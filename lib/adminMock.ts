@@ -1,16 +1,16 @@
 export const overviewStats = [
-  { emoji: "👨‍👩‍👧", tone: "purple" as const, label: "Valideynlər", value: "12,450" },
-  { emoji: "🧒", tone: "blue" as const, label: "Uşaqlar", value: "21,830" },
-  { emoji: "💳", tone: "gold" as const, label: "Premium", value: "4,821" },
-  { emoji: "🔥", tone: "orange" as const, label: "Bu gün aktiv", value: "8,921" },
+  { icon: "users" as const, tone: "purple" as const, label: "Valideynlər", value: "12,450" },
+  { icon: "smile" as const, tone: "blue" as const, label: "Uşaqlar", value: "21,830" },
+  { icon: "crown" as const, tone: "gold" as const, label: "Premium", value: "4,821" },
+  { icon: "flame" as const, tone: "orange" as const, label: "Bu gün aktiv", value: "8,921" },
 ];
 
 export const revenueStats = [
-  { emoji: "💰", tone: "green" as const, label: "MRR", value: "$38,240" },
-  { emoji: "💰", tone: "green" as const, label: "ARR", value: "$458,880" },
-  { emoji: "📈", tone: "teal" as const, label: "Yeni abunəliklər", value: "312" },
-  { emoji: "📉", tone: "pink" as const, label: "Churn", value: "2.4%" },
-  { emoji: "🔄", tone: "purple" as const, label: "Yenilənmələr", value: "1,204" },
+  { icon: "dollar" as const, tone: "green" as const, label: "MRR", value: "$38,240" },
+  { icon: "dollar" as const, tone: "green" as const, label: "ARR", value: "$458,880" },
+  { icon: "trendingUp" as const, tone: "teal" as const, label: "Yeni abunəliklər", value: "312" },
+  { icon: "trendingDown" as const, tone: "pink" as const, label: "Churn", value: "2.4%" },
+  { icon: "refresh" as const, tone: "purple" as const, label: "Yenilənmələr", value: "1,204" },
 ];
 
 export type Coupon = {
@@ -114,8 +114,8 @@ export const coupons: Coupon[] = [
 ];
 
 export const couponSummary = [
-  { emoji: "🏷️", tone: "purple" as const, label: "Aktiv kuponlar", value: "24", delta: "+4 bu həftə" },
-  { emoji: "🔗", tone: "blue" as const, label: "Ümumi paylanılıb", value: "8,532", delta: "+1,245 bu həftə" },
-  { emoji: "✅", tone: "green" as const, label: "İstifadə edilib", value: "2,318", delta: "27.1% istifadə nisbəti" },
-  { emoji: "👥", tone: "orange" as const, label: "Fəal tərəfdaşlar", value: "56", delta: "+6 yeni tərəfdaş" },
+  { icon: "tag" as const, tone: "purple" as const, label: "Aktiv kuponlar", value: "24", delta: "+4 bu həftə" },
+  { icon: "link" as const, tone: "blue" as const, label: "Ümumi paylanılıb", value: "8,532", delta: "+1,245 bu həftə" },
+  { icon: "check" as const, tone: "green" as const, label: "İstifadə edilib", value: "2,318", delta: "27.1% istifadə nisbəti" },
+  { icon: "users" as const, tone: "orange" as const, label: "Fəal tərəfdaşlar", value: "56", delta: "+6 yeni tərəfdaş" },
 ];

@@ -4,31 +4,31 @@ import { Nav } from "../components/Nav";
 
 const loveFeatures = [
   {
-    emoji: "🧠",
+    icon: "quiz" as const,
     tone: "purple" as const,
     title: "Daily 10 Quiz",
     body: "Fun quizzes every day to learn and earn XP.",
   },
   {
-    emoji: "📗",
+    icon: "book" as const,
     tone: "teal" as const,
     title: "Islamic Lessons",
     body: "Beautiful lessons on Quran, Prophets, Duas and more.",
   },
   {
-    emoji: "🎮",
+    icon: "controller" as const,
     tone: "orange" as const,
     title: "Exciting Games",
     body: "Play fun games and unlock amazing rewards.",
   },
   {
-    emoji: "🌳",
+    icon: "tree" as const,
     tone: "green" as const,
     title: "Good Deeds",
     body: "Do good deeds and watch your tree grow!",
   },
   {
-    emoji: "🎁",
+    icon: "gift" as const,
     tone: "pink" as const,
     title: "Rewards & World",
     body: "Collect rewards and build your own world!",
@@ -36,10 +36,10 @@ const loveFeatures = [
 ];
 
 const stats = [
-  { emoji: "👨‍👩‍👧", tone: "purple" as const, value: "100K+", label: "Happy Families" },
-  { emoji: "🌍", tone: "teal" as const, value: "50+", label: "Countries" },
-  { emoji: "⭐", tone: "gold" as const, value: "10K+", label: "Lessons & Quizzes" },
-  { emoji: "❤️", tone: "pink" as const, value: "4.8", label: "Parent Rating" },
+  { icon: "users" as const, tone: "purple" as const, value: "100K+", label: "Happy Families" },
+  { icon: "globe" as const, tone: "teal" as const, value: "50+", label: "Countries" },
+  { icon: "star" as const, tone: "gold" as const, value: "10K+", label: "Lessons & Quizzes" },
+  { icon: "heart" as const, tone: "pink" as const, value: "4.8", label: "Parent Rating" },
 ];
 
 const trustBadges = ["▶ Google Play", "🍎 App Store", "🛡 kidSAFE", "★ Trustpilot", "🔒 Certified Child Safe"];
@@ -123,7 +123,7 @@ export default function Home() {
               className="rounded-2xl border border-border bg-white p-6 text-center shadow-sm"
             >
               <div className="mx-auto">
-                <IconBadge emoji={f.emoji} tone={f.tone} size={56} shape="circle" />
+                <IconBadge icon={f.icon} tone={f.tone} size={56} />
               </div>
               <h3 className="mt-4 font-bold text-ink">{f.title}</h3>
               <p className="mt-2 text-sm text-inkMuted">{f.body}</p>
@@ -157,7 +157,7 @@ export default function Home() {
                 key={s.label}
                 className="flex flex-col items-center justify-center gap-2 rounded-2xl border border-border bg-white p-6 text-center shadow-sm"
               >
-                <span className="text-2xl">{s.emoji}</span>
+                <IconBadge icon={s.icon} tone={s.tone} size={44} />
                 <span className="text-2xl font-extrabold text-ink">{s.value}</span>
                 <span className="text-xs text-inkMuted">{s.label}</span>
               </div>

@@ -66,7 +66,7 @@ export default function AdminCoupons() {
               key={s.label}
               className="flex items-center gap-4 rounded-2xl border border-border bg-white p-5 shadow-sm"
             >
-              <IconBadge emoji={s.emoji} tone={s.tone} size={44} shape="circle" />
+              <IconBadge icon={s.icon} tone={s.tone} size={44} />
               <div>
                 <p className="text-xl font-extrabold text-ink">{s.value}</p>
                 <p className="text-xs text-inkMuted">{s.label}</p>

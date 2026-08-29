@@ -14,7 +14,7 @@ export default function AdminOverview() {
               key={s.label}
               className="flex items-center gap-4 rounded-2xl border border-border bg-white p-5 shadow-sm"
             >
-              <IconBadge emoji={s.emoji} tone={s.tone} size={48} shape="circle" />
+              <IconBadge icon={s.icon} tone={s.tone} size={48} />
               <div>
                 <p className="text-xl font-extrabold text-ink">{s.value}</p>
                 <p className="text-sm text-inkMuted">{s.label}</p>
@@ -30,7 +30,7 @@ export default function AdminOverview() {
               key={s.label}
               className="flex flex-col items-center gap-2 rounded-2xl border border-border bg-white p-5 text-center shadow-sm"
             >
-              <IconBadge emoji={s.emoji} tone={s.tone} size={40} shape="circle" />
+              <IconBadge icon={s.icon} tone={s.tone} size={40} />
               <p className="text-lg font-extrabold text-ink">{s.value}</p>
               <p className="text-xs text-inkMuted">{s.label}</p>
             </div>
