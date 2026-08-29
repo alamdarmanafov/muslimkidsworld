@@ -5,13 +5,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        night: "#0B1B2B",
-        moon: "#F4C95D",
-        teal: "#0E7C7B",
-        sand: "#FBF6EC",
-      },
-      fontFamily: {
-        display: ["var(--font-display)"],
+        ink: "#101534",
+        inkMuted: "#5B6178",
+        primary: "#6C5DD3",
+        primaryDark: "#5643C2",
+        accent: "#8B7CF6",
+        success: "#22C55E",
+        gold: "#F4B740",
+        surface: "#FAF9FE",
+        border: "#ECEAF7",
+        sidebar: "#12142B",
       },
     },
   },

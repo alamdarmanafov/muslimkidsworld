@@ -17,6 +17,14 @@ export const tones = {
   red: ["#FCA5A5", "#DC2626"],
 } as const satisfies Record<string, IconBadgeTone>;
 
+function darken(hex: string, amount: number) {
+  const num = parseInt(hex.replace("#", ""), 16);
+  const r = Math.round(((num >> 16) & 255) * (1 - amount));
+  const g = Math.round(((num >> 8) & 255) * (1 - amount));
+  const b = Math.round((num & 255) * (1 - amount));
+  return `rgb(${r}, ${g}, ${b})`;
+}
+
 export function IconBadge({
   emoji,
   tone,
@@ -29,34 +37,55 @@ export function IconBadge({
   shape?: "square" | "circle";
 }) {
   const radius = shape === "circle" ? size / 2 : size * 0.32;
+  const depth = Math.round(size * 0.16);
+  const baseColor = darken(tone[1], 0.35);
 
   return (
-    <View
-      style={[
-        styles.shadowWrap,
-        { width: size, height: size, borderRadius: radius, shadowColor: tone[1] },
-      ]}
-    >
-      <LinearGradient
-        colors={tone}
-        start={{ x: 0.2, y: 0 }}
-        end={{ x: 0.8, y: 1 }}
-        style={[styles.gradient, { width: size, height: size, borderRadius: radius }]}
+    <View style={{ width: size, height: size + depth }}>
+      <View
+        style={{
+          position: "absolute",
+          top: depth,
+          width: size,
+          height: size,
+          borderRadius: radius,
+          backgroundColor: baseColor,
+        }}
+      />
+      <View
+        style={[
+          styles.shadowWrap,
+          {
+            position: "absolute",
+            top: 0,
+            width: size,
+            height: size,
+            borderRadius: radius,
+            shadowColor: tone[1],
+          },
+        ]}
       >
-        <View
-          pointerEvents="none"
-          style={[
-            styles.gloss,
-            {
-              width: size * 0.9,
-              height: size * 0.55,
-              borderRadius: size * 0.45,
-              top: size * 0.06,
-            },
-          ]}
-        />
-        <Text style={{ fontSize: size * 0.5 }}>{emoji}</Text>
-      </LinearGradient>
+        <LinearGradient
+          colors={tone}
+          start={{ x: 0.2, y: 0 }}
+          end={{ x: 0.8, y: 1 }}
+          style={[styles.gradient, { width: size, height: size, borderRadius: radius }]}
+        >
+          <View
+            pointerEvents="none"
+            style={[
+              styles.gloss,
+              {
+                width: size * 0.9,
+                height: size * 0.55,
+                borderRadius: size * 0.45,
+                top: size * 0.06,
+              },
+            ]}
+          />
+          <Text style={{ fontSize: size * 0.5 }}>{emoji}</Text>
+        </LinearGradient>
+      </View>
     </View>
   );
 }
@@ -64,8 +93,8 @@ export function IconBadge({
 const styles = StyleSheet.create({
   shadowWrap: {
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.35,
-    shadowRadius: 6,
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
     elevation: 4,
   },
   gradient: {

@@ -1,215 +1,191 @@
-const features = [
+import Link from "next/link";
+import { IconBadge } from "../components/IconBadge";
+import { Nav } from "../components/Nav";
+
+const loveFeatures = [
   {
     emoji: "🧠",
-    title: "Daily 10",
-    body: "Ten bite-sized questions a day — five with pictures, five with text — covering Islam Basics, Quran, Prophets, Salah, and more.",
+    tone: "purple" as const,
+    title: "Daily 10 Quiz",
+    body: "Fun quizzes every day to learn and earn XP.",
   },
   {
-    emoji: "🌍",
-    title: "Muslim World",
-    body: "A virtual world with a home, a mosque, a knowledge center, and a Good Deeds Garden that grows as your child does.",
+    emoji: "📗",
+    tone: "teal" as const,
+    title: "Islamic Lessons",
+    body: "Beautiful lessons on Quran, Prophets, Duas and more.",
   },
   {
-    emoji: "❤️",
+    emoji: "🎮",
+    tone: "orange" as const,
+    title: "Exciting Games",
+    body: "Play fun games and unlock amazing rewards.",
+  },
+  {
+    emoji: "🌳",
+    tone: "green" as const,
     title: "Good Deeds",
-    body: "Kids log kindness — or parents assign a task — and watch a tree grow. Virtual rewards only, no real-money prizes.",
+    body: "Do good deeds and watch your tree grow!",
   },
   {
-    emoji: "🔥",
-    title: "Streaks & Rewards",
-    body: "XP, streaks, and unlockables turn consistent learning into something kids actually look forward to.",
+    emoji: "🎁",
+    tone: "pink" as const,
+    title: "Rewards & World",
+    body: "Collect rewards and build your own world!",
   },
 ];
 
-const safety = [
-  "No direct messaging or public chat",
-  "No stranger interaction",
-  "No advertising, ever",
-  "No in-app payments for children",
-  "Parent PIN / biometric gate on settings & subscriptions",
+const stats = [
+  { emoji: "👨‍👩‍👧", tone: "purple" as const, value: "100K+", label: "Happy Families" },
+  { emoji: "🌍", tone: "teal" as const, value: "50+", label: "Countries" },
+  { emoji: "⭐", tone: "gold" as const, value: "10K+", label: "Lessons & Quizzes" },
+  { emoji: "❤️", tone: "pink" as const, value: "4.8", label: "Parent Rating" },
 ];
 
-const plans = [
-  {
-    name: "Free",
-    price: "$0",
-    period: "",
-    features: ["1 child", "Daily 10", "Basic lessons", "Limited rewards"],
-    highlight: false,
-  },
-  {
-    name: "Single Child",
-    price: "$4.99",
-    period: "/month",
-    alt: "or $39.99/year",
-    features: ["1 child", "Full lesson library", "All rewards & world items"],
-    highlight: false,
-  },
-  {
-    name: "Family",
-    price: "$7.99",
-    period: "/month",
-    alt: "or $59.99/year",
-    features: ["Up to 3 children", "Full lesson library", "All rewards & world items"],
-    highlight: true,
-  },
-];
-
-const languages = [
-  ["🇬🇧", "English"],
-  ["🇸🇦", "العربية"],
-  ["🇹🇷", "Türkçe"],
-  ["🇦🇿", "Azərbaycan"],
-  ["🇮🇩", "Indonesia"],
-  ["🇲🇾", "Melayu"],
-  ["🇵🇰", "اردو"],
-  ["🇧🇩", "বাংলা"],
-  ["🇫🇷", "Français"],
-  ["🇩🇪", "Deutsch"],
-];
+const trustBadges = ["▶ Google Play", "🍎 App Store", "🛡 kidSAFE", "★ Trustpilot", "🔒 Certified Child Safe"];
 
 export default function Home() {
   return (
     <main>
-      {/* Nav */}
-      <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
-        <div className="flex items-center gap-2 text-lg font-semibold">
-          <span>🌙</span>
-          <span>Muslim Kids World</span>
-        </div>
-        <a
-          href="#plans"
-          className="rounded-full border border-moon/40 px-4 py-2 text-sm font-medium text-moon transition hover:bg-moon hover:text-night"
-        >
-          See plans
-        </a>
-      </header>
+      <Nav />
 
       {/* Hero */}
-      <section className="mx-auto flex max-w-4xl flex-col items-center px-6 pb-20 pt-12 text-center sm:pt-20">
-        <span className="rounded-full bg-teal/20 px-4 py-1 text-sm font-medium text-teal">
-          Coming soon · iOS & Android
-        </span>
-        <h1 className="mt-6 text-4xl font-bold leading-tight sm:text-6xl">
-          Learn <span className="text-moon">•</span> Play{" "}
-          <span className="text-moon">•</span> Grow
-        </h1>
-        <p className="mt-6 max-w-2xl text-lg text-sand/80">
-          A safe, global Islamic learning world for kids — daily quizzes,
-          good deeds, and a virtual Muslim World — with a parent dashboard
-          that keeps every child&apos;s progress in view.
-        </p>
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <span className="cursor-not-allowed rounded-xl border border-sand/20 px-6 py-3 text-sm font-medium text-sand/50">
-            📱 Download on the App Store
+      <section className="mx-auto grid max-w-7xl gap-12 px-6 py-10 lg:grid-cols-2 lg:items-center">
+        <div>
+          <span className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-4 py-1.5 text-sm font-medium text-amber-700">
+            ⭐ Learn. Play. Grow. With Islamic Values.
           </span>
-          <span className="cursor-not-allowed rounded-xl border border-sand/20 px-6 py-3 text-sm font-medium text-sand/50">
-            ▶️ Get it on Google Play
-          </span>
+          <h1 className="mt-6 text-5xl font-extrabold leading-[1.1] text-ink sm:text-6xl">
+            A Fun World
+            <br />
+            of Islamic Learning
+            <br />
+            for <span className="text-primary">Kids</span>
+          </h1>
+          <p className="mt-6 max-w-md text-base text-inkMuted">
+            Muslim Kids World makes learning about Islam exciting and
+            meaningful through games, quizzes, stories, and daily challenges.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a
+              href="#download"
+              className="flex items-center gap-2 rounded-xl bg-primary px-6 py-3.5 font-semibold text-white shadow-lg transition hover:bg-primaryDark"
+            >
+              📱 Download for iOS
+            </a>
+            <a
+              href="#download"
+              className="flex items-center gap-2 rounded-xl border border-border bg-white px-6 py-3.5 font-semibold text-ink shadow-sm transition hover:border-primary"
+            >
+              ▶ Download for Android
+            </a>
+          </div>
+          <p className="mt-5 flex items-center gap-2 text-sm text-inkMuted">
+            🛡️ Parent approved.{" "}
+            <a href="#parents" className="font-medium text-primary underline">
+              Kid safe.
+            </a>
+          </p>
+        </div>
+
+        <div className="relative flex items-center justify-center">
+          <div className="flex h-80 w-full max-w-md items-center justify-center rounded-[40px] bg-gradient-to-br from-sky-100 via-blue-50 to-emerald-100 text-8xl shadow-inner sm:h-96">
+            🕌
+          </div>
+          <div className="absolute left-0 top-6 rounded-2xl bg-white px-4 py-3 shadow-lg">
+            <p className="text-xs font-semibold text-inkMuted">🔥 Daily Challenge</p>
+            <p className="text-sm font-bold text-ink">7 Day Streak</p>
+          </div>
+          <div className="absolute right-0 top-16 rounded-2xl bg-white px-4 py-3 shadow-lg">
+            <p className="text-xs font-semibold text-inkMuted">⏰ Learning Time</p>
+            <p className="text-sm font-bold text-ink">42 min</p>
+          </div>
+          <div className="absolute bottom-10 left-2 rounded-2xl bg-white px-4 py-3 shadow-lg">
+            <p className="text-xs font-semibold text-inkMuted">⭐ Total XP</p>
+            <p className="text-sm font-bold text-ink">850</p>
+          </div>
+          <div className="absolute bottom-0 right-2 rounded-2xl bg-white px-4 py-3 shadow-lg">
+            <p className="text-xs font-semibold text-inkMuted">👑 Level</p>
+            <p className="text-sm font-bold text-ink">12</p>
+          </div>
         </div>
       </section>
 
-      {/* Features */}
-      <section className="mx-auto max-w-6xl px-6 py-16">
-        <h2 className="text-center text-3xl font-bold">
-          Everything a child needs, everything a parent trusts
+      {/* What Kids Will Love */}
+      <section id="features" className="mx-auto max-w-7xl px-6 py-16">
+        <h2 className="text-center text-2xl font-extrabold text-ink sm:text-3xl">
+          ✦ What <span className="text-primary">Kids</span> Will Love ✦
         </h2>
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {features.map((f) => (
+        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+          {loveFeatures.map((f) => (
             <div
               key={f.title}
-              className="rounded-2xl border border-sand/10 bg-white/5 p-6"
+              className="rounded-2xl border border-border bg-white p-6 text-center shadow-sm"
             >
-              <div className="text-3xl">{f.emoji}</div>
-              <h3 className="mt-4 text-lg font-semibold">{f.title}</h3>
-              <p className="mt-2 text-sm text-sand/70">{f.body}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* For parents / safety */}
-      <section className="bg-white/5 py-16">
-        <div className="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-2">
-          <div>
-            <h2 className="text-3xl font-bold">Built for parents first</h2>
-            <p className="mt-4 text-sand/70">
-              Add each child with a one-time family code, track their
-              accuracy and learning time in a weekly report, and approve
-              every new device before it can sign in.
-            </p>
-            <ul className="mt-6 space-y-3 text-sm text-sand/80">
-              <li>👦👧 Manage up to 3 children on the Family plan</li>
-              <li>📊 Weekly progress reports per child</li>
-              <li>📱 Approve or reject new devices</li>
-              <li>🔔 Notifications for streaks, completions, and rewards</li>
-            </ul>
-          </div>
-          <div>
-            <h2 className="text-3xl font-bold">Safety is non-negotiable</h2>
-            <ul className="mt-6 space-y-3 text-sm text-sand/80">
-              {safety.map((s) => (
-                <li key={s} className="flex items-start gap-2">
-                  <span className="text-teal">✓</span>
-                  <span>{s}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* Plans */}
-      <section id="plans" className="mx-auto max-w-6xl px-6 py-20">
-        <h2 className="text-center text-3xl font-bold">Simple family pricing</h2>
-        <div className="mt-12 grid gap-6 sm:grid-cols-3">
-          {plans.map((p) => (
-            <div
-              key={p.name}
-              className={`rounded-2xl border p-8 ${
-                p.highlight
-                  ? "border-moon bg-moon/10"
-                  : "border-sand/10 bg-white/5"
-              }`}
-            >
-              <h3 className="text-lg font-semibold">{p.name}</h3>
-              <div className="mt-4 flex items-baseline gap-1">
-                <span className="text-3xl font-bold">{p.price}</span>
-                <span className="text-sand/60">{p.period}</span>
+              <div className="mx-auto">
+                <IconBadge emoji={f.emoji} tone={f.tone} size={56} shape="circle" />
               </div>
-              {p.alt && <p className="mt-1 text-xs text-sand/50">{p.alt}</p>}
-              <ul className="mt-6 space-y-2 text-sm text-sand/80">
-                {p.features.map((f) => (
-                  <li key={f}>• {f}</li>
-                ))}
-              </ul>
+              <h3 className="mt-4 font-bold text-ink">{f.title}</h3>
+              <p className="mt-2 text-sm text-inkMuted">{f.body}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Languages */}
-      <section className="mx-auto max-w-6xl px-6 pb-20 text-center">
-        <h2 className="text-3xl font-bold">Built to be global from day one</h2>
-        <p className="mx-auto mt-4 max-w-2xl text-sand/70">
-          Language follows your preference, then your device, then your
-          country — never assumed, always changeable in Settings.
+      {/* For Parents + stats */}
+      <section id="parents" className="mx-auto max-w-7xl px-6 pb-16">
+        <div className="grid gap-5 lg:grid-cols-[1.1fr_2fr]">
+          <div className="flex items-center gap-4 rounded-2xl bg-violet-50 p-6">
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-white text-3xl shadow-sm">
+              👨‍👦
+            </div>
+            <div>
+              <h3 className="font-extrabold text-ink">For Parents</h3>
+              <p className="mt-1 text-sm text-inkMuted">
+                Track progress, set goals and support your child&apos;s
+                learning journey.
+              </p>
+              <a href="#parents" className="mt-2 inline-block text-sm font-semibold text-primary">
+                Learn more →
+              </a>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-5 sm:grid-cols-4">
+            {stats.map((s) => (
+              <div
+                key={s.label}
+                className="flex flex-col items-center justify-center gap-2 rounded-2xl border border-border bg-white p-6 text-center shadow-sm"
+              >
+                <span className="text-2xl">{s.emoji}</span>
+                <span className="text-2xl font-extrabold text-ink">{s.value}</span>
+                <span className="text-xs text-inkMuted">{s.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Trust bar */}
+      <section id="download" className="border-t border-border bg-white py-10">
+        <p className="text-center text-sm text-inkMuted">
+          Trusted by parents and loved by kids
         </p>
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
-          {languages.map(([flag, name]) => (
-            <span
-              key={name}
-              className="rounded-full border border-sand/15 px-4 py-2 text-sm"
-            >
-              {flag} {name}
-            </span>
+        <div className="mx-auto mt-5 flex max-w-4xl flex-wrap items-center justify-center gap-x-10 gap-y-3 px-6 text-sm font-medium text-inkMuted">
+          {trustBadges.map((b) => (
+            <span key={b}>{b}</span>
           ))}
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-sand/10 py-10 text-center text-sm text-sand/50">
-        <p>© {new Date().getFullYear()} Muslim Kids World. All rights reserved.</p>
+      <footer className="border-t border-border py-8 text-center text-sm text-inkMuted">
+        <p>
+          © {new Date().getFullYear()} Muslim Kids World. All rights
+          reserved. ·{" "}
+          <Link href="/admin" className="underline">
+            Admin
+          </Link>
+        </p>
       </footer>
     </main>
   );
