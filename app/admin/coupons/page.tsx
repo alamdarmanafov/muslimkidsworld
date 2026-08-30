@@ -1,23 +1,38 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { AdminTopbar } from "../../../components/admin/AdminTopbar";
 import { IconBadge } from "../../../components/IconBadge";
 import { coupons as initialCoupons, couponSummary, type Coupon } from "../../../lib/adminMock";
 
 const tabs = ["Bütün kuponlar", "Əyləncə yerləri", "Yemək yerləri", "Kampaniyalar"] as const;
 
+const partners = [
+  { name: "Joyland Əyləncə Mərkəzi", logo: "🎡", logoColor: "bg-orange-100", category: "Əyləncə" as const },
+  { name: "Fun Zone Park", logo: "🎠", logoColor: "bg-purple-100", category: "Əyləncə" as const },
+  { name: "McDonald's Azərbaycan", logo: "🍔", logoColor: "bg-red-100", category: "Yemək" as const },
+];
+
 function generateCode() {
   return "MKW" + Math.floor(1000 + Math.random() * 9000);
 }
 
+const emptyForm = {
+  couponType: "Əyləncə yeri" as "Əyləncə yeri" | "Yemək yeri",
+  partner: "",
+  code: "",
+  discountKind: "Faizlə (%)",
+  discountValue: "20",
+  maxDiscount: "10",
+  validFrom: "",
+  validTo: "",
+};
+
 export default function AdminCoupons() {
   const [tab, setTab] = useState<(typeof tabs)[number]>("Bütün kuponlar");
   const [couponList, setCouponList] = useState<Coupon[]>(initialCoupons);
-  const [couponType, setCouponType] = useState<"Əyləncə yeri" | "Yemək yeri">("Əyləncə yeri");
-  const [couponCode, setCouponCode] = useState("");
-  const [discountValue, setDiscountValue] = useState("20");
-  const [maxDiscount, setMaxDiscount] = useState("10");
+  const [form, setForm] = useState(emptyForm);
+  const formRef = useRef<HTMLDivElement>(null);
 
   const filtered = useMemo(() => {
     if (tab === "Əyləncə yerləri") return couponList.filter((c) => c.category === "Əyləncə");
@@ -26,9 +41,40 @@ export default function AdminCoupons() {
   }, [tab, couponList]);
 
   function toggleActive(id: string) {
-    setCouponList((list) =>
-      list.map((c) => (c.id === id ? { ...c, active: !c.active } : c)),
-    );
+    setCouponList((list) => list.map((c) => (c.id === id ? { ...c, active: !c.active } : c)));
+  }
+
+  function resetForm() {
+    setForm(emptyForm);
+  }
+
+  function createCoupon() {
+    if (!form.partner || !form.code) return;
+    const partner = partners.find((p) => p.name === form.partner);
+    if (!partner) return;
+
+    const discount =
+      form.discountKind === "Faizlə (%)" ? `${form.discountValue}%` : `${form.discountValue} AZN`;
+
+    const newCoupon: Coupon = {
+      id: form.code.toLowerCase(),
+      code: form.code,
+      name: partner.name,
+      logo: partner.logo,
+      logoColor: partner.logoColor,
+      category: partner.category,
+      discount,
+      maxDiscount: `Maks. ${form.maxDiscount} AZN`,
+      distributed: 0,
+      distributedDelta: "0",
+      used: 0,
+      usedPercent: 0,
+      active: true,
+      expires: form.validTo || "Müddətsiz",
+    };
+
+    setCouponList((list) => [newCoupon, ...list]);
+    resetForm();
   }
 
   return (
@@ -37,7 +83,10 @@ export default function AdminCoupons() {
         title="Kuponlar"
         subtitle="Uşaqlar üçün əyləncə və yemək yerlərində endirim kuponları yaradın və idarə edin."
         action={
-          <button className="flex items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-white shadow-md">
+          <button
+            onClick={() => formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}
+            className="flex items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-primaryDark"
+          >
             + Yeni kupon yarat
           </button>
         }
@@ -167,7 +216,7 @@ export default function AdminCoupons() {
           </div>
 
           {/* Create coupon form */}
-          <div className="h-fit rounded-2xl border border-border bg-white p-6 shadow-sm">
+          <div ref={formRef} className="h-fit rounded-2xl border border-border bg-white p-6 shadow-sm">
             <h2 className="mb-4 text-lg font-bold text-ink">Yeni kupon yarat</h2>
 
             <label className="mb-1 block text-xs font-medium text-inkMuted">Kupon növü</label>
@@ -176,8 +225,8 @@ export default function AdminCoupons() {
                 <label key={t} className="flex items-center gap-2">
                   <input
                     type="radio"
-                    checked={couponType === t}
-                    onChange={() => setCouponType(t)}
+                    checked={form.couponType === t}
+                    onChange={() => setForm((f) => ({ ...f, couponType: t, partner: "" }))}
                   />
                   {t}
                 </label>
@@ -185,23 +234,31 @@ export default function AdminCoupons() {
             </div>
 
             <label className="mb-1 block text-xs font-medium text-inkMuted">Tərəfdaş</label>
-            <select className="mb-4 w-full rounded-lg border border-border px-3 py-2 text-sm">
-              <option>Tərəfdaş seçin</option>
-              <option>Joyland Əyləncə Mərkəzi</option>
-              <option>Fun Zone Park</option>
-              <option>McDonald&apos;s Azərbaycan</option>
+            <select
+              value={form.partner}
+              onChange={(e) => setForm((f) => ({ ...f, partner: e.target.value }))}
+              className="mb-4 w-full rounded-lg border border-border px-3 py-2 text-sm"
+            >
+              <option value="">Tərəfdaş seçin</option>
+              {partners
+                .filter((p) => (form.couponType === "Əyləncə yeri" ? p.category === "Əyləncə" : p.category === "Yemək"))
+                .map((p) => (
+                  <option key={p.name} value={p.name}>
+                    {p.name}
+                  </option>
+                ))}
             </select>
 
             <label className="mb-1 block text-xs font-medium text-inkMuted">Kupon kodu</label>
             <div className="mb-4 flex gap-2">
               <input
-                value={couponCode}
-                onChange={(e) => setCouponCode(e.target.value)}
+                value={form.code}
+                onChange={(e) => setForm((f) => ({ ...f, code: e.target.value }))}
                 placeholder="Uşaqlar üçün unikal kod"
                 className="w-full rounded-lg border border-border px-3 py-2 text-sm"
               />
               <button
-                onClick={() => setCouponCode(generateCode())}
+                onClick={() => setForm((f) => ({ ...f, code: generateCode() }))}
                 className="whitespace-nowrap rounded-lg border border-border px-3 py-2 text-sm font-medium text-ink hover:bg-surface"
               >
                 Kod yarat
@@ -211,7 +268,11 @@ export default function AdminCoupons() {
             <div className="mb-4 grid grid-cols-2 gap-3">
               <div>
                 <label className="mb-1 block text-xs font-medium text-inkMuted">Endirim növü</label>
-                <select className="w-full rounded-lg border border-border px-3 py-2 text-sm">
+                <select
+                  value={form.discountKind}
+                  onChange={(e) => setForm((f) => ({ ...f, discountKind: e.target.value }))}
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm"
+                >
                   <option>Faizlə (%)</option>
                   <option>Sabit məbləğ</option>
                 </select>
@@ -219,8 +280,8 @@ export default function AdminCoupons() {
               <div>
                 <label className="mb-1 block text-xs font-medium text-inkMuted">Endirim dəyəri</label>
                 <input
-                  value={discountValue}
-                  onChange={(e) => setDiscountValue(e.target.value)}
+                  value={form.discountValue}
+                  onChange={(e) => setForm((f) => ({ ...f, discountValue: e.target.value }))}
                   className="w-full rounded-lg border border-border px-3 py-2 text-sm"
                 />
               </div>
@@ -230,8 +291,8 @@ export default function AdminCoupons() {
               Maksimum endirim (AZN)
             </label>
             <input
-              value={maxDiscount}
-              onChange={(e) => setMaxDiscount(e.target.value)}
+              value={form.maxDiscount}
+              onChange={(e) => setForm((f) => ({ ...f, maxDiscount: e.target.value }))}
               className="mb-4 w-full rounded-lg border border-border px-3 py-2 text-sm"
             />
 
@@ -239,9 +300,19 @@ export default function AdminCoupons() {
               Etibarlılıq müddəti
             </label>
             <div className="mb-4 flex items-center gap-2">
-              <input type="date" className="w-full rounded-lg border border-border px-3 py-2 text-sm" />
+              <input
+                type="date"
+                value={form.validFrom}
+                onChange={(e) => setForm((f) => ({ ...f, validFrom: e.target.value }))}
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm"
+              />
               <span className="text-inkMuted">→</span>
-              <input type="date" className="w-full rounded-lg border border-border px-3 py-2 text-sm" />
+              <input
+                type="date"
+                value={form.validTo}
+                onChange={(e) => setForm((f) => ({ ...f, validTo: e.target.value }))}
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm"
+              />
             </div>
 
             <label className="mb-1 block text-xs font-medium text-inkMuted">
@@ -254,10 +325,17 @@ export default function AdminCoupons() {
             </select>
 
             <div className="flex gap-3">
-              <button className="flex-1 rounded-xl border border-border py-2.5 text-sm font-semibold text-ink">
+              <button
+                onClick={resetForm}
+                className="flex-1 rounded-xl border border-border py-2.5 text-sm font-semibold text-ink transition hover:bg-surface"
+              >
                 İmtina
               </button>
-              <button className="flex-1 rounded-xl bg-primary py-2.5 text-sm font-semibold text-white">
+              <button
+                onClick={createCoupon}
+                disabled={!form.partner || !form.code}
+                className="flex-1 rounded-xl bg-primary py-2.5 text-sm font-semibold text-white transition hover:bg-primaryDark disabled:cursor-not-allowed disabled:opacity-50"
+              >
                 Yarat
               </button>
             </div>

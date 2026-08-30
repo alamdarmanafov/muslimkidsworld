@@ -1,8 +1,44 @@
+"use client";
+
+import { useState } from "react";
 import { AdminTopbar } from "../../../components/admin/AdminTopbar";
 import { StatusBadge } from "../../../components/admin/StatusBadge";
-import { sentNotifications } from "../../../lib/adminMock";
+import { sentNotifications as initialNotifications, type SentNotification } from "../../../lib/adminMock";
+
+const audiences = [
+  "Bütün istifadəçilər",
+  "Valideynlər",
+  "Xüsusi yaş qrupu",
+  "Xüsusi ölkə",
+  "Premium istifadəçilər",
+];
 
 export default function AdminNotifications() {
+  const [sent, setSent] = useState<SentNotification[]>(initialNotifications);
+  const [title, setTitle] = useState("");
+  const [audience, setAudience] = useState(audiences[0]);
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+
+  function send() {
+    if (!title.trim()) return;
+    const scheduled = date && time;
+    setSent((list) => [
+      {
+        id: `${Date.now()}`,
+        title,
+        audience,
+        sentAt: scheduled ? `${date} ${time}` : "İndi",
+        status: scheduled ? "Planlaşdırılıb" : "Göndərilib",
+      },
+      ...list,
+    ]);
+    setTitle("");
+    setAudience(audiences[0]);
+    setDate("");
+    setTime("");
+  }
+
   return (
     <>
       <AdminTopbar
@@ -24,7 +60,7 @@ export default function AdminNotifications() {
                   </tr>
                 </thead>
                 <tbody>
-                  {sentNotifications.map((n) => (
+                  {sent.map((n) => (
                     <tr key={n.id} className="border-b border-border last:border-0">
                       <td className="px-5 py-4 font-medium text-ink">{n.title}</td>
                       <td className="px-5 py-4 text-inkMuted">{n.audience}</td>
@@ -44,32 +80,50 @@ export default function AdminNotifications() {
 
             <label className="mb-1 block text-xs font-medium text-inkMuted">Başlıq</label>
             <input
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
               placeholder="New Daily Challenge! 🔥"
               className="mb-4 w-full rounded-lg border border-border px-3 py-2 text-sm"
             />
 
             <label className="mb-1 block text-xs font-medium text-inkMuted">Hədəf</label>
-            <select className="mb-4 w-full rounded-lg border border-border px-3 py-2 text-sm">
-              <option>Bütün istifadəçilər</option>
-              <option>Valideynlər</option>
-              <option>Xüsusi yaş qrupu</option>
-              <option>Xüsusi ölkə</option>
-              <option>Premium istifadəçilər</option>
+            <select
+              value={audience}
+              onChange={(e) => setAudience(e.target.value)}
+              className="mb-4 w-full rounded-lg border border-border px-3 py-2 text-sm"
+            >
+              {audiences.map((a) => (
+                <option key={a}>{a}</option>
+              ))}
             </select>
 
             <div className="mb-4 grid grid-cols-2 gap-3">
               <div>
                 <label className="mb-1 block text-xs font-medium text-inkMuted">Tarix</label>
-                <input type="date" className="w-full rounded-lg border border-border px-3 py-2 text-sm" />
+                <input
+                  type="date"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm"
+                />
               </div>
               <div>
                 <label className="mb-1 block text-xs font-medium text-inkMuted">Vaxt</label>
-                <input type="time" className="w-full rounded-lg border border-border px-3 py-2 text-sm" />
+                <input
+                  type="time"
+                  value={time}
+                  onChange={(e) => setTime(e.target.value)}
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm"
+                />
               </div>
             </div>
 
-            <button className="w-full rounded-xl bg-primary py-2.5 text-sm font-semibold text-white">
-              Göndər
+            <button
+              onClick={send}
+              disabled={!title.trim()}
+              className="w-full rounded-xl bg-primary py-2.5 text-sm font-semibold text-white transition hover:bg-primaryDark disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {date && time ? "Planlaşdır" : "Göndər"}
             </button>
           </div>
         </div>

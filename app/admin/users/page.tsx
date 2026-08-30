@@ -1,9 +1,31 @@
+"use client";
+
+import { useState } from "react";
 import { AdminTopbar } from "../../../components/admin/AdminTopbar";
+import { Modal } from "../../../components/admin/Modal";
 import { StatusBadge } from "../../../components/admin/StatusBadge";
 import { Icon } from "../../../components/icons";
-import { parents } from "../../../lib/adminMock";
+import { parents as initialParents, type Parent } from "../../../lib/adminMock";
 
 export default function AdminUsers() {
+  const [parents, setParents] = useState<Parent[]>(initialParents);
+  const [viewing, setViewing] = useState<Parent | null>(null);
+
+  function toggleSuspend(id: string) {
+    setParents((list) =>
+      list.map((p) =>
+        p.id === id
+          ? { ...p, status: p.status === "Dayandırılıb" ? "Aktiv" : "Dayandırılıb" }
+          : p,
+      ),
+    );
+  }
+
+  function remove(id: string) {
+    if (!confirm("Bu valideyn hesabını silmək istədiyinizə əminsiniz?")) return;
+    setParents((list) => list.filter((p) => p.id !== id));
+  }
+
   return (
     <>
       <AdminTopbar
@@ -48,24 +70,74 @@ export default function AdminUsers() {
                     </td>
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-3 text-inkMuted">
-                        <button aria-label="Bax" className="hover:text-primary">
+                        <button aria-label="Bax" onClick={() => setViewing(p)} className="hover:text-primary">
                           <Icon name="eye" style={{ width: 18, height: 18 }} />
                         </button>
-                        <button aria-label="Dayandır" className="hover:text-amber-600">
+                        <button
+                          aria-label="Dayandır"
+                          onClick={() => toggleSuspend(p.id)}
+                          className="hover:text-amber-600"
+                        >
                           <Icon name="ban" style={{ width: 18, height: 18 }} />
                         </button>
-                        <button aria-label="Sil" className="hover:text-red-600">
+                        <button aria-label="Sil" onClick={() => remove(p.id)} className="hover:text-red-600">
                           <Icon name="trash" style={{ width: 18, height: 18 }} />
                         </button>
                       </div>
                     </td>
                   </tr>
                 ))}
+                {parents.length === 0 ? (
+                  <tr>
+                    <td colSpan={8} className="px-5 py-8 text-center text-inkMuted">
+                      Heç bir istifadəçi tapılmadı.
+                    </td>
+                  </tr>
+                ) : null}
               </tbody>
             </table>
           </div>
         </div>
       </div>
+
+      <Modal title="Valideyn məlumatı" open={!!viewing} onClose={() => setViewing(null)}>
+        {viewing ? (
+          <div className="space-y-3 text-sm">
+            <div className="flex justify-between">
+              <span className="text-inkMuted">Ad</span>
+              <span className="font-medium text-ink">{viewing.name}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-inkMuted">E-poçt</span>
+              <span className="font-medium text-ink">{viewing.email}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-inkMuted">Ölkə</span>
+              <span className="font-medium text-ink">{viewing.country}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-inkMuted">Plan</span>
+              <span className="font-medium text-ink">{viewing.plan}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-inkMuted">Uşaqlar</span>
+              <span className="font-medium text-ink">{viewing.children}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-inkMuted">Cihazlar</span>
+              <span className="font-medium text-ink">{viewing.devices}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-inkMuted">Qeydiyyat tarixi</span>
+              <span className="font-medium text-ink">{viewing.joined}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-inkMuted">Status</span>
+              <StatusBadge label={viewing.status} />
+            </div>
+          </div>
+        ) : null}
+      </Modal>
     </>
   );
 }
