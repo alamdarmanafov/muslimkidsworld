@@ -40,17 +40,6 @@ export function AdminSidebar() {
           );
         })}
       </nav>
-
-      <div className="mt-6 rounded-2xl bg-gradient-to-br from-violet-600 to-indigo-700 p-4 text-white">
-        <p className="text-lg">👑</p>
-        <p className="mt-1 text-sm font-bold">Premium versiya</p>
-        <p className="mt-1 text-xs text-white/80">
-          Bütün imkanlardan istifadə edin
-        </p>
-        <button className="mt-3 w-full rounded-lg bg-white py-2 text-sm font-semibold text-primaryDark">
-          Yüksəlt
-        </button>
-      </div>
     </aside>
   );
 }
