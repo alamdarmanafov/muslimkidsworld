@@ -1,3 +1,8 @@
+"use client";
+
+import { useState } from "react";
+import { setAdminAuthed } from "../../lib/adminAuth";
+
 export function AdminTopbar({
   title,
   subtitle,
@@ -7,6 +12,13 @@ export function AdminTopbar({
   subtitle?: string;
   action?: React.ReactNode;
 }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  function logout() {
+    setAdminAuthed(false);
+    window.location.href = "/admin";
+  }
+
   return (
     <div>
       <div className="flex items-center justify-between border-b border-border bg-white px-8 py-4">
@@ -24,15 +36,31 @@ export function AdminTopbar({
               12
             </span>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-violet-100 text-lg">
-              🧑
-            </div>
-            <div className="text-sm leading-tight">
-              <p className="font-semibold text-ink">Admin</p>
-              <p className="text-xs text-inkMuted">Super Admin</p>
-            </div>
-            <span className="text-inkMuted">▾</span>
+          <div className="relative">
+            <button
+              onClick={() => setMenuOpen((v) => !v)}
+              className="flex items-center gap-2"
+            >
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-violet-100 text-lg">
+                🧑
+              </div>
+              <div className="text-left text-sm leading-tight">
+                <p className="font-semibold text-ink">Admin</p>
+                <p className="text-xs text-inkMuted">Super Admin</p>
+              </div>
+              <span className="text-inkMuted">▾</span>
+            </button>
+
+            {menuOpen ? (
+              <div className="absolute right-0 top-12 z-10 w-40 rounded-xl border border-border bg-white py-2 shadow-lg">
+                <button
+                  onClick={logout}
+                  className="block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-surface"
+                >
+                  Çıxış
+                </button>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>
