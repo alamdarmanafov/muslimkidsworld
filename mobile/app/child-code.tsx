@@ -4,15 +4,17 @@ import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../src/components/icons";
 import { familyCode } from "../src/data/mock";
+import { bindDeviceToFamilyCode } from "../src/lib/deviceBinding";
 import { colors, fonts, radii, spacing } from "../src/theme/theme";
 
 export default function ChildCode() {
   const [code, setCode] = useState("");
   const [error, setError] = useState(false);
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     if (code === familyCode) {
-      router.push("/child");
+      await bindDeviceToFamilyCode(code);
+      router.replace("/child");
     } else {
       setError(true);
     }
