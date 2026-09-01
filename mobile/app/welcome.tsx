@@ -82,7 +82,7 @@ export default function Welcome() {
 
               <Pressable
                 style={[styles.card, { backgroundColor: "#FFF3D6" }]}
-                onPress={() => router.push("/child")}
+                onPress={() => router.push("/child-code")}
               >
                 <View style={[styles.cardBadge, { backgroundColor: colors.gold }]}>
                   <Icon name="smile" size={20} color={colors.night} />

@@ -3,15 +3,23 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Avatar } from "../../../src/components/Avatar";
 import { Card } from "../../../src/components/Card";
+import { Icon, type IconName } from "../../../src/components/icons";
 import { IconBadge, tones } from "../../../src/components/IconBadge";
-import { children } from "../../../src/data/mock";
-import { colors, spacing } from "../../../src/theme/theme";
+import { children, familyCode } from "../../../src/data/mock";
+import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
 
 const weekStats = [
   { icon: "book" as const, tone: tones.blue, label: "Lessons", value: 4 },
   { icon: "quiz" as const, tone: tones.pink, label: "Questions", value: 70 },
   { icon: "clock" as const, tone: tones.teal, label: "Time", value: "42 min" },
   { icon: "gift" as const, tone: tones.gold, label: "Rewards", value: 3 },
+];
+
+const parentTools: { icon: IconName; label: string; href: string }[] = [
+  { icon: "chartBar", label: "Learning progress", href: "/parent/progress" },
+  { icon: "users", label: "Manage children", href: "/parent/children" },
+  { icon: "lock", label: "Parent PIN & safety", href: "/parent/profile" },
+  { icon: "smile", label: "Settings", href: "/parent/profile" },
 ];
 
 export default function ParentHome() {
@@ -24,6 +32,12 @@ export default function ParentHome() {
             <Text style={styles.name}>Ahmed 👋</Text>
           </View>
           <Text style={styles.bell}>🔔</Text>
+        </View>
+
+        <View style={styles.codeBox}>
+          <Text style={styles.codeLabel}>YOUR FAMILY CODE</Text>
+          <Text style={styles.code}>{familyCode}</Text>
+          <Text style={styles.codeHint}>Share this code with your child</Text>
         </View>
 
         <View style={styles.sectionHeader}>
@@ -61,6 +75,26 @@ export default function ParentHome() {
             </Card>
           ))}
         </View>
+
+        <Pressable style={styles.premiumButton} onPress={() => router.push("/parent/premium")}>
+          <Icon name="crown" size={18} color={colors.night} />
+          <Text style={styles.premiumButtonText}>Manage Premium Family</Text>
+        </Pressable>
+
+        <Text style={styles.sectionTitle}>Parent tools</Text>
+        <View style={styles.toolsList}>
+          {parentTools.map((t) => (
+            <Pressable
+              key={t.label}
+              style={styles.toolRow}
+              onPress={() => router.push(t.href as never)}
+            >
+              <Icon name={t.icon} size={18} color={colors.ink} />
+              <Text style={styles.toolLabel}>{t.label}</Text>
+              <Icon name="arrowRight" size={16} color={colors.inkMuted} />
+            </Pressable>
+          ))}
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -75,9 +109,31 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginBottom: spacing.lg,
   },
-  greeting: { fontSize: 14, color: colors.inkMuted },
-  name: { fontSize: 24, fontWeight: "800", color: colors.ink },
+  greeting: { fontFamily: fonts.body, fontSize: 14, color: colors.inkMuted },
+  name: { fontFamily: fonts.heading, fontSize: 22, color: colors.ink },
   bell: { fontSize: 22 },
+  codeBox: {
+    backgroundColor: colors.night,
+    borderRadius: radii.lg,
+    padding: spacing.lg,
+    alignItems: "center",
+    marginBottom: spacing.lg,
+    ...shadow,
+  },
+  codeLabel: {
+    fontFamily: fonts.bodyBold,
+    fontSize: 11,
+    letterSpacing: 2,
+    color: colors.onNightMuted,
+  },
+  code: {
+    fontFamily: fonts.heading,
+    fontSize: 32,
+    letterSpacing: 6,
+    color: colors.gold,
+    marginVertical: spacing.xs,
+  },
+  codeHint: { fontFamily: fonts.body, fontSize: 12, color: colors.onNightMuted },
   sectionHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -85,14 +141,43 @@ const styles = StyleSheet.create({
     marginBottom: spacing.sm,
     marginTop: spacing.md,
   },
-  sectionTitle: { fontSize: 16, fontWeight: "700", color: colors.ink },
-  link: { fontSize: 13, color: colors.primary, fontWeight: "600" },
+  sectionTitle: {
+    fontFamily: fonts.heading,
+    fontSize: 16,
+    color: colors.ink,
+    marginTop: spacing.lg,
+    marginBottom: spacing.sm,
+  },
+  link: { fontFamily: fonts.bodyBold, fontSize: 13, color: colors.primary },
   childrenRow: { flexDirection: "row", gap: spacing.md },
   childCard: { flex: 1, alignItems: "center", paddingVertical: spacing.md, gap: 4 },
-  childName: { fontSize: 14, fontWeight: "700", color: colors.ink },
-  childMeta: { fontSize: 12, color: colors.inkMuted },
+  childName: { fontFamily: fonts.bodyBold, fontSize: 14, color: colors.ink },
+  childMeta: { fontFamily: fonts.body, fontSize: 12, color: colors.inkMuted },
   statsGrid: { flexDirection: "row", flexWrap: "wrap", gap: spacing.md },
   statCard: { width: "47%", alignItems: "center", paddingVertical: spacing.md, gap: 4 },
-  statValue: { fontSize: 18, fontWeight: "800", color: colors.ink },
-  statLabel: { fontSize: 12, color: colors.inkMuted },
+  statValue: { fontFamily: fonts.heading, fontSize: 18, color: colors.ink },
+  statLabel: { fontFamily: fonts.body, fontSize: 12, color: colors.inkMuted },
+  premiumButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: spacing.sm,
+    backgroundColor: colors.gold,
+    borderRadius: radii.lg,
+    paddingVertical: spacing.md,
+    marginTop: spacing.lg,
+  },
+  premiumButtonText: { fontFamily: fonts.bodyBold, fontSize: 14, color: colors.night },
+  toolsList: { gap: spacing.sm },
+  toolRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.sm,
+    backgroundColor: colors.card,
+    borderRadius: radii.md,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.md,
+    ...shadow,
+  },
+  toolLabel: { flex: 1, fontFamily: fonts.bodyBold, fontSize: 14, color: colors.ink },
 });
