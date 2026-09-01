@@ -29,6 +29,7 @@ export default function RootLayout() {
         <Stack.Screen name="welcome" />
         <Stack.Screen name="child-code" />
         <Stack.Screen name="child" />
+        <Stack.Screen name="parent-pin" options={{ presentation: "modal" }} />
         <Stack.Screen name="parent" />
       </Stack>
     </SafeAreaProvider>

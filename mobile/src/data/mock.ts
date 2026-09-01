@@ -327,6 +327,7 @@ export const dailyMinutesDone = dailyJourney
   .reduce((sum, i) => sum + i.minutes, 0);
 
 export const familyCode = "583214";
+export const parentPin = "1234";
 
 export const plans = [
   {
