@@ -1,0 +1,13 @@
+{
+  "expo": {
+    "name": "Muslim Kids World",
+    "slug": "muslim-kids-world",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "muslimkidsworld",
+    "userInterfaceStyle": "light",
+    "plugins": ["expo-router"],
+    "ios": { "supportsTablet": true },
+    "android": { "adaptiveIcon": { "backgroundColor": "#69C8F5" } }
+  }
+}
