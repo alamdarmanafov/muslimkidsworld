@@ -35,24 +35,17 @@ export default function ChildTabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="learn"
+        name="progress"
         options={{
-          title: "Learn",
-          tabBarIcon: ({ focused }) => <TabIcon name="book" focused={focused} />,
-        }}
-      />
-      <Tabs.Screen
-        name="world"
-        options={{
-          title: "World",
-          tabBarIcon: ({ focused }) => <TabIcon name="globe" focused={focused} />,
+          title: "Progress",
+          tabBarIcon: ({ focused }) => <TabIcon name="chartBar" focused={focused} />,
         }}
       />
       <Tabs.Screen
         name="rewards"
         options={{
           title: "Rewards",
-          tabBarIcon: ({ focused }) => <TabIcon name="gift" focused={focused} />,
+          tabBarIcon: ({ focused }) => <TabIcon name="trophy" focused={focused} />,
         }}
       />
       <Tabs.Screen

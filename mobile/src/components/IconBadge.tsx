@@ -39,7 +39,7 @@ export function IconBadge({
         justifyContent: "center",
       }}
     >
-      <Icon name={icon} size={size * 0.5} color={tone[1]} />
+      <Icon name={icon} size={size * 0.6} color={tone[1]} />
     </View>
   );
 }

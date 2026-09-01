@@ -1,72 +1,58 @@
 import { router } from "expo-router";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Button } from "../../../src/components/Button";
-import { Card } from "../../../src/components/Card";
-import { IconBadge, tones } from "../../../src/components/IconBadge";
-import { StatPill } from "../../../src/components/StatPill";
-import { activeChild, dailyTen } from "../../../src/data/mock";
-import { colors, spacing } from "../../../src/theme/theme";
+import { Icon, type IconName } from "../../../src/components/icons";
+import { activeChild } from "../../../src/data/mock";
+import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
 
-const grid = [
-  { label: "Learn", icon: "book" as const, tone: tones.teal, href: "/child/learn" as const },
-  { label: "World", icon: "globe" as const, tone: tones.blue, href: "/child/world" as const },
-  { label: "Good Deeds", icon: "heart" as const, tone: tones.pink, href: "/child/rewards" as const },
-  { label: "Rewards", icon: "gift" as const, tone: tones.gold, href: "/child/rewards" as const },
-  { label: "Events", icon: "calendar" as const, tone: tones.orange, href: "/child/world" as const },
-  { label: "Profile", icon: "smile" as const, tone: tones.yellow, href: "/child/profile" as const },
+const learnTiles: { label: string; icon: IconName; bg: string; href: string }[] = [
+  { label: "Quran", icon: "book", bg: colors.successDark, href: "/child/quran" },
+  { label: "Dua", icon: "heart", bg: colors.purple, href: "/child/dua" },
+  { label: "Stories", icon: "star", bg: colors.fire, href: "/child/stories" },
+  { label: "Games", icon: "controller", bg: colors.primary, href: "/child/games" },
+  { label: "Quiz", icon: "quiz", bg: colors.pink, href: "/child/quiz" },
 ];
+
+const weeklyProgress = 72;
 
 export default function ChildHome() {
   return (
     <SafeAreaView style={styles.screen} edges={["top"]}>
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.header}>
-          <View style={styles.headerText}>
+          <View>
             <Text style={styles.greeting}>Assalamu Alaikum,</Text>
             <Text style={styles.name}>{activeChild.name}! 👋</Text>
           </View>
-          <Text style={styles.bell}>🔔</Text>
+          <View style={styles.starPill}>
+            <Icon name="star" size={14} color={colors.goldDark} />
+            <Text style={styles.starPillText}>{activeChild.xp}</Text>
+          </View>
         </View>
 
-        <Card style={styles.statsRow}>
-          <StatPill icon="star" tone={tones.gold} label="Level" value={activeChild.level} />
-          <StatPill icon="crown" tone={tones.orange} label="XP" value={activeChild.xp} />
-          <StatPill icon="flame" tone={tones.red} label="Streak" value={activeChild.streak} />
-        </Card>
-
-        <Card style={styles.missionCard}>
-          <Text style={styles.missionLabel}>Today's Mission</Text>
-          <View style={styles.missionRow}>
-            <IconBadge icon="quiz" tone={tones.purple} size={56} />
-            <View style={{ flex: 1 }}>
-              <Text style={styles.missionTitle}>Daily 10</Text>
-              <Text style={styles.missionSubtitle}>
-                {dailyTen.length * 3} Questions
-              </Text>
-              <Text style={styles.missionXp}>
-                +{dailyTen.reduce((sum, q) => sum + q.xp, 0)} XP 🪙
-              </Text>
-            </View>
+        <View style={styles.heroCard}>
+          <Icon name="moon" size={22} color={colors.gold} style={styles.heroMoon} />
+          <Text style={styles.heroTitle}>Keep going!</Text>
+          <Text style={styles.heroSubtitle}>You're doing great, {activeChild.name}!</Text>
+          <View style={styles.heroProgressRow}>
+            <Text style={styles.heroProgressLabel}>Your Progress</Text>
+            <Text style={styles.heroProgressValue}>{weeklyProgress}%</Text>
           </View>
-          <Button
-            label="Start"
-            variant="success"
-            onPress={() => router.push("/child/quiz")}
-          />
-        </Card>
+          <View style={styles.progressTrack}>
+            <View style={[styles.progressFill, { width: `${weeklyProgress}%` }]} />
+          </View>
+        </View>
 
+        <Text style={styles.sectionTitle}>Let's continue learning</Text>
         <View style={styles.grid}>
-          {grid.map((item) => (
+          {learnTiles.map((t) => (
             <Pressable
-              key={item.label}
-              style={styles.gridItem}
-              onPress={() => router.push(item.href)}
+              key={t.label}
+              style={[styles.tile, { backgroundColor: t.bg }]}
+              onPress={() => router.push(t.href as never)}
             >
-              <Card style={styles.gridCard}>
-                <IconBadge icon={item.icon} tone={item.tone} size={44} />
-                <Text style={styles.gridLabel}>{item.label}</Text>
-              </Card>
+              <Icon name={t.icon} size={34} color="#FFFFFF" />
+              <Text style={styles.tileLabel}>{t.label}</Text>
             </Pressable>
           ))}
         </View>
@@ -84,32 +70,60 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginBottom: spacing.lg,
   },
-  headerText: {},
-  greeting: { fontSize: 14, color: colors.inkMuted },
-  name: { fontSize: 24, fontWeight: "800", color: colors.ink },
-  bell: { fontSize: 22 },
-  statsRow: {
-    flexDirection: "row",
-    gap: spacing.sm,
-    marginBottom: spacing.md,
-  },
-  missionCard: { marginBottom: spacing.lg },
-  missionLabel: { fontSize: 13, color: colors.inkMuted, marginBottom: spacing.sm },
-  missionRow: {
+  greeting: { fontFamily: fonts.body, fontSize: 14, color: colors.inkMuted },
+  name: { fontFamily: fonts.heading, fontSize: 22, color: colors.ink },
+  starPill: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: spacing.md,
-    gap: spacing.md,
+    gap: 4,
+    backgroundColor: "#FFF3D6",
+    paddingHorizontal: spacing.sm,
+    paddingVertical: 6,
+    borderRadius: radii.pill,
   },
-  missionTitle: { fontSize: 18, fontWeight: "800", color: colors.ink },
-  missionSubtitle: { fontSize: 13, color: colors.inkMuted },
-  missionXp: { fontSize: 13, color: colors.successDark, fontWeight: "700" },
-  grid: {
+  starPillText: { fontFamily: fonts.bodyBold, fontSize: 13, color: colors.goldDark },
+  heroCard: {
+    backgroundColor: colors.night,
+    borderRadius: radii.lg,
+    padding: spacing.lg,
+    marginBottom: spacing.lg,
+    overflow: "hidden",
+    ...shadow,
+  },
+  heroMoon: { position: "absolute", top: spacing.md, right: spacing.md },
+  heroTitle: { fontFamily: fonts.heading, fontSize: 20, color: colors.onNight },
+  heroSubtitle: { fontFamily: fonts.body, fontSize: 13, color: colors.onNightMuted, marginTop: 2 },
+  heroProgressRow: {
     flexDirection: "row",
-    flexWrap: "wrap",
-    gap: spacing.md,
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: spacing.lg,
+    marginBottom: spacing.xs,
   },
-  gridItem: { width: "31%" },
-  gridCard: { alignItems: "center", paddingVertical: spacing.md, gap: spacing.xs },
-  gridLabel: { fontSize: 12, fontWeight: "600", color: colors.ink, textAlign: "center" },
+  heroProgressLabel: { fontFamily: fonts.body, fontSize: 12, color: colors.onNightMuted },
+  heroProgressValue: { fontFamily: fonts.bodyBold, fontSize: 13, color: colors.gold },
+  progressTrack: {
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: "rgba(255,255,255,0.15)",
+    overflow: "hidden",
+  },
+  progressFill: { height: "100%", borderRadius: 4, backgroundColor: colors.success },
+  sectionTitle: {
+    fontFamily: fonts.heading,
+    fontSize: 16,
+    color: colors.ink,
+    marginBottom: spacing.sm,
+  },
+  grid: { flexDirection: "row", flexWrap: "wrap", gap: spacing.md },
+  tile: {
+    width: "30%",
+    aspectRatio: 1,
+    borderRadius: radii.lg,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: spacing.xs,
+    ...shadow,
+  },
+  tileLabel: { fontFamily: fonts.bodyBold, fontSize: 12, color: "#FFFFFF", textAlign: "center" },
 });

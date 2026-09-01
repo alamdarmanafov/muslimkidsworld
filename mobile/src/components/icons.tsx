@@ -21,7 +21,15 @@ export type IconName =
   | "users"
   | "shield"
   | "lock"
-  | "arrowRight";
+  | "arrowRight"
+  | "controller"
+  | "play"
+  | "pause"
+  | "speaker"
+  | "skipBack"
+  | "skipForward"
+  | "trophy"
+  | "puzzle";
 
 const paths: Record<IconName, string> = {
   quiz: "M12 2.5A9.5 9.5 0 1 0 21.5 12 9.5 9.5 0 0 0 12 2.5Zm0 14.2a1.2 1.2 0 1 1 1.2-1.2A1.2 1.2 0 0 1 12 16.7Zm1.4-5.1c-.7.5-.9.8-.9 1.5h-1c0-1.1.4-1.7 1.3-2.3.6-.4.9-.7.9-1.3a1.7 1.7 0 0 0-3.4-.1H9.3a2.7 2.7 0 0 1 5.4.1c0 1-.5 1.6-1.3 2.1Z",
@@ -44,6 +52,14 @@ const paths: Record<IconName, string> = {
   shield: "M12 2.2 4.5 5v6c0 5 3.2 8.6 7.5 9.8 4.3-1.2 7.5-4.8 7.5-9.8V5ZM11 15.3 7.6 12l1.4-1.4L11 12.5l4-4 1.4 1.4Z",
   lock: "M12 2a4 4 0 0 1 4 4v3h1a1.6 1.6 0 0 1 1.6 1.6v9.8A1.6 1.6 0 0 1 17 22H7a1.6 1.6 0 0 1-1.6-1.6v-9.8A1.6 1.6 0 0 1 7 9h1V6a4 4 0 0 1 4-4Zm0 2a2 2 0 0 0-2 2v3h4V6a2 2 0 0 0-2-2Zm0 10.2a1.6 1.6 0 1 0 0 3.2 1.6 1.6 0 0 0 0-3.2Z",
   arrowRight: "M4 11h12.2l-4.6-4.6L13 5l7 7-7 7-1.4-1.4 4.6-4.6H4Z",
+  controller: "M6.5 8h11A4.5 4.5 0 0 1 22 12.5 4.5 4.5 0 0 1 17.5 17h-11A4.5 4.5 0 0 1 2 12.5 4.5 4.5 0 0 1 6.5 8ZM6 11.8h3v1.4H6ZM7.1 10.7h1.4v3.6H7.1ZM17 11.3a1 1 0 1 0-2 0 1 1 0 0 0 2 0ZM19.2 13.5a1 1 0 1 0-2 0 1 1 0 0 0 2 0Z",
+  play: "M8 5v14l11-7Z",
+  pause: "M7 5h4v14H7ZM13 5h4v14h-4Z",
+  speaker: "M4 9v6h4l5 4V5L8 9Z M16.3 8.3a5.2 5.2 0 0 1 0 7.4l-1.4-1.4a3.2 3.2 0 0 0 0-4.6Z",
+  skipBack: "M6 5v14H4V5Z M20 6 9 12l11 6Z",
+  skipForward: "M18 5v14h2V5Z M4 6l11 6L4 18Z",
+  trophy: "M7 3h10l-.6 6a4.4 4.4 0 0 1-8.8 0Z M11 12.2h2V17h-2Z M8 18h8v2H8Z",
+  puzzle: "M9 3h4v2.4a2 2 0 1 1 0 3.9V11h4a2 2 0 0 1 2 2v3.7a2 2 0 1 0 0 3.9V21H15a2 2 0 1 0-4 0H9v-4h2.2a2 2 0 1 0 0-4H9v-4H5a2 2 0 0 1-2-2V5h3.8a2 2 0 1 1 4 0H9Z",
 };
 
 export function Icon({
