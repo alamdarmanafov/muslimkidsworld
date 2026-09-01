@@ -325,8 +325,6 @@ export function setDailyLimitMinutes(minutes: number) {
 export const dailyMinutesDone = dailyJourney
   .filter((i) => i.done)
   .reduce((sum, i) => sum + i.minutes, 0);
-
-export const familyCode = "583214";
 export const parentPin = "1234";
 
 export const plans = [

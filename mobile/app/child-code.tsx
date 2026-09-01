@@ -3,20 +3,47 @@ import { router } from "expo-router";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../src/components/icons";
-import { familyCode } from "../src/data/mock";
-import { bindDeviceToFamilyCode } from "../src/lib/deviceBinding";
+import { bindDeviceToFamilyCode, getDeviceId } from "../src/lib/deviceBinding";
+import { getSupabaseClient } from "../src/lib/supabase";
 import { colors, fonts, radii, spacing } from "../src/theme/theme";
+
+async function readFunctionErrorMessage(error: unknown): Promise<string> {
+  const context = (error as { context?: Response } | null)?.context;
+  if (context && typeof context.json === "function") {
+    try {
+      const body = await context.json();
+      if (typeof body?.error === "string") return body.error;
+    } catch {
+      // fall through to generic message below
+    }
+  }
+  return error instanceof Error ? error.message : "Something went wrong. Try again.";
+}
 
 export default function ChildCode() {
   const [code, setCode] = useState("");
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleContinue = async () => {
-    if (code === familyCode) {
+    setError(null);
+    setLoading(true);
+    try {
+      const deviceId = await getDeviceId();
+      const { error: fnError } = await getSupabaseClient().functions.invoke(
+        "redeem-family-code",
+        { body: { code, deviceId } },
+      );
+      if (fnError) {
+        setError(await readFunctionErrorMessage(fnError));
+        return;
+      }
       await bindDeviceToFamilyCode(code);
       router.replace("/child");
-    } else {
-      setError(true);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Something went wrong. Try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -32,7 +59,7 @@ export default function ChildCode() {
         value={code}
         onChangeText={(v) => {
           setCode(v.replace(/[^0-9]/g, ""));
-          setError(false);
+          setError(null);
         }}
         keyboardType="number-pad"
         maxLength={6}
@@ -40,14 +67,14 @@ export default function ChildCode() {
         placeholderTextColor={colors.locked}
         style={[styles.input, error && styles.inputError]}
       />
-      {error ? <Text style={styles.errorText}>That code doesn't match. Try again.</Text> : null}
+      {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
       <Pressable
-        style={[styles.button, code.length < 6 && styles.buttonDisabled]}
-        disabled={code.length < 6}
+        style={[styles.button, (code.length < 6 || loading) && styles.buttonDisabled]}
+        disabled={code.length < 6 || loading}
         onPress={handleContinue}
       >
-        <Text style={styles.buttonText}>Continue →</Text>
+        <Text style={styles.buttonText}>{loading ? "Checking…" : "Continue →"}</Text>
       </Pressable>
 
       <Text style={styles.note}>

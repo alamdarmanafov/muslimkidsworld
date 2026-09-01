@@ -1,12 +1,11 @@
 // mobile/src/lib/supabase.ts
 //
-// Typed Supabase client factory for the mobile app. This is groundwork
-// only: nothing in the app calls this yet (screens still read from
-// mobile/src/data/mock.ts), and it is not imported from any screen or
-// component. It exists so that once a real Supabase project is linked
-// (see supabase/README.md), wiring a screen up to real data is just
-// `import { getSupabaseClient } from "../lib/supabase"` — no client
-// setup left to do at that point.
+// Typed Supabase client factory for the mobile app. Used by
+// app/parent-auth.tsx (email/password auth), app/child-code.tsx and
+// app/parent/family-code.tsx (the redeem-family-code /
+// generate-family-code edge functions). Most screens still read from
+// mobile/src/data/mock.ts — replacing that with real queries is the
+// ongoing follow-up, not something this file needs to change for.
 //
 // Reads EXPO_PUBLIC_SUPABASE_URL / EXPO_PUBLIC_SUPABASE_ANON_KEY, which
 // Expo inlines automatically for any env var prefixed EXPO_PUBLIC_
@@ -38,9 +37,7 @@ export function createSupabaseClient(): TypedSupabaseClient {
   if (!supabaseUrl || !supabaseAnonKey) {
     throw new Error(
       "Missing EXPO_PUBLIC_SUPABASE_URL / EXPO_PUBLIC_SUPABASE_ANON_KEY. " +
-        "Set them in mobile/.env — see supabase/README.md for where the values come from. " +
-        "(Nothing calls createSupabaseClient()/getSupabaseClient() yet, so seeing this " +
-        "means something new started calling it before the env vars were configured.)",
+        "Set them in mobile/.env — see supabase/README.md for where the values come from.",
     );
   }
 

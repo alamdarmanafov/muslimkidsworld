@@ -5,7 +5,7 @@ import { Avatar } from "../../../src/components/Avatar";
 import { Card } from "../../../src/components/Card";
 import { Icon, type IconName } from "../../../src/components/icons";
 import { IconBadge, tones } from "../../../src/components/IconBadge";
-import { children, familyCode } from "../../../src/data/mock";
+import { children } from "../../../src/data/mock";
 import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
 
 const weekStats = [
@@ -35,11 +35,11 @@ export default function ParentHome() {
           <Text style={styles.bell}>🔔</Text>
         </View>
 
-        <View style={styles.codeBox}>
-          <Text style={styles.codeLabel}>YOUR FAMILY CODE</Text>
-          <Text style={styles.code}>{familyCode}</Text>
-          <Text style={styles.codeHint}>Share this code with your child</Text>
-        </View>
+        <Pressable style={styles.codeBox} onPress={() => router.push("/parent/family-code")}>
+          <Icon name="users" size={22} color={colors.gold} style={{ marginBottom: spacing.xs }} />
+          <Text style={styles.codeLabel}>CONNECT A CHILD</Text>
+          <Text style={styles.codeHint}>Tap to get a Family Code</Text>
+        </Pressable>
 
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>My Children</Text>
@@ -127,14 +127,12 @@ const styles = StyleSheet.create({
     letterSpacing: 2,
     color: colors.onNightMuted,
   },
-  code: {
-    fontFamily: fonts.heading,
-    fontSize: 32,
-    letterSpacing: 6,
-    color: colors.gold,
-    marginVertical: spacing.xs,
+  codeHint: {
+    fontFamily: fonts.body,
+    fontSize: 12,
+    color: colors.onNightMuted,
+    marginTop: 2,
   },
-  codeHint: { fontFamily: fonts.body, fontSize: 12, color: colors.onNightMuted },
   sectionHeader: {
     flexDirection: "row",
     justifyContent: "space-between",

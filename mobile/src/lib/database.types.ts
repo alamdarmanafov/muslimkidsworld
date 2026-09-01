@@ -121,6 +121,7 @@ export type Database = {
           bound_device_id: string | null;
           bound_at: string | null;
           revoked_at: string | null;
+          expires_at: string;
           created_at: string;
         };
         Insert: {
@@ -131,6 +132,7 @@ export type Database = {
           bound_device_id?: string | null;
           bound_at?: string | null;
           revoked_at?: string | null;
+          expires_at?: string;
           created_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["family_codes"]["Insert"]>;

@@ -14,6 +14,13 @@
 // code locally, so the local "I'm bound" state and the server's are
 // established together.
 //
+// Codes also rotate every 30 seconds (generate-family-code revokes
+// the previous one each time it mints a new one, and every code
+// carries a 30s expires_at) — a code entered after its window closes
+// is treated the same as an invalid one, "404 Invalid or expired
+// code", unless it's the same device retrying a code it already
+// successfully bound.
+//
 // Request (no parent session required — a child's device calls this
 // with the project's anon key, which satisfies default JWT
 // verification, plus the code the parent shared with them):
@@ -85,7 +92,7 @@ Deno.serve(async (req: Request) => {
 
   const { data: familyCode, error: lookupError } = await adminClient
     .from("family_codes")
-    .select("id, family_id, bound_device_id")
+    .select("id, family_id, bound_device_id, expires_at")
     .eq("code", code)
     .is("revoked_at", null)
     .maybeSingle();
@@ -94,6 +101,16 @@ Deno.serve(async (req: Request) => {
     return jsonResponse({ error: lookupError.message }, 500);
   }
   if (!familyCode) {
+    return jsonResponse({ error: "Invalid or expired code" }, 404);
+  }
+
+  // The 30-second rotation window: a code that already bound *this*
+  // device stays honored even past expiry (a retry from the same
+  // device shouldn't fail just because it happened a moment late),
+  // but a fresh redemption attempt on an expired code is rejected —
+  // this is the actual enforcement, not just a UI countdown.
+  const isExpired = new Date(familyCode.expires_at).getTime() < Date.now();
+  if (isExpired && familyCode.bound_device_id !== deviceId) {
     return jsonResponse({ error: "Invalid or expired code" }, 404);
   }
 

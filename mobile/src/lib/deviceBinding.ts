@@ -16,10 +16,10 @@ export async function getDeviceId(): Promise<string> {
   return id;
 }
 
-// NOTE: this only remembers the binding locally, on this device. Without a
-// backend there is no way to know whether the same Family Code has already
-// been bound to a *different* device — that check has to happen server-side
-// once Family Codes are issued and tracked centrally.
+// This only remembers the binding locally, on this device — it is not
+// itself the enforcement. The real "one device per code" check happens
+// server-side in supabase/functions/redeem-family-code, which must be
+// called (and must succeed) before this is called; see app/child-code.tsx.
 export async function bindDeviceToFamilyCode(code: string): Promise<void> {
   await getDeviceId();
   await AsyncStorage.setItem(BOUND_CODE_KEY, code);
