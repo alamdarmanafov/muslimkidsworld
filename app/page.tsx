@@ -1,192 +1,37 @@
-import Link from "next/link";
-import { IconBadge } from "../components/IconBadge";
-import { Nav } from "../components/Nav";
+"use client";
 
-const loveFeatures = [
-  {
-    icon: "quiz" as const,
-    tone: "purple" as const,
-    title: "Daily 10 Quiz",
-    body: "Fun quizzes every day to learn and earn XP.",
-  },
-  {
-    icon: "book" as const,
-    tone: "teal" as const,
-    title: "Islamic Lessons",
-    body: "Beautiful lessons on Quran, Prophets, Duas and more.",
-  },
-  {
-    icon: "controller" as const,
-    tone: "orange" as const,
-    title: "Exciting Games",
-    body: "Play fun games and unlock amazing rewards.",
-  },
-  {
-    icon: "tree" as const,
-    tone: "green" as const,
-    title: "Good Deeds",
-    body: "Do good deeds and watch your tree grow!",
-  },
-  {
-    icon: "gift" as const,
-    tone: "pink" as const,
-    title: "Rewards & World",
-    body: "Collect rewards and build your own world!",
-  },
-];
+import { useEffect } from "react";
 
-const stats = [
-  { icon: "users" as const, tone: "purple" as const, value: "100K+", label: "Happy Families" },
-  { icon: "globe" as const, tone: "teal" as const, value: "50+", label: "Countries" },
-  { icon: "star" as const, tone: "gold" as const, value: "10K+", label: "Lessons & Quizzes" },
-  { icon: "heart" as const, tone: "pink" as const, value: "4.8", label: "Parent Rating" },
-];
-
-const trustBadges = ["▶ Google Play", "🍎 App Store", "🛡 kidSAFE", "★ Trustpilot", "🔒 Certified Child Safe"];
+const pageCss = `
+:root{--blue:#35aef2;--deep:#0d2d67;--navy:#102d68;--gold:#ffc83d;--cream:#fffaf0;--green:#35c779;--purple:#8e78ef;--pink:#f16d9b;--shadow:0 24px 70px rgba(20,67,125,.14)}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Nunito,system-ui,sans-serif;color:var(--navy);background:var(--cream);overflow-x:hidden}a{text-decoration:none;color:inherit}.container{width:min(1160px,92%);margin:auto}.nav{position:sticky;top:0;z-index:50;background:rgba(255,250,240,.86);backdrop-filter:blur(16px);border-bottom:1px solid rgba(13,45,103,.08)}.navin{height:76px;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:20px}.brand img{width:48px;height:48px;border-radius:14px}.brand span{color:var(--blue)}.brand b{color:var(--gold)}.links{display:flex;gap:26px;font-weight:700;font-size:14px}.links a:hover{color:var(--blue)}.navcta{background:var(--navy);color:#fff;padding:12px 18px;border-radius:14px;font-weight:800}.hero{position:relative;padding:80px 0 90px;background:radial-gradient(circle at 75% 15%,#bceaff 0,transparent 32%),linear-gradient(145deg,#effaff,#fffaf0 58%);overflow:hidden}.hero:before,.hero:after{content:'✦';position:absolute;color:#ffd55a;font-size:38px;opacity:.75}.hero:before{left:6%;top:18%}.hero:after{right:8%;bottom:15%}.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center}.eyebrow{display:inline-flex;gap:8px;align-items:center;background:#fff;padding:9px 14px;border-radius:999px;box-shadow:0 10px 30px #cfeaf7;font-weight:800;font-size:13px}.dot{width:8px;height:8px;background:var(--green);border-radius:50%}.hero h1{font-size:clamp(44px,6vw,72px);line-height:.98;margin:22px 0 20px;letter-spacing:-2px}.hero h1 em{font-style:normal;color:var(--blue)}.hero h1 strong{color:var(--gold)}.hero p{font-size:19px;line-height:1.65;color:#52709d;max-width:590px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin:28px 0}.store{background:var(--navy);color:#fff;border-radius:16px;padding:13px 19px;display:flex;align-items:center;gap:10px;font-weight:800}.store small{display:block;font-size:9px;font-weight:600;opacity:.7}.store b{display:block;font-size:15px}.store.alt{background:#fff;color:var(--navy);border:1px solid #d8e6f1}.hero-note{font-size:13px;color:#7390b1}.phone-wrap{display:flex;justify-content:center;position:relative}.phone{width:min(350px,82vw);background:#fff;border:10px solid #102d67;border-radius:46px;padding:9px;box-shadow:0 35px 80px rgba(20,67,125,.25);transform:rotate(2deg)}.screen{border-radius:34px;overflow:hidden;background:#f7fbff;min-height:620px}.screen-top{height:205px;padding:24px;background:linear-gradient(150deg,#0e3376,#2eaef0);color:#fff;position:relative}.moon{position:absolute;right:25px;top:22px;font-size:52px;color:#ffd452}.screen-top h3{margin:45px 0 2px;font-size:25px}.screen-top p{margin:0;opacity:.85}.progress{background:#fff;border-radius:22px;margin:-35px 15px 15px;padding:18px;position:relative;box-shadow:0 12px 30px #dceaf4}.bar{height:9px;background:#e5edf5;border-radius:20px;margin-top:10px}.bar i{display:block;width:72%;height:100%;background:var(--green);border-radius:20px}.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 15px}.tile{padding:17px;border-radius:18px;color:#fff;font-weight:900}.tile span{font-size:28px;display:block;margin-bottom:5px}.q{background:#34c875}.d{background:#8d75ec}.s{background:#ffb42f}.g{background:#43aef1}.trust{padding:20px 0;background:#fff;border-top:1px solid #edf3f7;border-bottom:1px solid #edf3f7}.trustin{display:flex;justify-content:space-around;gap:20px;flex-wrap:wrap;color:#587395;font-weight:800}.trustin span{display:flex;align-items:center;gap:8px}.trustin b{color:var(--green)}section{padding:90px 0}.section-head{text-align:center;max-width:700px;margin:0 auto 45px}.section-head .tag{color:var(--blue);font-weight:900;text-transform:uppercase;letter-spacing:1.5px;font-size:12px}.section-head h2{font-size:42px;line-height:1.05;margin:12px 0}.section-head p{color:#66809e;font-size:17px;line-height:1.6}.features{background:#fff}.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{padding:28px;border-radius:28px;background:#f8fbff;border:1px solid #e7f0f7;transition:.25s}.card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}.icon{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;font-size:28px;margin-bottom:18px}.card h3{margin:0 0 8px;font-size:21px}.card p{margin:0;color:#6b84a1;line-height:1.55}.parent{background:linear-gradient(145deg,#e9f8ff,#fff7db)}.split{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}.copy h2{font-size:46px;line-height:1.05;margin:10px 0 18px}.copy p{color:#66809e;line-height:1.65;font-size:17px}.checks{display:grid;gap:13px;margin:25px 0}.check{display:flex;gap:10px;align-items:flex-start;font-weight:800}.check i{background:#d9f8e7;color:#16a45b;border-radius:50%;width:25px;height:25px;display:grid;place-items:center;font-style:normal}.code-card{background:#fff;border-radius:34px;padding:32px;box-shadow:var(--shadow);position:relative}.code-card .mini{color:#7a91ad;font-size:13px;font-weight:800}.code{font-size:44px;letter-spacing:8px;font-weight:900;color:var(--navy);margin:10px 0 20px}.code-line{height:1px;background:#e9eff5}.kids{background:#fff}.kids .visual{background:linear-gradient(145deg,#dff5ff,#eef1ff);border-radius:36px;padding:35px;min-height:370px;display:grid;place-items:center}.character{font-size:130px;filter:drop-shadow(0 18px 14px rgba(30,75,120,.18))}.speech{background:#fff;border-radius:22px;padding:17px 20px;font-weight:800;box-shadow:0 15px 35px rgba(20,67,125,.12);text-align:center}.pricing{background:#f5fbff}.plans{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:820px;margin:auto}.plan{background:#fff;border:1px solid #e2edf5;border-radius:30px;padding:32px;position:relative}.plan.featured{border:3px solid var(--gold);box-shadow:var(--shadow)}.popular{position:absolute;right:22px;top:20px;background:#fff0b7;color:#a16b00;border-radius:999px;padding:7px 11px;font-size:11px;font-weight:900}.price{font-size:45px;font-weight:900;margin:12px 0}.price small{font-size:14px;color:#7990a9}.plan ul{list-style:none;padding:0;margin:22px 0;display:grid;gap:12px;color:#5f7898}.plan li:before{content:'✓';color:var(--green);font-weight:900;margin-right:9px}.plan button{width:100%;border:0;padding:14px;border-radius:15px;background:var(--navy);color:#fff;font:inherit;font-weight:900;cursor:pointer}.featured button{background:var(--gold);color:var(--navy)}.faq{background:#fff}.faqs{max-width:820px;margin:auto;display:grid;gap:12px}.faqitem{background:#f8fbff;border:1px solid #e6eff6;border-radius:18px;padding:19px 22px;cursor:pointer}.faqitem strong{display:flex;justify-content:space-between}.faqitem p{display:none;color:#6b84a1;line-height:1.6;margin:12px 0 0}.faqitem.open p{display:block}.footer{background:var(--navy);color:#fff;padding:55px 0 25px}.footerin{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}.footer .brand span{color:#8dd7ff}.footer .brand b{color:#ffd34d}.footer p{color:#b9cbe1;max-width:350px}.footlinks{display:flex;gap:20px;color:#d8e4f1;font-weight:700}.copy{border-top:1px solid rgba(255,255,255,.12);margin-top:35px;padding-top:20px;color:#9eb4cd;font-size:13px}@media(max-width:850px){.links{display:none}.hero-grid,.split{grid-template-columns:1fr;gap:35px}.hero{padding-top:55px}.hero h1{font-size:52px}.feature-grid{grid-template-columns:1fr 1fr}.plans{grid-template-columns:1fr}.phone{transform:none}}@media(max-width:560px){section{padding:65px 0}.feature-grid{grid-template-columns:1fr}.hero h1{font-size:44px;letter-spacing:-1px}.section-head h2,.copy h2{font-size:35px}.navcta{display:none}.phone{width:300px}.screen{min-height:560px}}
+`;
 
 export default function Home() {
+  useEffect(() => {
+    const items = document.querySelectorAll(".faqitem");
+    const handlers: Array<() => void> = [];
+    items.forEach((item) => {
+      const handler = () => item.classList.toggle("open");
+      item.addEventListener("click", handler);
+      handlers.push(() => item.removeEventListener("click", handler));
+    });
+    return () => handlers.forEach((off) => off());
+  }, []);
+
   return (
-    <main>
-      <Nav />
-
-      {/* Hero */}
-      <section className="mx-auto grid max-w-7xl gap-12 px-6 py-10 lg:grid-cols-2 lg:items-center">
-        <div>
-          <span className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-4 py-1.5 text-sm font-medium text-amber-700">
-            ⭐ Learn. Play. Grow. With Islamic Values.
-          </span>
-          <h1 className="mt-6 text-5xl font-extrabold leading-[1.1] text-ink sm:text-6xl">
-            A Fun World
-            <br />
-            of Islamic Learning
-            <br />
-            for <span className="text-primary">Kids</span>
-          </h1>
-          <p className="mt-6 max-w-md text-base text-inkMuted">
-            Muslim Kids World makes learning about Islam exciting and
-            meaningful through games, quizzes, stories, and daily challenges.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a
-              href="#download"
-              className="flex items-center gap-2 rounded-xl bg-primary px-6 py-3.5 font-semibold text-white shadow-lg transition hover:bg-primaryDark"
-            >
-              📱 Download for iOS
-            </a>
-            <a
-              href="#download"
-              className="flex items-center gap-2 rounded-xl border border-border bg-white px-6 py-3.5 font-semibold text-ink shadow-sm transition hover:border-primary"
-            >
-              ▶ Download for Android
-            </a>
-          </div>
-          <p className="mt-5 flex items-center gap-2 text-sm text-inkMuted">
-            🛡️ Parent approved.{" "}
-            <a href="#parents" className="font-medium text-primary underline">
-              Kid safe.
-            </a>
-          </p>
-        </div>
-
-        <div className="relative flex items-center justify-center">
-          <div className="flex h-80 w-full max-w-md items-center justify-center rounded-[40px] bg-gradient-to-br from-sky-100 via-blue-50 to-emerald-100 text-8xl shadow-inner sm:h-96">
-            🕌
-          </div>
-          <div className="absolute left-0 top-6 rounded-2xl bg-white px-4 py-3 shadow-lg">
-            <p className="text-xs font-semibold text-inkMuted">🔥 Daily Challenge</p>
-            <p className="text-sm font-bold text-ink">7 Day Streak</p>
-          </div>
-          <div className="absolute right-0 top-16 rounded-2xl bg-white px-4 py-3 shadow-lg">
-            <p className="text-xs font-semibold text-inkMuted">⏰ Learning Time</p>
-            <p className="text-sm font-bold text-ink">42 min</p>
-          </div>
-          <div className="absolute bottom-10 left-2 rounded-2xl bg-white px-4 py-3 shadow-lg">
-            <p className="text-xs font-semibold text-inkMuted">⭐ Total XP</p>
-            <p className="text-sm font-bold text-ink">850</p>
-          </div>
-          <div className="absolute bottom-0 right-2 rounded-2xl bg-white px-4 py-3 shadow-lg">
-            <p className="text-xs font-semibold text-inkMuted">👑 Level</p>
-            <p className="text-sm font-bold text-ink">12</p>
-          </div>
-        </div>
-      </section>
-
-      {/* What Kids Will Love */}
-      <section id="features" className="mx-auto max-w-7xl px-6 py-16">
-        <h2 className="text-center text-2xl font-extrabold text-ink sm:text-3xl">
-          ✦ What <span className="text-primary">Kids</span> Will Love ✦
-        </h2>
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
-          {loveFeatures.map((f) => (
-            <div
-              key={f.title}
-              className="rounded-2xl border border-border bg-white p-6 text-center shadow-sm"
-            >
-              <div className="mx-auto">
-                <IconBadge icon={f.icon} tone={f.tone} size={56} />
-              </div>
-              <h3 className="mt-4 font-bold text-ink">{f.title}</h3>
-              <p className="mt-2 text-sm text-inkMuted">{f.body}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* For Parents + stats */}
-      <section id="parents" className="mx-auto max-w-7xl px-6 pb-16">
-        <div className="grid gap-5 lg:grid-cols-[1.1fr_2fr]">
-          <div className="flex items-center gap-4 rounded-2xl bg-violet-50 p-6">
-            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-white text-3xl shadow-sm">
-              👨‍👦
-            </div>
-            <div>
-              <h3 className="font-extrabold text-ink">For Parents</h3>
-              <p className="mt-1 text-sm text-inkMuted">
-                Track progress, set goals and support your child&apos;s
-                learning journey.
-              </p>
-              <a href="#parents" className="mt-2 inline-block text-sm font-semibold text-primary">
-                Learn more →
-              </a>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-5 sm:grid-cols-4">
-            {stats.map((s) => (
-              <div
-                key={s.label}
-                className="flex flex-col items-center justify-center gap-2 rounded-2xl border border-border bg-white p-6 text-center shadow-sm"
-              >
-                <IconBadge icon={s.icon} tone={s.tone} size={44} />
-                <span className="text-2xl font-extrabold text-ink">{s.value}</span>
-                <span className="text-xs text-inkMuted">{s.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Trust bar */}
-      <section id="download" className="border-t border-border bg-white py-10">
-        <p className="text-center text-sm text-inkMuted">
-          Trusted by parents and loved by kids
-        </p>
-        <div className="mx-auto mt-5 flex max-w-4xl flex-wrap items-center justify-center gap-x-10 gap-y-3 px-6 text-sm font-medium text-inkMuted">
-          {trustBadges.map((b) => (
-            <span key={b}>{b}</span>
-          ))}
-        </div>
-      </section>
-
-      <footer className="border-t border-border py-8 text-center text-sm text-inkMuted">
-        <p>
-          © {new Date().getFullYear()} Muslim Kids World. All rights
-          reserved. ·{" "}
-          <Link href="/admin" className="underline">
-            Admin
-          </Link>
-        </p>
-      </footer>
-    </main>
+    <>
+      <style dangerouslySetInnerHTML={{ __html: pageCss }} />
+      <div dangerouslySetInnerHTML={{ __html: `<nav class="nav"><div class="container navin"><a class="brand" href="#top"><img src="/app-icon.png" alt="Muslim Kids World"><div>Muslim Kids <span>World</span></div></a><div class="links"><a href="#features">Features</a><a href="#parents">For Parents</a><a href="#kids">For Kids</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a></div><a class="navcta" href="#download">Download App</a></div></nav>
+<main id="top">
+<section class="hero"><div class="container hero-grid"><div><div class="eyebrow"><i class="dot"></i> A safe space for little Muslims</div><h1>Learn Islam.<br><em>Play.</em> <strong>Grow.</strong> 🌙</h1><p>Muslim Kids World makes Islamic learning joyful, simple and age-appropriate — with stories, Quran, duas, games and challenges children love.</p><div class="actions" id="download"><a class="store" href="#"><span></span><div><small>COMING SOON ON</small><b>App Store</b></div></a><a class="store alt" href="#"><span>▶</span><div><small>COMING SOON ON</small><b>Google Play</b></div></a></div><div class="hero-note">One app for the whole family • Parent-controlled • No ads for kids</div></div><div class="phone-wrap"><div class="phone"><div class="screen"><div class="screen-top"><div class="moon">☾</div><div>Assalamu Alaikum 👋</div><h3>Aisha's World</h3><p>Let's learn something new today!</p></div><div class="progress"><b>Your Progress <span style="float:right">72%</span></b><div class="bar"><i></i></div></div><div class="tiles"><div class="tile q"><span>📖</span>Quran</div><div class="tile d"><span>🤲</span>Duas</div><div class="tile s"><span>📚</span>Stories</div><div class="tile g"><span>🎮</span>Games</div></div></div></div></div></div></section>
+<div class="trust"><div class="container trustin"><span>🛡️ <b>Safe</b> content</span><span>🔒 <b>Parent</b> controls</span><span>💚 Built for <b>families</b></span><span>⭐ Learning through <b>play</b></span></div></div>
+<section class="features" id="features"><div class="container"><div class="section-head"><div class="tag">Everything in one place</div><h2>Faith learning that feels like play</h2><p>Short activities, beautiful stories and rewarding challenges help children build positive Islamic habits every day.</p></div><div class="feature-grid"><article class="card"><div class="icon" style="background:#d9f8e7">📖</div><h3>Quran</h3><p>Explore short surahs with child-friendly lessons and progress tracking.</p></article><article class="card"><div class="icon" style="background:#eee9ff">🤲</div><h3>Duas</h3><p>Learn daily duas through simple repetition, audio and playful practice.</p></article><article class="card"><div class="icon" style="background:#fff0ce">📚</div><h3>Islamic Stories</h3><p>Discover inspiring stories of prophets and important moments in Islamic history.</p></article><article class="card"><div class="icon" style="background:#dff3ff">🎮</div><h3>Games</h3><p>Memory games, word puzzles and mini challenges turn learning into fun.</p></article><article class="card"><div class="icon" style="background:#ffe2ec">❓</div><h3>Quiz</h3><p>Friendly quizzes help children remember what they learned and earn stars.</p></article><article class="card"><div class="icon" style="background:#fff2bd">🏆</div><h3>Achievements</h3><p>Collect stars, badges and milestones as your child's confidence grows.</p></article></div></div></section>
+<section class="parent" id="parents"><div class="container split"><div class="copy"><div class="tag">For parents</div><h2>You guide. They discover.</h2><p>One app, two experiences. Parents get the tools they need to manage learning, while children get a simple, joyful space made just for them.</p><div class="checks"><div class="check"><i>✓</i> Premium family access</div><div class="check"><i>✓</i> Connect children with a 6-digit Family Code</div><div class="check"><i>✓</i> Track learning progress for each child</div><div class="check"><i>✓</i> Parent Mode protected with PIN or biometrics</div></div><a class="navcta" href="#pricing" style="display:inline-block">See Premium plans</a></div><div class="code-card"><div class="mini">YOUR FAMILY CODE</div><div class="code">583 214</div><div class="code-line"></div><p style="color:#6b84a1;line-height:1.55"><b style="color:var(--navy)">Share this code with your child.</b><br>They enter it in Child Mode to connect to your family. Subscription and payment details stay hidden from children.</p><div style="display:flex;gap:8px;margin-top:18px"><span style="background:#e9f8ff;padding:9px 12px;border-radius:12px;font-weight:800">🔐 Parent-only</span><span style="background:#e9f8ff;padding:9px 12px;border-radius:12px;font-weight:800">👨‍👩‍👧 Family</span></div></div></div></section>
+<section class="kids" id="kids"><div class="container split"><div class="visual"><div><div class="character">🧒🏻</div><div class="speech">“I’m ready for today’s challenge! ⭐”</div></div></div><div class="copy"><div class="tag">For kids</div><h2>A world made for little learners.</h2><p>Children choose <b>Child Mode</b>, enter the family code once, and jump straight into their learning journey. No prices. No payment screens. No subscription distractions.</p><div class="checks"><div class="check"><i>✓</i> Bright, simple child-first interface</div><div class="check"><i>✓</i> Daily challenges and rewards</div><div class="check"><i>✓</i> Progress without pressure</div></div></div></div></section>
+<section class="pricing" id="pricing"><div class="container"><div class="section-head"><div class="tag">Simple family pricing</div><h2>One subscription. More family learning.</h2><p>Start free, then unlock the full experience when your family is ready.</p></div><div class="plans"><article class="plan"><h3>Free</h3><div class="price">$0 <small>forever</small></div><ul><li>Core learning activities</li><li>Limited daily content</li><li>1 child profile</li><li>Basic progress</li></ul><button>Start Free</button></article><article class="plan featured"><div class="popular">BEST FOR FAMILIES</div><h3>Premium Family</h3><div class="price">$4.99 <small>/ month</small></div><ul><li>All Quran, Duas & Stories</li><li>All games, quizzes & badges</li><li>Up to 3 child profiles</li><li>Detailed parent progress</li><li>Family Code connection</li></ul><button>Get Premium</button></article></div></div></section>
+<section class="faq" id="faq"><div class="container"><div class="section-head"><div class="tag">Questions</div><h2>Parents ask. We answer.</h2></div><div class="faqs"><div class="faqitem"><strong>Is this one app for parents and children? <span>+</span></strong><p>Yes. At startup, the user chooses Parent or Child. Each mode has a different experience inside the same app.</p></div><div class="faqitem"><strong>How does the 6-digit Family Code work? <span>+</span></strong><p>A Premium parent receives a Family Code and shares it with their child. The child enters the code to connect their profile to the family.</p></div><div class="faqitem"><strong>Can children see subscription or payment details? <span>+</span></strong><p>No. Child Mode does not show pricing, payment methods, subscription status, or purchase screens.</p></div><div class="faqitem"><strong>Can I add more than one child? <span>+</span></strong><p>Yes. Premium Family is designed for multiple children, with progress managed separately for each child.</p></div></div></div></section>
+</main>
+<footer class="footer"><div class="container footerin"><div><a class="brand" href="#top"><img src="/app-icon.png" alt=""><div>Muslim Kids <span>World</span></div></a><p>Learn • Play • Grow — a joyful Islamic learning world for children and peace of mind for parents.</p></div><div class="footlinks"><a href="#features">Features</a><a href="#parents">Parents</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a></div></div><div class="container copy">© 2026 Muslim Kids World. Made for little learners and their families. 🌙 · <a href="/admin" style="color:inherit;text-decoration:underline">Admin</a></div></footer>` }} />
+    </>
   );
 }
