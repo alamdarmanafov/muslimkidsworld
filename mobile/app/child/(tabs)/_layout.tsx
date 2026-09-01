@@ -1,9 +1,9 @@
 import { Tabs } from "expo-router";
-import { Text } from "react-native";
+import { Icon, type IconName } from "../../../src/components/icons";
 import { colors } from "../../../src/theme/theme";
 
-function TabIcon({ emoji, focused }: { emoji: string; focused: boolean }) {
-  return <Text style={{ fontSize: 20, opacity: focused ? 1 : 0.45 }}>{emoji}</Text>;
+function TabIcon({ name, focused }: { name: IconName; focused: boolean }) {
+  return <Icon name={name} size={22} color={focused ? colors.primary : colors.inkMuted} />;
 }
 
 export default function ChildTabsLayout() {
@@ -19,35 +19,35 @@ export default function ChildTabsLayout() {
         name="index"
         options={{
           title: "Home",
-          tabBarIcon: ({ focused }) => <TabIcon emoji="🏠" focused={focused} />,
+          tabBarIcon: ({ focused }) => <TabIcon name="home" focused={focused} />,
         }}
       />
       <Tabs.Screen
         name="learn"
         options={{
           title: "Learn",
-          tabBarIcon: ({ focused }) => <TabIcon emoji="📖" focused={focused} />,
+          tabBarIcon: ({ focused }) => <TabIcon name="book" focused={focused} />,
         }}
       />
       <Tabs.Screen
         name="world"
         options={{
           title: "World",
-          tabBarIcon: ({ focused }) => <TabIcon emoji="🌍" focused={focused} />,
+          tabBarIcon: ({ focused }) => <TabIcon name="globe" focused={focused} />,
         }}
       />
       <Tabs.Screen
         name="rewards"
         options={{
           title: "Rewards",
-          tabBarIcon: ({ focused }) => <TabIcon emoji="🎁" focused={focused} />,
+          tabBarIcon: ({ focused }) => <TabIcon name="gift" focused={focused} />,
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
           title: "Profile",
-          tabBarIcon: ({ focused }) => <TabIcon emoji="👤" focused={focused} />,
+          tabBarIcon: ({ focused }) => <TabIcon name="smile" focused={focused} />,
         }}
       />
     </Tabs>

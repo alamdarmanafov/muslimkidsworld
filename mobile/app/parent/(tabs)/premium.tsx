@@ -16,7 +16,7 @@ export default function Premium() {
   return (
     <SafeAreaView style={styles.screen} edges={["top"]}>
       <ScrollView contentContainerStyle={styles.content}>
-        <IconBadge emoji="👑" tone={tones.gold} size={72} shape="circle" />
+        <IconBadge icon="crown" tone={tones.gold} size={72} shape="circle" />
         <Text style={styles.title}>Go Premium</Text>
         <Text style={styles.subtitle}>
           Unlock the complete experience for your children.

@@ -8,10 +8,10 @@ import { children } from "../../../src/data/mock";
 import { colors, spacing } from "../../../src/theme/theme";
 
 const weekStats = [
-  { emoji: "📚", tone: tones.blue, label: "Lessons", value: 4 },
-  { emoji: "🧠", tone: tones.pink, label: "Questions", value: 70 },
-  { emoji: "⏱", tone: tones.teal, label: "Time", value: "42 min" },
-  { emoji: "🎁", tone: tones.gold, label: "Rewards", value: 3 },
+  { icon: "book" as const, tone: tones.blue, label: "Lessons", value: 4 },
+  { icon: "quiz" as const, tone: tones.pink, label: "Questions", value: 70 },
+  { icon: "clock" as const, tone: tones.teal, label: "Time", value: "42 min" },
+  { icon: "gift" as const, tone: tones.gold, label: "Rewards", value: 3 },
 ];
 
 export default function ParentHome() {
@@ -55,7 +55,7 @@ export default function ParentHome() {
         <View style={styles.statsGrid}>
           {weekStats.map((s) => (
             <Card key={s.label} style={styles.statCard}>
-              <IconBadge emoji={s.emoji} tone={s.tone} size={40} />
+              <IconBadge icon={s.icon} tone={s.tone} size={40} />
               <Text style={styles.statValue}>{s.value}</Text>
               <Text style={styles.statLabel}>{s.label}</Text>
             </Card>

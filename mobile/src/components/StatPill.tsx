@@ -1,21 +1,22 @@
 import { StyleSheet, Text, View } from "react-native";
 import { colors, radii, spacing } from "../theme/theme";
 import { IconBadge, IconBadgeTone } from "./IconBadge";
+import type { IconName } from "./icons";
 
 export function StatPill({
-  emoji,
+  icon,
   tone,
   label,
   value,
 }: {
-  emoji: string;
+  icon: IconName;
   tone: IconBadgeTone;
   label: string;
   value: string | number;
 }) {
   return (
     <View style={styles.pill}>
-      <IconBadge emoji={emoji} tone={tone} size={36} shape="circle" />
+      <IconBadge icon={icon} tone={tone} size={36} shape="circle" />
       <Text style={styles.label}>{label}</Text>
       <Text style={styles.value}>{value}</Text>
     </View>

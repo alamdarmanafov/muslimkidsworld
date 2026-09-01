@@ -98,36 +98,37 @@ export const dailyTen: QuizQuestion[] = [
 ];
 
 import { IconBadgeTone, tones } from "../components/IconBadge";
+import type { IconName } from "../components/icons";
 
 export type WorldLocation = {
   id: string;
   name: string;
-  emoji: string;
+  icon: IconName;
   tone: IconBadgeTone;
   unlockLevel: number;
 };
 
 export const worldLocations: WorldLocation[] = [
-  { id: "home", name: "My Home", emoji: "🏠", tone: tones.brown, unlockLevel: 1 },
-  { id: "mosque", name: "Mosque", emoji: "🕌", tone: tones.gold, unlockLevel: 5 },
+  { id: "home", name: "My Home", icon: "home", tone: tones.brown, unlockLevel: 1 },
+  { id: "mosque", name: "Mosque", icon: "mosque", tone: tones.gold, unlockLevel: 5 },
   {
     id: "knowledge",
     name: "Knowledge Center",
-    emoji: "📚",
+    icon: "book",
     tone: tones.blue,
     unlockLevel: 8,
   },
   {
     id: "garden",
     name: "Good Deeds Garden",
-    emoji: "🌳",
+    icon: "tree",
     tone: tones.green,
     unlockLevel: 1,
   },
   {
     id: "ramadan",
     name: "Ramadan Village",
-    emoji: "🌙",
+    icon: "moon",
     tone: tones.indigo,
     unlockLevel: 15,
   },
@@ -136,7 +137,7 @@ export const worldLocations: WorldLocation[] = [
 export type Reward = {
   id: string;
   name: string;
-  emoji: string;
+  icon: IconName;
   tone: IconBadgeTone;
   unlockLevel: number;
 };
@@ -144,7 +145,7 @@ export type Reward = {
 export const latestReward: Reward = {
   id: "blue-cap",
   name: "Blue Cap",
-  emoji: "🧢",
+  icon: "gift",
   tone: tones.blue,
   unlockLevel: 12,
 };

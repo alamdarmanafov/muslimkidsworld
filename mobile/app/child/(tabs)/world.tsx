@@ -21,7 +21,7 @@ export default function World() {
           return (
             <Card key={loc.id} style={styles.locationCard}>
               <View style={locked && styles.dim}>
-                <IconBadge emoji={loc.emoji} tone={loc.tone} size={64} shape="circle" />
+                <IconBadge icon={loc.icon} tone={loc.tone} size={64} shape="circle" />
               </View>
               <Text style={[styles.name, locked && styles.dim]}>{loc.name}</Text>
               {locked ? (

@@ -50,7 +50,7 @@ export default function Quiz() {
           <Text style={styles.rewardTitle}>New Reward{"\n"}Unlocked!</Text>
           <View style={styles.rewardImageWrap}>
             <IconBadge
-              emoji={latestReward.emoji}
+              icon={latestReward.icon}
               tone={latestReward.tone}
               size={112}
               shape="circle"
