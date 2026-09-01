@@ -29,7 +29,8 @@ export type IconName =
   | "skipBack"
   | "skipForward"
   | "trophy"
-  | "puzzle";
+  | "puzzle"
+  | "check";
 
 const paths: Record<IconName, string> = {
   quiz: "M12 2.5A9.5 9.5 0 1 0 21.5 12 9.5 9.5 0 0 0 12 2.5Zm0 14.2a1.2 1.2 0 1 1 1.2-1.2A1.2 1.2 0 0 1 12 16.7Zm1.4-5.1c-.7.5-.9.8-.9 1.5h-1c0-1.1.4-1.7 1.3-2.3.6-.4.9-.7.9-1.3a1.7 1.7 0 0 0-3.4-.1H9.3a2.7 2.7 0 0 1 5.4.1c0 1-.5 1.6-1.3 2.1Z",
@@ -60,6 +61,7 @@ const paths: Record<IconName, string> = {
   skipForward: "M18 5v14h2V5Z M4 6l11 6L4 18Z",
   trophy: "M7 3h10l-.6 6a4.4 4.4 0 0 1-8.8 0Z M11 12.2h2V17h-2Z M8 18h8v2H8Z",
   puzzle: "M9 3h4v2.4a2 2 0 1 1 0 3.9V11h4a2 2 0 0 1 2 2v3.7a2 2 0 1 0 0 3.9V21H15a2 2 0 1 0-4 0H9v-4h2.2a2 2 0 1 0 0-4H9v-4H5a2 2 0 0 1-2-2V5h3.8a2 2 0 1 1 4 0H9Z",
+  check: "M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4Z",
 };
 
 export function Icon({

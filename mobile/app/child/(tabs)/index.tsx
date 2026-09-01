@@ -2,10 +2,15 @@ import { router } from "expo-router";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon, type IconName } from "../../../src/components/icons";
-import { activeChild } from "../../../src/data/mock";
+import {
+  activeChild,
+  dailyGoalMinutes,
+  dailyJourney,
+  dailyMinutesDone,
+} from "../../../src/data/mock";
 import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
 
-const learnTiles: { label: string; icon: IconName; bg: string; href: string }[] = [
+const exploreTiles: { label: string; icon: IconName; bg: string; href: string }[] = [
   { label: "Quran", icon: "book", bg: colors.successDark, href: "/child/quran" },
   { label: "Dua", icon: "heart", bg: colors.purple, href: "/child/dua" },
   { label: "Stories", icon: "star", bg: colors.fire, href: "/child/stories" },
@@ -13,9 +18,18 @@ const learnTiles: { label: string; icon: IconName; bg: string; href: string }[] 
   { label: "Quiz", icon: "quiz", bg: colors.pink, href: "/child/quiz" },
 ];
 
-const weeklyProgress = 72;
+function gardenStage(percent: number) {
+  if (percent >= 100) return { label: "Your garden is in full bloom!", tone: colors.successDark };
+  if (percent >= 60) return { label: "Your garden is blooming!", tone: colors.success };
+  if (percent >= 25) return { label: "Your garden is growing!", tone: "#8FD19E" };
+  return { label: "Your garden just sprouted!", tone: "#B7E4C7" };
+}
 
 export default function ChildHome() {
+  const progress = Math.round((dailyMinutesDone / dailyGoalMinutes) * 100);
+  const complete = dailyMinutesDone >= dailyGoalMinutes;
+  const garden = gardenStage(progress);
+
   return (
     <SafeAreaView style={styles.screen} edges={["top"]}>
       <ScrollView contentContainerStyle={styles.content}>
@@ -32,20 +46,59 @@ export default function ChildHome() {
 
         <View style={styles.heroCard}>
           <Icon name="moon" size={22} color={colors.gold} style={styles.heroMoon} />
-          <Text style={styles.heroTitle}>Keep going!</Text>
-          <Text style={styles.heroSubtitle}>You're doing great, {activeChild.name}!</Text>
-          <View style={styles.heroProgressRow}>
-            <Text style={styles.heroProgressLabel}>Your Progress</Text>
-            <Text style={styles.heroProgressValue}>{weeklyProgress}%</Text>
-          </View>
+          {complete ? (
+            <>
+              <Text style={styles.heroTitle}>🎉 Today's Journey Complete!</Text>
+              <Text style={styles.heroSubtitle}>
+                Amazing job! Now go play, read or help your family. 💛
+              </Text>
+            </>
+          ) : (
+            <>
+              <Text style={styles.heroTitle}>Today's Journey</Text>
+              <Text style={styles.heroSubtitle}>
+                {dailyMinutesDone} of {dailyGoalMinutes} min done — keep going!
+              </Text>
+            </>
+          )}
           <View style={styles.progressTrack}>
-            <View style={[styles.progressFill, { width: `${weeklyProgress}%` }]} />
+            <View style={[styles.progressFill, { width: `${Math.min(progress, 100)}%` }]} />
+          </View>
+
+          <View style={styles.journeyList}>
+            {dailyJourney.map((item) => (
+              <Pressable
+                key={item.id}
+                style={styles.journeyRow}
+                onPress={() => router.push(item.href as never)}
+              >
+                <View style={[styles.journeyIconWrap, item.done && styles.journeyIconWrapDone]}>
+                  <Icon
+                    name={item.done ? "check" : item.icon}
+                    size={15}
+                    color={item.done ? colors.night : colors.onNight}
+                  />
+                </View>
+                <Text style={[styles.journeyLabel, item.done && styles.journeyLabelDone]}>
+                  {item.label}
+                </Text>
+                <Text style={styles.journeyMinutes}>{item.minutes} min</Text>
+              </Pressable>
+            ))}
           </View>
         </View>
 
-        <Text style={styles.sectionTitle}>Let's continue learning</Text>
+        <View style={[styles.gardenCard, { borderColor: garden.tone }]}>
+          <Icon name="tree" size={30} color={garden.tone} />
+          <View style={{ flex: 1 }}>
+            <Text style={styles.gardenTitle}>My Garden</Text>
+            <Text style={styles.gardenSubtitle}>{garden.label}</Text>
+          </View>
+        </View>
+
+        <Text style={styles.sectionTitle}>Explore</Text>
         <View style={styles.grid}>
-          {learnTiles.map((t) => (
+          {exploreTiles.map((t) => (
             <Pressable
               key={t.label}
               style={[styles.tile, { backgroundColor: t.bg }]}
@@ -86,22 +139,20 @@ const styles = StyleSheet.create({
     backgroundColor: colors.night,
     borderRadius: radii.lg,
     padding: spacing.lg,
-    marginBottom: spacing.lg,
+    marginBottom: spacing.md,
     overflow: "hidden",
     ...shadow,
   },
   heroMoon: { position: "absolute", top: spacing.md, right: spacing.md },
-  heroTitle: { fontFamily: fonts.heading, fontSize: 20, color: colors.onNight },
-  heroSubtitle: { fontFamily: fonts.body, fontSize: 13, color: colors.onNightMuted, marginTop: 2 },
-  heroProgressRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: spacing.lg,
-    marginBottom: spacing.xs,
+  heroTitle: { fontFamily: fonts.heading, fontSize: 18, color: colors.onNight },
+  heroSubtitle: {
+    fontFamily: fonts.body,
+    fontSize: 13,
+    color: colors.onNightMuted,
+    marginTop: 2,
+    marginBottom: spacing.md,
+    paddingRight: 30,
   },
-  heroProgressLabel: { fontFamily: fonts.body, fontSize: 12, color: colors.onNightMuted },
-  heroProgressValue: { fontFamily: fonts.bodyBold, fontSize: 13, color: colors.gold },
   progressTrack: {
     height: 8,
     borderRadius: 4,
@@ -109,6 +160,38 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   progressFill: { height: "100%", borderRadius: 4, backgroundColor: colors.success },
+  journeyList: { marginTop: spacing.md, gap: spacing.xs },
+  journeyRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.sm,
+    paddingVertical: spacing.xs,
+  },
+  journeyIconWrap: {
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    backgroundColor: "rgba(255,255,255,0.12)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  journeyIconWrapDone: { backgroundColor: colors.success },
+  journeyLabel: { flex: 1, fontFamily: fonts.bodyBold, fontSize: 13, color: colors.onNight },
+  journeyLabelDone: { color: colors.onNightMuted, textDecorationLine: "line-through" },
+  journeyMinutes: { fontFamily: fonts.body, fontSize: 12, color: colors.onNightMuted },
+  gardenCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.md,
+    backgroundColor: colors.card,
+    borderRadius: radii.lg,
+    borderWidth: 1.5,
+    padding: spacing.md,
+    marginBottom: spacing.lg,
+    ...shadow,
+  },
+  gardenTitle: { fontFamily: fonts.bodyBold, fontSize: 14, color: colors.ink },
+  gardenSubtitle: { fontFamily: fonts.body, fontSize: 12, color: colors.inkMuted, marginTop: 2 },
   sectionTitle: {
     fontFamily: fonts.heading,
     fontSize: 16,

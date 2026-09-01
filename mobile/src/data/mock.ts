@@ -293,6 +293,28 @@ export const achievements: Achievement[] = [
 
 export const childStats = { badges: 12, stars: 120, days: 15 };
 
+export type JourneyItem = {
+  id: string;
+  label: string;
+  icon: IconName;
+  minutes: number;
+  href: string;
+  done: boolean;
+};
+
+export const dailyJourney: JourneyItem[] = [
+  { id: "quran", label: "Quran", icon: "book", minutes: 15, href: "/child/quran", done: true },
+  { id: "dua", label: "Dua", icon: "heart", minutes: 10, href: "/child/dua", done: true },
+  { id: "story", label: "Story", icon: "star", minutes: 15, href: "/child/stories", done: false },
+  { id: "quiz", label: "Quiz", icon: "quiz", minutes: 10, href: "/child/quiz", done: false },
+  { id: "game", label: "Game", icon: "controller", minutes: 10, href: "/child/games", done: false },
+];
+
+export const dailyGoalMinutes = dailyJourney.reduce((sum, i) => sum + i.minutes, 0);
+export const dailyMinutesDone = dailyJourney
+  .filter((i) => i.done)
+  .reduce((sum, i) => sum + i.minutes, 0);
+
 export const familyCode = "583214";
 
 export const plans = [
