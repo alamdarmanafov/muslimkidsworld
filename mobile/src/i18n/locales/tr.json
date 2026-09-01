@@ -1,0 +1,138 @@
+{
+  "common": {
+    "continue": "Devam et",
+    "tryAgain": "Tekrar dene",
+    "cancel": "Vazgeç",
+    "save": "Kaydet",
+    "signOut": "Çıkış yap"
+  },
+  "welcome": {
+    "titleMuslim": "Muslim",
+    "titleKids": "Kids",
+    "titleWorld": "World",
+    "tagline": "Öğren · Oyna · Büyü",
+    "whoAreYou": "Sen kimsin?",
+    "imA": "Ben bir",
+    "parentTitle": "Veliyim",
+    "parentDesc": "Çocuğunun öğrenme yolculuğunu yönet",
+    "childTitle": "Çocuğum",
+    "childDesc": "Öğren, oyna ve harika şeyler keşfet",
+    "safeSpace": "Küçük Müslümanlar için güvenli bir alan",
+    "safeContent": "Güvenli içerik",
+    "parentControl": "Ebeveyn kontrolü",
+    "trustedByParents": "Ebeveynlerin güvendiği"
+  },
+  "childCode": {
+    "title": "Merhaba küçük kâşif! 🌟",
+    "subtitle": "6 haneli Aile Kodunu ebeveyninden iste.",
+    "checking": "Kontrol ediliyor…",
+    "continueArrow": "Devam et →",
+    "note": "Çocuk modunda abonelik veya ödeme bilgileri asla gösterilmez.",
+    "invalidOrExpired": "Bu kod eşleşmiyor veya süresi doldu. Tekrar dene.",
+    "alreadyLinked": "Bu kod zaten başka bir cihaza bağlı.",
+    "somethingWrong": "Bir şeyler ters gitti. Tekrar dene."
+  },
+  "parentAuth": {
+    "signInTitle": "Tekrar hoş geldin",
+    "signInSubtitle": "Çocuğunun öğrenmesini yönetmek için giriş yap.",
+    "signUpTitle": "Hesabını oluştur",
+    "signUpSubtitle": "Ailenin öğrenme yolculuğunu kur.",
+    "fullName": "Ad Soyad",
+    "email": "E-posta",
+    "password": "Şifre",
+    "confirmPassword": "Şifreyi onayla",
+    "signIn": "Giriş yap",
+    "createAccount": "Hesap oluştur",
+    "pleaseWait": "Lütfen bekleyin…",
+    "alreadyHaveAccount": "Zaten hesabın var mı? ",
+    "newHere": "Yeni misin? ",
+    "comingSoon": "yakında",
+    "continueWithApple": " Apple ile devam et",
+    "continueWithGoogle": "G  Google ile devam et",
+    "checkEmail": "Hesabını onaylamak için e-postanı kontrol et, ardından giriş yap.",
+    "somethingWrong": "Bir şeyler ters gitti. Tekrar dene."
+  },
+  "childHome": {
+    "greeting": "Assalamu Alaikum,",
+    "todaysJourney": "Bugünün Yolculuğu",
+    "journeyComplete": "🎉 Bugünün Yolculuğu Tamamlandı!",
+    "journeyCompleteBody": "Harika iş! Şimdi oyna, oku ya da ailene yardım et. 💛",
+    "almostThere": "🌙 Neredeyse bitti!",
+    "minutesLeft_one": "Bugünün yolculuğunda {{count}} dakikan kaldı.",
+    "minutesLeft_other": "Bugünün yolculuğunda {{count}} dakikan kaldı.",
+    "progressStatus": "{{goal}} dakikadan {{done}} tamamlandı — devam et!",
+    "letsContinueLearning": "Öğrenmeye devam edelim",
+    "explore": "Keşfet",
+    "quran": "Kur'an",
+    "dua": "Dua",
+    "stories": "Hikayeler",
+    "games": "Oyunlar",
+    "quiz": "Test",
+    "story": "Hikaye",
+    "game": "Oyun",
+    "gardenTitle": "Bahçem",
+    "gardenFullBloom": "Bahçen tamamen çiçek açtı!",
+    "gardenBlooming": "Bahçen çiçek açıyor!",
+    "gardenGrowing": "Bahçen büyüyor!",
+    "gardenSprouted": "Bahçen yeni filizlendi!"
+  },
+  "parentHome": {
+    "goodEvening": "İyi akşamlar,",
+    "connectChild": "ÇOCUK BAĞLA",
+    "tapForCode": "Aile Kodu almak için dokun",
+    "myChildren": "Çocuklarım",
+    "viewAll": "Tümünü gör",
+    "thisWeek": "Bu hafta",
+    "viewReport": "Raporu gör",
+    "managePremium": "Premium Aileyi yönet",
+    "parentTools": "Ebeveyn araçları",
+    "learningProgress": "Öğrenme ilerlemesi",
+    "manageChildren": "Çocukları yönet",
+    "dailyLimit": "Günlük sınır",
+    "parentPinSafety": "Ebeveyn PIN'i ve güvenlik",
+    "settings": "Ayarlar",
+    "lessons": "Dersler",
+    "questions": "Sorular",
+    "time": "Süre",
+    "rewardsLabel": "Ödüller",
+    "level": "Seviye"
+  },
+  "familyCode": {
+    "title": "Çocuk bağla",
+    "subtitle": "Çocuğunun cihazında Muslim Kids World'ü aç, \"Ben çocuğum\"u seç ve bu kodu gir.",
+    "newCodeIn": "Yeni kod {{seconds}} sn sonra",
+    "couldNotGetCode": "Kod alınamadı. Bağlantını kontrol et.",
+    "tryAgain": "Tekrar dene"
+  },
+  "parentPin": {
+    "title": "Ebeveyn PIN'ini gir",
+    "subtitle": "Bir ebeveynden 4 haneli PIN'i girmesini iste.",
+    "wrongPin": "Yanlış PIN, tekrar dene."
+  },
+  "dailyLimit": {
+    "title": "Günlük öğrenme sınırı",
+    "subtitle": "Çocuğun bu dakikaya ulaştığında bugünün yolculuğu tamamlanmış sayılır ve uygulama daha fazla içerik göstermez.",
+    "custom": "Özel",
+    "customPlaceholder": "örn. 40",
+    "minUnit": "dk"
+  },
+  "childProfile": {
+    "parentMode": "Ebeveyn Modu",
+    "levelAge": "Seviye {{level}} · {{age}} yaşında"
+  },
+  "parentProfile": {
+    "account": "Hesap",
+    "accountSubtitle": "Cihazlar, bildirimler ve Ebeveyn Kapısı burada olacak.",
+    "language": "Dil",
+    "signOutConfirmTitle": "Çıkış yapılsın mı?",
+    "signOutConfirmBody": "Aileni yönetmek için tekrar giriş yapman gerekecek."
+  },
+  "tabs": {
+    "home": "Ana Sayfa",
+    "progress": "İlerleme",
+    "rewards": "Ödüller",
+    "profile": "Profil",
+    "children": "Çocuklar",
+    "premium": "Premium"
+  }
+}

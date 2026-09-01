@@ -1,4 +1,5 @@
 import { router } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon, type IconName } from "../../../src/components/icons";
@@ -10,35 +11,44 @@ import {
 } from "../../../src/data/mock";
 import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
 
-const exploreTiles: { label: string; icon: IconName; bg: string; href: string }[] = [
-  { label: "Quran", icon: "book", bg: colors.successDark, href: "/child/quran" },
-  { label: "Dua", icon: "heart", bg: colors.purple, href: "/child/dua" },
-  { label: "Stories", icon: "star", bg: colors.fire, href: "/child/stories" },
-  { label: "Games", icon: "controller", bg: colors.primary, href: "/child/games" },
-  { label: "Quiz", icon: "quiz", bg: colors.pink, href: "/child/quiz" },
+const exploreTiles: { labelKey: string; icon: IconName; bg: string; href: string }[] = [
+  { labelKey: "childHome.quran", icon: "book", bg: colors.successDark, href: "/child/quran" },
+  { labelKey: "childHome.dua", icon: "heart", bg: colors.purple, href: "/child/dua" },
+  { labelKey: "childHome.stories", icon: "star", bg: colors.fire, href: "/child/stories" },
+  { labelKey: "childHome.games", icon: "controller", bg: colors.primary, href: "/child/games" },
+  { labelKey: "childHome.quiz", icon: "quiz", bg: colors.pink, href: "/child/quiz" },
 ];
 
-function gardenStage(percent: number) {
-  if (percent >= 100) return { label: "Your garden is in full bloom!", tone: colors.successDark };
-  if (percent >= 60) return { label: "Your garden is blooming!", tone: colors.success };
-  if (percent >= 25) return { label: "Your garden is growing!", tone: "#8FD19E" };
-  return { label: "Your garden just sprouted!", tone: "#B7E4C7" };
+const journeyLabelKeys: Record<string, string> = {
+  quran: "childHome.quran",
+  dua: "childHome.dua",
+  story: "childHome.story",
+  quiz: "childHome.quiz",
+  game: "childHome.game",
+};
+
+function gardenStageKey(percent: number) {
+  if (percent >= 100) return { key: "childHome.gardenFullBloom", tone: colors.successDark };
+  if (percent >= 60) return { key: "childHome.gardenBlooming", tone: colors.success };
+  if (percent >= 25) return { key: "childHome.gardenGrowing", tone: "#8FD19E" };
+  return { key: "childHome.gardenSprouted", tone: "#B7E4C7" };
 }
 
 export default function ChildHome() {
+  const { t } = useTranslation();
   const dailyGoalMinutes = getDailyLimitMinutes();
   const remaining = Math.max(dailyGoalMinutes - dailyMinutesDone, 0);
   const progress = Math.round((dailyMinutesDone / dailyGoalMinutes) * 100);
   const complete = dailyMinutesDone >= dailyGoalMinutes;
   const almostThere = !complete && remaining <= 5;
-  const garden = gardenStage(progress);
+  const garden = gardenStageKey(progress);
 
   return (
     <SafeAreaView style={styles.screen} edges={["top"]}>
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.header}>
           <View>
-            <Text style={styles.greeting}>Assalamu Alaikum,</Text>
+            <Text style={styles.greeting}>{t("childHome.greeting")}</Text>
             <Text style={styles.name}>{activeChild.name}! 👋</Text>
           </View>
           <View style={styles.starPill}>
@@ -51,23 +61,21 @@ export default function ChildHome() {
           <Icon name="moon" size={22} color={colors.gold} style={styles.heroMoon} />
           {complete ? (
             <>
-              <Text style={styles.heroTitle}>🎉 Today's Journey Complete!</Text>
-              <Text style={styles.heroSubtitle}>
-                Amazing job! Now go play, read or help your family. 💛
-              </Text>
+              <Text style={styles.heroTitle}>{t("childHome.journeyComplete")}</Text>
+              <Text style={styles.heroSubtitle}>{t("childHome.journeyCompleteBody")}</Text>
             </>
           ) : almostThere ? (
             <>
-              <Text style={styles.heroTitle}>🌙 Almost there!</Text>
+              <Text style={styles.heroTitle}>{t("childHome.almostThere")}</Text>
               <Text style={styles.heroSubtitle}>
-                You have {remaining} minute{remaining === 1 ? "" : "s"} left in today's journey.
+                {t("childHome.minutesLeft", { count: remaining })}
               </Text>
             </>
           ) : (
             <>
-              <Text style={styles.heroTitle}>Today's Journey</Text>
+              <Text style={styles.heroTitle}>{t("childHome.todaysJourney")}</Text>
               <Text style={styles.heroSubtitle}>
-                {dailyMinutesDone} of {dailyGoalMinutes} min done — keep going!
+                {t("childHome.progressStatus", { done: dailyMinutesDone, goal: dailyGoalMinutes })}
               </Text>
             </>
           )}
@@ -90,7 +98,7 @@ export default function ChildHome() {
                   />
                 </View>
                 <Text style={[styles.journeyLabel, item.done && styles.journeyLabelDone]}>
-                  {item.label}
+                  {t(journeyLabelKeys[item.id] ?? item.label)}
                 </Text>
                 <Text style={styles.journeyMinutes}>{item.minutes} min</Text>
               </Pressable>
@@ -101,21 +109,21 @@ export default function ChildHome() {
         <View style={[styles.gardenCard, { borderColor: garden.tone }]}>
           <Icon name="tree" size={30} color={garden.tone} />
           <View style={{ flex: 1 }}>
-            <Text style={styles.gardenTitle}>My Garden</Text>
-            <Text style={styles.gardenSubtitle}>{garden.label}</Text>
+            <Text style={styles.gardenTitle}>{t("childHome.gardenTitle")}</Text>
+            <Text style={styles.gardenSubtitle}>{t(garden.key)}</Text>
           </View>
         </View>
 
-        <Text style={styles.sectionTitle}>Explore</Text>
+        <Text style={styles.sectionTitle}>{t("childHome.explore")}</Text>
         <View style={styles.grid}>
-          {exploreTiles.map((t) => (
+          {exploreTiles.map((tile) => (
             <Pressable
-              key={t.label}
-              style={[styles.tile, { backgroundColor: t.bg }]}
-              onPress={() => router.push(t.href as never)}
+              key={tile.labelKey}
+              style={[styles.tile, { backgroundColor: tile.bg }]}
+              onPress={() => router.push(tile.href as never)}
             >
-              <Icon name={t.icon} size={34} color="#FFFFFF" />
-              <Text style={styles.tileLabel}>{t.label}</Text>
+              <Icon name={tile.icon} size={34} color="#FFFFFF" />
+              <Text style={styles.tileLabel}>{t(tile.labelKey)}</Text>
             </Pressable>
           ))}
         </View>

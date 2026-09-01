@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Stack } from "expo-router";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
@@ -8,6 +9,7 @@ import {
   Nunito_700Bold,
   Nunito_800ExtraBold,
 } from "@expo-google-fonts/nunito";
+import { initI18n } from "../src/i18n";
 import { colors } from "../src/theme/theme";
 
 export default function RootLayout() {
@@ -16,8 +18,13 @@ export default function RootLayout() {
     Nunito_700Bold,
     Nunito_800ExtraBold,
   });
+  const [i18nReady, setI18nReady] = useState(false);
 
-  if (!fontsLoaded) {
+  useEffect(() => {
+    initI18n().then(() => setI18nReady(true));
+  }, []);
+
+  if (!fontsLoaded || !i18nReady) {
     return <View style={{ flex: 1, backgroundColor: colors.night }} />;
   }
 

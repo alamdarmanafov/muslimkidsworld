@@ -1,4 +1,5 @@
 import { router } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Avatar } from "../../../src/components/Avatar";
@@ -9,27 +10,29 @@ import { children } from "../../../src/data/mock";
 import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
 
 const weekStats = [
-  { icon: "book" as const, tone: tones.blue, label: "Lessons", value: 4 },
-  { icon: "quiz" as const, tone: tones.pink, label: "Questions", value: 70 },
-  { icon: "clock" as const, tone: tones.teal, label: "Time", value: "42 min" },
-  { icon: "gift" as const, tone: tones.gold, label: "Rewards", value: 3 },
+  { icon: "book" as const, tone: tones.blue, labelKey: "parentHome.lessons", value: 4 },
+  { icon: "quiz" as const, tone: tones.pink, labelKey: "parentHome.questions", value: 70 },
+  { icon: "clock" as const, tone: tones.teal, labelKey: "parentHome.time", value: "42 min" },
+  { icon: "gift" as const, tone: tones.gold, labelKey: "parentHome.rewardsLabel", value: 3 },
 ];
 
-const parentTools: { icon: IconName; label: string; href: string }[] = [
-  { icon: "chartBar", label: "Learning progress", href: "/parent/progress" },
-  { icon: "users", label: "Manage children", href: "/parent/children" },
-  { icon: "clock", label: "Daily Limit", href: "/parent/daily-limit" },
-  { icon: "lock", label: "Parent PIN & safety", href: "/parent/profile" },
-  { icon: "smile", label: "Settings", href: "/parent/profile" },
+const parentTools: { icon: IconName; labelKey: string; href: string }[] = [
+  { icon: "chartBar", labelKey: "parentHome.learningProgress", href: "/parent/progress" },
+  { icon: "users", labelKey: "parentHome.manageChildren", href: "/parent/children" },
+  { icon: "clock", labelKey: "parentHome.dailyLimit", href: "/parent/daily-limit" },
+  { icon: "lock", labelKey: "parentHome.parentPinSafety", href: "/parent/profile" },
+  { icon: "smile", labelKey: "parentHome.settings", href: "/parent/profile" },
 ];
 
 export default function ParentHome() {
+  const { t } = useTranslation();
+
   return (
     <SafeAreaView style={styles.screen} edges={["top"]}>
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.header}>
           <View>
-            <Text style={styles.greeting}>Good evening,</Text>
+            <Text style={styles.greeting}>{t("parentHome.goodEvening")}</Text>
             <Text style={styles.name}>Ahmed 👋</Text>
           </View>
           <Text style={styles.bell}>🔔</Text>
@@ -37,14 +40,14 @@ export default function ParentHome() {
 
         <Pressable style={styles.codeBox} onPress={() => router.push("/parent/family-code")}>
           <Icon name="users" size={22} color={colors.gold} style={{ marginBottom: spacing.xs }} />
-          <Text style={styles.codeLabel}>CONNECT A CHILD</Text>
-          <Text style={styles.codeHint}>Tap to get a Family Code</Text>
+          <Text style={styles.codeLabel}>{t("parentHome.connectChild")}</Text>
+          <Text style={styles.codeHint}>{t("parentHome.tapForCode")}</Text>
         </Pressable>
 
         <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>My Children</Text>
+          <Text style={styles.sectionTitle}>{t("parentHome.myChildren")}</Text>
           <Pressable onPress={() => router.push("/parent/children")}>
-            <Text style={styles.link}>View All</Text>
+            <Text style={styles.link}>{t("parentHome.viewAll")}</Text>
           </Pressable>
         </View>
 
@@ -54,44 +57,44 @@ export default function ParentHome() {
               <Avatar emoji={child.emoji} color={child.color} size={44} />
               <Text style={styles.childName}>{child.name}</Text>
               <Text style={styles.childMeta}>
-                Level {child.level} · 🔥 {child.streak}
+                {t("parentHome.level")} {child.level} · 🔥 {child.streak}
               </Text>
             </Card>
           ))}
         </View>
 
         <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>This Week</Text>
+          <Text style={styles.sectionTitle}>{t("parentHome.thisWeek")}</Text>
           <Pressable onPress={() => router.push("/parent/progress")}>
-            <Text style={styles.link}>View Report</Text>
+            <Text style={styles.link}>{t("parentHome.viewReport")}</Text>
           </Pressable>
         </View>
 
         <View style={styles.statsGrid}>
           {weekStats.map((s) => (
-            <Card key={s.label} style={styles.statCard}>
+            <Card key={s.labelKey} style={styles.statCard}>
               <IconBadge icon={s.icon} tone={s.tone} size={40} />
               <Text style={styles.statValue}>{s.value}</Text>
-              <Text style={styles.statLabel}>{s.label}</Text>
+              <Text style={styles.statLabel}>{t(s.labelKey)}</Text>
             </Card>
           ))}
         </View>
 
         <Pressable style={styles.premiumButton} onPress={() => router.push("/parent/premium")}>
           <Icon name="crown" size={18} color={colors.night} />
-          <Text style={styles.premiumButtonText}>Manage Premium Family</Text>
+          <Text style={styles.premiumButtonText}>{t("parentHome.managePremium")}</Text>
         </Pressable>
 
-        <Text style={styles.sectionTitle}>Parent tools</Text>
+        <Text style={styles.sectionTitle}>{t("parentHome.parentTools")}</Text>
         <View style={styles.toolsList}>
-          {parentTools.map((t) => (
+          {parentTools.map((tool) => (
             <Pressable
-              key={t.label}
+              key={tool.labelKey}
               style={styles.toolRow}
-              onPress={() => router.push(t.href as never)}
+              onPress={() => router.push(tool.href as never)}
             >
-              <Icon name={t.icon} size={18} color={colors.ink} />
-              <Text style={styles.toolLabel}>{t.label}</Text>
+              <Icon name={tool.icon} size={18} color={colors.ink} />
+              <Text style={styles.toolLabel}>{t(tool.labelKey)}</Text>
               <Icon name="arrowRight" size={16} color={colors.inkMuted} />
             </Pressable>
           ))}

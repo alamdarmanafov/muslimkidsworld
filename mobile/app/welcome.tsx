@@ -1,8 +1,10 @@
 import { router } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../src/components/icons";
+import { LanguageSwitcher } from "../src/components/LanguageSwitcher";
 import { colors, fonts, radii, spacing } from "../src/theme/theme";
 
 const stars = [
@@ -15,13 +17,15 @@ const stars = [
   { top: 100, left: 300, size: 5 },
 ];
 
-const trustItems = [
-  { icon: "shield" as const, label: "Safe Content", color: colors.primary },
-  { icon: "lock" as const, label: "Parent Control", color: colors.successDark },
-  { icon: "heart" as const, label: "Trusted by Parents", color: colors.pink },
-];
-
 export default function Welcome() {
+  const { t } = useTranslation();
+
+  const trustItems = [
+    { icon: "shield" as const, label: t("welcome.safeContent"), color: colors.primary },
+    { icon: "lock" as const, label: t("welcome.parentControl"), color: colors.successDark },
+    { icon: "heart" as const, label: t("welcome.trustedByParents"), color: colors.pink },
+  ];
+
   return (
     <LinearGradient
       colors={[colors.night, colors.night, colors.background]}
@@ -31,6 +35,9 @@ export default function Welcome() {
       <SafeAreaView style={styles.flex} edges={["top", "bottom"]}>
         <ScrollView contentContainerStyle={styles.scroll}>
           <View style={styles.sky}>
+            <View style={styles.langSwitcherWrap}>
+              <LanguageSwitcher dark />
+            </View>
             {stars.map((s, i) => (
               <View
                 key={i}
@@ -50,19 +57,20 @@ export default function Welcome() {
             </View>
 
             <Text style={styles.title}>
-              Muslim{"\n"}
-              <Text style={{ color: colors.primaryLight }}>Kids</Text>
-              <Text style={{ color: colors.gold }}> World</Text>
+              {t("welcome.titleMuslim")}
+              {"\n"}
+              <Text style={{ color: colors.primaryLight }}>{t("welcome.titleKids")}</Text>
+              <Text style={{ color: colors.gold }}> {t("welcome.titleWorld")}</Text>
             </Text>
             <View style={styles.taglineRow}>
               <Text style={styles.taglineDot}>★</Text>
-              <Text style={styles.tagline}>Learn · Play · Grow</Text>
+              <Text style={styles.tagline}>{t("welcome.tagline")}</Text>
               <Text style={styles.taglineDot}>★</Text>
             </View>
           </View>
 
           <View style={styles.body}>
-            <Text style={styles.question}>Who are you?</Text>
+            <Text style={styles.question}>{t("welcome.whoAreYou")}</Text>
 
             <View style={styles.cardsRow}>
               <Pressable
@@ -72,9 +80,11 @@ export default function Welcome() {
                 <View style={[styles.cardBadge, { backgroundColor: colors.primary }]}>
                   <Icon name="users" size={20} color="#FFFFFF" />
                 </View>
-                <Text style={styles.cardEyebrow}>I'm a</Text>
-                <Text style={[styles.cardTitle, { color: colors.primaryDark }]}>Parent</Text>
-                <Text style={styles.cardSubtitle}>Manage your child's learning journey</Text>
+                <Text style={styles.cardEyebrow}>{t("welcome.imA")}</Text>
+                <Text style={[styles.cardTitle, { color: colors.primaryDark }]}>
+                  {t("welcome.parentTitle")}
+                </Text>
+                <Text style={styles.cardSubtitle}>{t("welcome.parentDesc")}</Text>
                 <View style={[styles.cardArrow, { backgroundColor: colors.primary }]}>
                   <Icon name="arrowRight" size={18} color="#FFFFFF" />
                 </View>
@@ -87,9 +97,11 @@ export default function Welcome() {
                 <View style={[styles.cardBadge, { backgroundColor: colors.gold }]}>
                   <Icon name="smile" size={20} color={colors.night} />
                 </View>
-                <Text style={styles.cardEyebrow}>I'm a</Text>
-                <Text style={[styles.cardTitle, { color: colors.goldDark }]}>Child</Text>
-                <Text style={styles.cardSubtitle}>Learn, play & discover amazing things</Text>
+                <Text style={styles.cardEyebrow}>{t("welcome.imA")}</Text>
+                <Text style={[styles.cardTitle, { color: colors.goldDark }]}>
+                  {t("welcome.childTitle")}
+                </Text>
+                <Text style={styles.cardSubtitle}>{t("welcome.childDesc")}</Text>
                 <View style={[styles.cardArrow, { backgroundColor: colors.gold }]}>
                   <Icon name="arrowRight" size={18} color={colors.night} />
                 </View>
@@ -98,14 +110,14 @@ export default function Welcome() {
 
             <View style={styles.trustHeader}>
               <Icon name="shield" size={18} color={colors.successDark} />
-              <Text style={styles.trustHeaderText}>A safe space for little Muslims</Text>
+              <Text style={styles.trustHeaderText}>{t("welcome.safeSpace")}</Text>
             </View>
 
             <View style={styles.trustRow}>
-              {trustItems.map((t) => (
-                <View key={t.label} style={styles.trustItem}>
-                  <Icon name={t.icon} size={15} color={t.color} />
-                  <Text style={styles.trustLabel}>{t.label}</Text>
+              {trustItems.map((item) => (
+                <View key={item.label} style={styles.trustItem}>
+                  <Icon name={item.icon} size={15} color={item.color} />
+                  <Text style={styles.trustLabel}>{item.label}</Text>
                 </View>
               ))}
             </View>
@@ -129,6 +141,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: spacing.lg,
     paddingBottom: spacing.xl,
+  },
+  langSwitcherWrap: {
+    position: "absolute",
+    top: spacing.md,
+    right: spacing.lg,
+    zIndex: 1,
   },
   star: { position: "absolute", backgroundColor: colors.onNight, opacity: 0.8 },
   bigMoon: { position: "absolute", top: 4, left: spacing.lg },
@@ -231,8 +249,11 @@ const styles = StyleSheet.create({
   trustHeaderText: { fontFamily: fonts.bodyBold, fontSize: 14, color: colors.ink },
   trustRow: {
     flexDirection: "row",
+    flexWrap: "wrap",
     justifyContent: "center",
-    gap: spacing.lg,
+    rowGap: spacing.xs,
+    columnGap: spacing.md,
+    paddingHorizontal: spacing.md,
     marginTop: spacing.sm,
   },
   trustItem: { flexDirection: "row", alignItems: "center", gap: 5 },

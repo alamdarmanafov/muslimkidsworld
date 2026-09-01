@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { router } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../src/components/icons";
@@ -7,20 +8,26 @@ import { bindDeviceToFamilyCode, getDeviceId } from "../src/lib/deviceBinding";
 import { getSupabaseClient } from "../src/lib/supabase";
 import { colors, fonts, radii, spacing } from "../src/theme/theme";
 
-async function readFunctionErrorMessage(error: unknown): Promise<string> {
+const SERVER_ERROR_KEYS: Record<string, string> = {
+  "Invalid or expired code": "childCode.invalidOrExpired",
+  "This code is already linked to another device": "childCode.alreadyLinked",
+};
+
+async function readServerErrorMessage(error: unknown): Promise<string | null> {
   const context = (error as { context?: Response } | null)?.context;
   if (context && typeof context.json === "function") {
     try {
       const body = await context.json();
       if (typeof body?.error === "string") return body.error;
     } catch {
-      // fall through to generic message below
+      // fall through
     }
   }
-  return error instanceof Error ? error.message : "Something went wrong. Try again.";
+  return null;
 }
 
 export default function ChildCode() {
+  const { t } = useTranslation();
   const [code, setCode] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -35,13 +42,15 @@ export default function ChildCode() {
         { body: { code, deviceId } },
       );
       if (fnError) {
-        setError(await readFunctionErrorMessage(fnError));
+        const serverMessage = await readServerErrorMessage(fnError);
+        const key = serverMessage ? SERVER_ERROR_KEYS[serverMessage] : undefined;
+        setError(key ? t(key) : t("childCode.somethingWrong"));
         return;
       }
       await bindDeviceToFamilyCode(code);
       router.replace("/child");
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Something went wrong. Try again.");
+    } catch {
+      setError(t("childCode.somethingWrong"));
     } finally {
       setLoading(false);
     }
@@ -52,8 +61,8 @@ export default function ChildCode() {
       <View style={styles.moonWrap}>
         <Icon name="moon" size={48} color={colors.gold} />
       </View>
-      <Text style={styles.title}>Hi, little explorer! 🌟</Text>
-      <Text style={styles.subtitle}>Ask your parent for your 6-digit Family Code.</Text>
+      <Text style={styles.title}>{t("childCode.title")}</Text>
+      <Text style={styles.subtitle}>{t("childCode.subtitle")}</Text>
 
       <TextInput
         value={code}
@@ -74,12 +83,12 @@ export default function ChildCode() {
         disabled={code.length < 6 || loading}
         onPress={handleContinue}
       >
-        <Text style={styles.buttonText}>{loading ? "Checking…" : "Continue →"}</Text>
+        <Text style={styles.buttonText}>
+          {loading ? t("childCode.checking") : t("childCode.continueArrow")}
+        </Text>
       </Pressable>
 
-      <Text style={styles.note}>
-        Your child experience never shows subscription or payment information.
-      </Text>
+      <Text style={styles.note}>{t("childCode.note")}</Text>
     </SafeAreaView>
   );
 }

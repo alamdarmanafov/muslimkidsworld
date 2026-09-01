@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { router } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../src/components/icons";
@@ -10,6 +11,7 @@ const PIN_LENGTH = 4;
 const KEYS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "", "0", "back"];
 
 export default function ParentPin() {
+  const { t } = useTranslation();
   const [digits, setDigits] = useState("");
   const [error, setError] = useState(false);
 
@@ -19,11 +21,11 @@ export default function ParentPin() {
       router.replace("/parent");
     } else {
       setError(true);
-      const t = setTimeout(() => {
+      const timeout = setTimeout(() => {
         setDigits("");
         setError(false);
       }, 500);
-      return () => clearTimeout(t);
+      return () => clearTimeout(timeout);
     }
   }, [digits]);
 
@@ -44,8 +46,8 @@ export default function ParentPin() {
 
       <View style={styles.body}>
         <Icon name="lock" size={30} color={colors.gold} />
-        <Text style={styles.title}>Enter Parent PIN</Text>
-        <Text style={styles.subtitle}>Ask a parent to enter their 4-digit PIN.</Text>
+        <Text style={styles.title}>{t("parentPin.title")}</Text>
+        <Text style={styles.subtitle}>{t("parentPin.subtitle")}</Text>
 
         <View style={styles.dots}>
           {Array.from({ length: PIN_LENGTH }).map((_, i) => (
@@ -59,7 +61,7 @@ export default function ParentPin() {
             />
           ))}
         </View>
-        {error ? <Text style={styles.errorText}>Wrong PIN, try again.</Text> : null}
+        {error ? <Text style={styles.errorText}>{t("parentPin.wrongPin")}</Text> : null}
       </View>
 
       <View style={styles.keypad}>

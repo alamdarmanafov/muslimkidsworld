@@ -1,0 +1,140 @@
+{
+  "common": {
+    "continue": "Продолжить",
+    "tryAgain": "Повторить",
+    "cancel": "Отмена",
+    "save": "Сохранить",
+    "signOut": "Выйти"
+  },
+  "welcome": {
+    "titleMuslim": "Muslim",
+    "titleKids": "Kids",
+    "titleWorld": "World",
+    "tagline": "Учись · Играй · Расти",
+    "whoAreYou": "Кто ты?",
+    "imA": "Я",
+    "parentTitle": "Родитель",
+    "parentDesc": "Управляйте обучением вашего ребёнка",
+    "childTitle": "Ребёнок",
+    "childDesc": "Учись, играй и открывай удивительное",
+    "safeSpace": "Безопасное пространство для маленьких мусульман",
+    "safeContent": "Безопасный контент",
+    "parentControl": "Родительский контроль",
+    "trustedByParents": "Доверие родителей"
+  },
+  "childCode": {
+    "title": "Привет, маленький исследователь! 🌟",
+    "subtitle": "Попроси у родителя 6-значный Семейный код.",
+    "checking": "Проверяем…",
+    "continueArrow": "Продолжить →",
+    "note": "В детском режиме никогда не показывается информация о подписке и оплате.",
+    "invalidOrExpired": "Этот код неверен или его срок истёк. Попробуйте ещё раз.",
+    "alreadyLinked": "Этот код уже привязан к другому устройству.",
+    "somethingWrong": "Что-то пошло не так. Попробуйте ещё раз."
+  },
+  "parentAuth": {
+    "signInTitle": "С возвращением",
+    "signInSubtitle": "Войдите, чтобы управлять обучением ребёнка.",
+    "signUpTitle": "Создайте аккаунт",
+    "signUpSubtitle": "Настройте путь обучения вашей семьи.",
+    "fullName": "Полное имя",
+    "email": "Email",
+    "password": "Пароль",
+    "confirmPassword": "Повторите пароль",
+    "signIn": "Войти",
+    "createAccount": "Создать аккаунт",
+    "pleaseWait": "Подождите…",
+    "alreadyHaveAccount": "Уже есть аккаунт? ",
+    "newHere": "Впервые здесь? ",
+    "comingSoon": "скоро",
+    "continueWithApple": " Продолжить с Apple",
+    "continueWithGoogle": "G  Продолжить с Google",
+    "checkEmail": "Проверьте почту, чтобы подтвердить аккаунт, затем войдите.",
+    "somethingWrong": "Что-то пошло не так. Попробуйте ещё раз."
+  },
+  "childHome": {
+    "greeting": "Ассаляму алейкум,",
+    "todaysJourney": "Сегодняшнее путешествие",
+    "journeyComplete": "🎉 Сегодняшнее путешествие завершено!",
+    "journeyCompleteBody": "Отличная работа! Теперь иди играть, читать или помоги семье. 💛",
+    "almostThere": "🌙 Почти готово!",
+    "minutesLeft_one": "У тебя осталась {{count}} минута в сегодняшнем путешествии.",
+    "minutesLeft_few": "У тебя осталось {{count}} минуты в сегодняшнем путешествии.",
+    "minutesLeft_many": "У тебя осталось {{count}} минут в сегодняшнем путешествии.",
+    "minutesLeft_other": "У тебя осталось {{count}} минуты в сегодняшнем путешествии.",
+    "progressStatus": "Выполнено {{done}} из {{goal}} мин — продолжай!",
+    "letsContinueLearning": "Продолжим учиться",
+    "explore": "Исследовать",
+    "quran": "Коран",
+    "dua": "Дуа",
+    "stories": "Истории",
+    "games": "Игры",
+    "quiz": "Викторина",
+    "story": "История",
+    "game": "Игра",
+    "gardenTitle": "Мой сад",
+    "gardenFullBloom": "Твой сад в полном цвету!",
+    "gardenBlooming": "Твой сад расцветает!",
+    "gardenGrowing": "Твой сад растёт!",
+    "gardenSprouted": "Твой сад только что взошёл!"
+  },
+  "parentHome": {
+    "goodEvening": "Добрый вечер,",
+    "connectChild": "ПОДКЛЮЧИТЬ РЕБЁНКА",
+    "tapForCode": "Нажмите, чтобы получить Семейный код",
+    "myChildren": "Мои дети",
+    "viewAll": "Смотреть всех",
+    "thisWeek": "На этой неделе",
+    "viewReport": "Смотреть отчёт",
+    "managePremium": "Управление Premium Family",
+    "parentTools": "Инструменты родителя",
+    "learningProgress": "Прогресс обучения",
+    "manageChildren": "Управление детьми",
+    "dailyLimit": "Дневной лимит",
+    "parentPinSafety": "Родительский PIN и безопасность",
+    "settings": "Настройки",
+    "lessons": "Уроки",
+    "questions": "Вопросы",
+    "time": "Время",
+    "rewardsLabel": "Награды",
+    "level": "Уровень"
+  },
+  "familyCode": {
+    "title": "Подключить ребёнка",
+    "subtitle": "Откройте Muslim Kids World на устройстве ребёнка, выберите «Я ребёнок» и введите этот код.",
+    "newCodeIn": "Новый код через {{seconds}} с",
+    "couldNotGetCode": "Не удалось получить код. Проверьте соединение.",
+    "tryAgain": "Повторить"
+  },
+  "parentPin": {
+    "title": "Введите родительский PIN",
+    "subtitle": "Попросите родителя ввести 4-значный PIN-код.",
+    "wrongPin": "Неверный PIN, попробуйте ещё раз."
+  },
+  "dailyLimit": {
+    "title": "Дневной лимит обучения",
+    "subtitle": "Когда ребёнок достигнет этого количества минут, сегодняшнее путешествие будет завершено, и приложение не будет предлагать больше контента.",
+    "custom": "Свой вариант",
+    "customPlaceholder": "например 40",
+    "minUnit": "мин"
+  },
+  "childProfile": {
+    "parentMode": "Режим родителя",
+    "levelAge": "Уровень {{level}} · {{age}} лет"
+  },
+  "parentProfile": {
+    "account": "Аккаунт",
+    "accountSubtitle": "Здесь будут устройства, уведомления и родительский доступ.",
+    "language": "Язык",
+    "signOutConfirmTitle": "Выйти?",
+    "signOutConfirmBody": "Чтобы снова управлять семьёй, нужно будет войти заново."
+  },
+  "tabs": {
+    "home": "Главная",
+    "progress": "Прогресс",
+    "rewards": "Награды",
+    "profile": "Профиль",
+    "children": "Дети",
+    "premium": "Premium"
+  }
+}

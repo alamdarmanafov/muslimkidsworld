@@ -1,0 +1,138 @@
+{
+  "common": {
+    "continue": "Continue",
+    "tryAgain": "Try Again",
+    "cancel": "Cancel",
+    "save": "Save",
+    "signOut": "Sign Out"
+  },
+  "welcome": {
+    "titleMuslim": "Muslim",
+    "titleKids": "Kids",
+    "titleWorld": "World",
+    "tagline": "Learn · Play · Grow",
+    "whoAreYou": "Who are you?",
+    "imA": "I'm a",
+    "parentTitle": "Parent",
+    "parentDesc": "Manage your child's learning journey",
+    "childTitle": "Child",
+    "childDesc": "Learn, play & discover amazing things",
+    "safeSpace": "A safe space for little Muslims",
+    "safeContent": "Safe Content",
+    "parentControl": "Parent Control",
+    "trustedByParents": "Trusted by Parents"
+  },
+  "childCode": {
+    "title": "Hi, little explorer! 🌟",
+    "subtitle": "Ask your parent for your 6-digit Family Code.",
+    "checking": "Checking…",
+    "continueArrow": "Continue →",
+    "note": "Your child experience never shows subscription or payment information.",
+    "invalidOrExpired": "That code doesn't match or has expired. Try again.",
+    "alreadyLinked": "This code is already linked to another device.",
+    "somethingWrong": "Something went wrong. Try again."
+  },
+  "parentAuth": {
+    "signInTitle": "Welcome back",
+    "signInSubtitle": "Sign in to manage your child's learning.",
+    "signUpTitle": "Create your account",
+    "signUpSubtitle": "Set up your family's learning journey.",
+    "fullName": "Full name",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "signIn": "Sign In",
+    "createAccount": "Create Account",
+    "pleaseWait": "Please wait…",
+    "alreadyHaveAccount": "Already have an account? ",
+    "newHere": "New here? ",
+    "comingSoon": "coming soon",
+    "continueWithApple": " Continue with Apple",
+    "continueWithGoogle": "G  Continue with Google",
+    "checkEmail": "Check your email to confirm your account, then sign in.",
+    "somethingWrong": "Something went wrong. Try again."
+  },
+  "childHome": {
+    "greeting": "Assalamu Alaikum,",
+    "todaysJourney": "Today's Journey",
+    "journeyComplete": "🎉 Today's Journey Complete!",
+    "journeyCompleteBody": "Amazing job! Now go play, read or help your family. 💛",
+    "almostThere": "🌙 Almost there!",
+    "minutesLeft_one": "You have {{count}} minute left in today's journey.",
+    "minutesLeft_other": "You have {{count}} minutes left in today's journey.",
+    "progressStatus": "{{done}} of {{goal}} min done — keep going!",
+    "letsContinueLearning": "Let's continue learning",
+    "explore": "Explore",
+    "quran": "Quran",
+    "dua": "Dua",
+    "stories": "Stories",
+    "games": "Games",
+    "quiz": "Quiz",
+    "story": "Story",
+    "game": "Game",
+    "gardenTitle": "My Garden",
+    "gardenFullBloom": "Your garden is in full bloom!",
+    "gardenBlooming": "Your garden is blooming!",
+    "gardenGrowing": "Your garden is growing!",
+    "gardenSprouted": "Your garden just sprouted!"
+  },
+  "parentHome": {
+    "goodEvening": "Good evening,",
+    "connectChild": "CONNECT A CHILD",
+    "tapForCode": "Tap to get a Family Code",
+    "myChildren": "My Children",
+    "viewAll": "View All",
+    "thisWeek": "This Week",
+    "viewReport": "View Report",
+    "managePremium": "Manage Premium Family",
+    "parentTools": "Parent tools",
+    "learningProgress": "Learning progress",
+    "manageChildren": "Manage children",
+    "dailyLimit": "Daily Limit",
+    "parentPinSafety": "Parent PIN & safety",
+    "settings": "Settings",
+    "lessons": "Lessons",
+    "questions": "Questions",
+    "time": "Time",
+    "rewardsLabel": "Rewards",
+    "level": "Level"
+  },
+  "familyCode": {
+    "title": "Connect a Child",
+    "subtitle": "Open Muslim Kids World on your child's device, choose \"I'm a Child\", and enter this code.",
+    "newCodeIn": "New code in {{seconds}}s",
+    "couldNotGetCode": "Could not get a code. Check your connection.",
+    "tryAgain": "Try Again"
+  },
+  "parentPin": {
+    "title": "Enter Parent PIN",
+    "subtitle": "Ask a parent to enter their 4-digit PIN.",
+    "wrongPin": "Wrong PIN, try again."
+  },
+  "dailyLimit": {
+    "title": "Daily Learning Limit",
+    "subtitle": "Once your child reaches this many minutes, today's journey is marked complete and the app won't push more content.",
+    "custom": "Custom",
+    "customPlaceholder": "e.g. 40",
+    "minUnit": "min"
+  },
+  "childProfile": {
+    "parentMode": "Parent Mode",
+    "levelAge": "Level {{level}} · {{age}} years old"
+  },
+  "parentProfile": {
+    "account": "Account",
+    "accountSubtitle": "Devices, notifications, and the Parent Gate live here.",
+    "language": "Language",
+    "signOutConfirmTitle": "Sign out?",
+    "signOutConfirmBody": "You'll need to sign in again to manage your family."
+  },
+  "tabs": {
+    "home": "Home",
+    "progress": "Progress",
+    "rewards": "Rewards",
+    "profile": "Profile",
+    "children": "Children",
+    "premium": "Premium"
+  }
+}

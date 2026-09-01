@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { router } from "expo-router";
+import { useTranslation } from "react-i18next";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -18,6 +19,7 @@ import { colors, fonts, radii, spacing } from "../src/theme/theme";
 type Mode = "signIn" | "signUp";
 
 export default function ParentAuth() {
+  const { t } = useTranslation();
   const [mode, setMode] = useState<Mode>("signIn");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -54,7 +56,7 @@ export default function ParentAuth() {
         }
 
         if (!data.session) {
-          setError("Check your email to confirm your account, then sign in.");
+          setError(t("parentAuth.checkEmail"));
           setMode("signIn");
           setLoading(false);
           return;
@@ -69,7 +71,7 @@ export default function ParentAuth() {
 
       router.replace("/parent");
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Something went wrong. Try again.");
+      setError(e instanceof Error ? e.message : t("parentAuth.somethingWrong"));
     } finally {
       setLoading(false);
     }
@@ -87,11 +89,11 @@ export default function ParentAuth() {
           </Pressable>
 
           <Icon name="users" size={30} color={colors.primary} style={{ marginBottom: spacing.sm }} />
-          <Text style={styles.title}>{isSignUp ? "Create your account" : "Welcome back"}</Text>
+          <Text style={styles.title}>
+            {isSignUp ? t("parentAuth.signUpTitle") : t("parentAuth.signInTitle")}
+          </Text>
           <Text style={styles.subtitle}>
-            {isSignUp
-              ? "Set up your family's learning journey."
-              : "Sign in to manage your child's learning."}
+            {isSignUp ? t("parentAuth.signUpSubtitle") : t("parentAuth.signInSubtitle")}
           </Text>
 
           <View style={styles.form}>
@@ -100,7 +102,7 @@ export default function ParentAuth() {
                 style={styles.input}
                 value={fullName}
                 onChangeText={setFullName}
-                placeholder="Full name"
+                placeholder={t("parentAuth.fullName")}
                 placeholderTextColor={colors.locked}
                 autoCapitalize="words"
               />
@@ -109,7 +111,7 @@ export default function ParentAuth() {
               style={styles.input}
               value={email}
               onChangeText={setEmail}
-              placeholder="Email"
+              placeholder={t("parentAuth.email")}
               placeholderTextColor={colors.locked}
               autoCapitalize="none"
               keyboardType="email-address"
@@ -118,7 +120,7 @@ export default function ParentAuth() {
               style={styles.input}
               value={password}
               onChangeText={setPassword}
-              placeholder="Password"
+              placeholder={t("parentAuth.password")}
               placeholderTextColor={colors.locked}
               secureTextEntry
             />
@@ -127,7 +129,7 @@ export default function ParentAuth() {
                 style={styles.input}
                 value={confirmPassword}
                 onChangeText={setConfirmPassword}
-                placeholder="Confirm password"
+                placeholder={t("parentAuth.confirmPassword")}
                 placeholderTextColor={colors.locked}
                 secureTextEntry
               />
@@ -142,7 +144,11 @@ export default function ParentAuth() {
             onPress={handleSubmit}
           >
             <Text style={styles.submitBtnText}>
-              {loading ? "Please wait…" : isSignUp ? "Create Account" : "Sign In"}
+              {loading
+                ? t("parentAuth.pleaseWait")
+                : isSignUp
+                  ? t("parentAuth.createAccount")
+                  : t("parentAuth.signIn")}
             </Text>
           </Pressable>
 
@@ -153,22 +159,24 @@ export default function ParentAuth() {
             }}
           >
             <Text style={styles.switchText}>
-              {isSignUp ? "Already have an account? " : "New here? "}
-              <Text style={styles.switchTextBold}>{isSignUp ? "Sign In" : "Create Account"}</Text>
+              {isSignUp ? t("parentAuth.alreadyHaveAccount") : t("parentAuth.newHere")}
+              <Text style={styles.switchTextBold}>
+                {isSignUp ? t("parentAuth.signIn") : t("parentAuth.createAccount")}
+              </Text>
             </Text>
           </Pressable>
 
           <View style={styles.divider}>
             <View style={styles.dividerLine} />
-            <Text style={styles.dividerText}>coming soon</Text>
+            <Text style={styles.dividerText}>{t("parentAuth.comingSoon")}</Text>
             <View style={styles.dividerLine} />
           </View>
 
           <View style={[styles.oauthBtn, styles.oauthBtnDisabled]}>
-            <Text style={styles.oauthBtnText}> Continue with Apple</Text>
+            <Text style={styles.oauthBtnText}>{t("parentAuth.continueWithApple")}</Text>
           </View>
           <View style={[styles.oauthBtn, styles.oauthBtnDisabled]}>
-            <Text style={styles.oauthBtnText}>G  Continue with Google</Text>
+            <Text style={styles.oauthBtnText}>{t("parentAuth.continueWithGoogle")}</Text>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

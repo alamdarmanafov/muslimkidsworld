@@ -1,0 +1,138 @@
+{
+  "common": {
+    "continue": "Davam et",
+    "tryAgain": "Yenidən cəhd et",
+    "cancel": "Ləğv et",
+    "save": "Saxla",
+    "signOut": "Çıxış"
+  },
+  "welcome": {
+    "titleMuslim": "Muslim",
+    "titleKids": "Kids",
+    "titleWorld": "World",
+    "tagline": "Öyrən · Oyna · Böyü",
+    "whoAreYou": "Sən kimsən?",
+    "imA": "Mən",
+    "parentTitle": "Valideynəm",
+    "parentDesc": "Uşağının öyrənmə səyahətini idarə et",
+    "childTitle": "Uşağam",
+    "childDesc": "Öyrən, oyna və gözəl şeylər kəşf et",
+    "safeSpace": "Kiçik müsəlmanlar üçün təhlükəsiz məkan",
+    "safeContent": "Təhlükəsiz məzmun",
+    "parentControl": "Valideyn nəzarəti",
+    "trustedByParents": "Valideynlərin etibarı"
+  },
+  "childCode": {
+    "title": "Salam, kiçik kəşfiyyatçı! 🌟",
+    "subtitle": "6 rəqəmli Ailə Kodunu valideynindən soruş.",
+    "checking": "Yoxlanılır…",
+    "continueArrow": "Davam et →",
+    "note": "Uşaq rejimində abunə və ödəniş məlumatları heç vaxt göstərilmir.",
+    "invalidOrExpired": "Bu kod uyğun gəlmir və ya vaxtı bitib. Yenidən cəhd et.",
+    "alreadyLinked": "Bu kod artıq başqa bir cihaza bağlanıb.",
+    "somethingWrong": "Nəsə səhv getdi. Yenidən cəhd et."
+  },
+  "parentAuth": {
+    "signInTitle": "Xoş gəldin",
+    "signInSubtitle": "Uşağının öyrənməsini idarə etmək üçün daxil ol.",
+    "signUpTitle": "Hesab yarat",
+    "signUpSubtitle": "Ailənin öyrənmə səyahətini quraq.",
+    "fullName": "Ad Soyad",
+    "email": "E-poçt",
+    "password": "Parol",
+    "confirmPassword": "Parolu təsdiqlə",
+    "signIn": "Daxil ol",
+    "createAccount": "Hesab yarat",
+    "pleaseWait": "Zəhmət olmasa gözlə…",
+    "alreadyHaveAccount": "Artıq hesabın var? ",
+    "newHere": "Yenisən? ",
+    "comingSoon": "tezliklə",
+    "continueWithApple": " Apple ilə davam et",
+    "continueWithGoogle": "G  Google ilə davam et",
+    "checkEmail": "Hesabını təsdiqləmək üçün e-poçtunu yoxla, sonra daxil ol.",
+    "somethingWrong": "Nəsə səhv getdi. Yenidən cəhd et."
+  },
+  "childHome": {
+    "greeting": "Assalamu Alaikum,",
+    "todaysJourney": "Bugünkü Səyahət",
+    "journeyComplete": "🎉 Bugünkü Səyahət Tamamlandı!",
+    "journeyCompleteBody": "Əla iş! İndi oyna, oxu ya da ailənə kömək et. 💛",
+    "almostThere": "🌙 Az qalıb!",
+    "minutesLeft_one": "Bugünkü səyahətdə {{count}} dəqiqən qalıb.",
+    "minutesLeft_other": "Bugünkü səyahətdə {{count}} dəqiqən qalıb.",
+    "progressStatus": "{{goal}} dəqiqədən {{done}}-i tamamlandı — davam et!",
+    "letsContinueLearning": "Öyrənməyə davam edək",
+    "explore": "Kəşf et",
+    "quran": "Quran",
+    "dua": "Dua",
+    "stories": "Hekayələr",
+    "games": "Oyunlar",
+    "quiz": "Test",
+    "story": "Hekayə",
+    "game": "Oyun",
+    "gardenTitle": "Mənim Bağçam",
+    "gardenFullBloom": "Bağçan tam çiçəklənib!",
+    "gardenBlooming": "Bağçan çiçəklənir!",
+    "gardenGrowing": "Bağçan böyüyür!",
+    "gardenSprouted": "Bağçan indicə cücərdi!"
+  },
+  "parentHome": {
+    "goodEvening": "Axşamın xeyir,",
+    "connectChild": "UŞAĞI QOŞ",
+    "tapForCode": "Ailə Kodu almaq üçün toxun",
+    "myChildren": "Uşaqlarım",
+    "viewAll": "Hamısına bax",
+    "thisWeek": "Bu həftə",
+    "viewReport": "Hesabata bax",
+    "managePremium": "Premium Ailəni idarə et",
+    "parentTools": "Valideyn alətləri",
+    "learningProgress": "Öyrənmə irəliləyişi",
+    "manageChildren": "Uşaqları idarə et",
+    "dailyLimit": "Gündəlik limit",
+    "parentPinSafety": "Valideyn PIN-i və təhlükəsizlik",
+    "settings": "Tənzimləmələr",
+    "lessons": "Dərslər",
+    "questions": "Suallar",
+    "time": "Vaxt",
+    "rewardsLabel": "Mükafatlar",
+    "level": "Səviyyə"
+  },
+  "familyCode": {
+    "title": "Uşağı qoş",
+    "subtitle": "Uşağının cihazında Muslim Kids World-ü aç, \"Mən uşağam\" seç və bu kodu daxil et.",
+    "newCodeIn": "Yeni kod {{seconds}} saniyəyə",
+    "couldNotGetCode": "Kod alına bilmədi. İnterneti yoxla.",
+    "tryAgain": "Yenidən cəhd et"
+  },
+  "parentPin": {
+    "title": "Valideyn PIN-i daxil et",
+    "subtitle": "Valideyndən 4 rəqəmli PIN-i daxil etməsini xahiş et.",
+    "wrongPin": "Yanlış PIN, yenidən cəhd et."
+  },
+  "dailyLimit": {
+    "title": "Gündəlik öyrənmə limiti",
+    "subtitle": "Uşağın bu qədər dəqiqəyə çatanda bugünkü səyahət tamamlanmış sayılır və tətbiq daha çox məzmun təklif etmir.",
+    "custom": "Fərdi",
+    "customPlaceholder": "məs. 40",
+    "minUnit": "dəq"
+  },
+  "childProfile": {
+    "parentMode": "Valideyn rejimi",
+    "levelAge": "Səviyyə {{level}} · {{age}} yaşında"
+  },
+  "parentProfile": {
+    "account": "Hesab",
+    "accountSubtitle": "Cihazlar, bildirişlər və Valideyn Girişi burada olacaq.",
+    "language": "Dil",
+    "signOutConfirmTitle": "Çıxış edilsin?",
+    "signOutConfirmBody": "Ailəni idarə etmək üçün yenidən daxil olmalı olacaqsan."
+  },
+  "tabs": {
+    "home": "Əsas",
+    "progress": "İrəliləyiş",
+    "rewards": "Mükafatlar",
+    "profile": "Profil",
+    "children": "Uşaqlar",
+    "premium": "Premium"
+  }
+}

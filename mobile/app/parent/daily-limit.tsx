@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { router } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../src/components/Button";
@@ -8,6 +9,7 @@ import { dailyLimitOptions, getDailyLimitMinutes, setDailyLimitMinutes } from ".
 import { colors, fonts, radii, shadow, spacing } from "../../src/theme/theme";
 
 export default function DailyLimit() {
+  const { t } = useTranslation();
   const current = getDailyLimitMinutes();
   const isPreset = (dailyLimitOptions as readonly number[]).includes(current);
   const [selected, setSelected] = useState<number | "custom">(isPreset ? current : "custom");
@@ -28,11 +30,8 @@ export default function DailyLimit() {
       </Pressable>
 
       <Icon name="clock" size={32} color={colors.primary} style={{ marginBottom: spacing.sm }} />
-      <Text style={styles.title}>Daily Learning Limit</Text>
-      <Text style={styles.subtitle}>
-        Once your child reaches this many minutes, today's journey is marked complete and the
-        app won't push more content.
-      </Text>
+      <Text style={styles.title}>{t("dailyLimit.title")}</Text>
+      <Text style={styles.subtitle}>{t("dailyLimit.subtitle")}</Text>
 
       <View style={styles.optionsGrid}>
         {dailyLimitOptions.map((m) => (
@@ -42,7 +41,7 @@ export default function DailyLimit() {
             onPress={() => setSelected(m)}
           >
             <Text style={[styles.optionText, selected === m && styles.optionTextSelected]}>
-              {m} min
+              {m} {t("dailyLimit.minUnit")}
             </Text>
           </Pressable>
         ))}
@@ -51,7 +50,7 @@ export default function DailyLimit() {
           onPress={() => setSelected("custom")}
         >
           <Text style={[styles.optionText, selected === "custom" && styles.optionTextSelected]}>
-            Custom
+            {t("dailyLimit.custom")}
           </Text>
         </Pressable>
       </View>
@@ -61,14 +60,14 @@ export default function DailyLimit() {
           value={customValue}
           onChangeText={setCustomValue}
           keyboardType="number-pad"
-          placeholder="e.g. 40"
+          placeholder={t("dailyLimit.customPlaceholder")}
           placeholderTextColor={colors.locked}
           style={styles.customInput}
         />
       ) : null}
 
       <View style={styles.footer}>
-        <Button label="Save" disabled={!canSave} onPress={handleSave} />
+        <Button label={t("common.save")} disabled={!canSave} onPress={handleSave} />
       </View>
     </SafeAreaView>
   );

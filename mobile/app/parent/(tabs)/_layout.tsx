@@ -1,4 +1,5 @@
 import { Tabs } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { Icon, type IconName } from "../../../src/components/icons";
 import { colors, radii, shadow, spacing } from "../../../src/theme/theme";
 
@@ -7,6 +8,8 @@ function TabIcon({ name, focused }: { name: IconName; focused: boolean }) {
 }
 
 export default function ParentTabsLayout() {
+  const { t } = useTranslation();
+
   return (
     <Tabs
       screenOptions={{
@@ -30,35 +33,35 @@ export default function ParentTabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: t("tabs.home"),
           tabBarIcon: ({ focused }) => <TabIcon name="home" focused={focused} />,
         }}
       />
       <Tabs.Screen
         name="children"
         options={{
-          title: "Children",
+          title: t("tabs.children"),
           tabBarIcon: ({ focused }) => <TabIcon name="users" focused={focused} />,
         }}
       />
       <Tabs.Screen
         name="progress"
         options={{
-          title: "Progress",
+          title: t("tabs.progress"),
           tabBarIcon: ({ focused }) => <TabIcon name="chartBar" focused={focused} />,
         }}
       />
       <Tabs.Screen
         name="premium"
         options={{
-          title: "Premium",
+          title: t("tabs.premium"),
           tabBarIcon: ({ focused }) => <TabIcon name="crown" focused={focused} />,
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
-          title: "Profile",
+          title: t("tabs.profile"),
           tabBarIcon: ({ focused }) => <TabIcon name="smile" focused={focused} />,
         }}
       />

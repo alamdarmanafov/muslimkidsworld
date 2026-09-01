@@ -1,16 +1,20 @@
 import { router } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IconBadge, tones } from "../../../src/components/IconBadge";
+import { LanguageSwitcher } from "../../../src/components/LanguageSwitcher";
 import { getSupabaseClient } from "../../../src/lib/supabase";
 import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
 
 export default function ParentProfile() {
+  const { t } = useTranslation();
+
   const handleSignOut = () => {
-    Alert.alert("Sign out?", "You'll need to sign in again to manage your family.", [
-      { text: "Cancel", style: "cancel" },
+    Alert.alert(t("parentProfile.signOutConfirmTitle"), t("parentProfile.signOutConfirmBody"), [
+      { text: t("common.cancel"), style: "cancel" },
       {
-        text: "Sign Out",
+        text: t("common.signOut"),
         style: "destructive",
         onPress: async () => {
           try {
@@ -28,12 +32,17 @@ export default function ParentProfile() {
     <SafeAreaView style={styles.screen}>
       <View style={styles.body}>
         <IconBadge icon="smile" tone={tones.purple} size={72} />
-        <Text style={styles.title}>Account</Text>
-        <Text style={styles.subtitle}>Devices, notifications, and the Parent Gate live here.</Text>
+        <Text style={styles.title}>{t("parentProfile.account")}</Text>
+        <Text style={styles.subtitle}>{t("parentProfile.accountSubtitle")}</Text>
+
+        <View style={styles.languageRow}>
+          <Text style={styles.languageLabel}>{t("parentProfile.language")}</Text>
+          <LanguageSwitcher />
+        </View>
       </View>
 
       <Pressable style={styles.signOutBtn} onPress={handleSignOut}>
-        <Text style={styles.signOutText}>Sign Out</Text>
+        <Text style={styles.signOutText}>{t("common.signOut")}</Text>
       </Pressable>
     </SafeAreaView>
   );
@@ -44,6 +53,18 @@ const styles = StyleSheet.create({
   body: { flex: 1, alignItems: "center", justifyContent: "center", gap: spacing.sm, padding: spacing.xl },
   title: { fontFamily: fonts.heading, fontSize: 20, color: colors.ink, marginTop: spacing.sm },
   subtitle: { fontFamily: fonts.body, fontSize: 13, color: colors.inkMuted, textAlign: "center" },
+  languageRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.md,
+    backgroundColor: colors.card,
+    borderRadius: radii.md,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.lg,
+    marginTop: spacing.xl,
+    ...shadow,
+  },
+  languageLabel: { fontFamily: fonts.bodyBold, fontSize: 13, color: colors.ink },
   signOutBtn: {
     backgroundColor: colors.card,
     borderRadius: radii.md,

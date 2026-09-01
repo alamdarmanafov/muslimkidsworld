@@ -1,4 +1,5 @@
 import { Tabs } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { Icon, type IconName } from "../../../src/components/icons";
 import { colors, radii, shadow, spacing } from "../../../src/theme/theme";
 
@@ -7,6 +8,8 @@ function TabIcon({ name, focused }: { name: IconName; focused: boolean }) {
 }
 
 export default function ChildTabsLayout() {
+  const { t } = useTranslation();
+
   return (
     <Tabs
       screenOptions={{
@@ -30,28 +33,28 @@ export default function ChildTabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: t("tabs.home"),
           tabBarIcon: ({ focused }) => <TabIcon name="home" focused={focused} />,
         }}
       />
       <Tabs.Screen
         name="progress"
         options={{
-          title: "Progress",
+          title: t("tabs.progress"),
           tabBarIcon: ({ focused }) => <TabIcon name="chartBar" focused={focused} />,
         }}
       />
       <Tabs.Screen
         name="rewards"
         options={{
-          title: "Rewards",
+          title: t("tabs.rewards"),
           tabBarIcon: ({ focused }) => <TabIcon name="trophy" focused={focused} />,
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
-          title: "Profile",
+          title: t("tabs.profile"),
           tabBarIcon: ({ focused }) => <TabIcon name="smile" focused={focused} />,
         }}
       />

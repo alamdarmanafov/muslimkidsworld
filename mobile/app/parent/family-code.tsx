@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { router } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../../src/components/icons";
@@ -11,6 +12,7 @@ const ROTATE_SECONDS = 30;
 type GenerateResponse = { code: string; familyCodeId: string; expiresAt: string };
 
 export default function FamilyCode() {
+  const { t } = useTranslation();
   const [code, setCode] = useState<string | null>(null);
   const [secondsLeft, setSecondsLeft] = useState(ROTATE_SECONDS);
   const [error, setError] = useState<string | null>(null);
@@ -29,13 +31,13 @@ export default function FamilyCode() {
       if (!mounted.current) return;
       setCode(data.code);
       setSecondsLeft(ROTATE_SECONDS);
-    } catch (e) {
+    } catch {
       if (!mounted.current) return;
-      setError(e instanceof Error ? e.message : "Could not get a code. Check your connection.");
+      setError(t("familyCode.couldNotGetCode"));
     } finally {
       if (mounted.current) setLoading(false);
     }
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     mounted.current = true;
@@ -68,11 +70,8 @@ export default function FamilyCode() {
 
       <View style={styles.body}>
         <Icon name="users" size={30} color={colors.gold} />
-        <Text style={styles.title}>Connect a Child</Text>
-        <Text style={styles.subtitle}>
-          Open Muslim Kids World on your child's device, choose "I'm a Child", and enter this
-          code.
-        </Text>
+        <Text style={styles.title}>{t("familyCode.title")}</Text>
+        <Text style={styles.subtitle}>{t("familyCode.subtitle")}</Text>
 
         {loading ? (
           <ActivityIndicator color={colors.gold} style={{ marginTop: spacing.xl }} />
@@ -80,7 +79,7 @@ export default function FamilyCode() {
           <View style={styles.errorBox}>
             <Text style={styles.errorText}>{error}</Text>
             <Pressable style={styles.retryBtn} onPress={fetchCode}>
-              <Text style={styles.retryText}>Try Again</Text>
+              <Text style={styles.retryText}>{t("familyCode.tryAgain")}</Text>
             </Pressable>
           </View>
         ) : (
@@ -101,7 +100,9 @@ export default function FamilyCode() {
                 ]}
               />
             </View>
-            <Text style={styles.countdownText}>New code in {secondsLeft}s</Text>
+            <Text style={styles.countdownText}>
+              {t("familyCode.newCodeIn", { seconds: secondsLeft })}
+            </Text>
           </>
         )}
       </View>
