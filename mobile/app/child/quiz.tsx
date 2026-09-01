@@ -53,7 +53,6 @@ export default function Quiz() {
               icon={latestReward.icon}
               tone={latestReward.tone}
               size={112}
-              shape="circle"
             />
           </View>
           <Text style={styles.rewardName}>{latestReward.name}</Text>

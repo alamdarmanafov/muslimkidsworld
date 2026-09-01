@@ -21,22 +21,20 @@ export function IconBadge({
   icon,
   tone,
   size = 44,
-  shape = "circle",
 }: {
   icon: IconName;
   tone: IconBadgeTone;
   size?: number;
-  shape?: "square" | "circle";
 }) {
-  const radius = shape === "circle" ? size / 2 : size * 0.32;
-
   return (
     <View
       style={{
         width: size,
         height: size,
-        borderRadius: radius,
+        borderRadius: size * 0.32,
         backgroundColor: tone[0],
+        borderWidth: 1.5,
+        borderColor: `${tone[1]}40`,
         alignItems: "center",
         justifyContent: "center",
       }}

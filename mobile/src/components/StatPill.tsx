@@ -16,7 +16,7 @@ export function StatPill({
 }) {
   return (
     <View style={styles.pill}>
-      <IconBadge icon={icon} tone={tone} size={36} shape="circle" />
+      <IconBadge icon={icon} tone={tone} size={36} />
       <Text style={styles.label}>{label}</Text>
       <Text style={styles.value}>{value}</Text>
     </View>

@@ -38,7 +38,7 @@ export default function ChildHome() {
         <Card style={styles.missionCard}>
           <Text style={styles.missionLabel}>Today's Mission</Text>
           <View style={styles.missionRow}>
-            <IconBadge icon="quiz" tone={tones.purple} size={56} shape="square" />
+            <IconBadge icon="quiz" tone={tones.purple} size={56} />
             <View style={{ flex: 1 }}>
               <Text style={styles.missionTitle}>Daily 10</Text>
               <Text style={styles.missionSubtitle}>
@@ -64,7 +64,7 @@ export default function ChildHome() {
               onPress={() => router.push(item.href)}
             >
               <Card style={styles.gridCard}>
-                <IconBadge icon={item.icon} tone={item.tone} size={44} shape="square" />
+                <IconBadge icon={item.icon} tone={item.tone} size={44} />
                 <Text style={styles.gridLabel}>{item.label}</Text>
               </Card>
             </Pressable>
