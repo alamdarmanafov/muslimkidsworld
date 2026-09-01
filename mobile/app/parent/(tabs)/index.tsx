@@ -18,6 +18,7 @@ const weekStats = [
 const parentTools: { icon: IconName; label: string; href: string }[] = [
   { icon: "chartBar", label: "Learning progress", href: "/parent/progress" },
   { icon: "users", label: "Manage children", href: "/parent/children" },
+  { icon: "clock", label: "Daily Limit", href: "/parent/daily-limit" },
   { icon: "lock", label: "Parent PIN & safety", href: "/parent/profile" },
   { icon: "smile", label: "Settings", href: "/parent/profile" },
 ];

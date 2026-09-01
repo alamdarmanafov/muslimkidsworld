@@ -310,7 +310,18 @@ export const dailyJourney: JourneyItem[] = [
   { id: "game", label: "Game", icon: "controller", minutes: 10, href: "/child/games", done: false },
 ];
 
-export const dailyGoalMinutes = dailyJourney.reduce((sum, i) => sum + i.minutes, 0);
+export const dailyLimitOptions = [30, 45, 60, 90] as const;
+
+let _dailyLimitMinutes = 60;
+
+export function getDailyLimitMinutes() {
+  return _dailyLimitMinutes;
+}
+
+export function setDailyLimitMinutes(minutes: number) {
+  _dailyLimitMinutes = minutes;
+}
+
 export const dailyMinutesDone = dailyJourney
   .filter((i) => i.done)
   .reduce((sum, i) => sum + i.minutes, 0);

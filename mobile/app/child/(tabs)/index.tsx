@@ -4,9 +4,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon, type IconName } from "../../../src/components/icons";
 import {
   activeChild,
-  dailyGoalMinutes,
   dailyJourney,
   dailyMinutesDone,
+  getDailyLimitMinutes,
 } from "../../../src/data/mock";
 import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
 
@@ -26,8 +26,11 @@ function gardenStage(percent: number) {
 }
 
 export default function ChildHome() {
+  const dailyGoalMinutes = getDailyLimitMinutes();
+  const remaining = Math.max(dailyGoalMinutes - dailyMinutesDone, 0);
   const progress = Math.round((dailyMinutesDone / dailyGoalMinutes) * 100);
   const complete = dailyMinutesDone >= dailyGoalMinutes;
+  const almostThere = !complete && remaining <= 5;
   const garden = gardenStage(progress);
 
   return (
@@ -51,6 +54,13 @@ export default function ChildHome() {
               <Text style={styles.heroTitle}>🎉 Today's Journey Complete!</Text>
               <Text style={styles.heroSubtitle}>
                 Amazing job! Now go play, read or help your family. 💛
+              </Text>
+            </>
+          ) : almostThere ? (
+            <>
+              <Text style={styles.heroTitle}>🌙 Almost there!</Text>
+              <Text style={styles.heroSubtitle}>
+                You have {remaining} minute{remaining === 1 ? "" : "s"} left in today's journey.
               </Text>
             </>
           ) : (
