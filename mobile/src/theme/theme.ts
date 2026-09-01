@@ -1,14 +1,21 @@
 export const colors = {
+  night: "#0D1B4C",
+  nightDeep: "#081233",
+  onNight: "#F5F8FC",
+  onNightMuted: "#A9B4D6",
+
   skyTop: "#8ED4F0",
   skyBottom: "#CFEFFB",
   ground: "#4CAF6D",
   groundDark: "#3C9B5C",
 
-  primary: "#3B82F6",
-  primaryDark: "#2563EB",
+  primary: "#2563EB",
+  primaryDark: "#1D4ED8",
+  primaryLight: "#7CC6FF",
   success: "#22C55E",
   successDark: "#16A34A",
-  gold: "#FBBF24",
+  gold: "#FFD54F",
+  goldDark: "#D97706",
   fire: "#F97316",
   purple: "#8B5CF6",
   pink: "#EC4899",
@@ -21,6 +28,12 @@ export const colors = {
   background: "#F5F8FC",
 
   locked: "#9CA3AF",
+} as const;
+
+export const fonts = {
+  heading: "Nunito_800ExtraBold",
+  body: "Nunito_400Regular",
+  bodyBold: "Nunito_700Bold",
 } as const;
 
 export const radii = {

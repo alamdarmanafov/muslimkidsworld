@@ -1,3 +1,4 @@
+import type { StyleProp, ViewStyle } from "react-native";
 import Svg, { Path } from "react-native-svg";
 
 export type IconName =
@@ -17,7 +18,10 @@ export type IconName =
   | "home"
   | "moon"
   | "chartBar"
-  | "users";
+  | "users"
+  | "shield"
+  | "lock"
+  | "arrowRight";
 
 const paths: Record<IconName, string> = {
   quiz: "M12 2.5A9.5 9.5 0 1 0 21.5 12 9.5 9.5 0 0 0 12 2.5Zm0 14.2a1.2 1.2 0 1 1 1.2-1.2A1.2 1.2 0 0 1 12 16.7Zm1.4-5.1c-.7.5-.9.8-.9 1.5h-1c0-1.1.4-1.7 1.3-2.3.6-.4.9-.7.9-1.3a1.7 1.7 0 0 0-3.4-.1H9.3a2.7 2.7 0 0 1 5.4.1c0 1-.5 1.6-1.3 2.1Z",
@@ -37,19 +41,24 @@ const paths: Record<IconName, string> = {
   moon: "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z",
   chartBar: "M3.5 20V10.5h4V20ZM10 20V3.5h4V20ZM16.5 20v-8h4v8Z",
   users: "M12 3.8a4.2 4.2 0 1 1 0 8.4 4.2 4.2 0 0 1 0-8.4ZM3.8 21a8.2 8.2 0 0 1 16.4 0Z",
+  shield: "M12 2.2 4.5 5v6c0 5 3.2 8.6 7.5 9.8 4.3-1.2 7.5-4.8 7.5-9.8V5ZM11 15.3 7.6 12l1.4-1.4L11 12.5l4-4 1.4 1.4Z",
+  lock: "M12 2a4 4 0 0 1 4 4v3h1a1.6 1.6 0 0 1 1.6 1.6v9.8A1.6 1.6 0 0 1 17 22H7a1.6 1.6 0 0 1-1.6-1.6v-9.8A1.6 1.6 0 0 1 7 9h1V6a4 4 0 0 1 4-4Zm0 2a2 2 0 0 0-2 2v3h4V6a2 2 0 0 0-2-2Zm0 10.2a1.6 1.6 0 1 0 0 3.2 1.6 1.6 0 0 0 0-3.2Z",
+  arrowRight: "M4 11h12.2l-4.6-4.6L13 5l7 7-7 7-1.4-1.4 4.6-4.6H4Z",
 };
 
 export function Icon({
   name,
   size = 24,
   color = "#1F2937",
+  style,
 }: {
   name: IconName;
   size?: number;
   color?: string;
+  style?: StyleProp<ViewStyle>;
 }) {
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill={color} style={style}>
       <Path d={paths[name]} fillRule="evenodd" clipRule="evenodd" />
     </Svg>
   );
