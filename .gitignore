@@ -26,3 +26,6 @@ next-env.d.ts
 
 # vercel
 .vercel
+
+# local Claude Code state (agent worktrees, etc.)
+/.claude/
