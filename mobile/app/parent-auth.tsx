@@ -1,0 +1,255 @@
+import { useState } from "react";
+import { router } from "expo-router";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Icon } from "../src/components/icons";
+import { getSupabaseClient } from "../src/lib/supabase";
+import { colors, fonts, radii, spacing } from "../src/theme/theme";
+
+type Mode = "signIn" | "signUp";
+
+export default function ParentAuth() {
+  const [mode, setMode] = useState<Mode>("signIn");
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const isSignUp = mode === "signUp";
+  const canSubmit =
+    email.trim().length > 3 &&
+    password.length >= 6 &&
+    (!isSignUp || (fullName.trim().length > 0 && password === confirmPassword));
+
+  const handleSubmit = async () => {
+    setError(null);
+    setLoading(true);
+    try {
+      const supabase = getSupabaseClient();
+
+      if (isSignUp) {
+        const { data, error: signUpError } = await supabase.auth.signUp({
+          email: email.trim(),
+          password,
+          options: { data: { full_name: fullName.trim() } },
+        });
+        if (signUpError) throw signUpError;
+
+        if (data.user) {
+          await supabase
+            .from("parents")
+            .update({ full_name: fullName.trim() })
+            .eq("id", data.user.id);
+        }
+
+        if (!data.session) {
+          setError("Check your email to confirm your account, then sign in.");
+          setMode("signIn");
+          setLoading(false);
+          return;
+        }
+      } else {
+        const { error: signInError } = await supabase.auth.signInWithPassword({
+          email: email.trim(),
+          password,
+        });
+        if (signInError) throw signInError;
+      }
+
+      router.replace("/parent");
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Something went wrong. Try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <SafeAreaView style={styles.screen}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        style={styles.flex}
+      >
+        <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+          <Pressable onPress={() => router.back()} style={styles.backBtn}>
+            <Icon name="arrowRight" size={18} color={colors.ink} style={styles.backIcon} />
+          </Pressable>
+
+          <Icon name="users" size={30} color={colors.primary} style={{ marginBottom: spacing.sm }} />
+          <Text style={styles.title}>{isSignUp ? "Create your account" : "Welcome back"}</Text>
+          <Text style={styles.subtitle}>
+            {isSignUp
+              ? "Set up your family's learning journey."
+              : "Sign in to manage your child's learning."}
+          </Text>
+
+          <View style={styles.form}>
+            {isSignUp ? (
+              <TextInput
+                style={styles.input}
+                value={fullName}
+                onChangeText={setFullName}
+                placeholder="Full name"
+                placeholderTextColor={colors.locked}
+                autoCapitalize="words"
+              />
+            ) : null}
+            <TextInput
+              style={styles.input}
+              value={email}
+              onChangeText={setEmail}
+              placeholder="Email"
+              placeholderTextColor={colors.locked}
+              autoCapitalize="none"
+              keyboardType="email-address"
+            />
+            <TextInput
+              style={styles.input}
+              value={password}
+              onChangeText={setPassword}
+              placeholder="Password"
+              placeholderTextColor={colors.locked}
+              secureTextEntry
+            />
+            {isSignUp ? (
+              <TextInput
+                style={styles.input}
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+                placeholder="Confirm password"
+                placeholderTextColor={colors.locked}
+                secureTextEntry
+              />
+            ) : null}
+          </View>
+
+          {error ? <Text style={styles.errorText}>{error}</Text> : null}
+
+          <Pressable
+            style={[styles.submitBtn, (!canSubmit || loading) && styles.submitBtnDisabled]}
+            disabled={!canSubmit || loading}
+            onPress={handleSubmit}
+          >
+            <Text style={styles.submitBtnText}>
+              {loading ? "Please wait…" : isSignUp ? "Create Account" : "Sign In"}
+            </Text>
+          </Pressable>
+
+          <Pressable
+            onPress={() => {
+              setError(null);
+              setMode(isSignUp ? "signIn" : "signUp");
+            }}
+          >
+            <Text style={styles.switchText}>
+              {isSignUp ? "Already have an account? " : "New here? "}
+              <Text style={styles.switchTextBold}>{isSignUp ? "Sign In" : "Create Account"}</Text>
+            </Text>
+          </Pressable>
+
+          <View style={styles.divider}>
+            <View style={styles.dividerLine} />
+            <Text style={styles.dividerText}>coming soon</Text>
+            <View style={styles.dividerLine} />
+          </View>
+
+          <View style={[styles.oauthBtn, styles.oauthBtnDisabled]}>
+            <Text style={styles.oauthBtnText}> Continue with Apple</Text>
+          </View>
+          <View style={[styles.oauthBtn, styles.oauthBtnDisabled]}>
+            <Text style={styles.oauthBtnText}>G  Continue with Google</Text>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  screen: { flex: 1, backgroundColor: colors.background },
+  flex: { flex: 1 },
+  content: { padding: spacing.lg, paddingBottom: spacing.xl },
+  backBtn: {
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    backgroundColor: colors.card,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: spacing.lg,
+  },
+  backIcon: { transform: [{ scaleX: -1 }] },
+  title: { fontFamily: fonts.heading, fontSize: 22, color: colors.ink },
+  subtitle: {
+    fontFamily: fonts.body,
+    fontSize: 13,
+    color: colors.inkMuted,
+    marginTop: spacing.xs,
+    marginBottom: spacing.lg,
+  },
+  form: { gap: spacing.sm },
+  input: {
+    backgroundColor: colors.card,
+    borderRadius: radii.md,
+    borderWidth: 1.5,
+    borderColor: colors.border,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.md,
+    fontFamily: fonts.body,
+    fontSize: 15,
+    color: colors.ink,
+  },
+  errorText: {
+    fontFamily: fonts.body,
+    fontSize: 12,
+    color: colors.pink,
+    marginTop: spacing.sm,
+  },
+  submitBtn: {
+    backgroundColor: colors.night,
+    borderRadius: radii.lg,
+    paddingVertical: spacing.md,
+    alignItems: "center",
+    marginTop: spacing.lg,
+  },
+  submitBtnDisabled: { opacity: 0.4 },
+  submitBtnText: { fontFamily: fonts.bodyBold, fontSize: 15, color: "#FFFFFF" },
+  switchText: {
+    fontFamily: fonts.body,
+    fontSize: 13,
+    color: colors.inkMuted,
+    textAlign: "center",
+    marginTop: spacing.md,
+  },
+  switchTextBold: { fontFamily: fonts.bodyBold, color: colors.primary },
+  divider: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.sm,
+    marginTop: spacing.xl,
+    marginBottom: spacing.md,
+  },
+  dividerLine: { flex: 1, height: 1, backgroundColor: colors.border },
+  dividerText: { fontFamily: fonts.body, fontSize: 11, color: colors.inkMuted },
+  oauthBtn: {
+    borderRadius: radii.md,
+    borderWidth: 1.5,
+    borderColor: colors.border,
+    paddingVertical: spacing.md,
+    alignItems: "center",
+    marginBottom: spacing.sm,
+  },
+  oauthBtnDisabled: { opacity: 0.4 },
+  oauthBtnText: { fontFamily: fonts.bodyBold, fontSize: 14, color: colors.ink },
+});

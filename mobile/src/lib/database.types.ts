@@ -38,6 +38,7 @@ export type Database = {
           updated_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["families"]["Insert"]>;
+        Relationships: [];
       };
       parents: {
         Row: {
@@ -57,6 +58,7 @@ export type Database = {
           updated_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["parents"]["Insert"]>;
+        Relationships: [];
       };
       children: {
         Row: {
@@ -80,6 +82,7 @@ export type Database = {
           updated_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["children"]["Insert"]>;
+        Relationships: [];
       };
       child_progress: {
         Row: {
@@ -107,6 +110,7 @@ export type Database = {
           updated_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["child_progress"]["Insert"]>;
+        Relationships: [];
       };
       family_codes: {
         Row: {
@@ -130,6 +134,7 @@ export type Database = {
           created_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["family_codes"]["Insert"]>;
+        Relationships: [];
       };
       subscription_plans: {
         Row: {
@@ -163,6 +168,7 @@ export type Database = {
           updated_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["subscription_plans"]["Insert"]>;
+        Relationships: [];
       };
       subscriptions: {
         Row: {
@@ -194,6 +200,7 @@ export type Database = {
           updated_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["subscriptions"]["Insert"]>;
+        Relationships: [];
       };
       quran_surahs: {
         Row: {
@@ -221,6 +228,7 @@ export type Database = {
           updated_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["quran_surahs"]["Insert"]>;
+        Relationships: [];
       };
       duas: {
         Row: {
@@ -248,6 +256,7 @@ export type Database = {
           updated_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["duas"]["Insert"]>;
+        Relationships: [];
       };
       stories: {
         Row: {
@@ -279,6 +288,7 @@ export type Database = {
           updated_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["stories"]["Insert"]>;
+        Relationships: [];
       };
       quizzes: {
         Row: {
@@ -300,6 +310,7 @@ export type Database = {
           updated_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["quizzes"]["Insert"]>;
+        Relationships: [];
       };
       quiz_questions: {
         Row: {
@@ -326,6 +337,7 @@ export type Database = {
           updated_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["quiz_questions"]["Insert"]>;
+        Relationships: [];
       };
       games: {
         Row: {
@@ -355,6 +367,7 @@ export type Database = {
           updated_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["games"]["Insert"]>;
+        Relationships: [];
       };
       achievements: {
         Row: {
@@ -380,6 +393,7 @@ export type Database = {
           updated_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["achievements"]["Insert"]>;
+        Relationships: [];
       };
       child_achievements: {
         Row: {
@@ -395,6 +409,7 @@ export type Database = {
           earned_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["child_achievements"]["Insert"]>;
+        Relationships: [];
       };
       daily_journeys: {
         Row: {
@@ -414,6 +429,7 @@ export type Database = {
           updated_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["daily_journeys"]["Insert"]>;
+        Relationships: [];
       };
       daily_journey_items: {
         Row: {
@@ -445,6 +461,7 @@ export type Database = {
           updated_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["daily_journey_items"]["Insert"]>;
+        Relationships: [];
       };
     };
     Views: Record<string, never>;

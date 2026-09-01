@@ -67,7 +67,7 @@ export default function Welcome() {
             <View style={styles.cardsRow}>
               <Pressable
                 style={[styles.card, { backgroundColor: "#E4F1FF" }]}
-                onPress={() => router.push("/parent")}
+                onPress={() => router.push("/parent-auth")}
               >
                 <View style={[styles.cardBadge, { backgroundColor: colors.primary }]}>
                   <Icon name="users" size={20} color="#FFFFFF" />
