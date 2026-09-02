@@ -2178,8 +2178,8 @@ export function getQuizQuestions(
     const staticMath = quizBank
       .filter((q) => q.category === "riyaziyyat")
       .filter((q) => !difficulty || getDifficulty(q) === difficulty);
-    const generated = generateMathQuestions(12, difficulty ?? "medium");
-    const wordProblems = generateMathWordProblemQuestions(8, difficulty ?? "medium");
+    const generated = generateMathQuestions(18, difficulty ?? "medium");
+    const wordProblems = generateMathWordProblemQuestions(12, difficulty ?? "medium");
     return shuffle([...staticMath, ...generated, ...wordProblems]);
   }
   if (category === "din") {
@@ -2189,11 +2189,11 @@ export function getQuizQuestions(
     const generated =
       !difficulty || difficulty === "hard"
         ? [
-            ...generateSurahFactQuestions(6),
-            ...generateSurahRevelationQuestions(6),
-            ...generateSurahOrderQuestions(6),
-            ...generateSurahCompareQuestions(6),
-            ...generateDivineNameQuestions(6, lang),
+            ...generateSurahFactQuestions(10),
+            ...generateSurahRevelationQuestions(10),
+            ...generateSurahOrderQuestions(10),
+            ...generateSurahCompareQuestions(10),
+            ...generateDivineNameQuestions(10, lang),
           ]
         : [];
     return shuffle([...staticDin, ...generated]);
