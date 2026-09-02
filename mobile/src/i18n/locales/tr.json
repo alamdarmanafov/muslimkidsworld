@@ -276,14 +276,32 @@
       "eat": "Yemekten Önce"
     },
     "stories": {
-      "yunus": { "title": "Peygamber Yunus'un (AS) Hikayesi", "subtitle": "Balığın içinde" },
-      "ibrahim": { "title": "Peygamber İbrahim (AS)", "subtitle": "Allah'ın dostu" },
-      "musa": { "title": "Peygamber Musa (AS)", "subtitle": "Asa ve deniz" }
+      "yunus": {
+        "title": "Peygamber Yunus'un (AS) Hikayesi",
+        "subtitle": "Balığın içinde"
+      },
+      "ibrahim": {
+        "title": "Peygamber İbrahim (AS)",
+        "subtitle": "Allah'ın dostu"
+      },
+      "musa": {
+        "title": "Peygamber Musa (AS)",
+        "subtitle": "Asa ve deniz"
+      }
     },
     "games": {
-      "find-pair": { "title": "Eşi Bul", "subtitle": "İslami mekanları eşleştir" },
-      "memory": { "title": "Hafıza", "subtitle": "Hafızanı geliştir" },
-      "word-puzzle": { "title": "İslami Kelime Bulmacası", "subtitle": "Arap harflerini sırala" }
+      "find-pair": {
+        "title": "Eşi Bul",
+        "subtitle": "İslami mekanları eşleştir"
+      },
+      "memory": {
+        "title": "Hafıza",
+        "subtitle": "Hafızanı geliştir"
+      },
+      "word-puzzle": {
+        "title": "İslami Kelime Bulmacası",
+        "subtitle": "Arap harflerini sırala"
+      }
     },
     "achievements": {
       "first-star": "İlk Yıldız",
@@ -409,7 +427,40 @@
       "sc18": "Çöpü nereye atmalıyız?",
       "m16": "5 elma var. 2'sini arkadaşına versen, kaç elma kalır?",
       "m17": "4 sepetin her birinde 3 elma varsa, toplam kaç elma vardır?",
-      "m18": "Bir çocukta 10 şeker var. 5'ini yerse, kaç şeker kalır?"
+      "m18": "Bir çocukta 10 şeker var. 5'ini yerse, kaç şeker kalır?",
+      "d7": "Müslümanlar namaz kılarken hangi yöne dönerler?",
+      "d8": "Kur'an-ı Kerim'in ilk suresi hangisidir?",
+      "d9": "Müslümanlar yemeğe başlamadan önce ne der?",
+      "d10": "Müslümanlar gelecekte bir şey yapmayı planladıklarında hangi kelimeyi söylerler?",
+      "d11": "Hangi bayramda kurban kesilir?",
+      "d12": "Oruç tutan Müslümanların gün batımında yemeğe başlamasına ne denir?",
+      "d13": "Yoksullara gönüllü olarak verilen yardıma ne denir?",
+      "e16": "Sokakta aç bir hayvan görüyorsun. Ne yaparsın?",
+      "e17": "Yaşlı komşun ağır bir çanta taşıyor. Ne yaparsın?",
+      "e18": "Küçük bir çocuk ayakkabısını bağlamakta zorlanıyor. Ne yaparsın?",
+      "e19": "Biri sana bir hediye veriyor. Ne yapmalısın?",
+      "e20": "Arkadaşın yarışmayı kaybetti ve üzgün. Ne yaparsın?",
+      "sc19": "Bir günde kaç saat vardır?",
+      "sc20": "Hangi hayvanın boynu çok uzundur?",
+      "sc21": "En büyük kara hayvanı hangisidir?",
+      "sc22": "Hangi hayvanın vücudunda siyah-beyaz çizgiler vardır?",
+      "sc23": "Hangi hayvan çoğunlukla bambu yer?",
+      "sc24": "Hangi hayvan yavrusunu karnındaki kesede taşır?",
+      "sc25": "Hangi hayvan çölde uzun süre susuz kalabilir?",
+      "sc26": "Hangi kuş geceleri çok iyi görür?",
+      "sc27": "Hangi deniz hayvanı çok zeki kabul edilir ve seslerle \"konuşur\"?",
+      "sc28": "Biz hangi gezegende yaşıyoruz?",
+      "sc29": "Su donduğunda neye dönüşür?",
+      "m19": "Diziyi tamamla: 2, 4, 6, 8, ?",
+      "m20": "Diziyi tamamla: 5, 10, 15, 20, ?",
+      "m21": "Diziyi tamamla: 1, 3, 5, 7, ?",
+      "m22": "Ağaçta 9 kuş oturuyordu. 4'ü uçup gitti. Kaç kuş kaldı?",
+      "m23": "3 sepette her birinde 5 kalem var. Toplam kaç kalem var?",
+      "m24": "12 şeker 4 çocuk arasında eşit paylaştırılıyor. Her çocuğa kaç şeker düşer?",
+      "m25": "Saat 3. 5 saat sonra saat kaç olacak?",
+      "m26": "4 kutuda her birinde 6 oyuncak var. Toplam kaç oyuncak var?",
+      "m27": "1 kilogramda kaç gram vardır?",
+      "m28": "Bir günde kaç saat vardır?"
     },
     "quizPlaces": {
       "mecca": "Mekke",
@@ -446,13 +497,18 @@
       "fasting": "Oruç tutmak",
       "zakat": "Zekat vermek",
       "hajj": "Hacca gitmek",
-      "sacrifice": "Kurban kesmek"
+      "sacrifice": "Kurban kesmek",
+      "iftar": "İftar",
+      "sahur": "Sahur",
+      "sadaqah": "Sadaka",
+      "prayer": "Namaz"
     },
     "quizPhrases": {
       "bismillah": "Bismillah",
       "alhamdulillah": "Elhamdülillah",
       "subhanallah": "Sübhanallah",
-      "astaghfirullah": "Estağfirullah"
+      "astaghfirullah": "Estağfirullah",
+      "inshallah": "İnşallah"
     },
     "quizPurposes": {
       "worship": "İbadet etmek için",
@@ -476,13 +532,22 @@
       "sparrow": "Serçe",
       "penguin": "Penguen",
       "eagle": "Kartal",
-      "peacock": "Tavus Kuşu"
+      "peacock": "Tavus Kuşu",
+      "giraffe": "Zürafa",
+      "elephant": "Fil",
+      "zebra": "Zebra",
+      "panda": "Panda",
+      "kangaroo": "Kanguru",
+      "camel": "Deve",
+      "owl": "Baykuş",
+      "dolphin": "Yunus"
     },
     "quizCelestial": {
       "moon": "Ay",
       "sun": "Güneş",
       "star": "Yıldız",
-      "comet": "Kuyruklu Yıldız"
+      "comet": "Kuyruklu Yıldız",
+      "earth": "Dünya"
     },
     "quizProducts": {
       "honey": "Bal",
@@ -513,7 +578,40 @@
       "sc15": "Aslan, gücünden dolayı \"ormanlar kralı\" olarak bilinir.",
       "sc16": "Arılar çiçeklerden topladıkları nektardan bal üretir.",
       "sc17": "Penguenler uçamaz ama suda çok hızlı yüzer.",
-      "sc18": "Çöpü doğru yere atmak doğayı korumaya yardımcı olur."
+      "sc18": "Çöpü doğru yere atmak doğayı korumaya yardımcı olur.",
+      "d7": "Dünyanın her yerindeki Müslümanlar namaz kılarken Mekke'deki Kâbe'ye yönelirler. Bu yöne kıble denir.",
+      "d8": "Kur'an-ı Kerim Fatiha suresi ile başlar. Bu sure her namazda da okunur.",
+      "d9": "'Bismillah', 'Allah'ın adıyla' demektir. Yemeğe başlamadan önce bu nimet için Allah'a şükretmek amacıyla söylenir.",
+      "d10": "'İnşallah', 'Allah izin verirse' demektir. Gelecekteki bir işten bahsederken söylenir, çünkü her şey Allah'ın izniyle olur.",
+      "d11": "Kurban Bayramı'nda Müslümanlar Allah'a itaatin işareti olarak kurban keser ve etini ihtiyaç sahipleriyle paylaşır.",
+      "d12": "İftar, orucun gün batımında açılması, yani yemeğe başlanmasıdır. Bu, Ramazan ayının güzel anlarından biridir.",
+      "d13": "Sadaka, hiçbir zorunluluk olmadan, gönülden verilen yardımdır. Küçük bir iyilik bile sadaka sayılır.",
+      "e16": "Hayvanlara karşı merhametli olmak, Peygamberimizin bize öğrettiği güzel ahlaktandır.",
+      "e17": "Yaşlı insanlara yardım etmek ve saygı göstermek çok sevap bir davranıştır.",
+      "e18": "Küçüklere yardım etmek ve onlara karşı şefkatli olmak güzel bir özelliktir.",
+      "e19": "Bize iyilik yapan kişiye teşekkür etmek güzel ahlakın bir parçasıdır.",
+      "e20": "Üzgün bir arkadaşı desteklemek ve onun yanında olmak çok güzel bir davranıştır.",
+      "sc19": "Bir gün 24 saatten oluşur — Dünya'nın kendi ekseni etrafında bir tam dönüş yapması kadar süredir.",
+      "sc20": "Zürafanın uzun boynu, ağaçlardaki yüksek yaprakları yemesine yardımcı olur.",
+      "sc21": "Fil, karada yaşayan en büyük hayvandır ve hortumuyla su içer, yiyecek alır.",
+      "sc22": "Her zebranın çizgileri farklıdır, tıpkı insan parmak izi gibi benzersizdir.",
+      "sc23": "Pandalar günde saatlerce bambu yer — bu onların ana besinidir.",
+      "sc24": "Kanguru, yavrusunu doğduktan sonra karnındaki kesede büyütür.",
+      "sc25": "Deve, hörgücünde yağ depolar ve bu sayede çölde uzun süre susuz kalabilir.",
+      "sc26": "Baykuşun gözleri karanlıkta görmeye uygundur, bu yüzden gece avlanır.",
+      "sc27": "Yunuslar çok zeki hayvanlardır ve birbirleriyle seslerle \"konuşurlar\".",
+      "sc28": "Güneş sistemindeki Dünya adlı gezegende yaşıyoruz.",
+      "sc29": "Su 0 derecenin altına soğuduğunda donar ve buza dönüşür.",
+      "m19": "Sayılar her seferinde 2 artıyor: 2, 4, 6, 8, 10.",
+      "m20": "Sayılar her seferinde 5 artıyor: 5, 10, 15, 20, 25.",
+      "m21": "Bu tek sayılar dizisidir: her seferinde 2 artar — 1, 3, 5, 7, 9.",
+      "m22": "9 - 4 = 5. Ağaçta 5 kuş kaldı.",
+      "m23": "3 sepet × 5 kalem = 15 kalem.",
+      "m24": "12 : 4 = 3. Her çocuğa 3 şeker düşer.",
+      "m25": "3 + 5 = 8. Saat 8 olacak.",
+      "m26": "4 kutu × 6 oyuncak = 24 oyuncak.",
+      "m27": "1 kilogram = 1000 gram.",
+      "m28": "Bir gün 24 saatten oluşur."
     },
     "prayers": {
       "fajr": "Sabah",
@@ -582,7 +680,11 @@
       "single": {
         "name": "Tek Çocuk",
         "childLimit": "1 Çocuk",
-        "features": ["Sınırsız Günlük 10", "Tam Dünya Erişimi", "Temel Raporlar"]
+        "features": [
+          "Sınırsız Günlük 10",
+          "Tam Dünya Erişimi",
+          "Temel Raporlar"
+        ]
       },
       "family": {
         "name": "Aile",
@@ -595,6 +697,24 @@
           "İstediğin zaman iptal et"
         ]
       }
+    },
+    "quizDirections": {
+      "kaaba": "Kâbe",
+      "sun": "Güneş",
+      "moon": "Ay",
+      "east": "Doğu"
+    },
+    "quizSurahNames": {
+      "fatiha": "Fatiha",
+      "baqara": "Bakara",
+      "yasin": "Yasin",
+      "ikhlas": "İhlas"
+    },
+    "quizWeather": {
+      "ice": "Buz",
+      "cloud": "Bulut",
+      "fog": "Sis",
+      "snow": "Kar"
     }
   }
 }

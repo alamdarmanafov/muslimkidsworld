@@ -276,14 +276,32 @@
       "eat": "Before Eating"
     },
     "stories": {
-      "yunus": { "title": "The Story of Prophet Yunus (AS)", "subtitle": "Inside the whale" },
-      "ibrahim": { "title": "Prophet Ibrahim (AS)", "subtitle": "The friend of Allah" },
-      "musa": { "title": "Prophet Musa (AS)", "subtitle": "The staff and the sea" }
+      "yunus": {
+        "title": "The Story of Prophet Yunus (AS)",
+        "subtitle": "Inside the whale"
+      },
+      "ibrahim": {
+        "title": "Prophet Ibrahim (AS)",
+        "subtitle": "The friend of Allah"
+      },
+      "musa": {
+        "title": "Prophet Musa (AS)",
+        "subtitle": "The staff and the sea"
+      }
     },
     "games": {
-      "find-pair": { "title": "Find the Pair", "subtitle": "Match Islamic landmarks" },
-      "memory": { "title": "Memory", "subtitle": "Train your memory" },
-      "word-puzzle": { "title": "Islamic Word Puzzle", "subtitle": "Arrange the Arabic letters" }
+      "find-pair": {
+        "title": "Find the Pair",
+        "subtitle": "Match Islamic landmarks"
+      },
+      "memory": {
+        "title": "Memory",
+        "subtitle": "Train your memory"
+      },
+      "word-puzzle": {
+        "title": "Islamic Word Puzzle",
+        "subtitle": "Arrange the Arabic letters"
+      }
     },
     "achievements": {
       "first-star": "First Star",
@@ -409,7 +427,40 @@
       "sc18": "Where should we throw trash?",
       "m16": "There are 5 apples. If you give 2 to your friend, how many are left?",
       "m17": "If each of 4 baskets has 3 apples, how many apples in total?",
-      "m18": "A child has 10 candies. If they eat 5, how many are left?"
+      "m18": "A child has 10 candies. If they eat 5, how many are left?",
+      "d7": "Which direction do Muslims face when praying?",
+      "d8": "Which is the first surah of the Quran?",
+      "d9": "What do Muslims say before starting to eat?",
+      "d10": "What word do Muslims say when they plan to do something in the future?",
+      "d11": "During which holiday do Muslims sacrifice an animal?",
+      "d12": "What is it called when fasting Muslims start eating at sunset?",
+      "d13": "What is voluntary help given to the poor called?",
+      "e16": "You see a hungry animal on the street. What do you do?",
+      "e17": "Your elderly neighbor is carrying a heavy bag. What do you do?",
+      "e18": "A little child is struggling to tie their shoes. What do you do?",
+      "e19": "Someone gives you a gift. What should you do?",
+      "e20": "Your friend lost a competition and is sad. What do you do?",
+      "sc19": "How many hours are there in a day?",
+      "sc20": "Which animal has a very long neck?",
+      "sc21": "Which is the largest land animal?",
+      "sc22": "Which animal has black and white stripes on its body?",
+      "sc23": "Which animal mainly eats bamboo?",
+      "sc24": "Which animal carries its baby in a pouch on its belly?",
+      "sc25": "Which animal can go a long time without water in the desert?",
+      "sc26": "Which bird can see very well at night?",
+      "sc27": "Which sea animal is considered very intelligent and \"talks\" with sounds?",
+      "sc28": "Which planet do we live on?",
+      "sc29": "What does water turn into when it freezes?",
+      "m19": "Continue the sequence: 2, 4, 6, 8, ?",
+      "m20": "Continue the sequence: 5, 10, 15, 20, ?",
+      "m21": "Continue the sequence: 1, 3, 5, 7, ?",
+      "m22": "9 birds were sitting on a tree. 4 flew away. How many birds are left?",
+      "m23": "There are 3 baskets, each with 5 pencils. How many pencils are there in total?",
+      "m24": "12 candies are shared equally among 4 children. How many candies does each child get?",
+      "m25": "It is 3 o'clock. What time will it be in 5 hours?",
+      "m26": "There are 4 boxes, each with 6 toys. How many toys are there in total?",
+      "m27": "How many grams are there in 1 kilogram?",
+      "m28": "How many hours are there in a day?"
     },
     "quizPlaces": {
       "mecca": "Mecca",
@@ -446,13 +497,18 @@
       "fasting": "Fasting",
       "zakat": "Zakat (charity)",
       "hajj": "Hajj (pilgrimage)",
-      "sacrifice": "Sacrifice (Qurbani)"
+      "sacrifice": "Sacrifice (Qurbani)",
+      "iftar": "Iftar",
+      "sahur": "Suhoor",
+      "sadaqah": "Sadaqah",
+      "prayer": "Prayer"
     },
     "quizPhrases": {
       "bismillah": "Bismillah",
       "alhamdulillah": "Alhamdulillah",
       "subhanallah": "Subhanallah",
-      "astaghfirullah": "Astaghfirullah"
+      "astaghfirullah": "Astaghfirullah",
+      "inshallah": "Inshallah"
     },
     "quizPurposes": {
       "worship": "For worship",
@@ -476,13 +532,22 @@
       "sparrow": "Sparrow",
       "penguin": "Penguin",
       "eagle": "Eagle",
-      "peacock": "Peacock"
+      "peacock": "Peacock",
+      "giraffe": "Giraffe",
+      "elephant": "Elephant",
+      "zebra": "Zebra",
+      "panda": "Panda",
+      "kangaroo": "Kangaroo",
+      "camel": "Camel",
+      "owl": "Owl",
+      "dolphin": "Dolphin"
     },
     "quizCelestial": {
       "moon": "Moon",
       "sun": "Sun",
       "star": "Star",
-      "comet": "Comet"
+      "comet": "Comet",
+      "earth": "Earth"
     },
     "quizProducts": {
       "honey": "Honey",
@@ -513,7 +578,40 @@
       "sc15": "The lion is called the \"king of the forest\" because of its strength.",
       "sc16": "Bees make honey from the nectar they collect from flowers.",
       "sc17": "Penguins can't fly, but they swim very fast in water.",
-      "sc18": "Throwing trash in the right place helps protect nature."
+      "sc18": "Throwing trash in the right place helps protect nature.",
+      "d7": "Muslims everywhere in the world face the Kaaba in Makkah when they pray. This direction is called the qibla.",
+      "d8": "The Quran begins with Surah Al-Fatiha. This surah is also recited in every prayer.",
+      "d9": "'Bismillah' means 'in the name of Allah.' It is said before eating to give thanks to Allah for the food.",
+      "d10": "'Inshallah' means 'if Allah wills.' It is said when talking about future plans, because everything happens by Allah's will.",
+      "d11": "During Eid al-Adha, Muslims sacrifice an animal as a sign of obedience to Allah and share the meat with those in need.",
+      "d12": "Iftar is when the fast is broken at sunset and eating begins. It is one of the beautiful moments of Ramadan.",
+      "d13": "Sadaqah is help given freely from the heart, without any obligation. Even a small act of kindness counts as sadaqah.",
+      "e16": "Being kind to animals is one of the beautiful teachings our Prophet showed us.",
+      "e17": "Helping and respecting elderly people is a very rewarding good deed.",
+      "e18": "Helping younger children and being kind to them is a wonderful quality.",
+      "e19": "Thanking someone who does good to us is part of good manners.",
+      "e20": "Supporting a sad friend and being there for them is a beautiful deed.",
+      "sc19": "A day has 24 hours — the time it takes Earth to complete one full spin on its axis.",
+      "sc20": "A giraffe's long neck helps it reach the high leaves on trees.",
+      "sc21": "The elephant is the largest land animal and uses its trunk to drink water and grab food.",
+      "sc22": "Every zebra's stripes are different, just like a human fingerprint.",
+      "sc23": "Pandas eat bamboo for many hours a day — it is their main food.",
+      "sc24": "A kangaroo raises its baby in the pouch on its belly after it is born.",
+      "sc25": "A camel stores fat in its hump, which helps it survive without water for a long time in the desert.",
+      "sc26": "An owl's eyes are made for seeing in the dark, which is why it hunts at night.",
+      "sc27": "Dolphins are very intelligent animals and \"talk\" to each other using sounds.",
+      "sc28": "We live on the planet called Earth in our solar system.",
+      "sc29": "When water cools below 0 degrees, it freezes and turns into ice.",
+      "m19": "Each number increases by 2: 2, 4, 6, 8, 10.",
+      "m20": "Each number increases by 5: 5, 10, 15, 20, 25.",
+      "m21": "This is the odd-number sequence: it increases by 2 each time — 1, 3, 5, 7, 9.",
+      "m22": "9 - 4 = 5. There are 5 birds left on the tree.",
+      "m23": "3 baskets × 5 pencils = 15 pencils.",
+      "m24": "12 ÷ 4 = 3. Each child gets 3 candies.",
+      "m25": "3 + 5 = 8. It will be 8 o'clock.",
+      "m26": "4 boxes × 6 toys = 24 toys.",
+      "m27": "1 kilogram = 1000 grams.",
+      "m28": "A day has 24 hours."
     },
     "prayers": {
       "fajr": "Fajr",
@@ -582,7 +680,11 @@
       "single": {
         "name": "Single Child",
         "childLimit": "1 Child",
-        "features": ["Unlimited Daily 10", "Full World Access", "Basic Reports"]
+        "features": [
+          "Unlimited Daily 10",
+          "Full World Access",
+          "Basic Reports"
+        ]
       },
       "family": {
         "name": "Family",
@@ -595,6 +697,24 @@
           "Cancel Anytime"
         ]
       }
+    },
+    "quizDirections": {
+      "kaaba": "Kaaba",
+      "sun": "Sun",
+      "moon": "Moon",
+      "east": "East"
+    },
+    "quizSurahNames": {
+      "fatiha": "Al-Fatiha",
+      "baqara": "Al-Baqarah",
+      "yasin": "Ya-Sin",
+      "ikhlas": "Al-Ikhlas"
+    },
+    "quizWeather": {
+      "ice": "Ice",
+      "cloud": "Cloud",
+      "fog": "Fog",
+      "snow": "Snow"
     }
   }
 }

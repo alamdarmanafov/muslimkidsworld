@@ -276,14 +276,32 @@
       "eat": "Yeməkdən əvvəl"
     },
     "stories": {
-      "yunus": { "title": "Peyğəmbər Yunusun (ə.s) hekayəsi", "subtitle": "Balığın içində" },
-      "ibrahim": { "title": "Peyğəmbər İbrahim (ə.s)", "subtitle": "Allahın dostu" },
-      "musa": { "title": "Peyğəmbər Musa (ə.s)", "subtitle": "Əsa və dəniz" }
+      "yunus": {
+        "title": "Peyğəmbər Yunusun (ə.s) hekayəsi",
+        "subtitle": "Balığın içində"
+      },
+      "ibrahim": {
+        "title": "Peyğəmbər İbrahim (ə.s)",
+        "subtitle": "Allahın dostu"
+      },
+      "musa": {
+        "title": "Peyğəmbər Musa (ə.s)",
+        "subtitle": "Əsa və dəniz"
+      }
     },
     "games": {
-      "find-pair": { "title": "Cütü tap", "subtitle": "İslam abidələrini uyğunlaşdır" },
-      "memory": { "title": "Yaddaş oyunu", "subtitle": "Yaddaşını inkişaf etdir" },
-      "word-puzzle": { "title": "İslami söz tapmacası", "subtitle": "Ərəb hərflərini düz" }
+      "find-pair": {
+        "title": "Cütü tap",
+        "subtitle": "İslam abidələrini uyğunlaşdır"
+      },
+      "memory": {
+        "title": "Yaddaş oyunu",
+        "subtitle": "Yaddaşını inkişaf etdir"
+      },
+      "word-puzzle": {
+        "title": "İslami söz tapmacası",
+        "subtitle": "Ərəb hərflərini düz"
+      }
     },
     "achievements": {
       "first-star": "İlk Ulduz",
@@ -409,7 +427,40 @@
       "sc18": "Zibili hara atmalıyıq?",
       "m16": "5 alma var. 2-sini dostuna versən, neçə alma qalır?",
       "m17": "4 səbətin hər birində 3 alma varsa, cəmi neçə alma var?",
-      "m18": "Bir uşaqda 10 konfet var. 5-ni yesə, neçə konfet qalar?"
+      "m18": "Bir uşaqda 10 konfet var. 5-ni yesə, neçə konfet qalar?",
+      "d7": "Müsəlmanlar namaz qılanda hansı tərəfə tərəf dururlar?",
+      "d8": "Qurani-Kərimin birinci surəsi hansıdır?",
+      "d9": "Yeməyə başlamazdan əvvəl müsəlmanlar nə deyirlər?",
+      "d10": "Gələcəkdə nəsə etmək niyyətində olanda müsəlmanlar hansı sözü deyirlər?",
+      "d11": "Hansı bayramda qurban kəsilir?",
+      "d12": "Oruc tutan müsəlmanlar gün batanda yeməyə başlamağa nə deyirlər?",
+      "d13": "Könüllü şəkildə kasıblara verilən köməyə nə deyilir?",
+      "e16": "Küçədə ac bir heyvan görürsən. Nə edirsən?",
+      "e17": "Yaşlı qonşun ağır çanta daşıyır. Nə edirsən?",
+      "e18": "Kiçik uşaq ayaqqabısını bağlamaqda çətinlik çəkir. Nə edirsən?",
+      "e19": "Kimsə sənə hədiyyə verir. Nə etməlisən?",
+      "e20": "Dostun yarışda uduzub kədərlənib. Nə edirsən?",
+      "sc19": "Bir gecə-gündüzdə neçə saat var?",
+      "sc20": "Hansı heyvanın boynu çox uzundur?",
+      "sc21": "Ən böyük quru heyvanı hansıdır?",
+      "sc22": "Hansı heyvanın bədənində ağ-qara zolaqlar var?",
+      "sc23": "Hansı heyvan əsasən bambuk yeyir?",
+      "sc24": "Hansı heyvan balasını qarın kisəsində daşıyır?",
+      "sc25": "Hansı heyvan səhrada uzun müddət susuz qala bilir?",
+      "sc26": "Hansı quş gecə çox yaxşı görür?",
+      "sc27": "Hansı dəniz heyvanı çox ağıllı sayılır və səslərlə \"danışır\"?",
+      "sc28": "Biz hansı planetdə yaşayırıq?",
+      "sc29": "Su donduqda nəyə çevrilir?",
+      "m19": "Ardıcıllığı davam etdir: 2, 4, 6, 8, ?",
+      "m20": "Ardıcıllığı davam etdir: 5, 10, 15, 20, ?",
+      "m21": "Ardıcıllığı davam etdir: 1, 3, 5, 7, ?",
+      "m22": "Ağacda 9 quş oturmuşdu. 4-ü uçub getdi. Neçə quş qaldı?",
+      "m23": "3 səbətdə hər birində 5 qələm var. Cəmi neçə qələm var?",
+      "m24": "12 konfeti 4 uşaq arasında bərabər bölürük. Hər uşağa neçə konfet düşür?",
+      "m25": "Saat 3-dür. 5 saat sonra saat neçə olacaq?",
+      "m26": "4 qutuda hər birində 6 oyuncaq var. Cəmi neçə oyuncaq var?",
+      "m27": "1 kiloqramda neçə qram var?",
+      "m28": "Bir gündə neçə saat var?"
     },
     "quizPlaces": {
       "mecca": "Məkkə",
@@ -446,13 +497,18 @@
       "fasting": "Oruc tutmaq",
       "zakat": "Zəkat vermək",
       "hajj": "Həccə getmək",
-      "sacrifice": "Qurban kəsmək"
+      "sacrifice": "Qurban kəsmək",
+      "iftar": "İftar",
+      "sahur": "Səhər (Sahur)",
+      "sadaqah": "Sədəqə",
+      "prayer": "Namaz"
     },
     "quizPhrases": {
       "bismillah": "Bismillah",
       "alhamdulillah": "Əlhəmdülillah",
       "subhanallah": "Subhanallah",
-      "astaghfirullah": "Əstəğfirullah"
+      "astaghfirullah": "Əstəğfirullah",
+      "inshallah": "İnşallah"
     },
     "quizPurposes": {
       "worship": "İbadət etmək üçün",
@@ -476,13 +532,22 @@
       "sparrow": "Sərçə",
       "penguin": "Pinqvin",
       "eagle": "Qartal",
-      "peacock": "Tovuzquşu"
+      "peacock": "Tovuzquşu",
+      "giraffe": "Zürafə",
+      "elephant": "Fil",
+      "zebra": "Zebra",
+      "panda": "Panda",
+      "kangaroo": "Kenqru",
+      "camel": "Dəvə",
+      "owl": "Bayquş",
+      "dolphin": "Delfin"
     },
     "quizCelestial": {
       "moon": "Ay",
       "sun": "Günəş",
       "star": "Ulduz",
-      "comet": "Kometa"
+      "comet": "Kometa",
+      "earth": "Yer"
     },
     "quizProducts": {
       "honey": "Bal",
@@ -513,7 +578,40 @@
       "sc15": "Şir gücünə görə \"meşələrin kralı\" adlandırılır.",
       "sc16": "Arılar çiçəklərdən topladıqları nektardan bal hazırlayır.",
       "sc17": "Pinqvinlər uça bilməz, amma suda çox sürətli üzür.",
-      "sc18": "Zibili düzgün yerə atmaq təbiəti qorumağa kömək edir."
+      "sc18": "Zibili düzgün yerə atmaq təbiəti qorumağa kömək edir.",
+      "d7": "Müsəlmanlar dünyanın hər yerindən namaz qılarkən Məkkədəki Kəbəyə tərəf dönürlər. Bu istiqamətə qiblə deyilir.",
+      "d8": "Qurani-Kərim Fatihə surəsi ilə başlayır. Bu surə həm də hər namazda oxunur.",
+      "d9": "'Bismillah' — 'Allahın adı ilə' deməkdir. Yeməyə başlamazdan əvvəl deyilir ki, bu nemət üçün Allaha şükür edilsin.",
+      "d10": "'İnşallah' — 'Allah qoysa' deməkdir. Gələcək bir işdən danışarkən deyilir, çünki hər şey Allahın iznilə olur.",
+      "d11": "Qurban bayramında müsəlmanlar Allaha itaətin nişanəsi olaraq qurban kəsir və ətini kasıblarla paylaşırlar.",
+      "d12": "İftar — orucun gün batımında açılması, yəni yeməyə başlamaqdır. Bu, Ramazan ayının gözəl anlarından biridir.",
+      "d13": "Sədəqə — heç bir məcburiyyət olmadan, ürəkdən verilən köməkdir. Kiçik bir yardım da sədəqə sayıla bilər.",
+      "e16": "Heyvanlara qarşı mərhəmətli olmaq Peyğəmbərimizin bizə öyrətdiyi gözəl əxlaqdandır.",
+      "e17": "Yaşlı insanlara kömək etmək və hörmət göstərmək çox savablı bir əməldir.",
+      "e18": "Kiçiklərə kömək etmək və onlara qarşı mərhəmətli olmaq gözəl bir xüsusiyyətdir.",
+      "e19": "Bizə yaxşılıq edən insana təşəkkür etmək gözəl əxlaqın bir hissəsidir.",
+      "e20": "Kədərli bir dostu dəstəkləmək və onun yanında olmaq çox gözəl bir əməldir.",
+      "sc19": "Bir gecə-gündüz 24 saatdan ibarətdir — Yerin öz oxu ətrafında bir tam dövr etməsi qədər vaxtdır.",
+      "sc20": "Zürafənin uzun boynu ona ağaclardakı yüksək yarpaqları yeməyə kömək edir.",
+      "sc21": "Fil quruda yaşayan ən böyük heyvandır və xortumu ilə su içir, yemək götürür.",
+      "sc22": "Zebranın hər biri fərqli olan ağ-qara zolaqları var, insan barmaq izi kimi unikaldır.",
+      "sc23": "Panda gündə saatlarla bambuk yeyir, bu onun əsas qidasıdır.",
+      "sc24": "Kenqru balasını doğulandan sonra qarnındakı kisədə böyüdür.",
+      "sc25": "Dəvə hörgücündə yağ toplayır və bu sayədə səhrada uzun müddət susuz qala bilir.",
+      "sc26": "Bayquşun gözləri gecə görməyə uyğunlaşıb, ona görə də gecə ovçusudur.",
+      "sc27": "Delfinlər çox ağıllı heyvanlardır və bir-biri ilə səslərlə \"danışırlar\".",
+      "sc28": "Biz Günəş sistemindəki Yer adlı planetdə yaşayırıq.",
+      "sc29": "Su 0 dərəcədən aşağı soyuyanda donur və buza çevrilir.",
+      "m19": "Ədədlər hər dəfə 2 artır: 2, 4, 6, 8, 10.",
+      "m20": "Ədədlər hər dəfə 5 artır: 5, 10, 15, 20, 25.",
+      "m21": "Tək ədədlər ardıcıllığı: hər dəfə 2 artır — 1, 3, 5, 7, 9.",
+      "m22": "9 - 4 = 5. Ağacda 5 quş qaldı.",
+      "m23": "3 səbət × 5 qələm = 15 qələm.",
+      "m24": "12 : 4 = 3. Hər uşağa 3 konfet düşür.",
+      "m25": "3 + 5 = 8. Saat 8 olacaq.",
+      "m26": "4 qutu × 6 oyuncaq = 24 oyuncaq.",
+      "m27": "1 kiloqram = 1000 qram.",
+      "m28": "Bir gecə-gündüz 24 saatdan ibarətdir."
     },
     "prayers": {
       "fajr": "Sübh",
@@ -582,7 +680,11 @@
       "single": {
         "name": "Tək uşaq",
         "childLimit": "1 Uşaq",
-        "features": ["Limitsiz Gündəlik 10", "Tam Dünya Girişi", "Əsas Hesabatlar"]
+        "features": [
+          "Limitsiz Gündəlik 10",
+          "Tam Dünya Girişi",
+          "Əsas Hesabatlar"
+        ]
       },
       "family": {
         "name": "Ailə",
@@ -595,6 +697,24 @@
           "İstənilən vaxt ləğv et"
         ]
       }
+    },
+    "quizDirections": {
+      "kaaba": "Kəbə",
+      "sun": "Günəş",
+      "moon": "Ay",
+      "east": "Şərq"
+    },
+    "quizSurahNames": {
+      "fatiha": "Fatihə",
+      "baqara": "Bəqərə",
+      "yasin": "Yasin",
+      "ikhlas": "İxlas"
+    },
+    "quizWeather": {
+      "ice": "Buz",
+      "cloud": "Bulud",
+      "fog": "Duman",
+      "snow": "Qar"
     }
   }
 }
