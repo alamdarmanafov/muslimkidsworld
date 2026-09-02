@@ -147,7 +147,9 @@ export default function Quiz() {
             <View style={[styles.optionBadge, { backgroundColor: optionColors[i] }]}>
               <Text style={styles.optionBadgeText}>{option.label}</Text>
             </View>
-            <Text style={styles.optionEmoji}>{option.emoji}</Text>
+            <Text style={option.textKey ? styles.optionText : styles.optionEmoji}>
+              {option.textKey ? t(option.textKey) : option.emoji}
+            </Text>
           </Pressable>
         ))}
       </View>
@@ -212,6 +214,13 @@ const styles = StyleSheet.create({
   },
   optionBadgeText: { color: "#fff", fontWeight: "800", fontSize: 13 },
   optionEmoji: { fontSize: 44 },
+  optionText: {
+    fontSize: 18,
+    fontWeight: "700",
+    color: colors.ink,
+    textAlign: "center",
+    paddingHorizontal: spacing.sm,
+  },
 
   feedbackScreen: {
     flex: 1,

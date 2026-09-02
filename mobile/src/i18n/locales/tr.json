@@ -362,7 +362,33 @@
       "g8": "\"Рыба\" kelimesi hangi resimle eşleşir?",
       "g9": "\"Дом\" kelimesi hangi resimle eşleşir?",
       "g10": "\"Луна\" kelimesi hangi resimle eşleşir?",
-      "dinVerseCount": "{{name}} suresinde kaç ayet vardır?"
+      "dinVerseCount": "{{name}} suresinde kaç ayet vardır?",
+      "p1": "Peygamberimizin (SAV) kaç çocuğu vardı?",
+      "p2": "Peygamberimize Kur'an ilk kez indiğinde kaç yaşındaydı?",
+      "p3": "Peygamberimiz kaç yaşında vefat etti?",
+      "p4": "Cennetle müjdelenen sahabelerin (Aşere-i Mübeşşere) sayısı kaçtır?",
+      "p5": "Peygamberimiz hangi şehirde doğdu?",
+      "p6": "Peygamberimiz hangi şehre hicret etti?",
+      "p7": "Peygamberimizin babasının adı nedir?",
+      "p8": "Peygamberimizin annesinin adı nedir?",
+      "p9": "Peygamberimizin ilk eşinin adı nedir?"
+    },
+    "quizPlaces": {
+      "mecca": "Mekke",
+      "medina": "Medine",
+      "taif": "Taif",
+      "damascus": "Şam"
+    },
+    "quizPeople": {
+      "abdullah": "Abdullah",
+      "abuTalib": "Ebu Talib",
+      "hamza": "Hamza",
+      "abbas": "Abbas",
+      "aminah": "Amine",
+      "khadijah": "Hatice",
+      "aisha": "Ayşe",
+      "fatimah": "Fatıma",
+      "zaynab": "Zeynep"
     },
     "prayers": {
       "fajr": "Sabah",

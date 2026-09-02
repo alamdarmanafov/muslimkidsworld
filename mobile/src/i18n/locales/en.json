@@ -362,7 +362,33 @@
       "g8": "Which picture matches the word \"Рыба\"?",
       "g9": "Which picture matches the word \"Дом\"?",
       "g10": "Which picture matches the word \"Луна\"?",
-      "dinVerseCount": "How many verses are in Surah {{name}}?"
+      "dinVerseCount": "How many verses are in Surah {{name}}?",
+      "p1": "How many children did the Prophet (SAW) have?",
+      "p2": "How old was the Prophet (SAW) when the Quran was first revealed to him?",
+      "p3": "How old was the Prophet (SAW) when he passed away?",
+      "p4": "How many companions were given the glad tidings of Paradise (Al-Asharah al-Mubashsharah)?",
+      "p5": "In which city was the Prophet (SAW) born?",
+      "p6": "To which city did the Prophet (SAW) migrate (Hijrah)?",
+      "p7": "What was the name of the Prophet's (SAW) father?",
+      "p8": "What was the name of the Prophet's (SAW) mother?",
+      "p9": "What was the name of the Prophet's (SAW) first wife?"
+    },
+    "quizPlaces": {
+      "mecca": "Mecca",
+      "medina": "Medina",
+      "taif": "Taif",
+      "damascus": "Damascus"
+    },
+    "quizPeople": {
+      "abdullah": "Abdullah",
+      "abuTalib": "Abu Talib",
+      "hamza": "Hamza",
+      "abbas": "Abbas",
+      "aminah": "Aminah",
+      "khadijah": "Khadijah",
+      "aisha": "Aisha",
+      "fatimah": "Fatimah",
+      "zaynab": "Zaynab"
     },
     "prayers": {
       "fajr": "Fajr",

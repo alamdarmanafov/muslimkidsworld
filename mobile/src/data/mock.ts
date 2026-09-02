@@ -48,7 +48,7 @@ export const children: Child[] = [
 
 export const activeChild = children[0];
 
-export type QuizOption = { id: string; label: string; emoji: string };
+export type QuizOption = { id: string; label: string; emoji: string; textKey?: string };
 
 export type QuizCategory = "din" | "riyaziyyat" | "yaxsiEmeller" | "elm" | "xariciDil";
 
@@ -316,6 +316,114 @@ export const quizBank: QuizQuestion[] = [
       { id: "d", label: "D", emoji: "5️⃣" },
     ],
     correctOptionId: "c",
+    xp: 20,
+  },
+  {
+    id: "p1",
+    category: "din",
+    options: [
+      { id: "a", label: "A", emoji: "6" },
+      { id: "b", label: "B", emoji: "7" },
+      { id: "c", label: "C", emoji: "8" },
+      { id: "d", label: "D", emoji: "9" },
+    ],
+    correctOptionId: "b",
+    xp: 20,
+  },
+  {
+    id: "p2",
+    category: "din",
+    options: [
+      { id: "a", label: "A", emoji: "35" },
+      { id: "b", label: "B", emoji: "40" },
+      { id: "c", label: "C", emoji: "45" },
+      { id: "d", label: "D", emoji: "50" },
+    ],
+    correctOptionId: "b",
+    xp: 20,
+  },
+  {
+    id: "p3",
+    category: "din",
+    options: [
+      { id: "a", label: "A", emoji: "60" },
+      { id: "b", label: "B", emoji: "63" },
+      { id: "c", label: "C", emoji: "65" },
+      { id: "d", label: "D", emoji: "70" },
+    ],
+    correctOptionId: "b",
+    xp: 20,
+  },
+  {
+    id: "p4",
+    category: "din",
+    options: [
+      { id: "a", label: "A", emoji: "8" },
+      { id: "b", label: "B", emoji: "9" },
+      { id: "c", label: "C", emoji: "10" },
+      { id: "d", label: "D", emoji: "11" },
+    ],
+    correctOptionId: "c",
+    xp: 20,
+  },
+  {
+    id: "p5",
+    category: "din",
+    options: [
+      { id: "a", label: "A", emoji: "", textKey: "content.quizPlaces.mecca" },
+      { id: "b", label: "B", emoji: "", textKey: "content.quizPlaces.medina" },
+      { id: "c", label: "C", emoji: "", textKey: "content.quizPlaces.taif" },
+      { id: "d", label: "D", emoji: "", textKey: "content.quizPlaces.damascus" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "p6",
+    category: "din",
+    options: [
+      { id: "a", label: "A", emoji: "", textKey: "content.quizPlaces.medina" },
+      { id: "b", label: "B", emoji: "", textKey: "content.quizPlaces.mecca" },
+      { id: "c", label: "C", emoji: "", textKey: "content.quizPlaces.taif" },
+      { id: "d", label: "D", emoji: "", textKey: "content.quizPlaces.damascus" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "p7",
+    category: "din",
+    options: [
+      { id: "a", label: "A", emoji: "", textKey: "content.quizPeople.abdullah" },
+      { id: "b", label: "B", emoji: "", textKey: "content.quizPeople.abuTalib" },
+      { id: "c", label: "C", emoji: "", textKey: "content.quizPeople.hamza" },
+      { id: "d", label: "D", emoji: "", textKey: "content.quizPeople.abbas" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "p8",
+    category: "din",
+    options: [
+      { id: "a", label: "A", emoji: "", textKey: "content.quizPeople.aminah" },
+      { id: "b", label: "B", emoji: "", textKey: "content.quizPeople.khadijah" },
+      { id: "c", label: "C", emoji: "", textKey: "content.quizPeople.aisha" },
+      { id: "d", label: "D", emoji: "", textKey: "content.quizPeople.fatimah" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "p9",
+    category: "din",
+    options: [
+      { id: "a", label: "A", emoji: "", textKey: "content.quizPeople.khadijah" },
+      { id: "b", label: "B", emoji: "", textKey: "content.quizPeople.aisha" },
+      { id: "c", label: "C", emoji: "", textKey: "content.quizPeople.fatimah" },
+      { id: "d", label: "D", emoji: "", textKey: "content.quizPeople.zaynab" },
+    ],
+    correctOptionId: "a",
     xp: 20,
   },
   // Yaxşı Əməllər

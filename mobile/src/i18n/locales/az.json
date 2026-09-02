@@ -362,7 +362,33 @@
       "g8": "\"Рыба\" sözü hansı şəkillə eynidir?",
       "g9": "\"Дом\" sözü hansı şəkillə eynidir?",
       "g10": "\"Луна\" sözü hansı şəkillə eynidir?",
-      "dinVerseCount": "{{name}} surəsində neçə ayə var?"
+      "dinVerseCount": "{{name}} surəsində neçə ayə var?",
+      "p1": "Peyğəmbərimizin (s.a.v) neçə övladı olub?",
+      "p2": "Peyğəmbərimizə Quran ilk dəfə nazil olanda neçə yaşı var idi?",
+      "p3": "Peyğəmbərimiz neçə yaşında vəfat edib?",
+      "p4": "Cənnətlə müjdələnən səhabələrin (Əşərə Mübəşşərə) sayı neçədir?",
+      "p5": "Peyğəmbərimiz hansı şəhərdə anadan olub?",
+      "p6": "Peyğəmbərimiz hansı şəhərə hicrət edib?",
+      "p7": "Peyğəmbərimizin atasının adı nədir?",
+      "p8": "Peyğəmbərimizin anasının adı nədir?",
+      "p9": "Peyğəmbərimizin ilk həyat yoldaşının adı nədir?"
+    },
+    "quizPlaces": {
+      "mecca": "Məkkə",
+      "medina": "Mədinə",
+      "taif": "Taif",
+      "damascus": "Şam"
+    },
+    "quizPeople": {
+      "abdullah": "Abdullah",
+      "abuTalib": "Əbu Talib",
+      "hamza": "Həmzə",
+      "abbas": "Abbas",
+      "aminah": "Əminə",
+      "khadijah": "Xədicə",
+      "aisha": "Aişə",
+      "fatimah": "Fatimə",
+      "zaynab": "Zeynəb"
     },
     "prayers": {
       "fajr": "Sübh",
