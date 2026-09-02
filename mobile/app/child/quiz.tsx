@@ -1,11 +1,16 @@
 import { useState } from "react";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../src/components/Button";
 import { IconBadge } from "../../src/components/IconBadge";
-import { dailyTen, latestReward } from "../../src/data/mock";
+import {
+  getQuizQuestions,
+  latestReward,
+  type ForeignTargetLang,
+  type QuizCategory,
+} from "../../src/data/mock";
 import { colors, radii, spacing } from "../../src/theme/theme";
 
 type Phase = "question" | "feedback" | "reward";
@@ -14,13 +19,18 @@ const optionColors = ["#FBBF24", "#22C55E", "#8B5CF6", "#3B82F6"];
 
 export default function Quiz() {
   const { t } = useTranslation();
+  const { category, targetLang } = useLocalSearchParams<{
+    category: QuizCategory;
+    targetLang?: ForeignTargetLang;
+  }>();
+  const questions = getQuizQuestions(category ?? "din", targetLang);
   const [index, setIndex] = useState(0);
   const [phase, setPhase] = useState<Phase>("question");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [earnedXp, setEarnedXp] = useState(0);
 
-  const question = dailyTen[index];
-  const isLast = index === dailyTen.length - 1;
+  const question = questions[index];
+  const isLast = index === questions.length - 1;
 
   function selectOption(optionId: string) {
     setSelectedId(optionId);
@@ -108,7 +118,7 @@ export default function Quiz() {
           <Text style={styles.closeText}>✕</Text>
         </Pressable>
         <Text style={styles.progressLabel}>
-          {t("quiz.questionOf", { current: index + 1, total: dailyTen.length })}
+          {t("quiz.questionOf", { current: index + 1, total: questions.length })}
         </Text>
         <Text style={styles.speaker}>🔊</Text>
       </View>
@@ -117,7 +127,7 @@ export default function Quiz() {
         <View
           style={[
             styles.progressFill,
-            { width: `${((index + 1) / dailyTen.length) * 100}%` },
+            { width: `${((index + 1) / questions.length) * 100}%` },
           ]}
         />
       </View>

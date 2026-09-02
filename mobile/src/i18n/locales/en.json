@@ -135,6 +135,14 @@
     "children": "Children",
     "premium": "Premium"
   },
+  "quizCategories": {
+    "title": "Choose a Subject",
+    "din": "Religion",
+    "riyaziyyat": "Math",
+    "yaxsiEmeller": "Good Deeds",
+    "elm": "Science & Nature",
+    "xariciDil": "Foreign Language"
+  },
   "quran": {
     "title": "Quran",
     "surah": "Surah {{name}}",
@@ -264,7 +272,36 @@
     "quiz": {
       "q1": "Which one is a mosque?",
       "q2": "How many times a day do Muslims pray?",
-      "q3": "What is the holy book of Islam called?"
+      "q3": "What is the holy book of Islam called?",
+      "q4": "How many pillars of Islam are there?",
+      "q5": "How many surahs (chapters) are in the Quran?",
+      "q6": "How many rak'ahs are in the Maghrib prayer?",
+      "q7": "How many pillars of Iman (faith) are there?",
+      "q8": "Which symbol reminds us of the Islamic calendar?",
+      "q9": "How many times a year do Muslims celebrate Eid?",
+      "q10": "How many months are in the Islamic (Hijri) calendar?",
+      "m1": "5 + 3 = ?",
+      "m2": "10 - 4 = ?",
+      "m3": "2 × 3 = ?",
+      "m4": "9 ÷ 3 = ?",
+      "m5": "7 + 6 = ?",
+      "e1": "Your friend fell down and is crying. What do you do?",
+      "e2": "Your classmate doesn't have a pencil. What do you do?",
+      "e3": "Your mom needs help, but you're playing a game. What do you do?",
+      "e4": "You see a lost little child on the street. What do you do?",
+      "sc1": "How many planets are in our solar system?",
+      "sc2": "At what temperature (Celsius) does water freeze?",
+      "sc3": "About how many bones does an adult human body have?",
+      "sc4": "How many days are in a week?",
+      "f1": "Which picture matches the word \"Apple\"?",
+      "f2": "Which picture matches the word \"Cat\"?",
+      "f3": "Which picture matches the word \"Sun\"?",
+      "f4": "Which picture matches the word \"Book\"?",
+      "f5": "Which picture matches the word \"Water\"?",
+      "g1": "Which picture matches the word \"Кошка\"?",
+      "g2": "Which picture matches the word \"Яблоко\"?",
+      "g3": "Which picture matches the word \"Книга\"?",
+      "g4": "Which picture matches the word \"Вода\"?"
     },
     "plans": {
       "single": {

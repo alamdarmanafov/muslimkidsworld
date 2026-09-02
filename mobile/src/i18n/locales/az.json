@@ -135,6 +135,14 @@
     "children": "Uşaqlar",
     "premium": "Premium"
   },
+  "quizCategories": {
+    "title": "Fənn seç",
+    "din": "Din",
+    "riyaziyyat": "Riyaziyyat",
+    "yaxsiEmeller": "Yaxşı Əməllər",
+    "elm": "Elm və Təbiət",
+    "xariciDil": "Xarici Dil"
+  },
   "quran": {
     "title": "Quran",
     "surah": "{{name}} surəsi",
@@ -264,7 +272,36 @@
     "quiz": {
       "q1": "Bunlardan hansı məsciddir?",
       "q2": "Müsəlmanlar gündə neçə dəfə namaz qılır?",
-      "q3": "İslamın müqəddəs kitabına nə deyilir?"
+      "q3": "İslamın müqəddəs kitabına nə deyilir?",
+      "q4": "İslamın neçə şərti (rüknü) var?",
+      "q5": "Quranda neçə surə var?",
+      "q6": "Axşam (Məğrib) namazında neçə rükət var?",
+      "q7": "İmanın neçə şərti var?",
+      "q8": "Hansı simvol bizə İslam təqvimini xatırladır?",
+      "q9": "Müsəlmanlar ildə neçə dəfə Bayram qeyd edir?",
+      "q10": "Hicri (İslam) təqviminə görə ildə neçə ay var?",
+      "m1": "5 + 3 = ?",
+      "m2": "10 - 4 = ?",
+      "m3": "2 × 3 = ?",
+      "m4": "9 ÷ 3 = ?",
+      "m5": "7 + 6 = ?",
+      "e1": "Dostun yıxılıb ağlayır. Nə edirsən?",
+      "e2": "Sinif yoldaşının qələmi yoxdur. Nə edirsən?",
+      "e3": "Anan kömək istəyir, amma sən oyun oynayırsan. Nə edirsən?",
+      "e4": "Küçədə itmiş balaca uşaq görürsən. Nə edirsən?",
+      "sc1": "Günəş sistemində neçə planet var?",
+      "sc2": "Su neçə dərəcədə (Selsi) donur?",
+      "sc3": "Yetkin insan bədənində təxminən neçə sümük var?",
+      "sc4": "Bir həftədə neçə gün var?",
+      "f1": "\"Apple\" sözü hansı şəkillə eynidir?",
+      "f2": "\"Cat\" sözü hansı şəkillə eynidir?",
+      "f3": "\"Sun\" sözü hansı şəkillə eynidir?",
+      "f4": "\"Book\" sözü hansı şəkillə eynidir?",
+      "f5": "\"Water\" sözü hansı şəkillə eynidir?",
+      "g1": "\"Кошка\" sözü hansı şəkillə eynidir?",
+      "g2": "\"Яблоко\" sözü hansı şəkillə eynidir?",
+      "g3": "\"Книга\" sözü hansı şəkillə eynidir?",
+      "g4": "\"Вода\" sözü hansı şəkillə eynidir?"
     },
     "plans": {
       "single": {

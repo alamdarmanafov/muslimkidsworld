@@ -135,6 +135,14 @@
     "children": "Çocuklar",
     "premium": "Premium"
   },
+  "quizCategories": {
+    "title": "Bir Ders Seç",
+    "din": "Din",
+    "riyaziyyat": "Matematik",
+    "yaxsiEmeller": "İyi Davranışlar",
+    "elm": "Fen ve Doğa",
+    "xariciDil": "Yabancı Dil"
+  },
   "quran": {
     "title": "Kur'an",
     "surah": "{{name}} Suresi",
@@ -264,7 +272,36 @@
     "quiz": {
       "q1": "Bunlardan hangisi camidir?",
       "q2": "Müslümanlar günde kaç kez namaz kılar?",
-      "q3": "İslam'ın kutsal kitabının adı nedir?"
+      "q3": "İslam'ın kutsal kitabının adı nedir?",
+      "q4": "İslam'ın kaç şartı vardır?",
+      "q5": "Kur'an'da kaç sure vardır?",
+      "q6": "Akşam (Mağrib) namazında kaç rekat vardır?",
+      "q7": "İmanın kaç şartı vardır?",
+      "q8": "Hangi sembol bize İslami takvimi hatırlatır?",
+      "q9": "Müslümanlar yılda kaç kez bayram kutlar?",
+      "q10": "Hicri (İslami) takvimde kaç ay vardır?",
+      "m1": "5 + 3 = ?",
+      "m2": "10 - 4 = ?",
+      "m3": "2 × 3 = ?",
+      "m4": "9 ÷ 3 = ?",
+      "m5": "7 + 6 = ?",
+      "e1": "Arkadaşın düştü ve ağlıyor. Ne yaparsın?",
+      "e2": "Sınıf arkadaşının kalemi yok. Ne yaparsın?",
+      "e3": "Annen yardım istiyor ama sen oyun oynuyorsun. Ne yaparsın?",
+      "e4": "Sokakta kaybolmuş küçük bir çocuk görüyorsun. Ne yaparsın?",
+      "sc1": "Güneş sistemimizde kaç gezegen vardır?",
+      "sc2": "Su kaç derecede (Selsius) donar?",
+      "sc3": "Yetişkin bir insan vücudunda yaklaşık kaç kemik vardır?",
+      "sc4": "Bir haftada kaç gün vardır?",
+      "f1": "\"Apple\" kelimesi hangi resimle eşleşir?",
+      "f2": "\"Cat\" kelimesi hangi resimle eşleşir?",
+      "f3": "\"Sun\" kelimesi hangi resimle eşleşir?",
+      "f4": "\"Book\" kelimesi hangi resimle eşleşir?",
+      "f5": "\"Water\" kelimesi hangi resimle eşleşir?",
+      "g1": "\"Кошка\" kelimesi hangi resimle eşleşir?",
+      "g2": "\"Яблоко\" kelimesi hangi resimle eşleşir?",
+      "g3": "\"Книга\" kelimesi hangi resimle eşleşir?",
+      "g4": "\"Вода\" kelimesi hangi resimle eşleşir?"
     },
     "plans": {
       "single": {
