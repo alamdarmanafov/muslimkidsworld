@@ -137,7 +137,8 @@
   },
   "quran": {
     "title": "Kur'an",
-    "surah": "{{name}} Suresi"
+    "surah": "{{name}} Suresi",
+    "translatedBy": "Çeviri: {{name}}"
   },
   "dua": {
     "title": "Dua",

@@ -4,7 +4,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../../../src/components/icons";
 import { quranSurahs } from "../../../src/data/mock";
-import { getArabicVerses, getSurahVerses } from "../../../src/data/quran";
+import { getArabicVerses, getSurahVerses, getTranslatorName } from "../../../src/data/quran";
 import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
 
 export default function SurahDetail() {
@@ -14,6 +14,7 @@ export default function SurahDetail() {
 
   const arabicVerses = getArabicVerses(surah.chapter);
   const translatedVerses = getSurahVerses(surah.chapter, i18n.language);
+  const translator = getTranslatorName(i18n.language);
 
   return (
     <SafeAreaView style={styles.screen} edges={["top"]}>
@@ -35,6 +36,8 @@ export default function SurahDetail() {
             <Text style={styles.translationText}>{translatedVerses[i]}</Text>
           </View>
         ))}
+
+        <Text style={styles.translatorNote}>{t("quran.translatedBy", { name: translator })}</Text>
       </ScrollView>
     </SafeAreaView>
   );
@@ -92,5 +95,13 @@ const styles = StyleSheet.create({
     color: colors.inkMuted,
     marginTop: spacing.sm,
     lineHeight: 20,
+  },
+  translatorNote: {
+    fontFamily: fonts.body,
+    fontSize: 11,
+    color: colors.inkMuted,
+    textAlign: "center",
+    marginTop: spacing.sm,
+    marginBottom: spacing.lg,
   },
 });

@@ -28,3 +28,8 @@ export function getSurahVerses(chapter: number, lang: string): string[] {
   const data = translations[lang] ?? translations.en;
   return data.chapters[String(chapter)] ?? [];
 }
+
+export function getTranslatorName(lang: string): string {
+  const data = translations[lang] ?? translations.en;
+  return data.translator;
+}

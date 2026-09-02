@@ -137,7 +137,8 @@
   },
   "quran": {
     "title": "Quran",
-    "surah": "Surah {{name}}"
+    "surah": "Surah {{name}}",
+    "translatedBy": "Translation: {{name}}"
   },
   "dua": {
     "title": "Dua",
