@@ -29,7 +29,9 @@ export default function QuizCategories() {
           <Icon name="arrowRight" size={18} color={colors.ink} style={styles.backIcon} />
         </Pressable>
         <Text style={styles.title}>{t("quizCategories.title")}</Text>
-        <Icon name="star" size={20} color={colors.gold} />
+        <View style={styles.starWrap}>
+          <Icon name="star" size={20} color={colors.gold} />
+        </View>
       </View>
 
       <ScrollView contentContainerStyle={styles.content}>
@@ -92,7 +94,8 @@ const styles = StyleSheet.create({
     ...shadow,
   },
   backIcon: { transform: [{ scaleX: -1 }] },
-  title: { fontFamily: fonts.heading, fontSize: 18, color: colors.ink },
+  title: { flex: 1, textAlign: "center", fontFamily: fonts.heading, fontSize: 18, color: colors.ink },
+  starWrap: { width: 34, alignItems: "center" },
   content: { padding: spacing.lg, paddingTop: 0, gap: spacing.md },
   sectionTitle: {
     fontFamily: fonts.heading,
