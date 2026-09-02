@@ -180,6 +180,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    marginTop: spacing.md,
     marginBottom: spacing.md,
   },
   closeText: { fontSize: 20, color: colors.inkMuted },
