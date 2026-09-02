@@ -1,18 +1,45 @@
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../../../src/components/icons";
-import { achievements, childStats } from "../../../src/data/mock";
+import { achievements } from "../../../src/data/mock";
+import { fetchChildProgress } from "../../../src/lib/childProgress";
 import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
 
 export default function Achievements() {
   const { t } = useTranslation();
+  const [loading, setLoading] = useState(true);
+  const [badges, setBadges] = useState(0);
+  const [stars, setStars] = useState(0);
+  const [days, setDays] = useState(0);
+
+  // The specific-badge grid below (`earned`) still comes from mock.ts —
+  // matching it to real unlock criteria needs a child_achievements
+  // table and evaluation logic this pass doesn't add. The 3 counters
+  // above it (badges/stars/days) are real, from child_progress.
   const earned = achievements.filter((a) => a.earned);
 
+  useEffect(() => {
+    let cancelled = false;
+    fetchChildProgress().then((result) => {
+      if (cancelled) return;
+      if (result) {
+        setBadges(result.progress.badges_count);
+        setStars(result.progress.stars_count);
+        setDays(result.progress.active_days_count);
+      }
+      setLoading(false);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const stats = [
-    { labelKey: "achievements.badges", value: childStats.badges },
-    { labelKey: "achievements.stars", value: childStats.stars },
-    { labelKey: "achievements.days", value: childStats.days },
+    { labelKey: "achievements.badges", value: badges },
+    { labelKey: "achievements.stars", value: stars },
+    { labelKey: "achievements.days", value: days },
   ];
 
   return (
@@ -20,34 +47,40 @@ export default function Achievements() {
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.title}>{t("achievements.title")}</Text>
 
-        <View style={styles.trophyCard}>
-          <View style={styles.trophyIconWrap}>
-            <Icon name="trophy" size={30} color={colors.goldDark} />
-          </View>
-          <Text style={styles.trophyTitle}>{t("achievements.youreAmazing")}</Text>
-          <Text style={styles.trophySubtitle}>{t("achievements.keepLearning")}</Text>
-
-          <View style={styles.statsRow}>
-            {stats.map((s) => (
-              <View key={s.labelKey} style={styles.statItem}>
-                <Text style={styles.statValue}>{s.value}</Text>
-                <Text style={styles.statLabel}>{t(s.labelKey)}</Text>
+        {loading ? (
+          <ActivityIndicator color={colors.primary} style={{ marginTop: spacing.xl }} />
+        ) : (
+          <>
+            <View style={styles.trophyCard}>
+              <View style={styles.trophyIconWrap}>
+                <Icon name="trophy" size={30} color={colors.goldDark} />
               </View>
-            ))}
-          </View>
-        </View>
+              <Text style={styles.trophyTitle}>{t("achievements.youreAmazing")}</Text>
+              <Text style={styles.trophySubtitle}>{t("achievements.keepLearning")}</Text>
 
-        <Text style={styles.sectionTitle}>{t("achievements.recentBadges")}</Text>
-        <View style={styles.badgeGrid}>
-          {earned.map((a) => (
-            <View key={a.id} style={styles.badge}>
-              <View style={[styles.badgeIconWrap, { backgroundColor: a.tone[0] }]}>
-                <Icon name={a.icon} size={26} color={a.tone[1]} />
+              <View style={styles.statsRow}>
+                {stats.map((s) => (
+                  <View key={s.labelKey} style={styles.statItem}>
+                    <Text style={styles.statValue}>{s.value}</Text>
+                    <Text style={styles.statLabel}>{t(s.labelKey)}</Text>
+                  </View>
+                ))}
               </View>
-              <Text style={styles.badgeLabel}>{t(`content.achievements.${a.id}`)}</Text>
             </View>
-          ))}
-        </View>
+
+            <Text style={styles.sectionTitle}>{t("achievements.recentBadges")}</Text>
+            <View style={styles.badgeGrid}>
+              {earned.map((a) => (
+                <View key={a.id} style={styles.badge}>
+                  <View style={[styles.badgeIconWrap, { backgroundColor: a.tone[0] }]}>
+                    <Icon name={a.icon} size={26} color={a.tone[1]} />
+                  </View>
+                  <Text style={styles.badgeLabel}>{t(`content.achievements.${a.id}`)}</Text>
+                </View>
+              ))}
+            </View>
+          </>
+        )}
       </ScrollView>
     </SafeAreaView>
   );

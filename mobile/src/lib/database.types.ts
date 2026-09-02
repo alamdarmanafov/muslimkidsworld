@@ -94,6 +94,8 @@ export type Database = {
           badges_count: number;
           stars_count: number;
           active_days_count: number;
+          total_questions_answered: number;
+          total_correct_answers: number;
           last_activity_at: string | null;
           updated_at: string;
         };
@@ -106,10 +108,28 @@ export type Database = {
           badges_count?: number;
           stars_count?: number;
           active_days_count?: number;
+          total_questions_answered?: number;
+          total_correct_answers?: number;
           last_activity_at?: string | null;
           updated_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["child_progress"]["Insert"]>;
+        Relationships: [];
+      };
+      child_daily_activity: {
+        Row: {
+          child_id: string;
+          activity_date: string;
+          questions_answered: number;
+          xp_earned: number;
+        };
+        Insert: {
+          child_id: string;
+          activity_date: string;
+          questions_answered?: number;
+          xp_earned?: number;
+        };
+        Update: Partial<Database["public"]["Tables"]["child_daily_activity"]["Insert"]>;
         Relationships: [];
       };
       family_codes: {

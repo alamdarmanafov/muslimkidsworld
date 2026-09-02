@@ -1,62 +1,99 @@
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../../../src/components/icons";
-import { activeChild } from "../../../src/data/mock";
+import { fetchChildProgress, type DailyActivity } from "../../../src/lib/childProgress";
 import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
 
-const week = [
-  { dayKey: "days.mon", value: 60 },
-  { dayKey: "days.tue", value: 80 },
-  { dayKey: "days.wed", value: 45 },
-  { dayKey: "days.thu", value: 90 },
-  { dayKey: "days.fri", value: 70 },
-  { dayKey: "days.sat", value: 100 },
-  { dayKey: "days.sun", value: 55 },
-];
+const DAY_KEYS = ["days.sun", "days.mon", "days.tue", "days.wed", "days.thu", "days.fri", "days.sat"];
+
+function buildWeekDisplay(week: DailyActivity[]) {
+  const byDate = new Map(week.map((d) => [d.activity_date, d.questions_answered]));
+  const days: { dayKey: string; value: number }[] = [];
+  const today = new Date();
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(today);
+    d.setUTCDate(d.getUTCDate() - i);
+    const dateStr = d.toISOString().slice(0, 10);
+    days.push({ dayKey: DAY_KEYS[d.getUTCDay()], value: byDate.get(dateStr) ?? 0 });
+  }
+  const max = Math.max(...days.map((d) => d.value), 1);
+  return days.map((d) => ({ ...d, percent: Math.round((d.value / max) * 100) }));
+}
 
 export default function ChildProgress() {
   const { t } = useTranslation();
+  const [loading, setLoading] = useState(true);
+  const [streak, setStreak] = useState(0);
+  const [accuracy, setAccuracy] = useState(0);
+  const [level, setLevel] = useState(1);
+  const [week, setWeek] = useState<{ dayKey: string; value: number; percent: number }[]>(
+    buildWeekDisplay([]),
+  );
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchChildProgress().then((result) => {
+      if (cancelled) return;
+      if (result) {
+        setStreak(result.progress.streak);
+        setAccuracy(result.progress.accuracy);
+        setLevel(result.progress.level);
+        setWeek(buildWeekDisplay(result.week));
+      }
+      setLoading(false);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <SafeAreaView style={styles.screen} edges={["top"]}>
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.title}>{t("childProgress.title")}</Text>
 
-        <View style={styles.streakCard}>
-          <Icon name="flame" size={26} color="#FFFFFF" />
-          <View>
-            <Text style={styles.streakValue}>
-              {t("childProgress.dayStreak", { count: activeChild.streak })}
-            </Text>
-            <Text style={styles.streakSubtitle}>{t("childProgress.keepGoingChain")}</Text>
-          </View>
-        </View>
-
-        <Text style={styles.sectionTitle}>{t("childProgress.thisWeek")}</Text>
-        <View style={styles.chartCard}>
-          <View style={styles.chartRow}>
-            {week.map((d) => (
-              <View key={d.dayKey} style={styles.barWrap}>
-                <View style={styles.barTrack}>
-                  <View style={[styles.barFill, { height: `${d.value}%` }]} />
-                </View>
-                <Text style={styles.barLabel}>{t(d.dayKey)}</Text>
+        {loading ? (
+          <ActivityIndicator color={colors.primary} style={{ marginTop: spacing.xl }} />
+        ) : (
+          <>
+            <View style={styles.streakCard}>
+              <Icon name="flame" size={26} color="#FFFFFF" />
+              <View>
+                <Text style={styles.streakValue}>
+                  {t("childProgress.dayStreak", { count: streak })}
+                </Text>
+                <Text style={styles.streakSubtitle}>{t("childProgress.keepGoingChain")}</Text>
               </View>
-            ))}
-          </View>
-        </View>
+            </View>
 
-        <View style={styles.statsRow}>
-          <View style={styles.statCard}>
-            <Text style={styles.statValue}>{activeChild.accuracy}%</Text>
-            <Text style={styles.statLabel}>{t("childProgress.accuracy")}</Text>
-          </View>
-          <View style={styles.statCard}>
-            <Text style={styles.statValue}>Lvl {activeChild.level}</Text>
-            <Text style={styles.statLabel}>{t("parentHome.level")}</Text>
-          </View>
-        </View>
+            <Text style={styles.sectionTitle}>{t("childProgress.thisWeek")}</Text>
+            <View style={styles.chartCard}>
+              <View style={styles.chartRow}>
+                {week.map((d, i) => (
+                  <View key={`${d.dayKey}-${i}`} style={styles.barWrap}>
+                    <View style={styles.barTrack}>
+                      <View style={[styles.barFill, { height: `${d.percent}%` }]} />
+                    </View>
+                    <Text style={styles.barLabel}>{t(d.dayKey)}</Text>
+                  </View>
+                ))}
+              </View>
+            </View>
+
+            <View style={styles.statsRow}>
+              <View style={styles.statCard}>
+                <Text style={styles.statValue}>{accuracy}%</Text>
+                <Text style={styles.statLabel}>{t("childProgress.accuracy")}</Text>
+              </View>
+              <View style={styles.statCard}>
+                <Text style={styles.statValue}>Lvl {level}</Text>
+                <Text style={styles.statLabel}>{t("parentHome.level")}</Text>
+              </View>
+            </View>
+          </>
+        )}
       </ScrollView>
     </SafeAreaView>
   );

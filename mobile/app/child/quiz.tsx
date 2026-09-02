@@ -12,6 +12,7 @@ import {
   type QuizCategory,
   type QuizDifficulty,
 } from "../../src/data/mock";
+import { recordQuizResult } from "../../src/lib/childProgress";
 import { colors, radii, spacing } from "../../src/theme/theme";
 
 type Phase = "question" | "feedback" | "reward";
@@ -35,6 +36,8 @@ export default function Quiz() {
   const [phase, setPhase] = useState<Phase>("question");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [earnedXp, setEarnedXp] = useState(0);
+  const [sessionCorrect, setSessionCorrect] = useState(0);
+  const [sessionXp, setSessionXp] = useState(0);
 
   const question = questions[index];
   const isLast = index === questions.length - 1;
@@ -43,6 +46,8 @@ export default function Quiz() {
     setSelectedId(optionId);
     if (optionId === question.correctOptionId) {
       setEarnedXp(question.xp);
+      setSessionCorrect((c) => c + 1);
+      setSessionXp((x) => x + question.xp);
     } else {
       setEarnedXp(0);
     }
@@ -51,6 +56,7 @@ export default function Quiz() {
 
   function next() {
     if (isLast) {
+      recordQuizResult(sessionCorrect, questions.length, sessionXp);
       setPhase("reward");
       return;
     }
