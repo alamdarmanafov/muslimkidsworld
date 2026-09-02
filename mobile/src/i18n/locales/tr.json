@@ -361,7 +361,8 @@
       "g7": "\"Дерево\" kelimesi hangi resimle eşleşir?",
       "g8": "\"Рыба\" kelimesi hangi resimle eşleşir?",
       "g9": "\"Дом\" kelimesi hangi resimle eşleşir?",
-      "g10": "\"Луна\" kelimesi hangi resimle eşleşir?"
+      "g10": "\"Луна\" kelimesi hangi resimle eşleşir?",
+      "dinVerseCount": "{{name}} suresinde kaç ayet vardır?"
     },
     "prayers": {
       "fajr": "Sabah",

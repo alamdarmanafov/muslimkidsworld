@@ -60,6 +60,9 @@ export type QuizQuestion = {
   targetLang?: ForeignTargetLang;
   /** Set only for procedurally generated questions (e.g. math) — used instead of a content.quiz.* translation key. */
   promptText?: string;
+  /** Set for generated questions whose prompt still needs translation (e.g. "How many verses in {{name}}?") — a top-level i18n key with interpolation params. */
+  promptKey?: string;
+  promptParams?: Record<string, string | number>;
   options: QuizOption[];
   correctOptionId: string;
   xp: number;
@@ -963,9 +966,59 @@ export function generateMathQuestions(count: number): QuizQuestion[] {
   return questions;
 }
 
+type SurahMeta = { chapter: number; name: string; verses: number; revelation: string };
+const surahIndex = surahIndexData as SurahMeta[];
+
+function buildCountDistractors(value: number): number[] {
+  const step = Math.max(1, Math.round(value * 0.15));
+  const candidates = new Set<number>();
+  for (const mult of shuffle([1, -1, 2, -2, 3, -3])) {
+    const val = value + step * mult;
+    if (val > 0 && val !== value) candidates.add(val);
+    if (candidates.size >= 3) break;
+  }
+  return Array.from(candidates);
+}
+
+/**
+ * Generates "how many verses are in Surah X?" questions from real Quran
+ * structural data (surahIndex.json — chapter numbers, verse counts, source:
+ * tanzil.net via fawazahmed0/quran-api), so answers are always accurate and
+ * the pool (114 surahs) is large enough to avoid repeats within a session.
+ * Surah names stay in their English transliteration regardless of app
+ * language — only the question sentence itself is translated.
+ */
+export function generateSurahFactQuestions(count: number): QuizQuestion[] {
+  const pool = shuffle(surahIndex).slice(0, count);
+  return pool.map((s, i) => {
+    const distractors = buildCountDistractors(s.verses);
+    const values = shuffle([s.verses, ...distractors.slice(0, 3)]);
+    const correctIndex = values.indexOf(s.verses);
+    const options: QuizOption[] = values.map((v, idx) => ({
+      id: optionLetters[idx],
+      label: optionLetters[idx].toUpperCase(),
+      emoji: String(v),
+    }));
+    return {
+      id: `surah-${s.chapter}-${i}`,
+      category: "din",
+      promptKey: "content.quiz.dinVerseCount",
+      promptParams: { name: s.name },
+      options,
+      correctOptionId: optionLetters[correctIndex],
+      xp: 20,
+    };
+  });
+}
+
 export function getQuizQuestions(category: QuizCategory, targetLang?: ForeignTargetLang): QuizQuestion[] {
   if (category === "riyaziyyat") {
     return generateMathQuestions(10);
+  }
+  if (category === "din") {
+    const staticDin = quizBank.filter((q) => q.category === "din");
+    const generated = generateSurahFactQuestions(10);
+    return shuffle([...staticDin, ...generated]);
   }
   return quizBank.filter(
     (q) => q.category === category && (category !== "xariciDil" || q.targetLang === targetLang),
@@ -974,6 +1027,7 @@ export function getQuizQuestions(category: QuizCategory, targetLang?: ForeignTar
 
 import { IconBadgeTone, tones } from "../components/IconBadge";
 import type { IconName } from "../components/icons";
+import surahIndexData from "./quran/surahIndex.json";
 
 export type WorldLocation = {
   id: string;

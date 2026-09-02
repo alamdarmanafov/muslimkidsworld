@@ -361,7 +361,8 @@
       "g7": "Which picture matches the word \"Дерево\"?",
       "g8": "Which picture matches the word \"Рыба\"?",
       "g9": "Which picture matches the word \"Дом\"?",
-      "g10": "Which picture matches the word \"Луна\"?"
+      "g10": "Which picture matches the word \"Луна\"?",
+      "dinVerseCount": "How many verses are in Surah {{name}}?"
     },
     "prayers": {
       "fajr": "Fajr",

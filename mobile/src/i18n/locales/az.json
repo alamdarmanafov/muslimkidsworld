@@ -361,7 +361,8 @@
       "g7": "\"Дерево\" sözü hansı şəkillə eynidir?",
       "g8": "\"Рыба\" sözü hansı şəkillə eynidir?",
       "g9": "\"Дом\" sözü hansı şəkillə eynidir?",
-      "g10": "\"Луна\" sözü hansı şəkillə eynidir?"
+      "g10": "\"Луна\" sözü hansı şəkillə eynidir?",
+      "dinVerseCount": "{{name}} surəsində neçə ayə var?"
     },
     "prayers": {
       "fajr": "Sübh",

@@ -132,7 +132,10 @@ export default function Quiz() {
         />
       </View>
 
-      <Text style={styles.prompt}>{question.promptText ?? t(`content.quiz.${question.id}`)}</Text>
+      <Text style={styles.prompt}>
+        {question.promptText ??
+          t(question.promptKey ?? `content.quiz.${question.id}`, question.promptParams)}
+      </Text>
 
       <View style={styles.optionsGrid}>
         {question.options.map((option, i) => (
