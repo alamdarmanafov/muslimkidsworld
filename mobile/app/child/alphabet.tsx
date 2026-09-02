@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: spacing.lg,
-    paddingTop: spacing.sm,
+    paddingTop: spacing.xl * 1.5,
     paddingBottom: spacing.md,
   },
   backBtn: {
