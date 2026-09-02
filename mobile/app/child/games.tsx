@@ -21,7 +21,7 @@ export default function Games() {
 
       <ScrollView contentContainerStyle={styles.content}>
         {games.map((g) => (
-          <Pressable key={g.id} style={styles.row}>
+          <Pressable key={g.id} style={styles.row} onPress={() => router.push(`/child/games/${g.id}`)}>
             <View style={[styles.iconWrap, { backgroundColor: g.tone[0] }]}>
               <Icon name={g.icon} size={28} color={g.tone[1]} />
             </View>

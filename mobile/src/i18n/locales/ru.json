@@ -174,7 +174,17 @@
     "moreStories": "Ещё истории"
   },
   "games": {
-    "title": "Игры"
+    "title": "Игры",
+    "moves_one": "Ход: {{count}}",
+    "moves_other": "Ходов: {{count}}",
+    "movesResult_one": "Ты нашёл за {{count}} ход!",
+    "movesResult_other": "Ты нашёл за {{count}} ходов!",
+    "wellDone": "Отлично!",
+    "playAgain": "Играть снова",
+    "wordsSolved_one": "Решено слов: {{count}}",
+    "wordsSolved_other": "Решено слов: {{count}}",
+    "nextWord": "Следующее слово",
+    "clearAttempt": "Очистить"
   },
   "quiz": {
     "questionOf": "Вопрос {{current}} из {{total}}",
@@ -904,6 +914,22 @@
       "eat": "С именем Аллаха.",
       "eat2": "Хвала Аллаху, Который накормил и напоил нас и сделал нас мусульманами.",
       "eat3": "С именем Аллаха, в начале её и в конце."
+    },
+    "islamicSymbols": {
+      "kaaba": "Кааба",
+      "mosque": "Мечеть",
+      "quran": "Коран",
+      "crescent": "Полумесяц",
+      "lantern": "Фонарь",
+      "zamzam": "Вода Замзам"
+    },
+    "arabicWords": {
+      "allah": "Аллах",
+      "quran": "Коран",
+      "salah": "Молитва (Салят)",
+      "hajj": "Хадж",
+      "sawm": "Пост (Саум)",
+      "zakat": "Закят"
     }
   }
 }

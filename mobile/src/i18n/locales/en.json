@@ -172,7 +172,17 @@
     "moreStories": "More Stories"
   },
   "games": {
-    "title": "Games"
+    "title": "Games",
+    "moves_one": "Move: {{count}}",
+    "moves_other": "Moves: {{count}}",
+    "movesResult_one": "You found it in {{count}} move!",
+    "movesResult_other": "You found it in {{count}} moves!",
+    "wellDone": "Great job!",
+    "playAgain": "Play again",
+    "wordsSolved_one": "Words solved: {{count}}",
+    "wordsSolved_other": "Words solved: {{count}}",
+    "nextWord": "Next word",
+    "clearAttempt": "Clear"
   },
   "quiz": {
     "questionOf": "Question {{current}} of {{total}}",
@@ -898,6 +908,22 @@
       "eat": "In the name of Allah.",
       "eat2": "Praise be to Allah who fed us, gave us drink, and made us Muslims.",
       "eat3": "In the name of Allah, at its beginning and at its end."
+    },
+    "islamicSymbols": {
+      "kaaba": "Kaaba",
+      "mosque": "Mosque",
+      "quran": "Quran",
+      "crescent": "Crescent Moon",
+      "lantern": "Lantern",
+      "zamzam": "Zamzam Water"
+    },
+    "arabicWords": {
+      "allah": "Allah",
+      "quran": "Quran",
+      "salah": "Prayer (Salah)",
+      "hajj": "Hajj",
+      "sawm": "Fasting (Sawm)",
+      "zakat": "Zakat"
     }
   }
 }

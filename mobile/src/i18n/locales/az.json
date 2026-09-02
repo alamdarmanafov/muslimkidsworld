@@ -172,7 +172,17 @@
     "moreStories": "Daha çox hekayə"
   },
   "games": {
-    "title": "Oyunlar"
+    "title": "Oyunlar",
+    "moves_one": "Hərəkət: {{count}}",
+    "moves_other": "Hərəkət: {{count}}",
+    "movesResult_one": "{{count}} hərəkətlə tapdın!",
+    "movesResult_other": "{{count}} hərəkətlə tapdın!",
+    "wellDone": "Əla! Bacardın!",
+    "playAgain": "Yenidən oyna",
+    "wordsSolved_one": "Həll edilən sözlər: {{count}}",
+    "wordsSolved_other": "Həll edilən sözlər: {{count}}",
+    "nextWord": "Növbəti söz",
+    "clearAttempt": "Təmizlə"
   },
   "quiz": {
     "questionOf": "Sual {{current}} / {{total}}",
@@ -898,6 +908,22 @@
       "eat": "Allahın adı ilə.",
       "eat2": "Bizi yedirən, içirdən və müsəlman edən Allaha həmd olsun.",
       "eat3": "Allahın adı ilə, əvvəlində də, sonunda da."
+    },
+    "islamicSymbols": {
+      "kaaba": "Kəbə",
+      "mosque": "Məscid",
+      "quran": "Quran",
+      "crescent": "Hilal (Ay)",
+      "lantern": "Fənər",
+      "zamzam": "Zəmzəm suyu"
+    },
+    "arabicWords": {
+      "allah": "Allah",
+      "quran": "Quran",
+      "salah": "Namaz (Salah)",
+      "hajj": "Həcc",
+      "sawm": "Oruc (Sovm)",
+      "zakat": "Zəkat"
     }
   }
 }

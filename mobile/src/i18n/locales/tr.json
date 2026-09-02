@@ -172,7 +172,17 @@
     "moreStories": "Daha Fazla Hikaye"
   },
   "games": {
-    "title": "Oyunlar"
+    "title": "Oyunlar",
+    "moves_one": "Hamle: {{count}}",
+    "moves_other": "Hamle: {{count}}",
+    "movesResult_one": "{{count}} hamlede buldun!",
+    "movesResult_other": "{{count}} hamlede buldun!",
+    "wellDone": "Harika iş!",
+    "playAgain": "Tekrar oyna",
+    "wordsSolved_one": "Çözülen kelimeler: {{count}}",
+    "wordsSolved_other": "Çözülen kelimeler: {{count}}",
+    "nextWord": "Sonraki kelime",
+    "clearAttempt": "Temizle"
   },
   "quiz": {
     "questionOf": "Soru {{current}} / {{total}}",
@@ -898,6 +908,22 @@
       "eat": "Allah'ın adıyla.",
       "eat2": "Bizi doyuran, içiren ve Müslüman eden Allah'a hamd olsun.",
       "eat3": "Allah'ın adıyla, başında da sonunda da."
+    },
+    "islamicSymbols": {
+      "kaaba": "Kâbe",
+      "mosque": "Cami",
+      "quran": "Kur'an",
+      "crescent": "Hilal (Ay)",
+      "lantern": "Fener",
+      "zamzam": "Zemzem Suyu"
+    },
+    "arabicWords": {
+      "allah": "Allah",
+      "quran": "Kur'an",
+      "salah": "Namaz (Salât)",
+      "hajj": "Hac",
+      "sawm": "Oruç (Savm)",
+      "zakat": "Zekât"
     }
   }
 }
