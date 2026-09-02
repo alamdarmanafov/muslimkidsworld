@@ -146,15 +146,16 @@ export const latestReward: Reward = {
 
 export type QuranSurah = {
   id: string;
+  chapter: number;
   arabicName: string;
   locked: boolean;
 };
 
 export const quranSurahs: QuranSurah[] = [
-  { id: "al-fatiha", arabicName: "الفاتحة", locked: false },
-  { id: "an-nas", arabicName: "الناس", locked: true },
-  { id: "al-falaq", arabicName: "الفلق", locked: true },
-  { id: "al-ikhlas", arabicName: "الإخلاص", locked: true },
+  { id: "al-fatiha", chapter: 1, arabicName: "الفاتحة", locked: false },
+  { id: "an-nas", chapter: 114, arabicName: "الناس", locked: true },
+  { id: "al-falaq", chapter: 113, arabicName: "الفلق", locked: true },
+  { id: "al-ikhlas", chapter: 112, arabicName: "الإخلاص", locked: true },
 ];
 
 export type DuaCategory = "Morning" | "Evening" | "Sleep" | "Eat";
