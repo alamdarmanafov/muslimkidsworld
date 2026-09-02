@@ -490,7 +490,27 @@
       "elmPlanetCompareBiggest": "Which of these 4 planets is the biggest?",
       "elmPlanetCompareSmallest": "Which of these 4 planets is the smallest?",
       "xariciDilPictureMatch": "Which picture matches the word \"{{word}}\"?",
-      "xariciDilWordMatch": "How do you say {{emoji}} {{lang}}?"
+      "xariciDilWordMatch": "How do you say {{emoji}} {{lang}}?",
+      "d14": "Who was Prophet Adam (peace be upon him)?",
+      "d15": "What did Prophet Noah (peace be upon him) build by Allah's command?",
+      "d16": "What was Prophet Ibrahim (peace be upon him) known for?",
+      "d17": "How is Prophet Ismail (peace be upon him) related to Prophet Ibrahim (peace be upon him)?",
+      "d18": "How did our Prophet (peace be upon him) treat children?",
+      "e21": "Your friend succeeded in a competition. What should you feel?",
+      "e22": "You did something kind for someone. What should you expect in return?",
+      "sc30": "From which direction does the Sun rise in the morning?",
+      "sc31": "In which direction does the Sun set in the evening?",
+      "sc32": "What is the largest animal that lives in the sea?",
+      "sc33": "Which body part helps birds fly?",
+      "sc34": "Which organ do fish use to breathe in water?",
+      "sc35": "What colorful natural phenomenon can we see in the sky after rain on a sunny day?",
+      "sc36": "Which animal carries its own \"house\" on its back?",
+      "sc37": "What happens to trees' leaves in autumn?",
+      "sc38": "Is it important to use water carefully and protect it in nature?",
+      "m29": "Continue the sequence: 2, 6, 10, 14, ?",
+      "m30": "Continue the sequence: 30, 25, 20, 15, ?",
+      "m31": "Continue the sequence: 1, 2, 4, 8, ?",
+      "m32": "You had 10 manats. You spent 4 manats, then earned 2 manats. How many manats do you have now?"
     },
     "quizPlaces": {
       "mecca": "Mecca",
@@ -570,7 +590,9 @@
       "kangaroo": "Kangaroo",
       "camel": "Camel",
       "owl": "Owl",
-      "dolphin": "Dolphin"
+      "dolphin": "Dolphin",
+      "whale": "Blue whale",
+      "turtle": "Turtle"
     },
     "quizCelestial": {
       "moon": "Moon",
@@ -641,7 +663,27 @@
       "m25": "3 + 5 = 8. It will be 8 o'clock.",
       "m26": "4 boxes × 6 toys = 24 toys.",
       "m27": "1 kilogram = 1000 grams.",
-      "m28": "A day has 24 hours."
+      "m28": "A day has 24 hours.",
+      "d14": "Prophet Adam (peace be upon him) was the first human Allah created and the first prophet.",
+      "d15": "Prophet Noah (peace be upon him) built a ship by Allah's command to be saved from the great flood.",
+      "d16": "Prophet Ibrahim (peace be upon him) was known for his strong faith in Allah and his trust in Him through every hardship.",
+      "d17": "Prophet Ismail (peace be upon him) is the son of Prophet Ibrahim (peace be upon him) and was himself a prophet.",
+      "d18": "Our Prophet (peace be upon him) was always kind, gentle, and caring toward children.",
+      "e21": "Being genuinely happy for a friend's success is a beautiful quality.",
+      "e22": "We should do good deeds to please Allah, without expecting anything in return — that is the most valuable kind of good deed.",
+      "sc30": "The Sun always rises in the east — this is a result of the Earth's rotation on its axis.",
+      "sc31": "The Sun always sets in the west, because the Earth rotates from west to east.",
+      "sc32": "The blue whale is the largest animal on Earth and it lives in the sea.",
+      "sc33": "Birds' wings help them fly through the air.",
+      "sc34": "Fish breathe by taking in oxygen dissolved in water through their gills.",
+      "sc35": "A rainbow is a beautiful color phenomenon caused by sunlight bending through raindrops.",
+      "sc36": "A turtle has a hard shell protecting its body, as if it carries its own house on its back.",
+      "sc37": "In autumn, trees prepare for winter, and their leaves change color and fall.",
+      "sc38": "Water is very important for life, so we must use it carefully and protect it.",
+      "m29": "Each number increases by 4: 2, 6, 10, 14, 18.",
+      "m30": "Each number decreases by 5: 30, 25, 20, 15, 10.",
+      "m31": "Each number is double the one before it: 1, 2, 4, 8, 16.",
+      "m32": "10 - 4 = 6, then 6 + 2 = 8. You now have 8 manats."
     },
     "prayers": {
       "fajr": "Fajr",
@@ -732,7 +774,10 @@
       "kaaba": "Kaaba",
       "sun": "Sun",
       "moon": "Moon",
-      "east": "East"
+      "east": "East",
+      "west": "West",
+      "north": "North",
+      "south": "South"
     },
     "quizSurahNames": {
       "fatiha": "Al-Fatiha",
@@ -744,7 +789,66 @@
       "ice": "Ice",
       "cloud": "Cloud",
       "fog": "Fog",
-      "snow": "Snow"
+      "snow": "Snow",
+      "rainbow": "Rainbow"
+    },
+    "quizRoles": {
+      "firstHumanProphet": "The first human and prophet",
+      "angel": "An angel",
+      "king": "A king",
+      "scholar": "A scholar"
+    },
+    "quizStructures": {
+      "ship": "Ship",
+      "house": "House",
+      "mosque": "Mosque",
+      "bridge": "Bridge"
+    },
+    "quizTraits": {
+      "strongFaith": "His strong faith",
+      "wealth": "His wealth",
+      "strength": "His strength",
+      "speed": "His speed"
+    },
+    "quizRelations": {
+      "son": "Son",
+      "brother": "Brother",
+      "uncle": "Uncle",
+      "friend": "Friend"
+    },
+    "quizAttitudes": {
+      "kindCaring": "Kind and caring",
+      "strict": "Strict",
+      "indifferent": "Indifferent",
+      "impatient": "Impatient"
+    },
+    "quizRewards": {
+      "nothing": "Nothing — do it to please Allah",
+      "money": "Money",
+      "gift": "A gift",
+      "praise": "Praise"
+    },
+    "quizBodyParts": {
+      "wings": "Wings",
+      "legs": "Legs",
+      "tail": "Tail",
+      "beak": "Beak",
+      "gills": "Gills",
+      "lungs": "Lungs",
+      "skin": "Skin",
+      "nose": "Nose"
+    },
+    "quizNatureFacts": {
+      "leavesChangeFall": "They change color and fall",
+      "staysGreen": "They stay green",
+      "grows": "They grow bigger",
+      "blooms": "They bloom"
+    },
+    "quizYesNo": {
+      "yes": "Yes",
+      "no": "No",
+      "sometimes": "Sometimes",
+      "unknown": "I don't know"
     }
   }
 }

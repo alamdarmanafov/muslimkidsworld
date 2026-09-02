@@ -490,7 +490,27 @@
       "elmPlanetCompareBiggest": "Bu 4 gezegenden hangisi en büyüktür?",
       "elmPlanetCompareSmallest": "Bu 4 gezegenden hangisi en küçüktür?",
       "xariciDilPictureMatch": "\"{{word}}\" kelimesi hangi resimle aynıdır?",
-      "xariciDilWordMatch": "{{emoji}} {{lang}} nasıl denir?"
+      "xariciDilWordMatch": "{{emoji}} {{lang}} nasıl denir?",
+      "d14": "Hz. Adem (a.s.) kimdir?",
+      "d15": "Hz. Nuh (a.s.) Allah'ın emriyle ne inşa etti?",
+      "d16": "Hz. İbrahim (a.s.) hangi özelliğiyle tanınırdı?",
+      "d17": "Hz. İsmail (a.s.) Hz. İbrahim'in (a.s.) kimidir?",
+      "d18": "Peygamberimiz (s.a.v) çocuklara karşı nasıl davranırdı?",
+      "e21": "Arkadaşın bir yarışmada başarılı oldu. Ne hissetmelisin?",
+      "e22": "Birine iyilik yaptın. Bunun karşılığında ne beklemelisin?",
+      "sc30": "Güneş sabah hangi yönden doğar?",
+      "sc31": "Güneş akşam hangi yönde batar?",
+      "sc32": "Denizde yaşayan en büyük hayvan hangisidir?",
+      "sc33": "Kuşların uçmasına hangi organları yardımcı olur?",
+      "sc34": "Balıklar suda hangi organla nefes alır?",
+      "sc35": "Yağmurdan sonra güneşli havada gökyüzünde hangi renkli doğa olayını görebiliriz?",
+      "sc36": "Hangi hayvan kendi \"evini\" sırtında taşır?",
+      "sc37": "Sonbaharda ağaçların yapraklarına ne olur?",
+      "sc38": "Doğada suyu tasarruflu kullanmak ve korumak önemli midir?",
+      "m29": "Diziyi tamamla: 2, 6, 10, 14, ?",
+      "m30": "Diziyi tamamla: 30, 25, 20, 15, ?",
+      "m31": "Diziyi tamamla: 1, 2, 4, 8, ?",
+      "m32": "10 manatın vardı. 4 manat harcadın, sonra 2 manat kazandın. Şimdi kaç manatın var?"
     },
     "quizPlaces": {
       "mecca": "Mekke",
@@ -570,7 +590,9 @@
       "kangaroo": "Kanguru",
       "camel": "Deve",
       "owl": "Baykuş",
-      "dolphin": "Yunus"
+      "dolphin": "Yunus",
+      "whale": "Mavi balina",
+      "turtle": "Kaplumbağa"
     },
     "quizCelestial": {
       "moon": "Ay",
@@ -641,7 +663,27 @@
       "m25": "3 + 5 = 8. Saat 8 olacak.",
       "m26": "4 kutu × 6 oyuncak = 24 oyuncak.",
       "m27": "1 kilogram = 1000 gram.",
-      "m28": "Bir gün 24 saatten oluşur."
+      "m28": "Bir gün 24 saatten oluşur.",
+      "d14": "Hz. Adem (a.s.), Allah'ın yarattığı ilk insan ve ilk peygamberdir.",
+      "d15": "Hz. Nuh (a.s.), büyük tufandan korunmak için Allah'ın emriyle bir gemi inşa etti.",
+      "d16": "Hz. İbrahim (a.s.), Allah'a olan güçlü imanı ve her zorlukta O'na güvenmesiyle tanınırdı.",
+      "d17": "Hz. İsmail (a.s.), Hz. İbrahim'in (a.s.) oğludur ve kendisi de bir peygamberdir.",
+      "d18": "Peygamberimiz (s.a.v) çocuklara karşı her zaman şefkatli ve ilgiliydi.",
+      "e21": "Arkadaşımızın başarısına içtenlikle sevinmek güzel bir haslettir.",
+      "e22": "İyiliği Allah rızası için, karşılık beklemeden yapmalıyız — bu en değerli iyiliktir.",
+      "sc30": "Güneş her zaman doğudan doğar — bu, Dünya'nın kendi ekseni etrafında dönmesinin sonucudur.",
+      "sc31": "Güneş her zaman batıda batar, çünkü Dünya batıdan doğuya doğru döner.",
+      "sc32": "Mavi balina, Dünya'daki en büyük hayvandır ve denizlerde yaşar.",
+      "sc33": "Kuşların kanatları havada uçmalarına yardımcı olur.",
+      "sc34": "Balıklar, suda çözünmüş oksijeni solungaçları aracılığıyla alarak nefes alır.",
+      "sc35": "Gökkuşağı, güneş ışığının yağmur damlalarında kırılmasıyla oluşan güzel bir renk olayıdır.",
+      "sc36": "Kaplumbağanın vücudunu koruyan sert bir kabuğu vardır, sanki kendi evini sırtında taşır.",
+      "sc37": "Sonbaharda ağaçlar kışa hazırlanır, yaprakları renk değiştirip dökülür.",
+      "sc38": "Su, yaşam için çok önemlidir, bu yüzden tasarruflu kullanmalı ve korumalıyız.",
+      "m29": "Sayılar her seferinde 4 artıyor: 2, 6, 10, 14, 18.",
+      "m30": "Sayılar her seferinde 5 azalıyor: 30, 25, 20, 15, 10.",
+      "m31": "Her sayı bir öncekinin 2 katıdır: 1, 2, 4, 8, 16.",
+      "m32": "10 - 4 = 6, sonra 6 + 2 = 8. Şimdi 8 manatın var."
     },
     "prayers": {
       "fajr": "Sabah",
@@ -732,7 +774,10 @@
       "kaaba": "Kâbe",
       "sun": "Güneş",
       "moon": "Ay",
-      "east": "Doğu"
+      "east": "Doğu",
+      "west": "Batı",
+      "north": "Kuzey",
+      "south": "Güney"
     },
     "quizSurahNames": {
       "fatiha": "Fatiha",
@@ -744,7 +789,66 @@
       "ice": "Buz",
       "cloud": "Bulut",
       "fog": "Sis",
-      "snow": "Kar"
+      "snow": "Kar",
+      "rainbow": "Gökkuşağı"
+    },
+    "quizRoles": {
+      "firstHumanProphet": "İlk insan ve peygamber",
+      "angel": "Melek",
+      "king": "Kral",
+      "scholar": "Alim"
+    },
+    "quizStructures": {
+      "ship": "Gemi",
+      "house": "Ev",
+      "mosque": "Cami",
+      "bridge": "Köprü"
+    },
+    "quizTraits": {
+      "strongFaith": "Güçlü imanıyla",
+      "wealth": "Zenginliğiyle",
+      "strength": "Gücüyle",
+      "speed": "Hızıyla"
+    },
+    "quizRelations": {
+      "son": "Oğlu",
+      "brother": "Kardeşi",
+      "uncle": "Amcası",
+      "friend": "Arkadaşı"
+    },
+    "quizAttitudes": {
+      "kindCaring": "Şefkatli ve ilgili",
+      "strict": "Sert",
+      "indifferent": "İlgisiz",
+      "impatient": "Sabırsız"
+    },
+    "quizRewards": {
+      "nothing": "Hiçbir şey, Allah rızası için",
+      "money": "Para",
+      "gift": "Hediye",
+      "praise": "Övgü"
+    },
+    "quizBodyParts": {
+      "wings": "Kanatlar",
+      "legs": "Bacaklar",
+      "tail": "Kuyruk",
+      "beak": "Gaga",
+      "gills": "Solungaç",
+      "lungs": "Akciğer",
+      "skin": "Deri",
+      "nose": "Burun"
+    },
+    "quizNatureFacts": {
+      "leavesChangeFall": "Renk değiştirip dökülür",
+      "staysGreen": "Yeşil kalır",
+      "grows": "Büyür",
+      "blooms": "Çiçek açar"
+    },
+    "quizYesNo": {
+      "yes": "Evet",
+      "no": "Hayır",
+      "sometimes": "Bazen",
+      "unknown": "Bilmiyorum"
     }
   }
 }
