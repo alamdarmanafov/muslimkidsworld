@@ -68,6 +68,8 @@
     "stories": "Stories",
     "games": "Games",
     "quiz": "Quiz",
+    "salah": "Salah",
+    "alphabet": "Alphabet",
     "story": "Story",
     "game": "Game",
     "gardenTitle": "My Garden",
@@ -173,6 +175,17 @@
     "tryNextOne": "Let's try the next one.",
     "seeReward": "See Reward",
     "nextQuestion": "Next Question"
+  },
+  "salah": {
+    "title": "Salah",
+    "subtitle": "The 5 daily prayers",
+    "rakatsLabel_one": "{{count}} rakat",
+    "rakatsLabel_other": "{{count}} rakats",
+    "howToPray": "How to Pray",
+    "stepOf": "Step {{current}} of {{total}}"
+  },
+  "alphabet": {
+    "title": "Arabic Alphabet"
   },
   "childProgress": {
     "title": "My Progress",
@@ -302,6 +315,69 @@
       "g2": "Which picture matches the word \"Яблоко\"?",
       "g3": "Which picture matches the word \"Книга\"?",
       "g4": "Which picture matches the word \"Вода\"?"
+    },
+    "prayers": {
+      "fajr": "Fajr",
+      "dhuhr": "Dhuhr",
+      "asr": "Asr",
+      "maghrib": "Maghrib",
+      "isha": "Isha"
+    },
+    "salahSteps": {
+      "niyyah": {
+        "name": "Intention (Niyyah)",
+        "desc": "Quietly intend in your heart to pray this prayer for Allah."
+      },
+      "takbir": {
+        "name": "Opening Takbir",
+        "desc": "Raise your hands and say \"Allahu Akbar\" to begin."
+      },
+      "qiyam": {
+        "name": "Standing (Qiyam)",
+        "desc": "Stand and recite Surah Al-Fatiha and another short surah."
+      },
+      "ruku": {
+        "name": "Bowing (Ruku)",
+        "desc": "Bow with your back straight and hands on your knees."
+      },
+      "sujud": {
+        "name": "Prostration (Sujud)",
+        "desc": "Place your forehead, nose, hands, knees and toes on the ground."
+      },
+      "tashahhud": {
+        "name": "Sitting (Tashahhud)",
+        "desc": "Sit and recite the Tashahhud, then finish with Salam."
+      }
+    },
+    "alphabet": {
+      "alif": "Alif",
+      "ba": "Ba",
+      "ta": "Ta",
+      "tha": "Tha",
+      "jim": "Jim",
+      "ha": "Ha",
+      "kha": "Kha",
+      "dal": "Dal",
+      "dhal": "Dhal",
+      "ra": "Ra",
+      "zay": "Zay",
+      "sin": "Sin",
+      "shin": "Shin",
+      "sad": "Sad",
+      "dad": "Dad",
+      "ta2": "Ta (emphatic)",
+      "za": "Za",
+      "ayn": "Ayn",
+      "ghayn": "Ghayn",
+      "fa": "Fa",
+      "qaf": "Qaf",
+      "kaf": "Kaf",
+      "lam": "Lam",
+      "mim": "Mim",
+      "nun": "Nun",
+      "waw": "Waw",
+      "ha2": "Ha",
+      "ya": "Ya"
     },
     "plans": {
       "single": {

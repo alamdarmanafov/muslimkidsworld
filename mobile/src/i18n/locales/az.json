@@ -68,6 +68,8 @@
     "stories": "Hekayələr",
     "games": "Oyunlar",
     "quiz": "Test",
+    "salah": "Namaz",
+    "alphabet": "Əlifba",
     "story": "Hekayə",
     "game": "Oyun",
     "gardenTitle": "Mənim Bağçam",
@@ -173,6 +175,17 @@
     "tryNextOne": "Növbətini sınayaq.",
     "seeReward": "Mükafata bax",
     "nextQuestion": "Növbəti sual"
+  },
+  "salah": {
+    "title": "Namaz",
+    "subtitle": "Gündəlik 5 vaxt namaz",
+    "rakatsLabel_one": "{{count}} rükət",
+    "rakatsLabel_other": "{{count}} rükət",
+    "howToPray": "Namaz necə qılınır?",
+    "stepOf": "{{current}} / {{total}} addım"
+  },
+  "alphabet": {
+    "title": "Ərəb Əlifbası"
   },
   "childProgress": {
     "title": "Mənim İrəliləyişim",
@@ -302,6 +315,69 @@
       "g2": "\"Яблоко\" sözü hansı şəkillə eynidir?",
       "g3": "\"Книга\" sözü hansı şəkillə eynidir?",
       "g4": "\"Вода\" sözü hansı şəkillə eynidir?"
+    },
+    "prayers": {
+      "fajr": "Sübh",
+      "dhuhr": "Zöhr",
+      "asr": "Əsr",
+      "maghrib": "Məğrib",
+      "isha": "İşa"
+    },
+    "salahSteps": {
+      "niyyah": {
+        "name": "Niyyət",
+        "desc": "Ürəyində bu namazı Allah üçün qılacağına niyyət et."
+      },
+      "takbir": {
+        "name": "İftitah təkbiri",
+        "desc": "Əllərini qaldırıb \"Allahu Əkbər\" deyərək namaza başla."
+      },
+      "qiyam": {
+        "name": "Qiyam",
+        "desc": "Ayaq üstə dur, əl-Fatihəni və başqa qısa bir surəni oxu."
+      },
+      "ruku": {
+        "name": "Rüku",
+        "desc": "Belini düz saxlayaraq əyil, əllərini dizlərinə qoy."
+      },
+      "sujud": {
+        "name": "Səcdə",
+        "desc": "Alnını, burnunu, əllərini, dizlərini və ayaq barmaqlarını yerə qoy."
+      },
+      "tashahhud": {
+        "name": "Təşəhhüd",
+        "desc": "Otur, təşəhhüdü oxu, sonra salam verərək namazı bitir."
+      }
+    },
+    "alphabet": {
+      "alif": "Əlif",
+      "ba": "Ba",
+      "ta": "Ta",
+      "tha": "Sə",
+      "jim": "Cim",
+      "ha": "Ha",
+      "kha": "Xa",
+      "dal": "Dal",
+      "dhal": "Zəl",
+      "ra": "Ra",
+      "zay": "Zey",
+      "sin": "Sin",
+      "shin": "Şin",
+      "sad": "Sad",
+      "dad": "Dad",
+      "ta2": "Ta (qalın)",
+      "za": "Za",
+      "ayn": "Eyn",
+      "ghayn": "Ğeyn",
+      "fa": "Fa",
+      "qaf": "Qaf",
+      "kaf": "Kaf",
+      "lam": "Lam",
+      "mim": "Mim",
+      "nun": "Nun",
+      "waw": "Vav",
+      "ha2": "Ha",
+      "ya": "Ya"
     },
     "plans": {
       "single": {
