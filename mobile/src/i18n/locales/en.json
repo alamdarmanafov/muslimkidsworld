@@ -273,7 +273,15 @@
       "morning": "Morning Dua",
       "evening": "Evening Dua",
       "sleep": "Before Sleep",
-      "eat": "Before Eating"
+      "eat": "Before Eating",
+      "morning2": "Waking-up Dua",
+      "morning3": "Knowledge Dua",
+      "evening2": "Protection Dua",
+      "evening3": "Gratitude Dua",
+      "sleep2": "Night Dua",
+      "sleep3": "Lying Down to Sleep",
+      "eat2": "After Eating",
+      "eat3": "Beginning-and-End Dua"
     },
     "stories": {
       "yunus": {
@@ -849,6 +857,47 @@
       "no": "No",
       "sometimes": "Sometimes",
       "unknown": "I don't know"
+    },
+    "storyContent": {
+      "yunus": [
+        "Prophet Yunus (peace be upon him) was sent by Allah as a messenger to the people of Nineveh. He called them to believe in Allah and follow the right path.",
+        "His people did not listen to him for a long time. Yunus (peace be upon him) became upset and left the city without waiting for Allah's permission, boarding a ship.",
+        "A powerful storm hit the sea. To make the ship lighter, the sailors drew lots, and the lot fell on Yunus. He was thrown into the sea, and by Allah's command, a huge fish swallowed him.",
+        "Inside the fish, in the depths of the dark sea, Yunus (peace be upon him) realized his mistake and called out to Allah with all his heart: \"There is no god but You, glory be to You, indeed I was among the wrongdoers.\"",
+        "Allah accepted his sincere repentance. The fish released him onto the shore. Yunus (peace be upon him) was very weak, so Allah made a plant grow over him to give him shade and food.",
+        "Yunus (peace be upon him) returned to his people. By then, they had already come to believe, and they were saved. This story teaches us: Allah forgives anyone who repents sincerely — even in the darkest moment."
+      ],
+      "ibrahim": [
+        "Prophet Ibrahim (peace be upon him) grew up in a society that worshipped idols, but from an early age he believed in the oneness of Allah.",
+        "He tried to explain to his father and his people that idols made of stone and wood could neither help nor harm anyone, but they would not listen to him.",
+        "One day, Ibrahim (peace be upon him) broke all the idols except the largest one and hung the axe on it. When the people returned and asked him, he said: \"The big one did it — ask it, if it can speak.\"",
+        "The people grew angry and decided to burn him in a great fire. But Allah commanded the fire: \"O fire, be cool and safe for Ibrahim!\" And Ibrahim (peace be upon him) came out unharmed.",
+        "Later, Ibrahim (peace be upon him) built the Kaaba in Makkah together with his son Ismail (peace be upon him) — the first house built for people to worship Allah.",
+        "Because of his strong trust and faith in Allah, Ibrahim (peace be upon him) was called \"Khalilullah\" — the Friend of Allah. This story teaches us: Allah protects everyone who holds firmly to true faith in Him, in every hardship."
+      ],
+      "musa": [
+        "Prophet Musa (peace be upon him) was born in Egypt, during the rule of a cruel pharaoh who had ordered that every newborn boy be killed.",
+        "By Allah's inspiration, his mother placed baby Musa in a basket and set it on the river. The basket reached Pharaoh's palace, and Musa grew up there, among Pharaoh's own family.",
+        "When he grew up, Musa (peace be upon him) had to leave Egypt. Years later, on Mount Sinai, Allah sent him revelation and chose him as a prophet, turning his staff into a miraculous sign.",
+        "Allah sent Musa (peace be upon him), together with his brother Harun (peace be upon him), to Pharaoh, to free the Children of Israel and call people to the truth. Pharaoh stubbornly refused.",
+        "Musa (peace be upon him) led his people out of Egypt at night. Pharaoh and his army chased after them and caught up with them at the shore of the Red Sea.",
+        "By Allah's command, Musa (peace be upon him) struck the sea with his staff, and it split into two. His people crossed safely on dry land, but when Pharaoh and his army followed them in, the sea closed again.",
+        "This story teaches us: Allah always shows a way out to those who trust and remain patient in Him, even in the hardest moments."
+      ]
+    },
+    "duaMeaning": {
+      "morning": "O my Lord! With Your help we have reached the morning, and with Your help we reach the evening.",
+      "morning2": "Praise be to Allah who gave us life after taking it from us in sleep, and to Him is the return.",
+      "morning3": "O my Lord, increase me in knowledge.",
+      "evening": "O my Lord! With Your help we have reached the evening, and with Your help we reach the morning.",
+      "evening2": "I seek refuge in the perfect words of Allah from the evil of what He has created.",
+      "evening3": "O my Lord, enable me to be grateful for Your favor.",
+      "sleep": "In Your name, O Allah, I die (sleep) and I live (wake up).",
+      "sleep2": "O my Lord, protect me from Your punishment.",
+      "sleep3": "In Your name, my Lord, I lay down my side, and in Your name I raise it up again.",
+      "eat": "In the name of Allah.",
+      "eat2": "Praise be to Allah who fed us, gave us drink, and made us Muslims.",
+      "eat3": "In the name of Allah, at its beginning and at its end."
     }
   }
 }

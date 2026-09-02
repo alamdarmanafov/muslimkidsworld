@@ -2759,10 +2759,34 @@ export const duas: Dua[] = [
     transliteration: "Allahumma bika asbahna wa bika amsaina",
   },
   {
+    id: "morning2",
+    category: "Morning",
+    arabic: "الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ",
+    transliteration: "Alhamdu lillahil-ladhi ahyana ba'da ma amatana wa ilayhin-nushur",
+  },
+  {
+    id: "morning3",
+    category: "Morning",
+    arabic: "رَبِّ زِدْنِي عِلْمًا",
+    transliteration: "Rabbi zidni ilma",
+  },
+  {
     id: "evening",
     category: "Evening",
     arabic: "اللَّهُمَّ بِكَ أَمْسَيْنَا وَبِكَ أَصْبَحْنَا",
     transliteration: "Allahumma bika amsaina wa bika asbahna",
+  },
+  {
+    id: "evening2",
+    category: "Evening",
+    arabic: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ",
+    transliteration: "A'udhu bikalimatillahit-tammati min sharri ma khalaq",
+  },
+  {
+    id: "evening3",
+    category: "Evening",
+    arabic: "رَبِّ أَوْزِعْنِي أَنْ أَشْكُرَ نِعْمَتَكَ",
+    transliteration: "Rabbi awzi'ni an ashkura ni'mataka",
   },
   {
     id: "sleep",
@@ -2771,10 +2795,34 @@ export const duas: Dua[] = [
     transliteration: "Bismika Allahumma amutu wa ahya",
   },
   {
+    id: "sleep2",
+    category: "Sleep",
+    arabic: "اللَّهُمَّ قِنِي عَذَابَكَ يَوْمَ تَبْعَثُ عِبَادَكَ",
+    transliteration: "Allahumma qini adhabaka yawma tab'athu 'ibadak",
+  },
+  {
+    id: "sleep3",
+    category: "Sleep",
+    arabic: "بِاسْمِكَ رَبِّي وَضَعْتُ جَنْبِي وَبِكَ أَرْفَعُهُ",
+    transliteration: "Bismika rabbi wada'tu janbi wa bika arfa'uh",
+  },
+  {
     id: "eat",
     category: "Eat",
     arabic: "بِسْمِ اللَّهِ",
     transliteration: "Bismillah",
+  },
+  {
+    id: "eat2",
+    category: "Eat",
+    arabic: "الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِينَ",
+    transliteration: "Alhamdu lillahil-ladhi at'amana wa saqana wa ja'alana muslimeen",
+  },
+  {
+    id: "eat3",
+    category: "Eat",
+    arabic: "بِسْمِ اللَّهِ أَوَّلَهُ وَآخِرَهُ",
+    transliteration: "Bismillahi awwalahu wa akhirahu",
   },
 ];
 

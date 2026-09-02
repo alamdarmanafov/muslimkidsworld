@@ -18,7 +18,18 @@ const categoryLabelKeys: Record<DuaCategory, string> = {
 export default function Dua() {
   const { t } = useTranslation();
   const [category, setCategory] = useState<DuaCategory>("Morning");
-  const active = duas.find((d) => d.category === category) ?? duas[0];
+  const [index, setIndex] = useState(0);
+  const categoryDuas = duas.filter((d) => d.category === category);
+  const active = categoryDuas[index] ?? categoryDuas[0] ?? duas[0];
+
+  function changeCategory(c: DuaCategory) {
+    setCategory(c);
+    setIndex(0);
+  }
+
+  function goTo(delta: number) {
+    setIndex((i) => (i + delta + categoryDuas.length) % categoryDuas.length);
+  }
 
   return (
     <SafeAreaView style={styles.screen} edges={["top"]}>
@@ -35,18 +46,22 @@ export default function Dua() {
           <Text style={styles.cardTitle}>{t(`content.dua.${active.id}`)}</Text>
           <Text style={styles.arabic}>{active.arabic}</Text>
           <Text style={styles.transliteration}>{active.transliteration}</Text>
+          <Text style={styles.meaning}>{t(`content.duaMeaning.${active.id}`)}</Text>
 
           <View style={styles.controls}>
-            <Pressable style={styles.smallBtn}>
+            <Pressable style={styles.smallBtn} onPress={() => goTo(-1)}>
               <Icon name="skipBack" size={16} color={colors.purple} />
             </Pressable>
             <Pressable style={styles.playBtn}>
               <Icon name="play" size={20} color="#FFFFFF" />
             </Pressable>
-            <Pressable style={styles.smallBtn}>
+            <Pressable style={styles.smallBtn} onPress={() => goTo(1)}>
               <Icon name="skipForward" size={16} color={colors.purple} />
             </Pressable>
           </View>
+          <Text style={styles.pageIndicator}>
+            {index + 1} / {categoryDuas.length}
+          </Text>
         </View>
 
         <View style={styles.categoryRow}>
@@ -54,7 +69,7 @@ export default function Dua() {
             <Pressable
               key={c}
               style={[styles.categoryChip, c === category && styles.categoryChipActive]}
-              onPress={() => setCategory(c)}
+              onPress={() => changeCategory(c)}
             >
               <Text style={[styles.categoryText, c === category && styles.categoryTextActive]}>
                 {t(categoryLabelKeys[c])}
@@ -105,11 +120,24 @@ const styles = StyleSheet.create({
     marginTop: spacing.sm,
     fontStyle: "italic",
   },
+  meaning: {
+    fontFamily: fonts.body,
+    fontSize: 13,
+    color: colors.ink,
+    textAlign: "center",
+    marginTop: spacing.sm,
+  },
   controls: {
     flexDirection: "row",
     alignItems: "center",
     gap: spacing.lg,
     marginTop: spacing.lg,
+  },
+  pageIndicator: {
+    fontFamily: fonts.body,
+    fontSize: 11,
+    color: colors.inkMuted,
+    marginTop: spacing.sm,
   },
   smallBtn: { padding: spacing.xs },
   playBtn: {

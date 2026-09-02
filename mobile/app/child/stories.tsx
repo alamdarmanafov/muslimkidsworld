@@ -21,7 +21,10 @@ export default function Stories() {
       </View>
 
       <ScrollView contentContainerStyle={styles.content}>
-        <Pressable style={[styles.featuredCard, { backgroundColor: colors.fire }]}>
+        <Pressable
+          style={[styles.featuredCard, { backgroundColor: colors.fire }]}
+          onPress={() => router.push(`/child/stories/${featured.id}`)}
+        >
           <Icon name={featured.icon} size={40} color="#FFFFFF" />
           <Text style={styles.featuredTitle}>{t(`content.stories.${featured.id}.title`)}</Text>
           <Text style={styles.featuredSubtitle}>{t(`content.stories.${featured.id}.subtitle`)}</Text>
@@ -30,7 +33,12 @@ export default function Stories() {
         <Text style={styles.sectionTitle}>{t("stories.moreStories")}</Text>
         <View style={styles.grid}>
           {rest.map((s) => (
-            <Pressable key={s.id} style={[styles.tile, s.locked && styles.tileLocked]}>
+            <Pressable
+              key={s.id}
+              style={[styles.tile, s.locked && styles.tileLocked]}
+              disabled={s.locked}
+              onPress={() => router.push(`/child/stories/${s.id}`)}
+            >
               <View style={[styles.tileIconWrap, { backgroundColor: s.tone[0] }]}>
                 <Icon name={s.icon} size={26} color={s.tone[1]} />
               </View>

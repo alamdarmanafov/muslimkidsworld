@@ -273,7 +273,15 @@
       "morning": "Səhər duası",
       "evening": "Axşam duası",
       "sleep": "Yatmazdan əvvəl",
-      "eat": "Yeməkdən əvvəl"
+      "eat": "Yeməkdən əvvəl",
+      "morning2": "Oyanış duası",
+      "morning3": "Elm duası",
+      "evening2": "Qorunma duası",
+      "evening3": "Şükür duası",
+      "sleep2": "Gecə duası",
+      "sleep3": "Yan üstə uzananda",
+      "eat2": "Yeməkdən sonra",
+      "eat3": "Əvvəli-sonu duası"
     },
     "stories": {
       "yunus": {
@@ -849,6 +857,47 @@
       "no": "Xeyr",
       "sometimes": "Bəzən",
       "unknown": "Bilmirəm"
+    },
+    "storyContent": {
+      "yunus": [
+        "Yunus peyğəmbər (ə.s) Ninova şəhərinin xalqına Allahın elçisi olaraq göndərilmişdi. O, insanları Allaha inanmağa və doğru yola çağırırdı.",
+        "Xalqı ona uzun müddət qulaq asmadı. Yunus (ə.s) kədərləndi və Allahın icazəsini gözləmədən şəhəri tərk edib bir gəmiyə mindi.",
+        "Dənizdə güclü fırtına qopdu. Gəmini yüngülləşdirmək üçün püşk atıldı və növbə Yunusa (ə.s) düşdü. O, dənizə atıldı və Allahın əmri ilə böyük bir balıq onu ududu.",
+        "Balığın qarnında, dənizin dərinliyində, qaranlıq içində Yunus (ə.s) səhvini başa düşdü və bütün qəlbi ilə Allaha yalvardı: \"Səndən başqa ilah yoxdur, Sən pak və müqəddəssən, həqiqətən mən zalımlardan oldum.\"",
+        "Allah onun səmimi tövbəsini qəbul etdi. Balıq onu sahilə buraxdı. Yunus (ə.s) çox zəif idi, Allah ona kölgə və qida versin deyə üzərində bir bitki bitirdi.",
+        "Yunus (ə.s) xalqının yanına qayıtdı. Bu dəfə onlar artıq iman gətirmişdilər və xilas oldular. Bu hekayə bizə öyrədir: Allah, ürəkdən tövbə edən hər kəsi bağışlayır — hətta ən qaranlıq anda belə."
+      ],
+      "ibrahim": [
+        "İbrahim peyğəmbər (ə.s) bütlərə sitayiş edən bir cəmiyyətdə böyüdü, amma kiçik yaşlarından Allahın vəhdaniyyətinə inanırdı.",
+        "O, atasına və xalqına daş və taxta bütlərin heç kimə fayda və ya zərər verə bilmədiyini izah etməyə çalışdı, amma onu dinləmədilər.",
+        "Bir gün İbrahim (ə.s) böyük bütdən başqa hamısını sındırdı və baltanı ən böyük bütün boynuna asdı. Xalq geri qayıdanda ondan soruşdu, o isə dedi: \"Bunu bu böyük büt edib, ondan soruşun, əgər danışa bilirsə.\"",
+        "Xalq qəzəbləndi və onu böyük bir tonqalda yandırmaq qərarına gəldi. Amma Allah oda əmr etdi: \"Ey od, İbrahim üçün sərinlik və salamatlıq ol!\" Və İbrahim (ə.s) oddan zərər görmədən sağ çıxdı.",
+        "İbrahim (ə.s) sonralar oğlu İsmayıl (ə.s) ilə birlikdə Məkkədə Kəbəni tikdi — insanların Allaha ibadət etdiyi ilk ev.",
+        "İbrahim (ə.s) Allaha olan güclü etibarı və imanına görə \"Xəlilullah\" — Allahın dostu adlandırıldı. Bu hekayə bizə öyrədir: Allaha həqiqi imanla bağlanan hər kəsi O, hər çətinlikdə qoruyur."
+      ],
+      "musa": [
+        "Musa peyğəmbər (ə.s) Misirdə, zalım fironun hökm sürdüyü bir dövrdə dünyaya gəldi. Firon bütün yeni doğulan oğlan uşaqlarının öldürülməsini əmr etmişdi.",
+        "Anası Allahın vəhyi ilə balaca Musanı bir səbətə qoyub çaya buraxdı. Səbət Fironun sarayına çatdı və Musa (ə.s) orada, Fironun ailəsinin yanında böyüdü.",
+        "Böyüdükdən sonra Musa (ə.s) Misiri tərk etməli oldu. Illər sonra Tur dağında Allah ona vəhy göndərdi və onu peyğəmbər seçdi, əsasını möcüzəli bir əlamətə çevirdi.",
+        "Allah Musanı (ə.s) qardaşı Harunla (ə.s) birlikdə Fironun yanına göndərdi ki, İsrail oğullarını azad etsin və insanları haqqa çağırsın. Firon inadla imtina etdi.",
+        "Musa (ə.s) xalqını gecə vaxtı Misirdən çıxartdı. Firon və ordusu onları təqib edərək Qırmızı dənizin kənarında tutdular.",
+        "Allahın əmri ilə Musa (ə.s) əsası ilə dənizə vurdu və dəniz iki yerə ayrıldı. Xalq quru yolla dənizin o tayına keçdi, Firon və ordusu isə arxalarınca girəndə dəniz yenidən birləşdi.",
+        "Bu hekayə bizə öyrədir: Allah çətin anlarda Ona güvənən və səbir edən qullarına həmişə bir çıxış yolu göstərir."
+      ]
+    },
+    "duaMeaning": {
+      "morning": "Ya Rəbbim! Biz Sənin köməyinlə səhərə çıxdıq, Sənin köməyinlə axşama çatırıq.",
+      "morning2": "Bizi öldükdən (yuxudan) sonra dirildən Allaha həmd olsun, dönüş də Onadır.",
+      "morning3": "Ya Rəbbim! Elmimi artır.",
+      "evening": "Ya Rəbbim! Biz Sənin köməyinlə axşama çatdıq, Sənin köməyinlə səhərə çıxırıq.",
+      "evening2": "Allahın kamil sözlərinə sığınıram, yaratdıqlarının şərindən qorunmaq üçün.",
+      "evening3": "Ya Rəbbim! Mənə nemətinə şükür etməyi nəsib et.",
+      "sleep": "Sənin adınla, Allahım, ölürəm (yatıram) və dirilirəm (oyanıram).",
+      "sleep2": "Ya Rəbbim! Məni əzabından qoru.",
+      "sleep3": "Sənin adınla, Rəbbim, yanımı yerə qoyuram, yenə Sənin adınla qaldırıram.",
+      "eat": "Allahın adı ilə.",
+      "eat2": "Bizi yedirən, içirdən və müsəlman edən Allaha həmd olsun.",
+      "eat3": "Allahın adı ilə, əvvəlində də, sonunda da."
     }
   }
 }

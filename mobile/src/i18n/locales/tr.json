@@ -273,7 +273,15 @@
       "morning": "Sabah Duası",
       "evening": "Akşam Duası",
       "sleep": "Uyumadan Önce",
-      "eat": "Yemekten Önce"
+      "eat": "Yemekten Önce",
+      "morning2": "Uyanma Duası",
+      "morning3": "İlim Duası",
+      "evening2": "Korunma Duası",
+      "evening3": "Şükür Duası",
+      "sleep2": "Gece Duası",
+      "sleep3": "Yan Yatarken",
+      "eat2": "Yemekten Sonra",
+      "eat3": "Başı-Sonu Duası"
     },
     "stories": {
       "yunus": {
@@ -849,6 +857,47 @@
       "no": "Hayır",
       "sometimes": "Bazen",
       "unknown": "Bilmiyorum"
+    },
+    "storyContent": {
+      "yunus": [
+        "Yunus Peygamber (a.s.), Ninova halkına Allah'ın elçisi olarak gönderildi. Onları Allah'a inanmaya ve doğru yola çağırdı.",
+        "Halkı onu uzun süre dinlemedi. Yunus (a.s.) üzüldü ve Allah'ın izni olmadan şehri terk edip bir gemiye bindi.",
+        "Denizde şiddetli bir fırtına koptu. Gemiyi hafifletmek için kura çekildi ve sıra Yunus'a düştü. Denize atıldı ve Allah'ın emriyle büyük bir balık onu yuttu.",
+        "Balığın karnında, karanlık denizin derinliklerinde Yunus (a.s.) hatasını anladı ve tüm kalbiyle Allah'a yalvardı: \"Senden başka ilah yoktur, Sen yücesin, gerçekten ben zalimlerden oldum.\"",
+        "Allah onun içten tövbesini kabul etti. Balık onu sahile bıraktı. Yunus (a.s.) çok güçsüzdü, Allah ona gölge ve besin versin diye üzerinde bir bitki yeşertti.",
+        "Yunus (a.s.) halkının yanına döndü. Bu kez onlar zaten iman etmişlerdi ve kurtuldular. Bu hikaye bize şunu öğretir: Allah, içtenlikle tövbe eden herkesi bağışlar — en karanlık anda bile."
+      ],
+      "ibrahim": [
+        "İbrahim Peygamber (a.s.), putlara tapan bir toplumda büyüdü, ama küçük yaşından itibaren Allah'ın birliğine inanıyordu.",
+        "Babasına ve halkına, taştan ve tahtadan yapılan putların kimseye fayda ya da zarar veremeyeceğini anlatmaya çalıştı, ama onu dinlemediler.",
+        "Bir gün İbrahim (a.s.) en büyüğü hariç tüm putları kırdı ve baltayı en büyük putun boynuna astı. Halk dönüp ona sorunca şöyle dedi: \"Bunu şu büyük put yaptı, ona sorun, eğer konuşabiliyorsa.\"",
+        "Halk öfkelendi ve onu büyük bir ateşte yakmaya karar verdi. Ama Allah ateşe şöyle emretti: \"Ey ateş, İbrahim için serin ve güvenli ol!\" Ve İbrahim (a.s.) hiç zarar görmeden çıktı.",
+        "Daha sonra İbrahim (a.s.), oğlu İsmail (a.s.) ile birlikte Mekke'de Kâbe'yi inşa etti — insanların Allah'a ibadet ettiği ilk ev.",
+        "İbrahim (a.s.), Allah'a olan güçlü güveni ve imanı nedeniyle \"Halilullah\" — Allah'ın dostu olarak anıldı. Bu hikaye bize şunu öğretir: Allah, O'na gerçek imanla bağlanan herkesi her zorlukta korur."
+      ],
+      "musa": [
+        "Musa Peygamber (a.s.), Mısır'da, zalim bir firavunun hüküm sürdüğü bir dönemde doğdu. Firavun, yeni doğan tüm erkek çocukların öldürülmesini emretmişti.",
+        "Annesi, Allah'ın ilhamıyla küçük Musa'yı bir sepete koyup nehre bıraktı. Sepet Firavun'un sarayına ulaştı ve Musa (a.s.) orada, Firavun'un ailesinin yanında büyüdü.",
+        "Büyüdükten sonra Musa (a.s.) Mısır'ı terk etmek zorunda kaldı. Yıllar sonra Sina Dağı'nda Allah ona vahiy gönderdi ve onu peygamber seçti, asasını mucizevi bir işarete dönüştürdü.",
+        "Allah, Musa'yı (a.s.) kardeşi Harun (a.s.) ile birlikte Firavun'a gönderdi ki İsrailoğullarını özgür bıraksın ve insanları hakka çağırsın. Firavun inatla reddetti.",
+        "Musa (a.s.) halkını geceleyin Mısır'dan çıkardı. Firavun ve ordusu onları takip ederek Kızıldeniz kıyısında yakaladı.",
+        "Allah'ın emriyle Musa (a.s.) asasıyla denize vurdu ve deniz ikiye ayrıldı. Halkı kuru bir yoldan denizin diğer tarafına geçti; Firavun ve ordusu peşlerinden girince deniz yeniden birleşti.",
+        "Bu hikaye bize şunu öğretir: Allah, en zor anlarda bile O'na güvenen ve sabreden kullarına her zaman bir çıkış yolu gösterir."
+      ]
+    },
+    "duaMeaning": {
+      "morning": "Ya Rabbi! Senin yardımınla sabaha ulaştık, senin yardımınla akşama ulaşırız.",
+      "morning2": "Bizi öldürdükten (uyuttuktan) sonra dirilten Allah'a hamd olsun, dönüş de O'nadır.",
+      "morning3": "Ya Rabbi! İlmimi artır.",
+      "evening": "Ya Rabbi! Senin yardımınla akşama ulaştık, senin yardımınla sabaha ulaşırız.",
+      "evening2": "Allah'ın eksiksiz sözlerine sığınırım, yarattıklarının şerinden korunmak için.",
+      "evening3": "Ya Rabbi! Bana nimetine şükretmeyi nasip et.",
+      "sleep": "Senin adınla, Allah'ım, ölürüm (uyurum) ve dirilirim (uyanırım).",
+      "sleep2": "Ya Rabbi! Beni azabından koru.",
+      "sleep3": "Senin adınla, Rabbim, yanımı yere koyarım, yine senin adınla kaldırırım.",
+      "eat": "Allah'ın adıyla.",
+      "eat2": "Bizi doyuran, içiren ve Müslüman eden Allah'a hamd olsun.",
+      "eat3": "Allah'ın adıyla, başında da sonunda da."
     }
   }
 }
