@@ -171,9 +171,10 @@
     "levelReward": "Səviyyə {{level}} Mükafatı",
     "awesome": "Əla!",
     "greatJob": "Əla iş!",
-    "notQuite": "Düz deyil!",
+    "notQuite": "Yaxşı cəhd!",
     "answeredCorrectly": "Düzgün cavab verdin.",
     "tryNextOne": "Növbətini sınayaq.",
+    "correctAnswerWas": "Doğru cavab: {{answer}}",
     "seeReward": "Mükafata bax",
     "nextQuestion": "Növbəti sual"
   },
@@ -379,7 +380,27 @@
       "p10": "Hicri təqvimin ilk ayı hansıdır?",
       "p11": "Quran hansı ayda nazil olmağa başlayıb?",
       "p12": "Həcc ziyarəti hansı ayda edilir?",
-      "p13": "Peyğəmbərimizə (s.a.v) görə, bir əməlin dəyəri nəyə əsaslanır?"
+      "p13": "Peyğəmbərimizə (s.a.v) görə, bir əməlin dəyəri nəyə əsaslanır?",
+      "d1": "Kəbə hansı şəhərdə yerləşir?",
+      "d2": "Ramazan ayında müsəlmanlar hansı ibadəti xüsusilə yerinə yetirir?",
+      "d3": "Yeməyə başlayarkən müsəlmanlar hansı sözü deyir?",
+      "d4": "Məscid nə üçün istifadə olunan yerdir?",
+      "d5": "Ramazandan sonra qeyd olunan bayramın adı nədir?",
+      "d6": "Quranda bir heyvanın adını daşıyan surə var — hansı heyvan?",
+      "e11": "Valideynlərinlə necə davranmalısan?",
+      "e12": "Yalan danışmaq necə bir şeydir?",
+      "e13": "Dostuna kömək etmək necə bir əməldir?",
+      "e14": "Yetimə kömək etmək necə bir davranışdır?",
+      "e15": "Təmizliyə diqqət etmək nə qədər vacibdir?",
+      "sc13": "Göy qurşağında neçə əsas rəng var?",
+      "sc14": "Dünyanın təbii peyki nədir?",
+      "sc15": "Hansı heyvan \"meşələrin kralı\" adlanır?",
+      "sc16": "Arılar hansı məhsulu hazırlayır?",
+      "sc17": "Hansı quş uça bilmir, amma çox yaxşı üzür?",
+      "sc18": "Zibili hara atmalıyıq?",
+      "m16": "5 alma var. 2-sini dostuna versən, neçə alma qalır?",
+      "m17": "4 səbətin hər birində 3 alma varsa, cəmi neçə alma var?",
+      "m18": "Bir uşaqda 10 konfet var. 5-ni yesə, neçə konfet qalar?"
     },
     "quizPlaces": {
       "mecca": "Məkkə",
@@ -411,6 +432,79 @@
       "time": "Zaman",
       "amount": "Miqdar",
       "place": "Yer"
+    },
+    "quizWorship": {
+      "fasting": "Oruc tutmaq",
+      "zakat": "Zəkat vermək",
+      "hajj": "Həccə getmək",
+      "sacrifice": "Qurban kəsmək"
+    },
+    "quizPhrases": {
+      "bismillah": "Bismillah",
+      "alhamdulillah": "Əlhəmdülillah",
+      "subhanallah": "Subhanallah",
+      "astaghfirullah": "Əstəğfirullah"
+    },
+    "quizPurposes": {
+      "worship": "İbadət etmək üçün",
+      "play": "Oyun oynamaq üçün",
+      "cook": "Yemək bişirmək üçün",
+      "shop": "Alış-veriş üçün"
+    },
+    "quizFestivals": {
+      "eidalfitr": "Ramazan bayramı",
+      "eidaladha": "Qurban bayramı",
+      "novruz": "Novruz bayramı",
+      "christmas": "Milad bayramı"
+    },
+    "quizAnimals": {
+      "bee": "Arı",
+      "dog": "İt",
+      "cat": "Pişik",
+      "fish": "Balıq",
+      "lion": "Şir",
+      "rabbit": "Dovşan",
+      "sparrow": "Sərçə",
+      "penguin": "Pinqvin",
+      "eagle": "Qartal",
+      "peacock": "Tovuzquşu"
+    },
+    "quizCelestial": {
+      "moon": "Ay",
+      "sun": "Günəş",
+      "star": "Ulduz",
+      "comet": "Kometa"
+    },
+    "quizProducts": {
+      "honey": "Bal",
+      "milk": "Süd",
+      "egg": "Yumurta",
+      "wool": "Yun"
+    },
+    "quizThings": {
+      "trashcan": "Zibil qutusuna",
+      "street": "Küçəyə",
+      "water": "Suya",
+      "forest": "Meşəyə"
+    },
+    "quizExplanations": {
+      "d1": "Kəbə, müsəlmanların namaz qılarkən üzləndiyi müqəddəs məkandır.",
+      "d2": "Ramazan ayında müsəlmanlar sübh açılandan gün batana qədər oruc tutur.",
+      "d3": "\"Bismillah\" demək, bir işə Allahın adı ilə başlamaq deməkdir.",
+      "d4": "Məscid, müsəlmanların namaz qılıb ibadət etdiyi müqəddəs yerdir.",
+      "d5": "Oruc ayı bitəndən sonra Ramazan (Fitr) bayramı qeyd olunur.",
+      "d6": "Quranda \"ən-Nəhl\" adlı surə var, mənası \"Arı\" deməkdir.",
+      "e11": "İslamda valideynlərə hörmət və mehribanlıq göstərmək çox vacibdir.",
+      "e12": "Doğruçuluq gözəl bir xüsusiyyətdir, yalan danışmaq isə pisdir.",
+      "e13": "Başqalarına kömək etmək bizi daha yaxşı insan edir.",
+      "e14": "Yetimlərə qayğı göstərmək çox savablı bir əməldir.",
+      "e15": "Təmizlik həm sağlamlıq, həm də gözəl əxlaq üçün vacibdir.",
+      "sc13": "Göy qurşağı 7 rəngdən ibarətdir: qırmızı, narıncı, sarı, yaşıl, mavi, göy və bənövşəyi.",
+      "sc14": "Ay, Yer kürəsinin ətrafında fırlanan təbii peykdir.",
+      "sc15": "Şir gücünə görə \"meşələrin kralı\" adlandırılır.",
+      "sc16": "Arılar çiçəklərdən topladıqları nektardan bal hazırlayır.",
+      "sc17": "Pinqvinlər uça bilməz, amma suda çox sürətli üzür.",
+      "sc18": "Zibili düzgün yerə atmaq təbiəti qorumağa kömək edir."
     },
     "prayers": {
       "fajr": "Sübh",

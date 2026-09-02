@@ -171,9 +171,10 @@
     "levelReward": "Level {{level}} Reward",
     "awesome": "Awesome!",
     "greatJob": "Great Job!",
-    "notQuite": "Not Quite!",
+    "notQuite": "Good Try!",
     "answeredCorrectly": "You answered correctly.",
     "tryNextOne": "Let's try the next one.",
+    "correctAnswerWas": "Correct answer: {{answer}}",
     "seeReward": "See Reward",
     "nextQuestion": "Next Question"
   },
@@ -379,7 +380,27 @@
       "p10": "Which is the first month of the Islamic (Hijri) calendar?",
       "p11": "In which month did the Quran begin to be revealed?",
       "p12": "In which month is the Hajj pilgrimage performed?",
-      "p13": "According to the Prophet (SAW), what determines the value of a deed?"
+      "p13": "According to the Prophet (SAW), what determines the value of a deed?",
+      "d1": "In which city is the Kaaba located?",
+      "d2": "Which act of worship do Muslims especially perform during Ramadan?",
+      "d3": "What do Muslims say before starting to eat?",
+      "d4": "What is a mosque used for?",
+      "d5": "What is the name of the festival celebrated after Ramadan?",
+      "d6": "The Quran has a chapter named after an animal — which one?",
+      "e11": "How should you treat your parents?",
+      "e12": "What kind of thing is lying?",
+      "e13": "What kind of deed is helping a friend?",
+      "e14": "What kind of behavior is helping an orphan?",
+      "e15": "How important is paying attention to cleanliness?",
+      "sc13": "How many main colors are in a rainbow?",
+      "sc14": "What is Earth's natural satellite?",
+      "sc15": "Which animal is called the \"king of the forest\"?",
+      "sc16": "What product do bees make?",
+      "sc17": "Which bird can't fly but swims very well?",
+      "sc18": "Where should we throw trash?",
+      "m16": "There are 5 apples. If you give 2 to your friend, how many are left?",
+      "m17": "If each of 4 baskets has 3 apples, how many apples in total?",
+      "m18": "A child has 10 candies. If they eat 5, how many are left?"
     },
     "quizPlaces": {
       "mecca": "Mecca",
@@ -411,6 +432,79 @@
       "time": "Time",
       "amount": "Amount",
       "place": "Place"
+    },
+    "quizWorship": {
+      "fasting": "Fasting",
+      "zakat": "Zakat (charity)",
+      "hajj": "Hajj (pilgrimage)",
+      "sacrifice": "Sacrifice (Qurbani)"
+    },
+    "quizPhrases": {
+      "bismillah": "Bismillah",
+      "alhamdulillah": "Alhamdulillah",
+      "subhanallah": "Subhanallah",
+      "astaghfirullah": "Astaghfirullah"
+    },
+    "quizPurposes": {
+      "worship": "For worship",
+      "play": "For playing games",
+      "cook": "For cooking",
+      "shop": "For shopping"
+    },
+    "quizFestivals": {
+      "eidalfitr": "Eid al-Fitr",
+      "eidaladha": "Eid al-Adha",
+      "novruz": "Novruz",
+      "christmas": "Christmas"
+    },
+    "quizAnimals": {
+      "bee": "Bee",
+      "dog": "Dog",
+      "cat": "Cat",
+      "fish": "Fish",
+      "lion": "Lion",
+      "rabbit": "Rabbit",
+      "sparrow": "Sparrow",
+      "penguin": "Penguin",
+      "eagle": "Eagle",
+      "peacock": "Peacock"
+    },
+    "quizCelestial": {
+      "moon": "Moon",
+      "sun": "Sun",
+      "star": "Star",
+      "comet": "Comet"
+    },
+    "quizProducts": {
+      "honey": "Honey",
+      "milk": "Milk",
+      "egg": "Egg",
+      "wool": "Wool"
+    },
+    "quizThings": {
+      "trashcan": "In the trash can",
+      "street": "In the street",
+      "water": "In the water",
+      "forest": "In the forest"
+    },
+    "quizExplanations": {
+      "d1": "The Kaaba is the holy site Muslims face while praying.",
+      "d2": "During Ramadan, Muslims fast from dawn until sunset.",
+      "d3": "Saying \"Bismillah\" means starting something in the name of Allah.",
+      "d4": "A mosque is a holy place where Muslims pray and worship.",
+      "d5": "The Eid al-Fitr festival is celebrated after the month of fasting ends.",
+      "d6": "The Quran has a chapter called \"An-Nahl\", which means \"The Bee\".",
+      "e11": "Treating parents with respect and kindness is very important in Islam.",
+      "e12": "Honesty is a beautiful trait, while lying is wrong.",
+      "e13": "Helping others makes us better people.",
+      "e14": "Caring for orphans is a highly rewarded good deed.",
+      "e15": "Cleanliness matters for both health and good character.",
+      "sc13": "A rainbow has 7 colors: red, orange, yellow, green, blue, indigo and violet.",
+      "sc14": "The Moon is the natural satellite that orbits the Earth.",
+      "sc15": "The lion is called the \"king of the forest\" because of its strength.",
+      "sc16": "Bees make honey from the nectar they collect from flowers.",
+      "sc17": "Penguins can't fly, but they swim very fast in water.",
+      "sc18": "Throwing trash in the right place helps protect nature."
     },
     "prayers": {
       "fajr": "Fajr",

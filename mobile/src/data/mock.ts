@@ -48,7 +48,15 @@ export const children: Child[] = [
 
 export const activeChild = children[0];
 
-export type QuizOption = { id: string; label: string; emoji: string; textKey?: string };
+export type QuizOption = {
+  id: string;
+  label: string;
+  emoji: string;
+  /** Translation key for a static text option (city/person names). */
+  textKey?: string;
+  /** Already-resolved text for a dynamically generated option (e.g. from divineNames data). */
+  text?: string;
+};
 
 export type QuizCategory = "din" | "riyaziyyat" | "yaxsiEmeller" | "elm" | "xariciDil";
 
@@ -63,6 +71,8 @@ export type QuizQuestion = {
   /** Set for generated questions whose prompt still needs translation (e.g. "How many verses in {{name}}?") — a top-level i18n key with interpolation params. */
   promptKey?: string;
   promptParams?: Record<string, string | number>;
+  /** Optional translation key for a short, encouraging fact shown on the feedback screen. */
+  explanationKey?: string;
   options: QuizOption[];
   correctOptionId: string;
   xp: number;
@@ -474,6 +484,121 @@ export const quizBank: QuizQuestion[] = [
     correctOptionId: "a",
     xp: 20,
   },
+  {
+    id: "d1",
+    category: "din",
+    explanationKey: "content.quizExplanations.d1",
+    options: [
+      { id: "a", label: "A", emoji: "", textKey: "content.quizPlaces.mecca" },
+      { id: "b", label: "B", emoji: "", textKey: "content.quizPlaces.medina" },
+      { id: "c", label: "C", emoji: "", textKey: "content.quizPlaces.taif" },
+      { id: "d", label: "D", emoji: "", textKey: "content.quizPlaces.damascus" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "d2",
+    category: "din",
+    explanationKey: "content.quizExplanations.d2",
+    options: [
+      { id: "a", label: "A", emoji: "", textKey: "content.quizWorship.fasting" },
+      { id: "b", label: "B", emoji: "", textKey: "content.quizWorship.zakat" },
+      { id: "c", label: "C", emoji: "", textKey: "content.quizWorship.hajj" },
+      { id: "d", label: "D", emoji: "", textKey: "content.quizWorship.sacrifice" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "d3",
+    category: "din",
+    explanationKey: "content.quizExplanations.d3",
+    options: [
+      { id: "a", label: "A", emoji: "", textKey: "content.quizPhrases.bismillah" },
+      { id: "b", label: "B", emoji: "", textKey: "content.quizPhrases.alhamdulillah" },
+      { id: "c", label: "C", emoji: "", textKey: "content.quizPhrases.subhanallah" },
+      { id: "d", label: "D", emoji: "", textKey: "content.quizPhrases.astaghfirullah" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "d4",
+    category: "din",
+    explanationKey: "content.quizExplanations.d4",
+    options: [
+      { id: "a", label: "A", emoji: "", textKey: "content.quizPurposes.worship" },
+      { id: "b", label: "B", emoji: "", textKey: "content.quizPurposes.play" },
+      { id: "c", label: "C", emoji: "", textKey: "content.quizPurposes.cook" },
+      { id: "d", label: "D", emoji: "", textKey: "content.quizPurposes.shop" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "d5",
+    category: "din",
+    explanationKey: "content.quizExplanations.d5",
+    options: [
+      { id: "a", label: "A", emoji: "", textKey: "content.quizFestivals.eidalfitr" },
+      { id: "b", label: "B", emoji: "", textKey: "content.quizFestivals.eidaladha" },
+      { id: "c", label: "C", emoji: "", textKey: "content.quizFestivals.novruz" },
+      { id: "d", label: "D", emoji: "", textKey: "content.quizFestivals.christmas" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "d6",
+    category: "din",
+    explanationKey: "content.quizExplanations.d6",
+    options: [
+      { id: "a", label: "A", emoji: "", textKey: "content.quizAnimals.bee" },
+      { id: "b", label: "B", emoji: "", textKey: "content.quizAnimals.dog" },
+      { id: "c", label: "C", emoji: "", textKey: "content.quizAnimals.cat" },
+      { id: "d", label: "D", emoji: "", textKey: "content.quizAnimals.fish" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  // Riyaziyyat — söz məsələləri
+  {
+    id: "m16",
+    category: "riyaziyyat",
+    options: [
+      { id: "a", label: "A", emoji: "2" },
+      { id: "b", label: "B", emoji: "3" },
+      { id: "c", label: "C", emoji: "4" },
+      { id: "d", label: "D", emoji: "5" },
+    ],
+    correctOptionId: "b",
+    xp: 20,
+  },
+  {
+    id: "m17",
+    category: "riyaziyyat",
+    options: [
+      { id: "a", label: "A", emoji: "10" },
+      { id: "b", label: "B", emoji: "11" },
+      { id: "c", label: "C", emoji: "12" },
+      { id: "d", label: "D", emoji: "13" },
+    ],
+    correctOptionId: "c",
+    xp: 20,
+  },
+  {
+    id: "m18",
+    category: "riyaziyyat",
+    options: [
+      { id: "a", label: "A", emoji: "3" },
+      { id: "b", label: "B", emoji: "4" },
+      { id: "c", label: "C", emoji: "5" },
+      { id: "d", label: "D", emoji: "6" },
+    ],
+    correctOptionId: "c",
+    xp: 20,
+  },
   // Yaxşı Əməllər
   {
     id: "e1",
@@ -591,6 +716,71 @@ export const quizBank: QuizQuestion[] = [
       { id: "b", label: "B", emoji: "👊" },
       { id: "c", label: "C", emoji: "😢" },
       { id: "d", label: "D", emoji: "🗣️" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "e11",
+    category: "yaxsiEmeller",
+    explanationKey: "content.quizExplanations.e11",
+    options: [
+      { id: "a", label: "A", emoji: "🤗" },
+      { id: "b", label: "B", emoji: "😤" },
+      { id: "c", label: "C", emoji: "🙈" },
+      { id: "d", label: "D", emoji: "😠" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "e12",
+    category: "yaxsiEmeller",
+    explanationKey: "content.quizExplanations.e12",
+    options: [
+      { id: "a", label: "A", emoji: "😞" },
+      { id: "b", label: "B", emoji: "😊" },
+      { id: "c", label: "C", emoji: "😐" },
+      { id: "d", label: "D", emoji: "😏" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "e13",
+    category: "yaxsiEmeller",
+    explanationKey: "content.quizExplanations.e13",
+    options: [
+      { id: "a", label: "A", emoji: "😊" },
+      { id: "b", label: "B", emoji: "😐" },
+      { id: "c", label: "C", emoji: "😞" },
+      { id: "d", label: "D", emoji: "🙄" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "e14",
+    category: "yaxsiEmeller",
+    explanationKey: "content.quizExplanations.e14",
+    options: [
+      { id: "a", label: "A", emoji: "😇" },
+      { id: "b", label: "B", emoji: "😐" },
+      { id: "c", label: "C", emoji: "😒" },
+      { id: "d", label: "D", emoji: "🙄" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "e15",
+    category: "yaxsiEmeller",
+    explanationKey: "content.quizExplanations.e15",
+    options: [
+      { id: "a", label: "A", emoji: "😊" },
+      { id: "b", label: "B", emoji: "😐" },
+      { id: "c", label: "C", emoji: "😴" },
+      { id: "d", label: "D", emoji: "🙄" },
     ],
     correctOptionId: "a",
     xp: 20,
@@ -738,6 +928,84 @@ export const quizBank: QuizQuestion[] = [
       { id: "d", label: "D", emoji: "6️⃣" },
     ],
     correctOptionId: "c",
+    xp: 20,
+  },
+  {
+    id: "sc13",
+    category: "elm",
+    explanationKey: "content.quizExplanations.sc13",
+    options: [
+      { id: "a", label: "A", emoji: "5️⃣" },
+      { id: "b", label: "B", emoji: "6️⃣" },
+      { id: "c", label: "C", emoji: "7️⃣" },
+      { id: "d", label: "D", emoji: "8️⃣" },
+    ],
+    correctOptionId: "c",
+    xp: 20,
+  },
+  {
+    id: "sc14",
+    category: "elm",
+    explanationKey: "content.quizExplanations.sc14",
+    options: [
+      { id: "a", label: "A", emoji: "", textKey: "content.quizCelestial.moon" },
+      { id: "b", label: "B", emoji: "", textKey: "content.quizCelestial.sun" },
+      { id: "c", label: "C", emoji: "", textKey: "content.quizCelestial.star" },
+      { id: "d", label: "D", emoji: "", textKey: "content.quizCelestial.comet" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "sc15",
+    category: "elm",
+    explanationKey: "content.quizExplanations.sc15",
+    options: [
+      { id: "a", label: "A", emoji: "", textKey: "content.quizAnimals.lion" },
+      { id: "b", label: "B", emoji: "", textKey: "content.quizAnimals.rabbit" },
+      { id: "c", label: "C", emoji: "", textKey: "content.quizAnimals.sparrow" },
+      { id: "d", label: "D", emoji: "", textKey: "content.quizAnimals.fish" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "sc16",
+    category: "elm",
+    explanationKey: "content.quizExplanations.sc16",
+    options: [
+      { id: "a", label: "A", emoji: "", textKey: "content.quizProducts.honey" },
+      { id: "b", label: "B", emoji: "", textKey: "content.quizProducts.milk" },
+      { id: "c", label: "C", emoji: "", textKey: "content.quizProducts.egg" },
+      { id: "d", label: "D", emoji: "", textKey: "content.quizProducts.wool" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "sc17",
+    category: "elm",
+    explanationKey: "content.quizExplanations.sc17",
+    options: [
+      { id: "a", label: "A", emoji: "", textKey: "content.quizAnimals.penguin" },
+      { id: "b", label: "B", emoji: "", textKey: "content.quizAnimals.sparrow" },
+      { id: "c", label: "C", emoji: "", textKey: "content.quizAnimals.eagle" },
+      { id: "d", label: "D", emoji: "", textKey: "content.quizAnimals.peacock" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "sc18",
+    category: "elm",
+    explanationKey: "content.quizExplanations.sc18",
+    options: [
+      { id: "a", label: "A", emoji: "", textKey: "content.quizThings.trashcan" },
+      { id: "b", label: "B", emoji: "", textKey: "content.quizThings.street" },
+      { id: "c", label: "C", emoji: "", textKey: "content.quizThings.water" },
+      { id: "d", label: "D", emoji: "", textKey: "content.quizThings.forest" },
+    ],
+    correctOptionId: "a",
     xp: 20,
   },
   // Xarici Dil — English
@@ -1169,7 +1437,9 @@ export function generateSurahFactQuestions(count: number): QuizQuestion[] {
 
 export function getQuizQuestions(category: QuizCategory, targetLang?: ForeignTargetLang): QuizQuestion[] {
   if (category === "riyaziyyat") {
-    return generateMathQuestions(10);
+    const staticMath = quizBank.filter((q) => q.category === "riyaziyyat");
+    const generated = generateMathQuestions(10);
+    return shuffle([...staticMath, ...generated]);
   }
   if (category === "din") {
     const staticDin = quizBank.filter((q) => q.category === "din");

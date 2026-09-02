@@ -171,9 +171,10 @@
     "levelReward": "Seviye {{level}} Ödülü",
     "awesome": "Harika!",
     "greatJob": "Harika iş!",
-    "notQuite": "Tam olmadı!",
+    "notQuite": "Güzel Deneme!",
     "answeredCorrectly": "Doğru cevap verdin.",
     "tryNextOne": "Bir sonrakini deneyelim.",
+    "correctAnswerWas": "Doğru cevap: {{answer}}",
     "seeReward": "Ödülü Gör",
     "nextQuestion": "Sonraki Soru"
   },
@@ -379,7 +380,27 @@
       "p10": "Hicri takvimin ilk ayı hangisidir?",
       "p11": "Kur'an hangi ayda inmeye başladı?",
       "p12": "Hac ibadeti hangi ayda yapılır?",
-      "p13": "Peygamberimize (SAV) göre, bir amelin değeri neye bağlıdır?"
+      "p13": "Peygamberimize (SAV) göre, bir amelin değeri neye bağlıdır?",
+      "d1": "Kâbe hangi şehirde bulunur?",
+      "d2": "Müslümanlar Ramazan ayında özellikle hangi ibadeti yerine getirir?",
+      "d3": "Müslümanlar yemeğe başlarken ne der?",
+      "d4": "Cami ne için kullanılan bir yerdir?",
+      "d5": "Ramazan'dan sonra kutlanan bayramın adı nedir?",
+      "d6": "Kur'an'da bir hayvanın adını taşıyan bir sure vardır — hangisi?",
+      "e11": "Ailene nasıl davranmalısın?",
+      "e12": "Yalan söylemek nasıl bir şeydir?",
+      "e13": "Arkadaşına yardım etmek nasıl bir davranıştır?",
+      "e14": "Bir yetime yardım etmek nasıl bir davranıştır?",
+      "e15": "Temizliğe dikkat etmek ne kadar önemlidir?",
+      "sc13": "Gökkuşağında kaç ana renk vardır?",
+      "sc14": "Dünya'nın doğal uydusu nedir?",
+      "sc15": "Hangi hayvan \"ormanlar kralı\" olarak bilinir?",
+      "sc16": "Arılar hangi ürünü üretir?",
+      "sc17": "Hangi kuş uçamaz ama çok iyi yüzer?",
+      "sc18": "Çöpü nereye atmalıyız?",
+      "m16": "5 elma var. 2'sini arkadaşına versen, kaç elma kalır?",
+      "m17": "4 sepetin her birinde 3 elma varsa, toplam kaç elma vardır?",
+      "m18": "Bir çocukta 10 şeker var. 5'ini yerse, kaç şeker kalır?"
     },
     "quizPlaces": {
       "mecca": "Mekke",
@@ -411,6 +432,79 @@
       "time": "Zaman",
       "amount": "Miktar",
       "place": "Yer"
+    },
+    "quizWorship": {
+      "fasting": "Oruç tutmak",
+      "zakat": "Zekat vermek",
+      "hajj": "Hacca gitmek",
+      "sacrifice": "Kurban kesmek"
+    },
+    "quizPhrases": {
+      "bismillah": "Bismillah",
+      "alhamdulillah": "Elhamdülillah",
+      "subhanallah": "Sübhanallah",
+      "astaghfirullah": "Estağfirullah"
+    },
+    "quizPurposes": {
+      "worship": "İbadet etmek için",
+      "play": "Oyun oynamak için",
+      "cook": "Yemek pişirmek için",
+      "shop": "Alışveriş için"
+    },
+    "quizFestivals": {
+      "eidalfitr": "Ramazan Bayramı",
+      "eidaladha": "Kurban Bayramı",
+      "novruz": "Nevruz",
+      "christmas": "Noel"
+    },
+    "quizAnimals": {
+      "bee": "Arı",
+      "dog": "Köpek",
+      "cat": "Kedi",
+      "fish": "Balık",
+      "lion": "Aslan",
+      "rabbit": "Tavşan",
+      "sparrow": "Serçe",
+      "penguin": "Penguen",
+      "eagle": "Kartal",
+      "peacock": "Tavus Kuşu"
+    },
+    "quizCelestial": {
+      "moon": "Ay",
+      "sun": "Güneş",
+      "star": "Yıldız",
+      "comet": "Kuyruklu Yıldız"
+    },
+    "quizProducts": {
+      "honey": "Bal",
+      "milk": "Süt",
+      "egg": "Yumurta",
+      "wool": "Yün"
+    },
+    "quizThings": {
+      "trashcan": "Çöp kutusuna",
+      "street": "Sokağa",
+      "water": "Suya",
+      "forest": "Ormana"
+    },
+    "quizExplanations": {
+      "d1": "Kâbe, müslümanların namaz kılarken yöneldiği kutsal mekandır.",
+      "d2": "Ramazan ayında müslümanlar tan ağarmasından güneş batımına kadar oruç tutar.",
+      "d3": "\"Bismillah\" demek, bir işe Allah'ın adıyla başlamak demektir.",
+      "d4": "Cami, müslümanların namaz kılıp ibadet ettiği kutsal bir yerdir.",
+      "d5": "Oruç ayı bittikten sonra Ramazan (Fıtır) bayramı kutlanır.",
+      "d6": "Kur'an'da \"En-Nahl\" adında bir sure vardır, anlamı \"Arı\" demektir.",
+      "e11": "Ailene saygı ve şefkatle davranmak İslam'da çok önemlidir.",
+      "e12": "Doğruluk güzel bir özelliktir, yalan söylemek ise yanlıştır.",
+      "e13": "Başkalarına yardım etmek bizi daha iyi insanlar yapar.",
+      "e14": "Yetimlere sahip çıkmak çok sevap kazandıran bir davranıştır.",
+      "e15": "Temizlik hem sağlık hem de güzel ahlak için önemlidir.",
+      "sc13": "Gökkuşağında 7 renk vardır: kırmızı, turuncu, sarı, yeşil, mavi, lacivert ve mor.",
+      "sc14": "Ay, Dünya'nın etrafında dönen doğal uydudur.",
+      "sc15": "Aslan, gücünden dolayı \"ormanlar kralı\" olarak bilinir.",
+      "sc16": "Arılar çiçeklerden topladıkları nektardan bal üretir.",
+      "sc17": "Penguenler uçamaz ama suda çok hızlı yüzer.",
+      "sc18": "Çöpü doğru yere atmak doğayı korumaya yardımcı olur."
     },
     "prayers": {
       "fajr": "Sabah",

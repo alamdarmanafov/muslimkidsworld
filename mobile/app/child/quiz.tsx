@@ -17,6 +17,11 @@ type Phase = "question" | "feedback" | "reward";
 
 const optionColors = ["#FBBF24", "#22C55E", "#8B5CF6", "#3B82F6"];
 
+function resolveOptionText(option: { textKey?: string; text?: string; emoji: string }, t: (key: string) => string) {
+  if (option.textKey) return t(option.textKey);
+  return option.text ?? option.emoji;
+}
+
 export default function Quiz() {
   const { t } = useTranslation();
   const { category, targetLang } = useLocalSearchParams<{
@@ -81,16 +86,18 @@ export default function Quiz() {
 
   if (phase === "feedback") {
     const correct = selectedId === question.correctOptionId;
+    const correctOption = question.options.find((o) => o.id === question.correctOptionId);
+    const explanation = question.explanationKey ? t(question.explanationKey) : null;
     return (
       <SafeAreaView style={styles.feedbackScreen}>
         <View style={styles.feedbackBody}>
           <View
             style={[
               styles.resultCircle,
-              { backgroundColor: correct ? colors.success : colors.fire },
+              { backgroundColor: correct ? colors.success : colors.gold },
             ]}
           >
-            <Text style={styles.resultIcon}>{correct ? "✓" : "✕"}</Text>
+            <Text style={styles.resultIcon}>{correct ? "✓" : "💡"}</Text>
           </View>
           <Text style={styles.feedbackTitle}>
             {correct ? t("quiz.greatJob") : t("quiz.notQuite")}
@@ -98,6 +105,12 @@ export default function Quiz() {
           <Text style={styles.feedbackSubtitle}>
             {correct ? t("quiz.answeredCorrectly") : t("quiz.tryNextOne")}
           </Text>
+          {!correct && correctOption ? (
+            <Text style={styles.correctAnswer}>
+              {t("quiz.correctAnswerWas", { answer: resolveOptionText(correctOption, t) })}
+            </Text>
+          ) : null}
+          {explanation ? <Text style={styles.explanation}>{explanation}</Text> : null}
           {correct ? <Text style={styles.xpEarned}>⭐ +{earnedXp} XP</Text> : null}
         </View>
         <View style={styles.footer}>
@@ -240,6 +253,21 @@ const styles = StyleSheet.create({
   resultIcon: { fontSize: 44, color: "#fff", fontWeight: "800" },
   feedbackTitle: { fontSize: 26, fontWeight: "800", color: colors.ink },
   feedbackSubtitle: { fontSize: 14, color: colors.inkMuted, marginTop: spacing.xs },
+  correctAnswer: {
+    marginTop: spacing.md,
+    fontSize: 15,
+    fontWeight: "700",
+    color: colors.ink,
+    textAlign: "center",
+  },
+  explanation: {
+    marginTop: spacing.sm,
+    fontSize: 13,
+    color: colors.inkMuted,
+    textAlign: "center",
+    lineHeight: 19,
+    paddingHorizontal: spacing.lg,
+  },
   xpEarned: {
     marginTop: spacing.lg,
     fontSize: 18,
