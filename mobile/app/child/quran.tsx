@@ -21,20 +21,28 @@ export default function Quran() {
       </View>
 
       <ScrollView contentContainerStyle={styles.content}>
-        <View style={styles.featuredCard}>
+        <Pressable
+          style={styles.featuredCard}
+          onPress={() => router.push(`/child/quran/${featured.id}`)}
+        >
           <View style={styles.featuredTop}>
             <Text style={styles.featuredLabel}>
               {t("quran.surah", { name: t(`content.quran.${featured.id}`) })}
             </Text>
-            <Pressable style={styles.playBtn}>
+            <View style={styles.playBtn}>
               <Icon name="play" size={18} color={colors.successDark} />
-            </Pressable>
+            </View>
           </View>
           <Text style={styles.featuredJuz}>{t("content.quran.juzAmma")}</Text>
-        </View>
+        </Pressable>
 
         {rest.map((s) => (
-          <View key={s.id} style={[styles.row, s.locked && styles.rowLocked]}>
+          <Pressable
+            key={s.id}
+            style={[styles.row, s.locked && styles.rowLocked]}
+            disabled={s.locked}
+            onPress={() => router.push(`/child/quran/${s.id}`)}
+          >
             <View>
               <Text style={styles.rowName}>
                 {t("quran.surah", { name: t(`content.quran.${s.id}`) })}
@@ -49,7 +57,7 @@ export default function Quran() {
                 <Icon name="play" size={16} color={colors.successDark} />
               )}
             </View>
-          </View>
+          </Pressable>
         ))}
       </ScrollView>
     </SafeAreaView>
