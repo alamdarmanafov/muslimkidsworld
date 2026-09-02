@@ -197,8 +197,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.success,
   },
   questionBlock: {
-    flex: 1,
-    justifyContent: "center",
+    marginTop: spacing.xl,
   },
   prompt: {
     fontSize: 22,
