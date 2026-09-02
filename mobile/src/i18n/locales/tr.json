@@ -488,7 +488,9 @@
       "elmPlanetCompareNearest": "Bu 4 gezegenden hangisi Güneş'e en yakındır?",
       "elmPlanetCompareFarthest": "Bu 4 gezegenden hangisi Güneş'ten en uzaktır?",
       "elmPlanetCompareBiggest": "Bu 4 gezegenden hangisi en büyüktür?",
-      "elmPlanetCompareSmallest": "Bu 4 gezegenden hangisi en küçüktür?"
+      "elmPlanetCompareSmallest": "Bu 4 gezegenden hangisi en küçüktür?",
+      "xariciDilPictureMatch": "\"{{word}}\" kelimesi hangi resimle aynıdır?",
+      "xariciDilWordMatch": "{{emoji}} {{lang}} nasıl denir?"
     },
     "quizPlaces": {
       "mecca": "Mekke",

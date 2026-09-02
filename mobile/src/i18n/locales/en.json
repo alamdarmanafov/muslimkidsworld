@@ -488,7 +488,9 @@
       "elmPlanetCompareNearest": "Which of these 4 planets is closest to the Sun?",
       "elmPlanetCompareFarthest": "Which of these 4 planets is farthest from the Sun?",
       "elmPlanetCompareBiggest": "Which of these 4 planets is the biggest?",
-      "elmPlanetCompareSmallest": "Which of these 4 planets is the smallest?"
+      "elmPlanetCompareSmallest": "Which of these 4 planets is the smallest?",
+      "xariciDilPictureMatch": "Which picture matches the word \"{{word}}\"?",
+      "xariciDilWordMatch": "How do you say {{emoji}} {{lang}}?"
     },
     "quizPlaces": {
       "mecca": "Mecca",

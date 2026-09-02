@@ -488,7 +488,9 @@
       "elmPlanetCompareNearest": "Bu 4 planetdən hansı Günəşə daha yaxındır?",
       "elmPlanetCompareFarthest": "Bu 4 planetdən hansı Günəşdən daha uzaqdır?",
       "elmPlanetCompareBiggest": "Bu 4 planetdən hansı ən böyükdür?",
-      "elmPlanetCompareSmallest": "Bu 4 planetdən hansı ən kiçikdir?"
+      "elmPlanetCompareSmallest": "Bu 4 planetdən hansı ən kiçikdir?",
+      "xariciDilPictureMatch": "\"{{word}}\" sözü hansı şəkillə eynidir?",
+      "xariciDilWordMatch": "{{emoji}} {{lang}} necə deyilir?"
     },
     "quizPlaces": {
       "mecca": "Məkkə",

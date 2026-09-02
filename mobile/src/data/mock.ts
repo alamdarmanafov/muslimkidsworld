@@ -2277,6 +2277,86 @@ export function generatePlanetCompareQuestions(count: number, lang: string): Qui
   return questions;
 }
 
+type VocabEntry = { id: string; emoji: string; en: string; ru: string };
+const vocabIndex = vocabularyData as VocabEntry[];
+
+const FOREIGN_LANG_LABEL: Record<string, Record<ForeignTargetLang, string>> = {
+  az: { en: "İngiliscə", ru: "Rusca" },
+  en: { en: "in English", ru: "in Russian" },
+  tr: { en: "İngilizce", ru: "Rusça" },
+  ru: { en: "по-английски", ru: "по-русски" },
+};
+
+/**
+ * "Which picture matches this word?" — reuses the same emoji-flashcard
+ * format as the hand-written f1-f12/g1-g10 questions, but drawn from a
+ * 68-word vocabulary table instead of one-off translated strings, so the
+ * pool scales with the dataset instead of with how many sentences were
+ * hand-typed.
+ */
+export function generateVocabPictureQuestions(
+  count: number,
+  targetLang: ForeignTargetLang,
+): QuizQuestion[] {
+  const pool = shuffle(vocabIndex).slice(0, count);
+  return pool.map((entry, i) => {
+    const distractors = shuffle(vocabIndex.filter((v) => v.id !== entry.id)).slice(0, 3);
+    const group = shuffle([entry, ...distractors]);
+    const correctIndex = group.findIndex((v) => v.id === entry.id);
+    const options: QuizOption[] = group.map((v, idx) => ({
+      id: optionLetters[idx],
+      label: optionLetters[idx].toUpperCase(),
+      emoji: v.emoji,
+    }));
+    return {
+      id: `vocab-picture-${targetLang}-${entry.id}-${i}`,
+      category: "xariciDil",
+      targetLang,
+      difficulty: "easy",
+      promptKey: "content.quiz.xariciDilPictureMatch",
+      promptParams: { word: entry[targetLang] },
+      options,
+      correctOptionId: optionLetters[correctIndex],
+      xp: 20,
+    };
+  });
+}
+
+/**
+ * Reverse direction: shown the picture, pick the matching word — same
+ * vocabulary table, so both directions of practice come from one dataset.
+ */
+export function generateVocabWordQuestions(
+  count: number,
+  targetLang: ForeignTargetLang,
+  lang: string,
+): QuizQuestion[] {
+  const pool = shuffle(vocabIndex).slice(0, count);
+  const langLabel = FOREIGN_LANG_LABEL[lang]?.[targetLang] ?? FOREIGN_LANG_LABEL.az[targetLang];
+  return pool.map((entry, i) => {
+    const distractors = shuffle(vocabIndex.filter((v) => v.id !== entry.id)).slice(0, 3);
+    const group = shuffle([entry, ...distractors]);
+    const correctIndex = group.findIndex((v) => v.id === entry.id);
+    const options: QuizOption[] = group.map((v, idx) => ({
+      id: optionLetters[idx],
+      label: optionLetters[idx].toUpperCase(),
+      emoji: "",
+      text: v[targetLang],
+    }));
+    return {
+      id: `vocab-word-${targetLang}-${entry.id}-${i}`,
+      category: "xariciDil",
+      targetLang,
+      difficulty: "easy",
+      promptKey: "content.quiz.xariciDilWordMatch",
+      promptParams: { emoji: entry.emoji, lang: langLabel },
+      options,
+      correctOptionId: optionLetters[correctIndex],
+      xp: 20,
+    };
+  });
+}
+
 export function getQuizQuestions(
   category: QuizCategory,
   targetLang?: ForeignTargetLang,
@@ -2317,11 +2397,19 @@ export function getQuizQuestions(
         : [];
     return shuffle([...staticElm, ...generated]);
   }
+  if (category === "xariciDil") {
+    const tl = targetLang ?? "en";
+    const staticForeign = quizBank
+      .filter((q) => q.category === "xariciDil" && q.targetLang === tl)
+      .filter((q) => !difficulty || getDifficulty(q) === difficulty);
+    const generated =
+      !difficulty || difficulty === "easy"
+        ? [...generateVocabPictureQuestions(12, tl), ...generateVocabWordQuestions(12, tl, lang)]
+        : [];
+    return shuffle([...staticForeign, ...generated]);
+  }
   return quizBank.filter(
-    (q) =>
-      q.category === category &&
-      (category !== "xariciDil" || q.targetLang === targetLang) &&
-      (!difficulty || getDifficulty(q) === difficulty),
+    (q) => q.category === category && (!difficulty || getDifficulty(q) === difficulty),
   );
 }
 
@@ -2329,6 +2417,7 @@ import { IconBadgeTone, tones } from "../components/IconBadge";
 import type { IconName } from "../components/icons";
 import surahIndexData from "./quran/surahIndex.json";
 import { getDivineNames } from "./divineNamesLoader";
+import vocabularyData from "./vocabulary.json";
 import planetData from "./planets.json";
 
 export type WorldLocation = {

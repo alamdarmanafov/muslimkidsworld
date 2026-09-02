@@ -494,7 +494,9 @@
       "elmPlanetCompareNearest": "Какая из этих 4 планет ближе всего к Солнцу?",
       "elmPlanetCompareFarthest": "Какая из этих 4 планет находится дальше всего от Солнца?",
       "elmPlanetCompareBiggest": "Какая из этих 4 планет самая большая?",
-      "elmPlanetCompareSmallest": "Какая из этих 4 планет самая маленькая?"
+      "elmPlanetCompareSmallest": "Какая из этих 4 планет самая маленькая?",
+      "xariciDilPictureMatch": "Какая картинка соответствует слову \"{{word}}\"?",
+      "xariciDilWordMatch": "Как будет {{emoji}} {{lang}}?"
     },
     "quizPlaces": {
       "mecca": "Мекка",
