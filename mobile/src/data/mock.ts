@@ -426,6 +426,54 @@ export const quizBank: QuizQuestion[] = [
     correctOptionId: "a",
     xp: 20,
   },
+  {
+    id: "p10",
+    category: "din",
+    options: [
+      { id: "a", label: "A", emoji: "", textKey: "content.quizMonths.muharram" },
+      { id: "b", label: "B", emoji: "", textKey: "content.quizMonths.safar" },
+      { id: "c", label: "C", emoji: "", textKey: "content.quizMonths.rajab" },
+      { id: "d", label: "D", emoji: "", textKey: "content.quizMonths.shawwal" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "p11",
+    category: "din",
+    options: [
+      { id: "a", label: "A", emoji: "", textKey: "content.quizMonths.shawwal" },
+      { id: "b", label: "B", emoji: "", textKey: "content.quizMonths.ramadan" },
+      { id: "c", label: "C", emoji: "", textKey: "content.quizMonths.rajab" },
+      { id: "d", label: "D", emoji: "", textKey: "content.quizMonths.muharram" },
+    ],
+    correctOptionId: "b",
+    xp: 20,
+  },
+  {
+    id: "p12",
+    category: "din",
+    options: [
+      { id: "a", label: "A", emoji: "", textKey: "content.quizMonths.shawwal" },
+      { id: "b", label: "B", emoji: "", textKey: "content.quizMonths.rajab" },
+      { id: "c", label: "C", emoji: "", textKey: "content.quizMonths.dhulhijjah" },
+      { id: "d", label: "D", emoji: "", textKey: "content.quizMonths.muharram" },
+    ],
+    correctOptionId: "c",
+    xp: 20,
+  },
+  {
+    id: "p13",
+    category: "din",
+    options: [
+      { id: "a", label: "A", emoji: "", textKey: "content.quizConcepts.intention" },
+      { id: "b", label: "B", emoji: "", textKey: "content.quizConcepts.time" },
+      { id: "c", label: "C", emoji: "", textKey: "content.quizConcepts.amount" },
+      { id: "d", label: "D", emoji: "", textKey: "content.quizConcepts.place" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
   // Yaxşı Əməllər
   {
     id: "e1",

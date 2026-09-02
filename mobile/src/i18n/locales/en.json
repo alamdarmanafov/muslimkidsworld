@@ -70,6 +70,7 @@
     "quiz": "Quiz",
     "salah": "Salah",
     "alphabet": "Alphabet",
+    "divineNames": "99 Names",
     "story": "Story",
     "game": "Game",
     "gardenTitle": "My Garden",
@@ -186,6 +187,9 @@
   },
   "alphabet": {
     "title": "Arabic Alphabet"
+  },
+  "divineNames": {
+    "title": "99 Names of Allah"
   },
   "childProgress": {
     "title": "My Progress",
@@ -371,7 +375,11 @@
       "p6": "To which city did the Prophet (SAW) migrate (Hijrah)?",
       "p7": "What was the name of the Prophet's (SAW) father?",
       "p8": "What was the name of the Prophet's (SAW) mother?",
-      "p9": "What was the name of the Prophet's (SAW) first wife?"
+      "p9": "What was the name of the Prophet's (SAW) first wife?",
+      "p10": "Which is the first month of the Islamic (Hijri) calendar?",
+      "p11": "In which month did the Quran begin to be revealed?",
+      "p12": "In which month is the Hajj pilgrimage performed?",
+      "p13": "According to the Prophet (SAW), what determines the value of a deed?"
     },
     "quizPlaces": {
       "mecca": "Mecca",
@@ -389,6 +397,20 @@
       "aisha": "Aisha",
       "fatimah": "Fatimah",
       "zaynab": "Zaynab"
+    },
+    "quizMonths": {
+      "muharram": "Muharram",
+      "safar": "Safar",
+      "rajab": "Rajab",
+      "shawwal": "Shawwal",
+      "ramadan": "Ramadan",
+      "dhulhijjah": "Dhul-Hijjah"
+    },
+    "quizConcepts": {
+      "intention": "Intention",
+      "time": "Time",
+      "amount": "Amount",
+      "place": "Place"
     },
     "prayers": {
       "fajr": "Fajr",

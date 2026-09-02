@@ -70,6 +70,7 @@
     "quiz": "Test",
     "salah": "Namaz",
     "alphabet": "Əlifba",
+    "divineNames": "99 Ad",
     "story": "Hekayə",
     "game": "Oyun",
     "gardenTitle": "Mənim Bağçam",
@@ -186,6 +187,9 @@
   },
   "alphabet": {
     "title": "Ərəb Əlifbası"
+  },
+  "divineNames": {
+    "title": "Allahın 99 Adı"
   },
   "childProgress": {
     "title": "Mənim İrəliləyişim",
@@ -371,7 +375,11 @@
       "p6": "Peyğəmbərimiz hansı şəhərə hicrət edib?",
       "p7": "Peyğəmbərimizin atasının adı nədir?",
       "p8": "Peyğəmbərimizin anasının adı nədir?",
-      "p9": "Peyğəmbərimizin ilk həyat yoldaşının adı nədir?"
+      "p9": "Peyğəmbərimizin ilk həyat yoldaşının adı nədir?",
+      "p10": "Hicri təqvimin ilk ayı hansıdır?",
+      "p11": "Quran hansı ayda nazil olmağa başlayıb?",
+      "p12": "Həcc ziyarəti hansı ayda edilir?",
+      "p13": "Peyğəmbərimizə (s.a.v) görə, bir əməlin dəyəri nəyə əsaslanır?"
     },
     "quizPlaces": {
       "mecca": "Məkkə",
@@ -389,6 +397,20 @@
       "aisha": "Aişə",
       "fatimah": "Fatimə",
       "zaynab": "Zeynəb"
+    },
+    "quizMonths": {
+      "muharram": "Məhərrəm",
+      "safar": "Səfər",
+      "rajab": "Rəcəb",
+      "shawwal": "Şəvval",
+      "ramadan": "Ramazan",
+      "dhulhijjah": "Zülhiccə"
+    },
+    "quizConcepts": {
+      "intention": "Niyyət",
+      "time": "Zaman",
+      "amount": "Miqdar",
+      "place": "Yer"
     },
     "prayers": {
       "fajr": "Sübh",

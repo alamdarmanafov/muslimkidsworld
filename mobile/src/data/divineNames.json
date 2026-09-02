@@ -1,0 +1,1685 @@
+[
+  {
+    "id": "ar-rahman",
+    "number": 1,
+    "arabic": "الرَّحْمَنُ",
+    "name": {
+      "en": "Ar-Rahman",
+      "az": "Rəhman",
+      "tr": "Rahman",
+      "ru": "Рахман"
+    },
+    "meaning": {
+      "en": "The Most Gracious",
+      "az": "Bütün məxluqata Mərhəmətli",
+      "tr": "Tüm Yaratılmışlara Merhametli",
+      "ru": "Милостивый ко всем"
+    }
+  },
+  {
+    "id": "ar-rahim",
+    "number": 2,
+    "arabic": "الرَّحِيْمُ",
+    "name": {
+      "en": "Ar-Rahim",
+      "az": "Rəhim",
+      "tr": "Rahim",
+      "ru": "Рахим"
+    },
+    "meaning": {
+      "en": "The Most Merciful",
+      "az": "Möminlərə Rəhmli",
+      "tr": "Mü'minlere Rahim Olan",
+      "ru": "Милосердный к верующим"
+    }
+  },
+  {
+    "id": "al-malik",
+    "number": 3,
+    "arabic": "المَلِكُ",
+    "name": {
+      "en": "Al-Malik",
+      "az": "Məlik",
+      "tr": "Melik",
+      "ru": "Малик"
+    },
+    "meaning": {
+      "en": "The King",
+      "az": "Mütləq Hökmdar",
+      "tr": "Mutlak Hükümdar",
+      "ru": "Владыка"
+    }
+  },
+  {
+    "id": "al-quddus",
+    "number": 4,
+    "arabic": "القُدُّوسُ",
+    "name": {
+      "en": "Al-Quddus",
+      "az": "Quddus",
+      "tr": "Kuddüs",
+      "ru": "Куддус"
+    },
+    "meaning": {
+      "en": "The Most Holy",
+      "az": "Hər Eyibdən Pak",
+      "tr": "Her Türlü Noksandan Uzak",
+      "ru": "Пресвятой"
+    }
+  },
+  {
+    "id": "as-salam",
+    "number": 5,
+    "arabic": "السَّلامُ",
+    "name": {
+      "en": "As-Salam",
+      "az": "Səlam",
+      "tr": "Selam",
+      "ru": "Салям"
+    },
+    "meaning": {
+      "en": "The Source of Peace",
+      "az": "Salamətlik Verən",
+      "tr": "Esenlik Veren",
+      "ru": "Источник мира"
+    }
+  },
+  {
+    "id": "al-mumin",
+    "number": 6,
+    "arabic": "المُّؤْمِنُ",
+    "name": {
+      "en": "Al-Mu'min",
+      "az": "Mömin",
+      "tr": "Mü'min",
+      "ru": "Мумин"
+    },
+    "meaning": {
+      "en": "The Giver of Faith and Security",
+      "az": "Əmin-Amanlıq Verən",
+      "tr": "Güven Veren",
+      "ru": "Дающий безопасность"
+    }
+  },
+  {
+    "id": "al-muhaymin",
+    "number": 7,
+    "arabic": "المُهَيمِنُ",
+    "name": {
+      "en": "Al-Muhaymin",
+      "az": "Muheymin",
+      "tr": "Müheymin",
+      "ru": "Мухаймин"
+    },
+    "meaning": {
+      "en": "The Guardian",
+      "az": "Hər Şeyi Nəzarətdə Saxlayan",
+      "tr": "Her Şeyi Gözetip Koruyan",
+      "ru": "Хранитель всего"
+    }
+  },
+  {
+    "id": "al-aziz",
+    "number": 8,
+    "arabic": "العَزِيزُ",
+    "name": {
+      "en": "Al-Aziz",
+      "az": "Əziz",
+      "tr": "Aziz",
+      "ru": "Азиз"
+    },
+    "meaning": {
+      "en": "The Mighty",
+      "az": "Qüdrətli, Qalib",
+      "tr": "Üstün ve Güçlü",
+      "ru": "Могущественный"
+    }
+  },
+  {
+    "id": "al-jabbar",
+    "number": 9,
+    "arabic": "الجَبَّارُ",
+    "name": {
+      "en": "Al-Jabbar",
+      "az": "Cabbar",
+      "tr": "Cebbar",
+      "ru": "Джаббар"
+    },
+    "meaning": {
+      "en": "The Compeller",
+      "az": "İstədiyini Yerinə Yetirən",
+      "tr": "İstediğini Yaptıran",
+      "ru": "Всемогущий повелитель"
+    }
+  },
+  {
+    "id": "al-mutakabbir",
+    "number": 10,
+    "arabic": "المُتَكَبِّرُ",
+    "name": {
+      "en": "Al-Mutakabbir",
+      "az": "Mütəkəbbir",
+      "tr": "Mütekebbir",
+      "ru": "Мутакаббир"
+    },
+    "meaning": {
+      "en": "The Majestic",
+      "az": "Əzəmət Sahibi",
+      "tr": "Büyüklükte Eşsiz",
+      "ru": "Обладатель величия"
+    }
+  },
+  {
+    "id": "al-khaliq",
+    "number": 11,
+    "arabic": "الخَالِقُ",
+    "name": {
+      "en": "Al-Khaliq",
+      "az": "Xaliq",
+      "tr": "Halık",
+      "ru": "Халик"
+    },
+    "meaning": {
+      "en": "The Creator",
+      "az": "Yaradan",
+      "tr": "Yaratan",
+      "ru": "Творец"
+    }
+  },
+  {
+    "id": "al-bari",
+    "number": 12,
+    "arabic": "البَارِئُ",
+    "name": {
+      "en": "Al-Bari'",
+      "az": "Bari",
+      "tr": "Bari",
+      "ru": "Бари"
+    },
+    "meaning": {
+      "en": "The Evolver",
+      "az": "Nöqsansız Yaradan",
+      "tr": "Kusursuz Yaratan",
+      "ru": "Создающий без изъяна"
+    }
+  },
+  {
+    "id": "al-musawwir",
+    "number": 13,
+    "arabic": "المُصَوِّرُ",
+    "name": {
+      "en": "Al-Musawwir",
+      "az": "Müsəvvir",
+      "tr": "Musavvir",
+      "ru": "Мусаввир"
+    },
+    "meaning": {
+      "en": "The Fashioner",
+      "az": "Surət Verən",
+      "tr": "Şekil Veren",
+      "ru": "Придающий форму"
+    }
+  },
+  {
+    "id": "al-ghaffar",
+    "number": 14,
+    "arabic": "الغَفَّارُ",
+    "name": {
+      "en": "Al-Ghaffar",
+      "az": "Qəffar",
+      "tr": "Gaffar",
+      "ru": "Гаффар"
+    },
+    "meaning": {
+      "en": "The Great Forgiver",
+      "az": "Çox Bağışlayan",
+      "tr": "Çokça Bağışlayan",
+      "ru": "Многократно прощающий"
+    }
+  },
+  {
+    "id": "al-qahhar",
+    "number": 15,
+    "arabic": "القَهَّارُ",
+    "name": {
+      "en": "Al-Qahhar",
+      "az": "Qəhhar",
+      "tr": "Kahhar",
+      "ru": "Каххар"
+    },
+    "meaning": {
+      "en": "The Subduer",
+      "az": "Hər Şeyə Qalib Gələn",
+      "tr": "Her Şeye Galip Gelen",
+      "ru": "Побеждающий всё"
+    }
+  },
+  {
+    "id": "al-wahhab",
+    "number": 16,
+    "arabic": "الوَهَّابُ",
+    "name": {
+      "en": "Al-Wahhab",
+      "az": "Vəhhab",
+      "tr": "Vehhab",
+      "ru": "Ваххаб"
+    },
+    "meaning": {
+      "en": "The Bestower",
+      "az": "Əvəzsiz Bəxş Edən",
+      "tr": "Karşılıksız Bağışlayan",
+      "ru": "Дарующий без взамен"
+    }
+  },
+  {
+    "id": "ar-razzaq",
+    "number": 17,
+    "arabic": "الرَّزَّاقُ",
+    "name": {
+      "en": "Ar-Razzaq",
+      "az": "Rəzzaq",
+      "tr": "Rezzak",
+      "ru": "Раззак"
+    },
+    "meaning": {
+      "en": "The Provider",
+      "az": "Ruzi Verən",
+      "tr": "Rızık Veren",
+      "ru": "Дающий пропитание"
+    }
+  },
+  {
+    "id": "al-fattah",
+    "number": 18,
+    "arabic": "الفَتَّاحُ",
+    "name": {
+      "en": "Al-Fattah",
+      "az": "Fəttah",
+      "tr": "Fettah",
+      "ru": "Феттах"
+    },
+    "meaning": {
+      "en": "The Opener",
+      "az": "Çətinlikləri Açan",
+      "tr": "Zorlukları Açan",
+      "ru": "Открывающий трудности"
+    }
+  },
+  {
+    "id": "al-alim",
+    "number": 19,
+    "arabic": "العَلِيمُ",
+    "name": {
+      "en": "Al-Alim",
+      "az": "Alim",
+      "tr": "Alîm",
+      "ru": "Алим"
+    },
+    "meaning": {
+      "en": "The All-Knowing",
+      "az": "Hər Şeyi Bilən",
+      "tr": "Her Şeyi Bilen",
+      "ru": "Всезнающий"
+    }
+  },
+  {
+    "id": "al-qabid",
+    "number": 20,
+    "arabic": "القَابِضُ",
+    "name": {
+      "en": "Al-Qabid",
+      "az": "Qabid",
+      "tr": "Kâbıd",
+      "ru": "Кабид"
+    },
+    "meaning": {
+      "en": "The Withholder",
+      "az": "Sıxan, Daraldan",
+      "tr": "Daraltan",
+      "ru": "Сжимающий"
+    }
+  },
+  {
+    "id": "al-basit",
+    "number": 21,
+    "arabic": "البَاسِطُ",
+    "name": {
+      "en": "Al-Basit",
+      "az": "Basit",
+      "tr": "Basıt",
+      "ru": "Басит"
+    },
+    "meaning": {
+      "en": "The Extender",
+      "az": "Genişləndirən",
+      "tr": "Genişleten",
+      "ru": "Расширяющий"
+    }
+  },
+  {
+    "id": "al-khafid",
+    "number": 22,
+    "arabic": "الخَافِضُ",
+    "name": {
+      "en": "Al-Khafid",
+      "az": "Xafid",
+      "tr": "Hâfıd",
+      "ru": "Хафид"
+    },
+    "meaning": {
+      "en": "The Abaser",
+      "az": "Alçaldan",
+      "tr": "Alçaltan",
+      "ru": "Принижающий"
+    }
+  },
+  {
+    "id": "ar-rafi",
+    "number": 23,
+    "arabic": "الرَّافِعُ",
+    "name": {
+      "en": "Ar-Rafi'",
+      "az": "Rafi",
+      "tr": "Rafi'",
+      "ru": "Рафи"
+    },
+    "meaning": {
+      "en": "The Exalter",
+      "az": "Ucaldan",
+      "tr": "Yükselten",
+      "ru": "Возвышающий"
+    }
+  },
+  {
+    "id": "al-muizz",
+    "number": 24,
+    "arabic": "المُعِزُ",
+    "name": {
+      "en": "Al-Mu'izz",
+      "az": "Müizz",
+      "tr": "Muîzz",
+      "ru": "Муизз"
+    },
+    "meaning": {
+      "en": "The Honorer",
+      "az": "Şərəf Verən",
+      "tr": "İzzet Veren",
+      "ru": "Дарующий честь"
+    }
+  },
+  {
+    "id": "al-mudhill",
+    "number": 25,
+    "arabic": "المُذِلُ",
+    "name": {
+      "en": "Al-Mudhill",
+      "az": "Müzill",
+      "tr": "Müzill",
+      "ru": "Музилл"
+    },
+    "meaning": {
+      "en": "The Humiliator",
+      "az": "Zəlil Edən",
+      "tr": "Alçaltan",
+      "ru": "Унижающий"
+    }
+  },
+  {
+    "id": "as-sami",
+    "number": 26,
+    "arabic": "السَمِيْعُ",
+    "name": {
+      "en": "As-Sami'",
+      "az": "Səmi",
+      "tr": "Sem'î",
+      "ru": "Сами"
+    },
+    "meaning": {
+      "en": "The All-Hearing",
+      "az": "Hər Şeyi Eşidən",
+      "tr": "Her Şeyi İşiten",
+      "ru": "Всеслышащий"
+    }
+  },
+  {
+    "id": "al-basir",
+    "number": 27,
+    "arabic": "البَصِيْرُ",
+    "name": {
+      "en": "Al-Basir",
+      "az": "Bəsir",
+      "tr": "Basîr",
+      "ru": "Басир"
+    },
+    "meaning": {
+      "en": "The All-Seeing",
+      "az": "Hər Şeyi Görən",
+      "tr": "Her Şeyi Gören",
+      "ru": "Всевидящий"
+    }
+  },
+  {
+    "id": "al-hakam",
+    "number": 28,
+    "arabic": "الحَكَمُ",
+    "name": {
+      "en": "Al-Hakam",
+      "az": "Həkəm",
+      "tr": "Hakem",
+      "ru": "Хакам"
+    },
+    "meaning": {
+      "en": "The Judge",
+      "az": "Hökm Verən",
+      "tr": "Hükmeden",
+      "ru": "Судья"
+    }
+  },
+  {
+    "id": "al-adl",
+    "number": 29,
+    "arabic": "العَدْلُ",
+    "name": {
+      "en": "Al-Adl",
+      "az": "Ədl",
+      "tr": "Adl",
+      "ru": "Адль"
+    },
+    "meaning": {
+      "en": "The Just",
+      "az": "Ədalətli",
+      "tr": "Adaletli",
+      "ru": "Справедливый"
+    }
+  },
+  {
+    "id": "al-latif",
+    "number": 30,
+    "arabic": "اللَطِيْفُ",
+    "name": {
+      "en": "Al-Latif",
+      "az": "Lətif",
+      "tr": "Latîf",
+      "ru": "Лятиф"
+    },
+    "meaning": {
+      "en": "The Subtle",
+      "az": "İncə Lütf Sahibi",
+      "tr": "Lütfu Bol Olan",
+      "ru": "Тонко милостивый"
+    }
+  },
+  {
+    "id": "al-khabir",
+    "number": 31,
+    "arabic": "الخَبِيْرُ",
+    "name": {
+      "en": "Al-Khabir",
+      "az": "Xəbir",
+      "tr": "Habîr",
+      "ru": "Хабир"
+    },
+    "meaning": {
+      "en": "The All-Aware",
+      "az": "Hər Şeydən Xəbərdar",
+      "tr": "Her Şeyden Haberdar",
+      "ru": "Осведомлённый обо всём"
+    }
+  },
+  {
+    "id": "al-halim",
+    "number": 32,
+    "arabic": "الحَلِيْمُ",
+    "name": {
+      "en": "Al-Halim",
+      "az": "Həlim",
+      "tr": "Halîm",
+      "ru": "Халим"
+    },
+    "meaning": {
+      "en": "The Forbearing",
+      "az": "Səbirli, Yumşaqxasiyyət",
+      "tr": "Yumuşak Davranan",
+      "ru": "Кроткий"
+    }
+  },
+  {
+    "id": "al-azim",
+    "number": 33,
+    "arabic": "العَظِيْمُ",
+    "name": {
+      "en": "Al-Azim",
+      "az": "Əzim",
+      "tr": "Azîm",
+      "ru": "Азым"
+    },
+    "meaning": {
+      "en": "The Magnificent",
+      "az": "Böyüklük Sahibi",
+      "tr": "Büyüklük Sahibi",
+      "ru": "Великий"
+    }
+  },
+  {
+    "id": "al-ghafur",
+    "number": 34,
+    "arabic": "الغَفُورُ",
+    "name": {
+      "en": "Al-Ghafur",
+      "az": "Qəfur",
+      "tr": "Gafûr",
+      "ru": "Гафур"
+    },
+    "meaning": {
+      "en": "The Forgiving",
+      "az": "Bağışlayan",
+      "tr": "Bağışlayan",
+      "ru": "Прощающий"
+    }
+  },
+  {
+    "id": "ash-shakur",
+    "number": 35,
+    "arabic": "الشَّكُورُ",
+    "name": {
+      "en": "Ash-Shakur",
+      "az": "Şəkur",
+      "tr": "Şekûr",
+      "ru": "Шакур"
+    },
+    "meaning": {
+      "en": "The Appreciative",
+      "az": "Az Əməli Çox Mükafatlandıran",
+      "tr": "Az Amele Çok Mükafat Veren",
+      "ru": "Вознаграждающий сполна"
+    }
+  },
+  {
+    "id": "al-ali",
+    "number": 36,
+    "arabic": "العَلِيُ",
+    "name": {
+      "en": "Al-Ali",
+      "az": "Əli",
+      "tr": "Alî",
+      "ru": "Али"
+    },
+    "meaning": {
+      "en": "The Most High",
+      "az": "Ən Uca",
+      "tr": "Yüceler Yücesi",
+      "ru": "Всевышний"
+    }
+  },
+  {
+    "id": "al-kabir",
+    "number": 37,
+    "arabic": "الكَبِيْرُ",
+    "name": {
+      "en": "Al-Kabir",
+      "az": "Kəbir",
+      "tr": "Kebîr",
+      "ru": "Кабир"
+    },
+    "meaning": {
+      "en": "The Greatest",
+      "az": "Ən Böyük",
+      "tr": "En Büyük",
+      "ru": "Величайший"
+    }
+  },
+  {
+    "id": "al-hafiz",
+    "number": 38,
+    "arabic": "الحَفِيظُ",
+    "name": {
+      "en": "Al-Hafiz",
+      "az": "Hafiz",
+      "tr": "Hafîz",
+      "ru": "Хафиз"
+    },
+    "meaning": {
+      "en": "The Preserver",
+      "az": "Qoruyan",
+      "tr": "Koruyan",
+      "ru": "Хранящий"
+    }
+  },
+  {
+    "id": "al-muqit",
+    "number": 39,
+    "arabic": "المُقِيْتُ",
+    "name": {
+      "en": "Al-Muqit",
+      "az": "Müqit",
+      "tr": "Mukît",
+      "ru": "Мукит"
+    },
+    "meaning": {
+      "en": "The Sustainer",
+      "az": "Qidalandıran",
+      "tr": "Rızıklandıran",
+      "ru": "Питающий"
+    }
+  },
+  {
+    "id": "al-hasib",
+    "number": 40,
+    "arabic": "الحَسِيْبُ",
+    "name": {
+      "en": "Al-Hasib",
+      "az": "Hasib",
+      "tr": "Hasîb",
+      "ru": "Хасиб"
+    },
+    "meaning": {
+      "en": "The Reckoner",
+      "az": "Haqq-Hesab Çəkən",
+      "tr": "Hesaba Çeken",
+      "ru": "Ведущий счёт"
+    }
+  },
+  {
+    "id": "al-jalil",
+    "number": 41,
+    "arabic": "الجَلِيْلُ",
+    "name": {
+      "en": "Al-Jalil",
+      "az": "Cəlil",
+      "tr": "Celîl",
+      "ru": "Джалиль"
+    },
+    "meaning": {
+      "en": "The Majestic",
+      "az": "Əzəmətli",
+      "tr": "Yüce ve Ulu",
+      "ru": "Величественный"
+    }
+  },
+  {
+    "id": "al-karim",
+    "number": 42,
+    "arabic": "الكَرِيْمُ",
+    "name": {
+      "en": "Al-Karim",
+      "az": "Kərim",
+      "tr": "Kerîm",
+      "ru": "Кярим"
+    },
+    "meaning": {
+      "en": "The Generous",
+      "az": "Kərəmli, Səxavətli",
+      "tr": "Cömert",
+      "ru": "Щедрый"
+    }
+  },
+  {
+    "id": "ar-raqib",
+    "number": 43,
+    "arabic": "الرَقِيْبُ",
+    "name": {
+      "en": "Ar-Raqib",
+      "az": "Rəqib",
+      "tr": "Rakîb",
+      "ru": "Ракыб"
+    },
+    "meaning": {
+      "en": "The Watchful",
+      "az": "Hər Şeyi İzləyən",
+      "tr": "Her Şeyi Gözetleyen",
+      "ru": "Наблюдающий"
+    }
+  },
+  {
+    "id": "al-mujib",
+    "number": 44,
+    "arabic": "المُجِيْبُ",
+    "name": {
+      "en": "Al-Mujib",
+      "az": "Mücib",
+      "tr": "Mücîb",
+      "ru": "Муджиб"
+    },
+    "meaning": {
+      "en": "The Responsive",
+      "az": "Duaları Qəbul Edən",
+      "tr": "Duaları Kabul Eden",
+      "ru": "Отвечающий на мольбы"
+    }
+  },
+  {
+    "id": "al-wasi",
+    "number": 45,
+    "arabic": "الوَاسِعُ",
+    "name": {
+      "en": "Al-Wasi'",
+      "az": "Vasi",
+      "tr": "Vâsi'",
+      "ru": "Васи"
+    },
+    "meaning": {
+      "en": "The All-Encompassing",
+      "az": "Genişliyi Sonsuz Olan",
+      "tr": "İlmi ve Rahmeti Geniş",
+      "ru": "Всеобъемлющий"
+    }
+  },
+  {
+    "id": "al-hakim",
+    "number": 46,
+    "arabic": "الحَكِيْمُ",
+    "name": {
+      "en": "Al-Hakim",
+      "az": "Həkim",
+      "tr": "Hakîm",
+      "ru": "Хаким"
+    },
+    "meaning": {
+      "en": "The Wise",
+      "az": "Hikmət Sahibi",
+      "tr": "Hikmet Sahibi",
+      "ru": "Мудрый"
+    }
+  },
+  {
+    "id": "al-wadud",
+    "number": 47,
+    "arabic": "الوَدُودُ",
+    "name": {
+      "en": "Al-Wadud",
+      "az": "Vədud",
+      "tr": "Vedûd",
+      "ru": "Вадуд"
+    },
+    "meaning": {
+      "en": "The Loving",
+      "az": "Çox Sevən",
+      "tr": "Çok Seven",
+      "ru": "Любящий"
+    }
+  },
+  {
+    "id": "al-majid",
+    "number": 48,
+    "arabic": "المَجِيْدُ",
+    "name": {
+      "en": "Al-Majid",
+      "az": "Məcid",
+      "tr": "Mecîd",
+      "ru": "Маджид"
+    },
+    "meaning": {
+      "en": "The Glorious",
+      "az": "Şərəfli, Şanlı",
+      "tr": "Şanı Yüce",
+      "ru": "Славный"
+    }
+  },
+  {
+    "id": "al-baith",
+    "number": 49,
+    "arabic": "البَاعِثُ",
+    "name": {
+      "en": "Al-Ba'ith",
+      "az": "Bais",
+      "tr": "Bâis",
+      "ru": "Баис"
+    },
+    "meaning": {
+      "en": "The Resurrector",
+      "az": "Öləndən Sonra Dirildən",
+      "tr": "Öldükten Sonra Dirilten",
+      "ru": "Воскрешающий"
+    }
+  },
+  {
+    "id": "ash-shahid",
+    "number": 50,
+    "arabic": "الشَهِيْدُ",
+    "name": {
+      "en": "Ash-Shahid",
+      "az": "Şəhid",
+      "tr": "Şehîd",
+      "ru": "Шахид"
+    },
+    "meaning": {
+      "en": "The Witness",
+      "az": "Hər Şeyə Şahid Olan",
+      "tr": "Her Şeye Şahit Olan",
+      "ru": "Свидетель всего"
+    }
+  },
+  {
+    "id": "al-haqq",
+    "number": 51,
+    "arabic": "الحَقُّ",
+    "name": {
+      "en": "Al-Haqq",
+      "az": "Həqq",
+      "tr": "Hakk",
+      "ru": "Хакк"
+    },
+    "meaning": {
+      "en": "The Truth",
+      "az": "Mütləq Həqiqət",
+      "tr": "Mutlak Gerçek",
+      "ru": "Абсолютная истина"
+    }
+  },
+  {
+    "id": "al-wakil",
+    "number": 52,
+    "arabic": "الوَكِيْلُ",
+    "name": {
+      "en": "Al-Wakil",
+      "az": "Vəkil",
+      "tr": "Vekîl",
+      "ru": "Вакиль"
+    },
+    "meaning": {
+      "en": "The Trustee",
+      "az": "İşləri İdarə Edən",
+      "tr": "İşleri Yoluna Koyan",
+      "ru": "Управляющий делами"
+    }
+  },
+  {
+    "id": "al-qawiyy",
+    "number": 53,
+    "arabic": "القَوِىُّ",
+    "name": {
+      "en": "Al-Qawiyy",
+      "az": "Qavi",
+      "tr": "Kavî",
+      "ru": "Кави"
+    },
+    "meaning": {
+      "en": "The Strong",
+      "az": "Çox Qüvvətli",
+      "tr": "Çok Güçlü",
+      "ru": "Сильный"
+    }
+  },
+  {
+    "id": "al-matin",
+    "number": 54,
+    "arabic": "المَتِيْنُ",
+    "name": {
+      "en": "Al-Matin",
+      "az": "Mətin",
+      "tr": "Metîn",
+      "ru": "Матин"
+    },
+    "meaning": {
+      "en": "The Firm",
+      "az": "Sarsılmaz Qüvvət Sahibi",
+      "tr": "Kuvveti Sarsılmaz",
+      "ru": "Непоколебимо крепкий"
+    }
+  },
+  {
+    "id": "al-waliyy",
+    "number": 55,
+    "arabic": "الوَلِيُ",
+    "name": {
+      "en": "Al-Waliyy",
+      "az": "Vəli",
+      "tr": "Velî",
+      "ru": "Вали"
+    },
+    "meaning": {
+      "en": "The Protecting Friend",
+      "az": "Dost, Qoruyucu",
+      "tr": "Dost ve Yardımcı",
+      "ru": "Покровитель"
+    }
+  },
+  {
+    "id": "al-hamid",
+    "number": 56,
+    "arabic": "الحَمِيْدُ",
+    "name": {
+      "en": "Al-Hamid",
+      "az": "Həmid",
+      "tr": "Hamîd",
+      "ru": "Хамид"
+    },
+    "meaning": {
+      "en": "The Praiseworthy",
+      "az": "Tərifə Layiq",
+      "tr": "Övgüye Layık",
+      "ru": "Достойный похвалы"
+    }
+  },
+  {
+    "id": "al-muhsi",
+    "number": 57,
+    "arabic": "المُحْصِيُ",
+    "name": {
+      "en": "Al-Muhsi",
+      "az": "Mühsi",
+      "tr": "Muhsî",
+      "ru": "Мухси"
+    },
+    "meaning": {
+      "en": "The Accounter",
+      "az": "Hər Şeyi Sayan",
+      "tr": "Her Şeyi Sayan",
+      "ru": "Считающий всё"
+    }
+  },
+  {
+    "id": "al-mubdi",
+    "number": 58,
+    "arabic": "المُبْدِئُ",
+    "name": {
+      "en": "Al-Mubdi'",
+      "az": "Mübdi",
+      "tr": "Mübdî",
+      "ru": "Мубди"
+    },
+    "meaning": {
+      "en": "The Originator",
+      "az": "İlk Yaradan",
+      "tr": "İlk Yaratan",
+      "ru": "Первотворец"
+    }
+  },
+  {
+    "id": "al-muid",
+    "number": 59,
+    "arabic": "المُعِيْدُ",
+    "name": {
+      "en": "Al-Mu'id",
+      "az": "Müid",
+      "tr": "Muîd",
+      "ru": "Муид"
+    },
+    "meaning": {
+      "en": "The Restorer",
+      "az": "Yenidən Yaradan",
+      "tr": "Yeniden Yaratan",
+      "ru": "Воссоздающий"
+    }
+  },
+  {
+    "id": "al-muhyi",
+    "number": 60,
+    "arabic": "المُحِيِيُ",
+    "name": {
+      "en": "Al-Muhyi",
+      "az": "Mühyi",
+      "tr": "Muhyî",
+      "ru": "Мухьи"
+    },
+    "meaning": {
+      "en": "The Giver of Life",
+      "az": "Həyat Verən",
+      "tr": "Hayat Veren",
+      "ru": "Дающий жизнь"
+    }
+  },
+  {
+    "id": "al-mumit",
+    "number": 61,
+    "arabic": "المُمِيْتُ",
+    "name": {
+      "en": "Al-Mumit",
+      "az": "Mümit",
+      "tr": "Mümît",
+      "ru": "Мумит"
+    },
+    "meaning": {
+      "en": "The Bringer of Death",
+      "az": "Ölüm Verən",
+      "tr": "Öldüren",
+      "ru": "Умерщвляющий"
+    }
+  },
+  {
+    "id": "al-hayy",
+    "number": 62,
+    "arabic": "الحَيُ",
+    "name": {
+      "en": "Al-Hayy",
+      "az": "Həyy",
+      "tr": "Hayy",
+      "ru": "Хайй"
+    },
+    "meaning": {
+      "en": "The Ever-Living",
+      "az": "Əbədi Diri",
+      "tr": "Ebedi Diri",
+      "ru": "Вечно живой"
+    }
+  },
+  {
+    "id": "al-qayyum",
+    "number": 63,
+    "arabic": "القَيُّومُ",
+    "name": {
+      "en": "Al-Qayyum",
+      "az": "Qayyum",
+      "tr": "Kayyûm",
+      "ru": "Каййум"
+    },
+    "meaning": {
+      "en": "The Self-Subsisting",
+      "az": "Hər Şeyi Ayaqda Saxlayan",
+      "tr": "Her Şeyi Ayakta Tutan",
+      "ru": "Поддерживающий всё сущее"
+    }
+  },
+  {
+    "id": "al-wajid",
+    "number": 64,
+    "arabic": "الوَاجِدُ",
+    "name": {
+      "en": "Al-Wajid",
+      "az": "Vacid",
+      "tr": "Vâcid",
+      "ru": "Ваджид"
+    },
+    "meaning": {
+      "en": "The Finder",
+      "az": "İstədiyini Tapan",
+      "tr": "İstediğini Bulan",
+      "ru": "Находящий желаемое"
+    }
+  },
+  {
+    "id": "al-majid2",
+    "number": 65,
+    "arabic": "المَاجِدُ",
+    "name": {
+      "en": "Al-Majid",
+      "az": "Macid",
+      "tr": "Mâcid",
+      "ru": "Маджид"
+    },
+    "meaning": {
+      "en": "The Noble",
+      "az": "Şərəf və Kəramət Sahibi",
+      "tr": "Şeref ve Kerem Sahibi",
+      "ru": "Благородный"
+    }
+  },
+  {
+    "id": "al-wahid",
+    "number": 66,
+    "arabic": "الوَاحِدُ",
+    "name": {
+      "en": "Al-Wahid",
+      "az": "Vahid",
+      "tr": "Vâhid",
+      "ru": "Вахид"
+    },
+    "meaning": {
+      "en": "The One",
+      "az": "Tək, Bənzərsiz",
+      "tr": "Tek ve Benzersiz",
+      "ru": "Единственный"
+    }
+  },
+  {
+    "id": "al-ahad",
+    "number": 67,
+    "arabic": "الأَحَدُ",
+    "name": {
+      "en": "Al-Ahad",
+      "az": "Əhəd",
+      "tr": "Ehad",
+      "ru": "Ахад"
+    },
+    "meaning": {
+      "en": "The Unique",
+      "az": "Şəriksiz Bir",
+      "tr": "Ortağı Olmayan Bir",
+      "ru": "Единый, не имеющий равных"
+    }
+  },
+  {
+    "id": "as-samad",
+    "number": 68,
+    "arabic": "الصَّمَدُ",
+    "name": {
+      "en": "As-Samad",
+      "az": "Səməd",
+      "tr": "Samed",
+      "ru": "Самад"
+    },
+    "meaning": {
+      "en": "The Eternal Refuge",
+      "az": "Heç Nəyə Möhtac Olmayan",
+      "tr": "Hiçbir Şeye Muhtaç Olmayan",
+      "ru": "Ни в чём не нуждающийся"
+    }
+  },
+  {
+    "id": "al-qadir",
+    "number": 69,
+    "arabic": "القَادِرُ",
+    "name": {
+      "en": "Al-Qadir",
+      "az": "Qadir",
+      "tr": "Kâdir",
+      "ru": "Кадир"
+    },
+    "meaning": {
+      "en": "The Able",
+      "az": "Qüdrət Sahibi",
+      "tr": "Güç Sahibi",
+      "ru": "Могущий"
+    }
+  },
+  {
+    "id": "al-muqtadir",
+    "number": 70,
+    "arabic": "المُقْتَدِر",
+    "name": {
+      "en": "Al-Muqtadir",
+      "az": "Müqtədir",
+      "tr": "Muktedir",
+      "ru": "Муктадир"
+    },
+    "meaning": {
+      "en": "The Powerful",
+      "az": "Qüdrəti Tam Olan",
+      "tr": "Gücü Tam Olan",
+      "ru": "Всесильный"
+    }
+  },
+  {
+    "id": "al-muqaddim",
+    "number": 71,
+    "arabic": "المُقَدِّمُ",
+    "name": {
+      "en": "Al-Muqaddim",
+      "az": "Müqəddim",
+      "tr": "Mukaddim",
+      "ru": "Мукаддим"
+    },
+    "meaning": {
+      "en": "The Expediter",
+      "az": "İrəli Aparan",
+      "tr": "Öne Alan",
+      "ru": "Выдвигающий вперёд"
+    }
+  },
+  {
+    "id": "al-muakhkhir",
+    "number": 72,
+    "arabic": "المُؤَخِرُ",
+    "name": {
+      "en": "Al-Muakhkhir",
+      "az": "Müəxxir",
+      "tr": "Muahhir",
+      "ru": "Муаххыр"
+    },
+    "meaning": {
+      "en": "The Delayer",
+      "az": "Geriyə Saxlayan",
+      "tr": "Geri Bırakan",
+      "ru": "Отдаляющий"
+    }
+  },
+  {
+    "id": "al-awwal",
+    "number": 73,
+    "arabic": "الأَوَّلُ",
+    "name": {
+      "en": "Al-Awwal",
+      "az": "Əvvəl",
+      "tr": "Evvel",
+      "ru": "Аввал"
+    },
+    "meaning": {
+      "en": "The First",
+      "az": "İlk, Əvvəli Olmayan",
+      "tr": "Başlangıcı Olmayan",
+      "ru": "Безначальный первый"
+    }
+  },
+  {
+    "id": "al-akhir",
+    "number": 74,
+    "arabic": "الاَخِرُ",
+    "name": {
+      "en": "Al-Akhir",
+      "az": "Axir",
+      "tr": "Âhir",
+      "ru": "Ахир"
+    },
+    "meaning": {
+      "en": "The Last",
+      "az": "Son, Sonu Olmayan",
+      "tr": "Sonu Olmayan Son",
+      "ru": "Бесконечный последний"
+    }
+  },
+  {
+    "id": "az-zahir",
+    "number": 75,
+    "arabic": "الظَّاهِرُ",
+    "name": {
+      "en": "Az-Zahir",
+      "az": "Zahir",
+      "tr": "Zâhir",
+      "ru": "Захир"
+    },
+    "meaning": {
+      "en": "The Manifest",
+      "az": "Varlığı Aşkar Olan",
+      "tr": "Varlığı Açık Olan",
+      "ru": "Явный"
+    }
+  },
+  {
+    "id": "al-batin",
+    "number": 76,
+    "arabic": "البَاطِنُ",
+    "name": {
+      "en": "Al-Batin",
+      "az": "Batin",
+      "tr": "Bâtın",
+      "ru": "Батын"
+    },
+    "meaning": {
+      "en": "The Hidden",
+      "az": "Zatı Gizli Olan",
+      "tr": "Zatı Gizli Olan",
+      "ru": "Сокровенный"
+    }
+  },
+  {
+    "id": "al-wali2",
+    "number": 77,
+    "arabic": "الوَالِيُ",
+    "name": {
+      "en": "Al-Wali",
+      "az": "Vali",
+      "tr": "Vâlî",
+      "ru": "Вали"
+    },
+    "meaning": {
+      "en": "The Governor",
+      "az": "İşləri İdarə Edən",
+      "tr": "İşleri Yöneten",
+      "ru": "Управляющий всем"
+    }
+  },
+  {
+    "id": "al-mutaali",
+    "number": 78,
+    "arabic": "المُتَعَالِيُ",
+    "name": {
+      "en": "Al-Muta'ali",
+      "az": "Mütəali",
+      "tr": "Müteâli",
+      "ru": "Мутаали"
+    },
+    "meaning": {
+      "en": "The Most Exalted",
+      "az": "Çox Uca",
+      "tr": "Çok Yüce",
+      "ru": "Превознесённый"
+    }
+  },
+  {
+    "id": "al-barr",
+    "number": 79,
+    "arabic": "البَرُّ",
+    "name": {
+      "en": "Al-Barr",
+      "az": "Barr",
+      "tr": "Berr",
+      "ru": "Барр"
+    },
+    "meaning": {
+      "en": "The Source of Goodness",
+      "az": "Yaxşılıq Edən",
+      "tr": "İyilik Eden",
+      "ru": "Источник добра"
+    }
+  },
+  {
+    "id": "at-tawwab",
+    "number": 80,
+    "arabic": "التَّوَابُ",
+    "name": {
+      "en": "At-Tawwab",
+      "az": "Təvvab",
+      "tr": "Tevvâb",
+      "ru": "Тавваб"
+    },
+    "meaning": {
+      "en": "The Acceptor of Repentance",
+      "az": "Tövbələri Qəbul Edən",
+      "tr": "Tevbeleri Kabul Eden",
+      "ru": "Принимающий покаяние"
+    }
+  },
+  {
+    "id": "al-muntaqim",
+    "number": 81,
+    "arabic": "المُنْتَقِمُ",
+    "name": {
+      "en": "Al-Muntaqim",
+      "az": "Müntəqim",
+      "tr": "Müntekim",
+      "ru": "Мунтакым"
+    },
+    "meaning": {
+      "en": "The Avenger",
+      "az": "Zalımdan İntiqam Alan",
+      "tr": "Zalimden İntikam Alan",
+      "ru": "Мстящий притеснителю"
+    }
+  },
+  {
+    "id": "al-afuww",
+    "number": 82,
+    "arabic": "العَفُوُّ",
+    "name": {
+      "en": "Al-Afuww",
+      "az": "Əfuvv",
+      "tr": "Afüvv",
+      "ru": "Афувв"
+    },
+    "meaning": {
+      "en": "The Pardoner",
+      "az": "Günahları Silən",
+      "tr": "Günahları Silen",
+      "ru": "Стирающий грехи"
+    }
+  },
+  {
+    "id": "ar-rauf",
+    "number": 83,
+    "arabic": "الرَؤُوفُ",
+    "name": {
+      "en": "Ar-Ra'uf",
+      "az": "Rəuf",
+      "tr": "Raûf",
+      "ru": "Рауф"
+    },
+    "meaning": {
+      "en": "The Most Kind",
+      "az": "Çox Şəfqətli",
+      "tr": "Çok Şefkatli",
+      "ru": "Сострадательный"
+    }
+  },
+  {
+    "id": "malik-al-mulk",
+    "number": 84,
+    "arabic": "مَالِكُ المُلْكِ",
+    "name": {
+      "en": "Malik al-Mulk",
+      "az": "Malikəl-Mülk",
+      "tr": "Mâlikü'l-Mülk",
+      "ru": "Малику-ль-Мульк"
+    },
+    "meaning": {
+      "en": "Owner of Sovereignty",
+      "az": "Mülkün Sahibi",
+      "tr": "Mülkün Sahibi",
+      "ru": "Владыка царства"
+    }
+  },
+  {
+    "id": "dhul-jalal",
+    "number": 85,
+    "arabic": "ذُو الجَلَال والإِكْرَامِ",
+    "name": {
+      "en": "Dhul-Jalal wal-Ikram",
+      "az": "Zül-Cəlali vəl-İkram",
+      "tr": "Zü'l-Celâli ve'l-İkram",
+      "ru": "Зуль-Джаляли валь-Икрам"
+    },
+    "meaning": {
+      "en": "Lord of Majesty and Honor",
+      "az": "Əzəmət və Kərəm Sahibi",
+      "tr": "Yücelik ve İkram Sahibi",
+      "ru": "Обладатель величия и щедрости"
+    }
+  },
+  {
+    "id": "al-muqsit",
+    "number": 86,
+    "arabic": "المُقْسِطُ",
+    "name": {
+      "en": "Al-Muqsit",
+      "az": "Müqsit",
+      "tr": "Muksit",
+      "ru": "Муксит"
+    },
+    "meaning": {
+      "en": "The Equitable",
+      "az": "Ədaləti Bərqərar Edən",
+      "tr": "Adaleti Sağlayan",
+      "ru": "Устанавливающий справедливость"
+    }
+  },
+  {
+    "id": "al-jami",
+    "number": 87,
+    "arabic": "الجَامِعُ",
+    "name": {
+      "en": "Al-Jami'",
+      "az": "Cami",
+      "tr": "Câmi'",
+      "ru": "Джами"
+    },
+    "meaning": {
+      "en": "The Gatherer",
+      "az": "Toplayan, Birləşdirən",
+      "tr": "Toplayan",
+      "ru": "Собирающий"
+    }
+  },
+  {
+    "id": "al-ghani",
+    "number": 88,
+    "arabic": "الغَنِيُ",
+    "name": {
+      "en": "Al-Ghani",
+      "az": "Qəni",
+      "tr": "Ganî",
+      "ru": "Гани"
+    },
+    "meaning": {
+      "en": "The Self-Sufficient",
+      "az": "Heç Nəyə Ehtiyacı Olmayan",
+      "tr": "Hiçbir Şeye Muhtaç Olmayan",
+      "ru": "Ни в чём не нуждающийся богатый"
+    }
+  },
+  {
+    "id": "al-mughni",
+    "number": 89,
+    "arabic": "المُغْنِيُ",
+    "name": {
+      "en": "Al-Mughni",
+      "az": "Muğni",
+      "tr": "Muğnî",
+      "ru": "Мугни"
+    },
+    "meaning": {
+      "en": "The Enricher",
+      "az": "Zənginlik Verən",
+      "tr": "Zenginlik Veren",
+      "ru": "Обогащающий"
+    }
+  },
+  {
+    "id": "al-mani",
+    "number": 90,
+    "arabic": "المَانِعُ",
+    "name": {
+      "en": "Al-Mani'",
+      "az": "Mani",
+      "tr": "Mâni'",
+      "ru": "Мани"
+    },
+    "meaning": {
+      "en": "The Preventer",
+      "az": "Zərəri Dəf Edən",
+      "tr": "Zararı Engelleyen",
+      "ru": "Предотвращающий вред"
+    }
+  },
+  {
+    "id": "ad-darr",
+    "number": 91,
+    "arabic": "الضَارُّ",
+    "name": {
+      "en": "Ad-Darr",
+      "az": "Zarr",
+      "tr": "Darr",
+      "ru": "Дарр"
+    },
+    "meaning": {
+      "en": "The One Who Ordains Harm (with wisdom)",
+      "az": "Hikmətlə Zərər Yazan",
+      "tr": "Hikmetle Zarar Takdir Eden",
+      "ru": "Допускающий вред по мудрости"
+    }
+  },
+  {
+    "id": "an-nafi",
+    "number": 92,
+    "arabic": "النَافِعُ",
+    "name": {
+      "en": "An-Nafi'",
+      "az": "Nafi",
+      "tr": "Nâfi'",
+      "ru": "Нафи"
+    },
+    "meaning": {
+      "en": "The Benefactor",
+      "az": "Fayda Verən",
+      "tr": "Fayda Veren",
+      "ru": "Приносящий пользу"
+    }
+  },
+  {
+    "id": "an-nur",
+    "number": 93,
+    "arabic": "النُّورُ",
+    "name": {
+      "en": "An-Nur",
+      "az": "Nur",
+      "tr": "Nûr",
+      "ru": "Нур"
+    },
+    "meaning": {
+      "en": "The Light",
+      "az": "İşıq",
+      "tr": "Nur",
+      "ru": "Свет"
+    }
+  },
+  {
+    "id": "al-hadi",
+    "number": 94,
+    "arabic": "الهَادِيُ",
+    "name": {
+      "en": "Al-Hadi",
+      "az": "Hadi",
+      "tr": "Hâdî",
+      "ru": "Хади"
+    },
+    "meaning": {
+      "en": "The Guide",
+      "az": "Doğru Yola Yönəldən",
+      "tr": "Doğru Yola İleten",
+      "ru": "Наставляющий на путь"
+    }
+  },
+  {
+    "id": "al-badi",
+    "number": 95,
+    "arabic": "البَدِيْعُ",
+    "name": {
+      "en": "Al-Badi'",
+      "az": "Bədi",
+      "tr": "Bedî'",
+      "ru": "Бади"
+    },
+    "meaning": {
+      "en": "The Incomparable Originator",
+      "az": "Misilsiz Yaradan",
+      "tr": "Örneksiz Yaratan",
+      "ru": "Творящий без примера"
+    }
+  },
+  {
+    "id": "al-baqi",
+    "number": 96,
+    "arabic": "البَاقِيُ",
+    "name": {
+      "en": "Al-Baqi",
+      "az": "Baqi",
+      "tr": "Bâkî",
+      "ru": "Баки"
+    },
+    "meaning": {
+      "en": "The Everlasting",
+      "az": "Sonu Olmayan",
+      "tr": "Sonu Olmayan",
+      "ru": "Вечно пребывающий"
+    }
+  },
+  {
+    "id": "al-warith",
+    "number": 97,
+    "arabic": "الوَارِثُ",
+    "name": {
+      "en": "Al-Warith",
+      "az": "Varis",
+      "tr": "Vâris",
+      "ru": "Варис"
+    },
+    "meaning": {
+      "en": "The Inheritor",
+      "az": "Hər Şeyin Varisi",
+      "tr": "Her Şeyin Varisi",
+      "ru": "Наследующий всё"
+    }
+  },
+  {
+    "id": "ar-rashid",
+    "number": 98,
+    "arabic": "الرَشِيْدُ",
+    "name": {
+      "en": "Ar-Rashid",
+      "az": "Rəşid",
+      "tr": "Reşîd",
+      "ru": "Рашид"
+    },
+    "meaning": {
+      "en": "The Guide to the Right Path",
+      "az": "Doğru Yolu Göstərən",
+      "tr": "İrşad Eden",
+      "ru": "Указывающий верный путь"
+    }
+  },
+  {
+    "id": "as-sabur",
+    "number": 99,
+    "arabic": "الصَّبُورُ",
+    "name": {
+      "en": "As-Sabur",
+      "az": "Səbur",
+      "tr": "Sabûr",
+      "ru": "Сабур"
+    },
+    "meaning": {
+      "en": "The Patient",
+      "az": "Çox Səbirli",
+      "tr": "Çok Sabırlı",
+      "ru": "Терпеливый"
+    }
+  }
+]

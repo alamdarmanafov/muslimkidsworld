@@ -70,6 +70,7 @@
     "quiz": "Test",
     "salah": "Namaz",
     "alphabet": "Alfabe",
+    "divineNames": "99 İsim",
     "story": "Hikaye",
     "game": "Oyun",
     "gardenTitle": "Bahçem",
@@ -186,6 +187,9 @@
   },
   "alphabet": {
     "title": "Arap Alfabesi"
+  },
+  "divineNames": {
+    "title": "Esmaül Hüsna (99 İsim)"
   },
   "childProgress": {
     "title": "İlerlemem",
@@ -371,7 +375,11 @@
       "p6": "Peygamberimiz hangi şehre hicret etti?",
       "p7": "Peygamberimizin babasının adı nedir?",
       "p8": "Peygamberimizin annesinin adı nedir?",
-      "p9": "Peygamberimizin ilk eşinin adı nedir?"
+      "p9": "Peygamberimizin ilk eşinin adı nedir?",
+      "p10": "Hicri takvimin ilk ayı hangisidir?",
+      "p11": "Kur'an hangi ayda inmeye başladı?",
+      "p12": "Hac ibadeti hangi ayda yapılır?",
+      "p13": "Peygamberimize (SAV) göre, bir amelin değeri neye bağlıdır?"
     },
     "quizPlaces": {
       "mecca": "Mekke",
@@ -389,6 +397,20 @@
       "aisha": "Ayşe",
       "fatimah": "Fatıma",
       "zaynab": "Zeynep"
+    },
+    "quizMonths": {
+      "muharram": "Muharrem",
+      "safar": "Safer",
+      "rajab": "Recep",
+      "shawwal": "Şevval",
+      "ramadan": "Ramazan",
+      "dhulhijjah": "Zilhicce"
+    },
+    "quizConcepts": {
+      "intention": "Niyet",
+      "time": "Zaman",
+      "amount": "Miktar",
+      "place": "Yer"
     },
     "prayers": {
       "fajr": "Sabah",

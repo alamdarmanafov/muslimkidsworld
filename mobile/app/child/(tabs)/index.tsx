@@ -19,6 +19,7 @@ const exploreTiles: { labelKey: string; icon: IconName; bg: string; href: string
   { labelKey: "childHome.quiz", icon: "quiz", bg: colors.pink, href: "/child/quiz-categories" },
   { labelKey: "childHome.salah", icon: "mosque", bg: colors.teal, href: "/child/salah" },
   { labelKey: "childHome.alphabet", icon: "globe", bg: colors.goldDark, href: "/child/alphabet" },
+  { labelKey: "childHome.divineNames", icon: "star", bg: colors.purple, href: "/child/divine-names" },
 ];
 
 const journeyLabelKeys: Record<string, string> = {
