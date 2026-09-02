@@ -148,6 +148,15 @@
     "elm": "Наука и природа",
     "xariciDil": "Иностранный язык"
   },
+  "quizDifficulty": {
+    "title": "Выбери уровень",
+    "easy": "Легко",
+    "easyAge": "4-6 лет",
+    "medium": "Средне",
+    "mediumAge": "7-8 лет",
+    "hard": "Сложно",
+    "hardAge": "9-10 лет"
+  },
   "quran": {
     "title": "Коран",
     "surah": "Сура {{name}}",

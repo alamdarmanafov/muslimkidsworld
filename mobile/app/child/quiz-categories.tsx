@@ -37,7 +37,7 @@ export default function QuizCategories() {
           <Pressable
             key={tile.category}
             style={styles.row}
-            onPress={() => router.push(`/child/quiz?category=${tile.category}`)}
+            onPress={() => router.push(`/child/quiz-difficulty?category=${tile.category}`)}
           >
             <View style={[styles.iconWrap, { backgroundColor: tile.bg }]}>
               <Icon name={tile.icon} size={26} color="#FFFFFF" />
@@ -54,7 +54,9 @@ export default function QuizCategories() {
               <Pressable
                 key={lang}
                 style={styles.row}
-                onPress={() => router.push(`/child/quiz?category=xariciDil&targetLang=${lang}`)}
+                onPress={() =>
+                  router.push(`/child/quiz-difficulty?category=xariciDil&targetLang=${lang}`)
+                }
               >
                 <View style={[styles.iconWrap, { backgroundColor: colors.purple }]}>
                   <Icon name="quiz" size={26} color="#FFFFFF" />

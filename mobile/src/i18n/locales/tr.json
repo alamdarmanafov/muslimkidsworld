@@ -146,6 +146,15 @@
     "elm": "Fen ve Doğa",
     "xariciDil": "Yabancı Dil"
   },
+  "quizDifficulty": {
+    "title": "Seviye Seç",
+    "easy": "Kolay",
+    "easyAge": "4-6 yaş",
+    "medium": "Orta",
+    "mediumAge": "7-8 yaş",
+    "hard": "Zor",
+    "hardAge": "9-10 yaş"
+  },
   "quran": {
     "title": "Kur'an",
     "surah": "{{name}} Suresi",

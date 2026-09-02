@@ -10,6 +10,7 @@ import {
   latestReward,
   type ForeignTargetLang,
   type QuizCategory,
+  type QuizDifficulty,
 } from "../../src/data/mock";
 import { colors, radii, spacing } from "../../src/theme/theme";
 
@@ -24,11 +25,12 @@ function resolveOptionText(option: { textKey?: string; text?: string; emoji: str
 
 export default function Quiz() {
   const { t } = useTranslation();
-  const { category, targetLang } = useLocalSearchParams<{
+  const { category, targetLang, difficulty } = useLocalSearchParams<{
     category: QuizCategory;
     targetLang?: ForeignTargetLang;
+    difficulty?: QuizDifficulty;
   }>();
-  const questions = getQuizQuestions(category ?? "din", targetLang);
+  const questions = getQuizQuestions(category ?? "din", targetLang, difficulty);
   const [index, setIndex] = useState(0);
   const [phase, setPhase] = useState<Phase>("question");
   const [selectedId, setSelectedId] = useState<string | null>(null);

@@ -146,6 +146,15 @@
     "elm": "Science & Nature",
     "xariciDil": "Foreign Language"
   },
+  "quizDifficulty": {
+    "title": "Choose a Level",
+    "easy": "Easy",
+    "easyAge": "Ages 4-6",
+    "medium": "Medium",
+    "mediumAge": "Ages 7-8",
+    "hard": "Hard",
+    "hardAge": "Ages 9-10"
+  },
   "quran": {
     "title": "Quran",
     "surah": "Surah {{name}}",

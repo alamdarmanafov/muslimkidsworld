@@ -62,10 +62,39 @@ export type QuizCategory = "din" | "riyaziyyat" | "yaxsiEmeller" | "elm" | "xari
 
 export type ForeignTargetLang = "en" | "ru";
 
+export type QuizDifficulty = "easy" | "medium" | "hard";
+
+/** Difficulty for hand-authored questions that predate the `difficulty` field. */
+const DIFFICULTY_BY_ID: Record<string, QuizDifficulty> = {
+  q1: "easy", q2: "easy", q3: "easy", q8: "easy",
+  q4: "medium", q6: "medium", q7: "medium", q9: "medium", q10: "medium",
+  q15: "medium", q18: "medium", q19: "medium", q20: "medium",
+  q5: "hard", q11: "hard", q12: "hard", q13: "hard", q14: "hard", q16: "hard", q17: "hard",
+  p1: "hard", p2: "medium", p3: "medium", p4: "hard", p5: "easy", p6: "easy", p7: "easy",
+  p8: "easy", p9: "medium", p10: "medium", p11: "medium", p12: "medium", p13: "hard",
+  d1: "easy", d2: "easy", d3: "easy", d4: "easy", d5: "medium", d6: "hard",
+  e1: "easy", e2: "easy", e3: "easy", e4: "easy", e5: "easy", e6: "easy", e7: "easy",
+  e8: "easy", e9: "easy", e10: "easy", e11: "easy", e12: "easy", e13: "easy", e14: "easy", e15: "easy",
+  sc1: "medium", sc2: "medium", sc3: "hard", sc4: "easy", sc5: "easy", sc6: "easy",
+  sc7: "medium", sc8: "easy", sc9: "easy", sc10: "hard", sc11: "medium", sc12: "easy",
+  sc13: "easy", sc14: "easy", sc15: "easy", sc16: "easy", sc17: "easy", sc18: "easy",
+  m16: "medium", m17: "medium", m18: "medium",
+  f1: "easy", f2: "easy", f3: "easy", f4: "easy", f5: "easy", f6: "easy",
+  f7: "easy", f8: "easy", f9: "easy", f10: "easy", f11: "easy", f12: "easy",
+  g1: "easy", g2: "easy", g3: "easy", g4: "easy", g5: "easy",
+  g6: "easy", g7: "easy", g8: "easy", g9: "easy", g10: "easy",
+};
+
+export function getDifficulty(question: { id: string; difficulty?: QuizDifficulty }): QuizDifficulty {
+  return question.difficulty ?? DIFFICULTY_BY_ID[question.id] ?? "medium";
+}
+
 export type QuizQuestion = {
   id: string;
   category: QuizCategory;
   targetLang?: ForeignTargetLang;
+  /** Falls back to DIFFICULTY_BY_ID / "medium" via getDifficulty() when omitted. */
+  difficulty?: QuizDifficulty;
   /** Set only for procedurally generated questions (e.g. math) — used instead of a content.quiz.* translation key. */
   promptText?: string;
   /** Set for generated questions whose prompt still needs translation (e.g. "How many verses in {{name}}?") — a top-level i18n key with interpolation params. */
@@ -1313,26 +1342,30 @@ function shuffle<T>(arr: T[]): T[] {
 
 type MathOp = "+" | "-" | "×" | "÷";
 
-function buildMathProblem(): { promptText: string; answer: number } {
-  const op = shuffle<MathOp>(["+", "-", "×", "÷"])[0];
+function buildMathProblem(difficulty: QuizDifficulty): { promptText: string; answer: number } {
+  const ops: MathOp[] =
+    difficulty === "easy" ? ["+", "-"] : ["+", "-", "×", "÷"];
+  const op = shuffle(ops)[0];
+  const range = difficulty === "easy" ? 10 : difficulty === "medium" ? 20 : 50;
+  const mulRange = difficulty === "hard" ? 12 : difficulty === "medium" ? 10 : 5;
   let a: number;
   let b: number;
   let answer: number;
   if (op === "+") {
-    a = randInt(1, 20);
-    b = randInt(1, 20);
+    a = randInt(1, range);
+    b = randInt(1, range);
     answer = a + b;
   } else if (op === "-") {
-    a = randInt(5, 20);
+    a = randInt(Math.ceil(range / 2), range);
     b = randInt(1, a);
     answer = a - b;
   } else if (op === "×") {
-    a = randInt(1, 12);
-    b = randInt(1, 12);
+    a = randInt(1, mulRange);
+    b = randInt(1, mulRange);
     answer = a * b;
   } else {
-    b = randInt(1, 12);
-    answer = randInt(1, 12);
+    b = randInt(1, mulRange);
+    answer = randInt(1, mulRange);
     a = b * answer;
   }
   return { promptText: `${a} ${op} ${b} = ?`, answer };
@@ -1356,12 +1389,15 @@ const optionLetters = ["a", "b", "c", "d"];
  * possible problems (addition, subtraction, multiplication, division within
  * a kid-appropriate range) is already in the thousands.
  */
-export function generateMathQuestions(count: number): QuizQuestion[] {
+export function generateMathQuestions(
+  count: number,
+  difficulty: QuizDifficulty = "medium",
+): QuizQuestion[] {
   const questions: QuizQuestion[] = [];
   const seenPrompts = new Set<string>();
 
   while (questions.length < count) {
-    const { promptText, answer } = buildMathProblem();
+    const { promptText, answer } = buildMathProblem(difficulty);
     if (seenPrompts.has(promptText)) continue;
 
     const distractors = buildMathDistractors(answer);
@@ -1380,6 +1416,7 @@ export function generateMathQuestions(count: number): QuizQuestion[] {
     questions.push({
       id: `math-${questions.length}`,
       category: "riyaziyyat",
+      difficulty,
       promptText,
       options,
       correctOptionId: optionLetters[correctIndex],
@@ -1426,6 +1463,7 @@ export function generateSurahFactQuestions(count: number): QuizQuestion[] {
     return {
       id: `surah-${s.chapter}-${i}`,
       category: "din",
+      difficulty: "hard",
       promptKey: "content.quiz.dinVerseCount",
       promptParams: { name: s.name },
       options,
@@ -1435,19 +1473,31 @@ export function generateSurahFactQuestions(count: number): QuizQuestion[] {
   });
 }
 
-export function getQuizQuestions(category: QuizCategory, targetLang?: ForeignTargetLang): QuizQuestion[] {
+export function getQuizQuestions(
+  category: QuizCategory,
+  targetLang?: ForeignTargetLang,
+  difficulty?: QuizDifficulty,
+): QuizQuestion[] {
   if (category === "riyaziyyat") {
-    const staticMath = quizBank.filter((q) => q.category === "riyaziyyat");
-    const generated = generateMathQuestions(10);
+    const staticMath = quizBank
+      .filter((q) => q.category === "riyaziyyat")
+      .filter((q) => !difficulty || getDifficulty(q) === difficulty);
+    const generated = generateMathQuestions(10, difficulty ?? "medium");
     return shuffle([...staticMath, ...generated]);
   }
   if (category === "din") {
-    const staticDin = quizBank.filter((q) => q.category === "din");
-    const generated = generateSurahFactQuestions(10);
+    const staticDin = quizBank
+      .filter((q) => q.category === "din")
+      .filter((q) => !difficulty || getDifficulty(q) === difficulty);
+    const generated =
+      !difficulty || difficulty === "hard" ? generateSurahFactQuestions(10) : [];
     return shuffle([...staticDin, ...generated]);
   }
   return quizBank.filter(
-    (q) => q.category === category && (category !== "xariciDil" || q.targetLang === targetLang),
+    (q) =>
+      q.category === category &&
+      (category !== "xariciDil" || q.targetLang === targetLang) &&
+      (!difficulty || getDifficulty(q) === difficulty),
   );
 }
 

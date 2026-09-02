@@ -146,6 +146,15 @@
     "elm": "Elm və Təbiət",
     "xariciDil": "Xarici Dil"
   },
+  "quizDifficulty": {
+    "title": "Səviyyə seç",
+    "easy": "Asan",
+    "easyAge": "4-6 yaş",
+    "medium": "Orta",
+    "mediumAge": "7-8 yaş",
+    "hard": "Çətin",
+    "hardAge": "9-10 yaş"
+  },
   "quran": {
     "title": "Quran",
     "surah": "{{name}} surəsi",
