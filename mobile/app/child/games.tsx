@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   },
   backIcon: { transform: [{ scaleX: -1 }] },
   title: { fontFamily: fonts.heading, fontSize: 18, color: colors.ink },
-  content: { padding: spacing.lg, paddingTop: 0, gap: spacing.md },
+  content: { flexGrow: 1, padding: spacing.lg, paddingTop: 0, gap: spacing.md, justifyContent: "center" },
   row: {
     flexDirection: "row",
     alignItems: "center",
