@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   },
   backIcon: { transform: [{ scaleX: -1 }] },
   title: { fontFamily: fonts.heading, fontSize: 18, color: colors.ink },
-  content: { padding: spacing.lg, paddingTop: 0 },
+  content: { flexGrow: 1, padding: spacing.lg, paddingTop: 0, justifyContent: "center" },
   card: {
     backgroundColor: "#EDE6FB",
     borderRadius: radii.lg,

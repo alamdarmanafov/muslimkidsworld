@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   },
   backIcon: { transform: [{ scaleX: -1 }] },
   title: { flex: 1, textAlign: "center", fontFamily: fonts.heading, fontSize: 16, color: colors.ink },
-  content: { padding: spacing.lg, paddingTop: 0 },
+  content: { flexGrow: 1, padding: spacing.lg, paddingTop: 0, justifyContent: "center" },
   solvedText: {
     fontFamily: fonts.bodyBold,
     fontSize: 13,
