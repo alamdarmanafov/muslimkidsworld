@@ -1873,11 +1873,17 @@ const WORD_PROBLEM_TEMPLATES: WordProblemTemplate[] = [
   { promptKey: "content.quiz.mathWordApples", op: "subtract" },
   { promptKey: "content.quiz.mathWordBirds", op: "subtract" },
   { promptKey: "content.quiz.mathWordStudents", op: "subtract" },
+  { promptKey: "content.quiz.mathWordEggs", op: "subtract" },
+  { promptKey: "content.quiz.mathWordFish", op: "subtract" },
   { promptKey: "content.quiz.mathWordBoxes", op: "multiply" },
   { promptKey: "content.quiz.mathWordBaskets", op: "multiply" },
   { promptKey: "content.quiz.mathWordMilk", op: "multiply" },
+  { promptKey: "content.quiz.mathWordStickers", op: "multiply" },
+  { promptKey: "content.quiz.mathWordBalloons", op: "multiply" },
   { promptKey: "content.quiz.mathWordCandy", op: "divide" },
   { promptKey: "content.quiz.mathWordBooks", op: "divide" },
+  { promptKey: "content.quiz.mathWordFlowers", op: "divide" },
+  { promptKey: "content.quiz.mathWordCookies", op: "divide" },
 ];
 
 function buildWordProblem(
@@ -2168,6 +2174,109 @@ export function generateDivineNameQuestions(count: number, lang: string): QuizQu
   });
 }
 
+type PlanetMeta = { order: number; sizeRank: number; name: Record<string, string> };
+const planetIndex = planetData as PlanetMeta[];
+
+function planetName(p: PlanetMeta, lang: string): string {
+  return p.name[lang] ?? p.name.en;
+}
+
+function planetNameOptions(pool: PlanetMeta[], lang: string): QuizOption[] {
+  return pool.map((p, idx) => ({
+    id: optionLetters[idx],
+    label: optionLetters[idx].toUpperCase(),
+    emoji: "",
+    text: planetName(p, lang),
+  }));
+}
+
+/**
+ * "Which planet is #N from the Sun?" in both directions, built from a small
+ * verified dataset (planets.json — real, stable order-from-Sun facts) so the
+ * answers never need hand-checking beyond the 8-row source table.
+ */
+export function generatePlanetOrderQuestions(count: number, lang: string): QuizQuestion[] {
+  const pool = shuffle(planetIndex).slice(0, count);
+  return pool.map((p, i) => {
+    const distractors = shuffle(planetIndex.filter((o) => o.order !== p.order)).slice(0, 3);
+    const askForName = i % 2 === 0;
+
+    if (askForName) {
+      const group = shuffle([p, ...distractors]);
+      const correctIndex = group.findIndex((n) => n.order === p.order);
+      return {
+        id: `planet-order-name-${p.order}-${i}`,
+        category: "elm",
+        difficulty: "medium",
+        promptKey: "content.quiz.elmPlanetOrderName",
+        promptParams: { number: p.order } as Record<string, string | number>,
+        options: planetNameOptions(group, lang),
+        correctOptionId: optionLetters[correctIndex],
+        xp: 20,
+      };
+    }
+
+    const group = shuffle([p, ...distractors]);
+    const correctIndex = group.findIndex((n) => n.order === p.order);
+    const options: QuizOption[] = group.map((n, idx) => ({
+      id: optionLetters[idx],
+      label: optionLetters[idx].toUpperCase(),
+      emoji: String(n.order),
+    }));
+    return {
+      id: `planet-order-number-${p.order}-${i}`,
+      category: "elm",
+      difficulty: "medium",
+      promptKey: "content.quiz.elmPlanetOrderNumber",
+      promptParams: { name: planetName(p, lang) },
+      options,
+      correctOptionId: optionLetters[correctIndex],
+      xp: 20,
+    };
+  });
+}
+
+type PlanetCompareMode = {
+  promptKey: string;
+  field: "order" | "sizeRank";
+  pick: "min" | "max";
+};
+
+const PLANET_COMPARE_MODES: PlanetCompareMode[] = [
+  { promptKey: "content.quiz.elmPlanetCompareNearest", field: "order", pick: "min" },
+  { promptKey: "content.quiz.elmPlanetCompareFarthest", field: "order", pick: "max" },
+  { promptKey: "content.quiz.elmPlanetCompareBiggest", field: "sizeRank", pick: "min" },
+  { promptKey: "content.quiz.elmPlanetCompareSmallest", field: "sizeRank", pick: "max" },
+];
+
+/**
+ * "Which of these 4 planets is closest/farthest/biggest/smallest?" — pure
+ * comparisons over the same verified table, giving C(8,4)=70 groupings per
+ * mode without a single new fact to check by hand.
+ */
+export function generatePlanetCompareQuestions(count: number, lang: string): QuizQuestion[] {
+  const questions: QuizQuestion[] = [];
+  for (let i = 0; i < count; i++) {
+    const mode = shuffle(PLANET_COMPARE_MODES)[0];
+    const group = shuffle(planetIndex).slice(0, 4);
+    const target =
+      mode.pick === "min"
+        ? group.reduce((best, p) => (p[mode.field] < best[mode.field] ? p : best))
+        : group.reduce((best, p) => (p[mode.field] > best[mode.field] ? p : best));
+    const correctIndex = group.findIndex((p) => p.order === target.order);
+    questions.push({
+      id: `planet-compare-${i}-${group.map((p) => p.order).join("-")}`,
+      category: "elm",
+      difficulty: "medium",
+      promptKey: mode.promptKey,
+      options: planetNameOptions(group, lang),
+      correctOptionId: optionLetters[correctIndex],
+      xp: 20,
+    });
+  }
+  return questions;
+}
+
 export function getQuizQuestions(
   category: QuizCategory,
   targetLang?: ForeignTargetLang,
@@ -2178,8 +2287,8 @@ export function getQuizQuestions(
     const staticMath = quizBank
       .filter((q) => q.category === "riyaziyyat")
       .filter((q) => !difficulty || getDifficulty(q) === difficulty);
-    const generated = generateMathQuestions(18, difficulty ?? "medium");
-    const wordProblems = generateMathWordProblemQuestions(12, difficulty ?? "medium");
+    const generated = generateMathQuestions(26, difficulty ?? "medium");
+    const wordProblems = generateMathWordProblemQuestions(20, difficulty ?? "medium");
     return shuffle([...staticMath, ...generated, ...wordProblems]);
   }
   if (category === "din") {
@@ -2198,6 +2307,16 @@ export function getQuizQuestions(
         : [];
     return shuffle([...staticDin, ...generated]);
   }
+  if (category === "elm") {
+    const staticElm = quizBank
+      .filter((q) => q.category === "elm")
+      .filter((q) => !difficulty || getDifficulty(q) === difficulty);
+    const generated =
+      !difficulty || difficulty === "medium"
+        ? [...generatePlanetOrderQuestions(10, lang), ...generatePlanetCompareQuestions(10, lang)]
+        : [];
+    return shuffle([...staticElm, ...generated]);
+  }
   return quizBank.filter(
     (q) =>
       q.category === category &&
@@ -2210,6 +2329,7 @@ import { IconBadgeTone, tones } from "../components/IconBadge";
 import type { IconName } from "../components/icons";
 import surahIndexData from "./quran/surahIndex.json";
 import { getDivineNames } from "./divineNamesLoader";
+import planetData from "./planets.json";
 
 export type WorldLocation = {
   id: string;

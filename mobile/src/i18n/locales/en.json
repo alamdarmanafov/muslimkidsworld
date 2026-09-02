@@ -476,7 +476,19 @@
       "dinCompareMost": "Which of these 4 surahs has the MOST verses?",
       "dinCompareLeast": "Which of these 4 surahs has the FEWEST verses?",
       "divineNameFromNumber": "Which of the 99 Names of Allah is number {{number}}?",
-      "divineNameMeaning": "What does the name '{{name}}' mean?"
+      "divineNameMeaning": "What does the name '{{name}}' mean?",
+      "mathWordEggs": "There were {{a}} eggs in a basket, {{b}} of them broke. How many eggs are left?",
+      "mathWordFish": "There were {{a}} fish in a pond, {{b}} of them were caught. How many fish are left?",
+      "mathWordStickers": "We gave {{b}} stickers to each of {{a}} children. How many stickers were given out in total?",
+      "mathWordBalloons": "Each of {{a}} children has {{b}} balloons. How many balloons are there in total?",
+      "mathWordFlowers": "{{a}} flowers are divided equally into {{b}} vases. How many flowers go in each vase?",
+      "mathWordCookies": "{{a}} cookies are placed equally on {{b}} plates. How many cookies go on each plate?",
+      "elmPlanetOrderName": "Which planet is the {{number}}th from the Sun?",
+      "elmPlanetOrderNumber": "Which position from the Sun is the planet '{{name}}'?",
+      "elmPlanetCompareNearest": "Which of these 4 planets is closest to the Sun?",
+      "elmPlanetCompareFarthest": "Which of these 4 planets is farthest from the Sun?",
+      "elmPlanetCompareBiggest": "Which of these 4 planets is the biggest?",
+      "elmPlanetCompareSmallest": "Which of these 4 planets is the smallest?"
     },
     "quizPlaces": {
       "mecca": "Mecca",

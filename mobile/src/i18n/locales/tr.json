@@ -476,7 +476,19 @@
       "dinCompareMost": "Bu 4 sureden hangisinde EN ÇOK ayet vardır?",
       "dinCompareLeast": "Bu 4 sureden hangisinde EN AZ ayet vardır?",
       "divineNameFromNumber": "Esmâ-i Hüsnâ'da {{number}}. isim hangisidir?",
-      "divineNameMeaning": "'{{name}}' isminin anlamı nedir?"
+      "divineNameMeaning": "'{{name}}' isminin anlamı nedir?",
+      "mathWordEggs": "Sepette {{a}} yumurta vardı, {{b}}'si kırıldı. Kaç yumurta kaldı?",
+      "mathWordFish": "Gölette {{a}} balık vardı, {{b}}'si tutuldu. Kaç balık kaldı?",
+      "mathWordStickers": "{{a}} çocuğun her birine {{b}} çıkartma verdik. Toplam kaç çıkartma dağıtıldı?",
+      "mathWordBalloons": "{{a}} çocuğun her birinde {{b}} balon var. Toplam kaç balon var?",
+      "mathWordFlowers": "{{a}} çiçek {{b}} vazoya eşit olarak dağıtılıyor. Her vazoya kaç çiçek düşer?",
+      "mathWordCookies": "{{a}} kurabiye {{b}} tabağa eşit olarak konuluyor. Her tabağa kaç kurabiye düşer?",
+      "elmPlanetOrderName": "Güneş'ten {{number}}. gezegen hangisidir?",
+      "elmPlanetOrderNumber": "'{{name}}' Güneş'ten kaçıncı gezegendir?",
+      "elmPlanetCompareNearest": "Bu 4 gezegenden hangisi Güneş'e en yakındır?",
+      "elmPlanetCompareFarthest": "Bu 4 gezegenden hangisi Güneş'ten en uzaktır?",
+      "elmPlanetCompareBiggest": "Bu 4 gezegenden hangisi en büyüktür?",
+      "elmPlanetCompareSmallest": "Bu 4 gezegenden hangisi en küçüktür?"
     },
     "quizPlaces": {
       "mecca": "Mekke",

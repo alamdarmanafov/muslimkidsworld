@@ -1,0 +1,10 @@
+[
+  { "order": 1, "sizeRank": 8, "name": { "en": "Mercury", "az": "Merkuri", "tr": "Merkür", "ru": "Меркурий" } },
+  { "order": 2, "sizeRank": 6, "name": { "en": "Venus", "az": "Venera", "tr": "Venüs", "ru": "Венера" } },
+  { "order": 3, "sizeRank": 5, "name": { "en": "Earth", "az": "Yer", "tr": "Dünya", "ru": "Земля" } },
+  { "order": 4, "sizeRank": 7, "name": { "en": "Mars", "az": "Mars", "tr": "Mars", "ru": "Марс" } },
+  { "order": 5, "sizeRank": 1, "name": { "en": "Jupiter", "az": "Yupiter", "tr": "Jüpiter", "ru": "Юпитер" } },
+  { "order": 6, "sizeRank": 2, "name": { "en": "Saturn", "az": "Saturn", "tr": "Satürn", "ru": "Сатурн" } },
+  { "order": 7, "sizeRank": 3, "name": { "en": "Uranus", "az": "Uran", "tr": "Uranüs", "ru": "Уран" } },
+  { "order": 8, "sizeRank": 4, "name": { "en": "Neptune", "az": "Neptun", "tr": "Neptün", "ru": "Нептун" } }
+]

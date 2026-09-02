@@ -476,7 +476,19 @@
       "dinCompareMost": "Bu 4 surədən hansında ƏN ÇOX ayə var?",
       "dinCompareLeast": "Bu 4 surədən hansında ƏN AZ ayə var?",
       "divineNameFromNumber": "Əsmayi-Hüsnada {{number}}-ci ad hansıdır?",
-      "divineNameMeaning": "'{{name}}' adının mənası nədir?"
+      "divineNameMeaning": "'{{name}}' adının mənası nədir?",
+      "mathWordEggs": "Səbətdə {{a}} yumurta var idi, {{b}}-i sındı. Neçə yumurta qaldı?",
+      "mathWordFish": "Gölməçədə {{a}} balıq var idi, {{b}}-i tutuldu. Neçə balıq qaldı?",
+      "mathWordStickers": "{{a}} uşağın hər birinə {{b}} stiker verdik. Cəmi neçə stiker paylandı?",
+      "mathWordBalloons": "{{a}} uşağın hər birində {{b}} şar var. Cəmi neçə şar var?",
+      "mathWordFlowers": "{{a}} gülü {{b}} vazaya bərabər bölürük. Hər vazaya neçə gül düşür?",
+      "mathWordCookies": "{{a}} peçenyeni {{b}} boşqaba bərabər qoyuruq. Hər boşqaba neçə peçenyə düşür?",
+      "elmPlanetOrderName": "Günəşdən {{number}}-ci planet hansıdır?",
+      "elmPlanetOrderNumber": "'{{name}}' Günəşdən neçənci planetdir?",
+      "elmPlanetCompareNearest": "Bu 4 planetdən hansı Günəşə daha yaxındır?",
+      "elmPlanetCompareFarthest": "Bu 4 planetdən hansı Günəşdən daha uzaqdır?",
+      "elmPlanetCompareBiggest": "Bu 4 planetdən hansı ən böyükdür?",
+      "elmPlanetCompareSmallest": "Bu 4 planetdən hansı ən kiçikdir?"
     },
     "quizPlaces": {
       "mecca": "Məkkə",
