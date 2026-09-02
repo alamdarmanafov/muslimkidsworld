@@ -1,4 +1,5 @@
 import { router } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Avatar } from "../../../src/components/Avatar";
@@ -11,15 +12,16 @@ import { colors, spacing } from "../../../src/theme/theme";
 const MAX_SLOTS = 3;
 
 export default function Children() {
+  const { t } = useTranslation();
   const slotsUsed = children.length;
   const slotsFull = slotsUsed >= MAX_SLOTS;
 
   return (
     <SafeAreaView style={styles.screen} edges={["top"]}>
       <View style={styles.header}>
-        <Text style={styles.title}>My Children</Text>
+        <Text style={styles.title}>{t("parentChildren.title")}</Text>
         <Text style={styles.slots}>
-          {slotsUsed}/{MAX_SLOTS} slots
+          {t("parentChildren.slots", { used: slotsUsed, max: MAX_SLOTS })}
         </Text>
       </View>
 
@@ -29,7 +31,7 @@ export default function Children() {
             <Avatar emoji={child.emoji} color={child.color} size={48} />
             <View style={styles.rowInfo}>
               <Text style={styles.rowName}>{child.name}</Text>
-              <Text style={styles.rowMeta}>{child.age} years old</Text>
+              <Text style={styles.rowMeta}>{t("parentChildren.yearsOld", { age: child.age })}</Text>
             </View>
             <ProgressRing percent={child.accuracy} size={48} strokeWidth={4} />
           </Card>
@@ -38,7 +40,7 @@ export default function Children() {
 
       <View style={styles.footer}>
         <Button
-          label={slotsFull ? "No child slots available" : "Add Child"}
+          label={slotsFull ? t("parentChildren.noSlotsAvailable") : t("parentChildren.addChild")}
           disabled={slotsFull}
           onPress={() => router.push("/parent/add-child")}
         />

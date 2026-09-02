@@ -134,5 +134,95 @@
     "profile": "Profil",
     "children": "Uşaqlar",
     "premium": "Premium"
+  },
+  "quran": {
+    "title": "Quran",
+    "surah": "{{name}} surəsi"
+  },
+  "dua": {
+    "title": "Dua",
+    "categoryMorning": "Səhər",
+    "categoryEvening": "Axşam",
+    "categorySleep": "Yuxu",
+    "categoryEat": "Yemək"
+  },
+  "stories": {
+    "title": "Hekayələr",
+    "moreStories": "Daha çox hekayə"
+  },
+  "games": {
+    "title": "Oyunlar"
+  },
+  "quiz": {
+    "questionOf": "Sual {{current}} / {{total}}",
+    "newRewardUnlocked": "Yeni Mükafat\nAçıldı!",
+    "levelReward": "Səviyyə {{level}} Mükafatı",
+    "awesome": "Əla!",
+    "greatJob": "Əla iş!",
+    "notQuite": "Düz deyil!",
+    "answeredCorrectly": "Düzgün cavab verdin.",
+    "tryNextOne": "Növbətini sınayaq.",
+    "seeReward": "Mükafata bax",
+    "nextQuestion": "Növbəti sual"
+  },
+  "childProgress": {
+    "title": "Mənim İrəliləyişim",
+    "dayStreak_one": "{{count}} günlük ardıcıllıq",
+    "dayStreak_other": "{{count}} günlük ardıcıllıq",
+    "keepGoingChain": "Davam et, zənciri qırma!",
+    "thisWeek": "Bu həftə",
+    "accuracy": "Dəqiqlik"
+  },
+  "achievements": {
+    "title": "Nailiyyətlər",
+    "youreAmazing": "Sən möhtəşəmsən!",
+    "keepLearning": "Öyrənməyə davam et, daha çox mükafat qazan.",
+    "recentBadges": "Son nişanlar",
+    "badges": "Nişanlar",
+    "stars": "Ulduzlar",
+    "days": "Günlər"
+  },
+  "parentChildren": {
+    "title": "Uşaqlarım",
+    "slots": "{{used}}/{{max}} yer",
+    "yearsOld": "{{age}} yaşında",
+    "addChild": "Uşaq əlavə et",
+    "noSlotsAvailable": "Uşaq üçün yer qalmayıb"
+  },
+  "parentPremium": {
+    "title": "Premium ol",
+    "subtitle": "Uşaqların üçün tam təcrübəni aç.",
+    "bestValue": "Ən sərfəli",
+    "continue": "Davam et"
+  },
+  "parentProgressPlaceholder": {
+    "title": "Həftəlik Hesabat",
+    "subtitle": "Hər uşaq üçün dəqiqlik, öyrənmə vaxtı, güclü sahələr və ardıcıllıq."
+  },
+  "addChild": {
+    "title": "Uşaq əlavə et",
+    "avatar": "Avatar",
+    "name": "Ad",
+    "namePlaceholder": "məs. Əli",
+    "age": "Yaş",
+    "agePlaceholder": "məs. 8",
+    "gender": "Cins",
+    "boy": "Oğlan",
+    "girl": "Qız",
+    "generateCode": "Uşaq Kodu Yarat",
+    "childCode": "Uşaq Kodu",
+    "expiresIn10": "10 dəqiqəyə etibarsız olacaq",
+    "hint": "Bu kodu {{name}} adlı uşağın cihazında \"Ailə Kodunu daxil et\" hissəsində yaz ki, profili bağlansın.",
+    "yourChild": "uşağın",
+    "done": "Hazırdır"
+  },
+  "days": {
+    "mon": "B.e",
+    "tue": "Ç.a",
+    "wed": "Çər",
+    "thu": "C.a",
+    "fri": "Cüm",
+    "sat": "Şən",
+    "sun": "Baz"
   }
 }

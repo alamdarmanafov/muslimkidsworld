@@ -1,41 +1,43 @@
+import { useTranslation } from "react-i18next";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../../../src/components/icons";
 import { achievements, childStats } from "../../../src/data/mock";
 import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
 
-const stats = [
-  { label: "Badges", value: childStats.badges },
-  { label: "Stars", value: childStats.stars },
-  { label: "Days", value: childStats.days },
-];
-
 export default function Achievements() {
+  const { t } = useTranslation();
   const earned = achievements.filter((a) => a.earned);
+
+  const stats = [
+    { labelKey: "achievements.badges", value: childStats.badges },
+    { labelKey: "achievements.stars", value: childStats.stars },
+    { labelKey: "achievements.days", value: childStats.days },
+  ];
 
   return (
     <SafeAreaView style={styles.screen} edges={["top"]}>
       <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.title}>Achievements</Text>
+        <Text style={styles.title}>{t("achievements.title")}</Text>
 
         <View style={styles.trophyCard}>
           <View style={styles.trophyIconWrap}>
             <Icon name="trophy" size={30} color={colors.goldDark} />
           </View>
-          <Text style={styles.trophyTitle}>You're Amazing!</Text>
-          <Text style={styles.trophySubtitle}>Keep learning and earn more rewards.</Text>
+          <Text style={styles.trophyTitle}>{t("achievements.youreAmazing")}</Text>
+          <Text style={styles.trophySubtitle}>{t("achievements.keepLearning")}</Text>
 
           <View style={styles.statsRow}>
             {stats.map((s) => (
-              <View key={s.label} style={styles.statItem}>
+              <View key={s.labelKey} style={styles.statItem}>
                 <Text style={styles.statValue}>{s.value}</Text>
-                <Text style={styles.statLabel}>{s.label}</Text>
+                <Text style={styles.statLabel}>{t(s.labelKey)}</Text>
               </View>
             ))}
           </View>
         </View>
 
-        <Text style={styles.sectionTitle}>Recent Badges</Text>
+        <Text style={styles.sectionTitle}>{t("achievements.recentBadges")}</Text>
         <View style={styles.badgeGrid}>
           {earned.map((a) => (
             <View key={a.id} style={styles.badge}>

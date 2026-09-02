@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { router } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../src/components/Button";
@@ -12,6 +13,7 @@ type Phase = "question" | "feedback" | "reward";
 const optionColors = ["#FBBF24", "#22C55E", "#8B5CF6", "#3B82F6"];
 
 export default function Quiz() {
+  const { t } = useTranslation();
   const [index, setIndex] = useState(0);
   const [phase, setPhase] = useState<Phase>("question");
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -47,7 +49,7 @@ export default function Quiz() {
           <Text style={styles.closeText}>✕</Text>
         </Pressable>
         <View style={styles.rewardBody}>
-          <Text style={styles.rewardTitle}>New Reward{"\n"}Unlocked!</Text>
+          <Text style={styles.rewardTitle}>{t("quiz.newRewardUnlocked")}</Text>
           <View style={styles.rewardImageWrap}>
             <IconBadge
               icon={latestReward.icon}
@@ -56,10 +58,12 @@ export default function Quiz() {
             />
           </View>
           <Text style={styles.rewardName}>{latestReward.name}</Text>
-          <Text style={styles.rewardLevel}>Level {latestReward.unlockLevel} Reward</Text>
+          <Text style={styles.rewardLevel}>
+            {t("quiz.levelReward", { level: latestReward.unlockLevel })}
+          </Text>
         </View>
         <View style={styles.footer}>
-          <Button label="Awesome!" onPress={() => router.replace("/child")} />
+          <Button label={t("quiz.awesome")} onPress={() => router.replace("/child")} />
         </View>
       </SafeAreaView>
     );
@@ -79,16 +83,16 @@ export default function Quiz() {
             <Text style={styles.resultIcon}>{correct ? "✓" : "✕"}</Text>
           </View>
           <Text style={styles.feedbackTitle}>
-            {correct ? "Great Job!" : "Not Quite!"}
+            {correct ? t("quiz.greatJob") : t("quiz.notQuite")}
           </Text>
           <Text style={styles.feedbackSubtitle}>
-            {correct ? "You answered correctly." : "Let's try the next one."}
+            {correct ? t("quiz.answeredCorrectly") : t("quiz.tryNextOne")}
           </Text>
           {correct ? <Text style={styles.xpEarned}>⭐ +{earnedXp} XP</Text> : null}
         </View>
         <View style={styles.footer}>
           <Button
-            label={isLast ? "See Reward" : "Next Question"}
+            label={isLast ? t("quiz.seeReward") : t("quiz.nextQuestion")}
             variant="success"
             onPress={next}
           />
@@ -104,7 +108,7 @@ export default function Quiz() {
           <Text style={styles.closeText}>✕</Text>
         </Pressable>
         <Text style={styles.progressLabel}>
-          Question {index + 1} of {dailyTen.length}
+          {t("quiz.questionOf", { current: index + 1, total: dailyTen.length })}
         </Text>
         <Text style={styles.speaker}>🔊</Text>
       </View>

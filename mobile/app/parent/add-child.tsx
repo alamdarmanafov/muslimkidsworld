@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { router } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../src/components/Button";
@@ -8,12 +9,17 @@ import { colors, radii, spacing } from "../../src/theme/theme";
 
 const avatarOptions = ["👦", "👧", "🧒", "👶"];
 const genderOptions = ["Boy", "Girl"] as const;
+const genderLabelKeys: Record<(typeof genderOptions)[number], string> = {
+  Boy: "addChild.boy",
+  Girl: "addChild.girl",
+};
 
 function generateChildCode() {
   return String(Math.floor(100000 + Math.random() * 900000));
 }
 
 export default function AddChild() {
+  const { t } = useTranslation();
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [gender, setGender] = useState<(typeof genderOptions)[number]>("Boy");
@@ -26,16 +32,15 @@ export default function AddChild() {
     return (
       <SafeAreaView style={styles.screen}>
         <View style={styles.codeBody}>
-          <Text style={styles.codeLabel}>Child Code</Text>
+          <Text style={styles.codeLabel}>{t("addChild.childCode")}</Text>
           <Text style={styles.code}>{code}</Text>
-          <Text style={styles.expiry}>Expires in 10 minutes</Text>
+          <Text style={styles.expiry}>{t("addChild.expiresIn10")}</Text>
           <Text style={styles.hint}>
-            Enter this code on {name || "your child"}'s device under "Enter Family
-            Code" to link their profile.
+            {t("addChild.hint", { name: name || t("addChild.yourChild") })}
           </Text>
         </View>
         <View style={styles.footer}>
-          <Button label="Done" onPress={() => router.replace("/parent/children")} />
+          <Button label={t("addChild.done")} onPress={() => router.replace("/parent/children")} />
         </View>
       </SafeAreaView>
     );
@@ -43,10 +48,10 @@ export default function AddChild() {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Text style={styles.title}>Add Child</Text>
+      <Text style={styles.title}>{t("addChild.title")}</Text>
 
       <Card style={styles.form}>
-        <Text style={styles.label}>Avatar</Text>
+        <Text style={styles.label}>{t("addChild.avatar")}</Text>
         <View style={styles.avatarRow}>
           {avatarOptions.map((emoji) => (
             <Pressable
@@ -62,26 +67,26 @@ export default function AddChild() {
           ))}
         </View>
 
-        <Text style={styles.label}>Name</Text>
+        <Text style={styles.label}>{t("addChild.name")}</Text>
         <TextInput
           style={styles.input}
           value={name}
           onChangeText={setName}
-          placeholder="e.g. Ali"
+          placeholder={t("addChild.namePlaceholder")}
           placeholderTextColor={colors.inkMuted}
         />
 
-        <Text style={styles.label}>Age</Text>
+        <Text style={styles.label}>{t("addChild.age")}</Text>
         <TextInput
           style={styles.input}
           value={age}
           onChangeText={setAge}
-          placeholder="e.g. 8"
+          placeholder={t("addChild.agePlaceholder")}
           keyboardType="number-pad"
           placeholderTextColor={colors.inkMuted}
         />
 
-        <Text style={styles.label}>Gender</Text>
+        <Text style={styles.label}>{t("addChild.gender")}</Text>
         <View style={styles.genderRow}>
           {genderOptions.map((g) => (
             <Pressable
@@ -95,7 +100,7 @@ export default function AddChild() {
                   gender === g && styles.genderTextSelected,
                 ]}
               >
-                {g}
+                {t(genderLabelKeys[g])}
               </Text>
             </Pressable>
           ))}
@@ -104,7 +109,7 @@ export default function AddChild() {
 
       <View style={styles.footer}>
         <Button
-          label="Generate Child Code"
+          label={t("addChild.generateCode")}
           disabled={!canGenerate}
           onPress={() => setCode(generateChildCode())}
         />

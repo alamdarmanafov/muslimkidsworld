@@ -136,5 +136,97 @@
     "profile": "Профиль",
     "children": "Дети",
     "premium": "Premium"
+  },
+  "quran": {
+    "title": "Коран",
+    "surah": "Сура {{name}}"
+  },
+  "dua": {
+    "title": "Дуа",
+    "categoryMorning": "Утро",
+    "categoryEvening": "Вечер",
+    "categorySleep": "Сон",
+    "categoryEat": "Еда"
+  },
+  "stories": {
+    "title": "Истории",
+    "moreStories": "Ещё истории"
+  },
+  "games": {
+    "title": "Игры"
+  },
+  "quiz": {
+    "questionOf": "Вопрос {{current}} из {{total}}",
+    "newRewardUnlocked": "Новая награда\nоткрыта!",
+    "levelReward": "Награда уровня {{level}}",
+    "awesome": "Отлично!",
+    "greatJob": "Отличная работа!",
+    "notQuite": "Не совсем!",
+    "answeredCorrectly": "Ты ответил правильно.",
+    "tryNextOne": "Попробуем следующий.",
+    "seeReward": "Смотреть награду",
+    "nextQuestion": "Следующий вопрос"
+  },
+  "childProgress": {
+    "title": "Мой прогресс",
+    "dayStreak_one": "Серия: {{count}} день",
+    "dayStreak_few": "Серия: {{count}} дня",
+    "dayStreak_many": "Серия: {{count}} дней",
+    "dayStreak_other": "Серия: {{count}} дня",
+    "keepGoingChain": "Продолжай, не разрывай цепочку!",
+    "thisWeek": "На этой неделе",
+    "accuracy": "Точность"
+  },
+  "achievements": {
+    "title": "Достижения",
+    "youreAmazing": "Ты потрясающий!",
+    "keepLearning": "Продолжай учиться и получай больше наград.",
+    "recentBadges": "Последние значки",
+    "badges": "Значки",
+    "stars": "Звёзды",
+    "days": "Дни"
+  },
+  "parentChildren": {
+    "title": "Мои дети",
+    "slots": "{{used}}/{{max}} мест",
+    "yearsOld": "{{age}} лет",
+    "addChild": "Добавить ребёнка",
+    "noSlotsAvailable": "Нет свободных мест для ребёнка"
+  },
+  "parentPremium": {
+    "title": "Перейти на Premium",
+    "subtitle": "Откройте полный опыт для ваших детей.",
+    "bestValue": "Выгоднее всего",
+    "continue": "Продолжить"
+  },
+  "parentProgressPlaceholder": {
+    "title": "Еженедельный отчёт",
+    "subtitle": "Точность, время обучения, сильные стороны и серии по каждому ребёнку."
+  },
+  "addChild": {
+    "title": "Добавить ребёнка",
+    "avatar": "Аватар",
+    "name": "Имя",
+    "namePlaceholder": "напр. Али",
+    "age": "Возраст",
+    "agePlaceholder": "напр. 8",
+    "gender": "Пол",
+    "boy": "Мальчик",
+    "girl": "Девочка",
+    "generateCode": "Создать код ребёнка",
+    "childCode": "Код ребёнка",
+    "expiresIn10": "Истекает через 10 минут",
+    "hint": "Введите этот код на устройстве {{name}} в разделе «Ввести семейный код», чтобы привязать профиль.",
+    "yourChild": "вашего ребёнка",
+    "done": "Готово"
+  },
+  "days": {
+    "mon": "Пн",
+    "tue": "Вт",
+    "wed": "Ср",
+    "thu": "Чт",
+    "fri": "Пт",
+    "sat": "Сб",
+    "sun": "Вс"
   }
 }

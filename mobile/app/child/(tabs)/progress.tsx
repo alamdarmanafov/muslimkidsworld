@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../../../src/components/icons";
@@ -5,38 +6,42 @@ import { activeChild } from "../../../src/data/mock";
 import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
 
 const week = [
-  { day: "Mon", value: 60 },
-  { day: "Tue", value: 80 },
-  { day: "Wed", value: 45 },
-  { day: "Thu", value: 90 },
-  { day: "Fri", value: 70 },
-  { day: "Sat", value: 100 },
-  { day: "Sun", value: 55 },
+  { dayKey: "days.mon", value: 60 },
+  { dayKey: "days.tue", value: 80 },
+  { dayKey: "days.wed", value: 45 },
+  { dayKey: "days.thu", value: 90 },
+  { dayKey: "days.fri", value: 70 },
+  { dayKey: "days.sat", value: 100 },
+  { dayKey: "days.sun", value: 55 },
 ];
 
 export default function ChildProgress() {
+  const { t } = useTranslation();
+
   return (
     <SafeAreaView style={styles.screen} edges={["top"]}>
       <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.title}>My Progress</Text>
+        <Text style={styles.title}>{t("childProgress.title")}</Text>
 
         <View style={styles.streakCard}>
           <Icon name="flame" size={26} color="#FFFFFF" />
           <View>
-            <Text style={styles.streakValue}>{activeChild.streak} day streak</Text>
-            <Text style={styles.streakSubtitle}>Keep it going, don't break the chain!</Text>
+            <Text style={styles.streakValue}>
+              {t("childProgress.dayStreak", { count: activeChild.streak })}
+            </Text>
+            <Text style={styles.streakSubtitle}>{t("childProgress.keepGoingChain")}</Text>
           </View>
         </View>
 
-        <Text style={styles.sectionTitle}>This Week</Text>
+        <Text style={styles.sectionTitle}>{t("childProgress.thisWeek")}</Text>
         <View style={styles.chartCard}>
           <View style={styles.chartRow}>
             {week.map((d) => (
-              <View key={d.day} style={styles.barWrap}>
+              <View key={d.dayKey} style={styles.barWrap}>
                 <View style={styles.barTrack}>
                   <View style={[styles.barFill, { height: `${d.value}%` }]} />
                 </View>
-                <Text style={styles.barLabel}>{d.day}</Text>
+                <Text style={styles.barLabel}>{t(d.dayKey)}</Text>
               </View>
             ))}
           </View>
@@ -45,11 +50,11 @@ export default function ChildProgress() {
         <View style={styles.statsRow}>
           <View style={styles.statCard}>
             <Text style={styles.statValue}>{activeChild.accuracy}%</Text>
-            <Text style={styles.statLabel}>Accuracy</Text>
+            <Text style={styles.statLabel}>{t("childProgress.accuracy")}</Text>
           </View>
           <View style={styles.statCard}>
             <Text style={styles.statValue}>Lvl {activeChild.level}</Text>
-            <Text style={styles.statLabel}>Level</Text>
+            <Text style={styles.statLabel}>{t("parentHome.level")}</Text>
           </View>
         </View>
       </ScrollView>

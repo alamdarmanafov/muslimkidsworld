@@ -134,5 +134,95 @@
     "profile": "Profil",
     "children": "Çocuklar",
     "premium": "Premium"
+  },
+  "quran": {
+    "title": "Kur'an",
+    "surah": "{{name}} Suresi"
+  },
+  "dua": {
+    "title": "Dua",
+    "categoryMorning": "Sabah",
+    "categoryEvening": "Akşam",
+    "categorySleep": "Uyku",
+    "categoryEat": "Yemek"
+  },
+  "stories": {
+    "title": "Hikayeler",
+    "moreStories": "Daha Fazla Hikaye"
+  },
+  "games": {
+    "title": "Oyunlar"
+  },
+  "quiz": {
+    "questionOf": "Soru {{current}} / {{total}}",
+    "newRewardUnlocked": "Yeni Ödül\nAçıldı!",
+    "levelReward": "Seviye {{level}} Ödülü",
+    "awesome": "Harika!",
+    "greatJob": "Harika iş!",
+    "notQuite": "Tam olmadı!",
+    "answeredCorrectly": "Doğru cevap verdin.",
+    "tryNextOne": "Bir sonrakini deneyelim.",
+    "seeReward": "Ödülü Gör",
+    "nextQuestion": "Sonraki Soru"
+  },
+  "childProgress": {
+    "title": "İlerlemem",
+    "dayStreak_one": "{{count}} günlük seri",
+    "dayStreak_other": "{{count}} günlük seri",
+    "keepGoingChain": "Devam et, zinciri kırma!",
+    "thisWeek": "Bu Hafta",
+    "accuracy": "Doğruluk"
+  },
+  "achievements": {
+    "title": "Başarılar",
+    "youreAmazing": "Harikasın!",
+    "keepLearning": "Öğrenmeye devam et, daha fazla ödül kazan.",
+    "recentBadges": "Son Rozetler",
+    "badges": "Rozetler",
+    "stars": "Yıldızlar",
+    "days": "Günler"
+  },
+  "parentChildren": {
+    "title": "Çocuklarım",
+    "slots": "{{used}}/{{max}} kontenjan",
+    "yearsOld": "{{age}} yaşında",
+    "addChild": "Çocuk Ekle",
+    "noSlotsAvailable": "Boş çocuk kontenjanı yok"
+  },
+  "parentPremium": {
+    "title": "Premium'a Geç",
+    "subtitle": "Çocukların için tam deneyimin kilidini aç.",
+    "bestValue": "En İyi Değer",
+    "continue": "Devam et"
+  },
+  "parentProgressPlaceholder": {
+    "title": "Haftalık Rapor",
+    "subtitle": "Her çocuk için doğruluk, öğrenme süresi, güçlü alanlar ve seriler."
+  },
+  "addChild": {
+    "title": "Çocuk Ekle",
+    "avatar": "Avatar",
+    "name": "İsim",
+    "namePlaceholder": "örn. Ali",
+    "age": "Yaş",
+    "agePlaceholder": "örn. 8",
+    "gender": "Cinsiyet",
+    "boy": "Erkek",
+    "girl": "Kız",
+    "generateCode": "Çocuk Kodu Oluştur",
+    "childCode": "Çocuk Kodu",
+    "expiresIn10": "10 dakika içinde sona erer",
+    "hint": "Bu kodu {{name}} adlı çocuğunun cihazında \"Aile Kodunu Gir\" bölümüne yazarak profilini bağla.",
+    "yourChild": "çocuğunun",
+    "done": "Tamam"
+  },
+  "days": {
+    "mon": "Pzt",
+    "tue": "Sal",
+    "wed": "Çar",
+    "thu": "Per",
+    "fri": "Cum",
+    "sat": "Cmt",
+    "sun": "Paz"
   }
 }

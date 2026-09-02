@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../../src/components/Button";
@@ -8,6 +9,7 @@ import { plans } from "../../../src/data/mock";
 import { colors, radii, spacing } from "../../../src/theme/theme";
 
 export default function Premium() {
+  const { t } = useTranslation();
   const [selectedPlan, setSelectedPlan] = useState(
     plans.find((p) => p.bestValue)?.id ?? plans[0].id,
   );
@@ -17,10 +19,8 @@ export default function Premium() {
     <SafeAreaView style={styles.screen} edges={["top"]}>
       <ScrollView contentContainerStyle={styles.content}>
         <IconBadge icon="crown" tone={tones.gold} size={72} />
-        <Text style={styles.title}>Go Premium</Text>
-        <Text style={styles.subtitle}>
-          Unlock the complete experience for your children.
-        </Text>
+        <Text style={styles.title}>{t("parentPremium.title")}</Text>
+        <Text style={styles.subtitle}>{t("parentPremium.subtitle")}</Text>
 
         <View style={styles.plansRow}>
           {plans.map((p) => {
@@ -32,7 +32,7 @@ export default function Premium() {
                 style={[styles.planCard, selected && styles.planCardSelected]}
               >
                 {p.bestValue ? (
-                  <Text style={styles.bestValue}>Best Value</Text>
+                  <Text style={styles.bestValue}>{t("parentPremium.bestValue")}</Text>
                 ) : null}
                 <Text style={styles.planName}>{p.name}</Text>
                 <Text style={styles.planPrice}>
@@ -61,7 +61,7 @@ export default function Premium() {
       </ScrollView>
 
       <View style={styles.footer}>
-        <Button label="Continue" variant="success" onPress={() => {}} />
+        <Button label={t("parentPremium.continue")} variant="success" onPress={() => {}} />
       </View>
     </SafeAreaView>
   );

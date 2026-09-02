@@ -134,5 +134,95 @@
     "profile": "Profile",
     "children": "Children",
     "premium": "Premium"
+  },
+  "quran": {
+    "title": "Quran",
+    "surah": "Surah {{name}}"
+  },
+  "dua": {
+    "title": "Dua",
+    "categoryMorning": "Morning",
+    "categoryEvening": "Evening",
+    "categorySleep": "Sleep",
+    "categoryEat": "Eat"
+  },
+  "stories": {
+    "title": "Stories",
+    "moreStories": "More Stories"
+  },
+  "games": {
+    "title": "Games"
+  },
+  "quiz": {
+    "questionOf": "Question {{current}} of {{total}}",
+    "newRewardUnlocked": "New Reward\nUnlocked!",
+    "levelReward": "Level {{level}} Reward",
+    "awesome": "Awesome!",
+    "greatJob": "Great Job!",
+    "notQuite": "Not Quite!",
+    "answeredCorrectly": "You answered correctly.",
+    "tryNextOne": "Let's try the next one.",
+    "seeReward": "See Reward",
+    "nextQuestion": "Next Question"
+  },
+  "childProgress": {
+    "title": "My Progress",
+    "dayStreak_one": "{{count}} day streak",
+    "dayStreak_other": "{{count}} day streak",
+    "keepGoingChain": "Keep it going, don't break the chain!",
+    "thisWeek": "This Week",
+    "accuracy": "Accuracy"
+  },
+  "achievements": {
+    "title": "Achievements",
+    "youreAmazing": "You're Amazing!",
+    "keepLearning": "Keep learning and earn more rewards.",
+    "recentBadges": "Recent Badges",
+    "badges": "Badges",
+    "stars": "Stars",
+    "days": "Days"
+  },
+  "parentChildren": {
+    "title": "My Children",
+    "slots": "{{used}}/{{max}} slots",
+    "yearsOld": "{{age}} years old",
+    "addChild": "Add Child",
+    "noSlotsAvailable": "No child slots available"
+  },
+  "parentPremium": {
+    "title": "Go Premium",
+    "subtitle": "Unlock the complete experience for your children.",
+    "bestValue": "Best Value",
+    "continue": "Continue"
+  },
+  "parentProgressPlaceholder": {
+    "title": "Weekly Report",
+    "subtitle": "Accuracy, learning time, strong areas, and streaks per child."
+  },
+  "addChild": {
+    "title": "Add Child",
+    "avatar": "Avatar",
+    "name": "Name",
+    "namePlaceholder": "e.g. Ali",
+    "age": "Age",
+    "agePlaceholder": "e.g. 8",
+    "gender": "Gender",
+    "boy": "Boy",
+    "girl": "Girl",
+    "generateCode": "Generate Child Code",
+    "childCode": "Child Code",
+    "expiresIn10": "Expires in 10 minutes",
+    "hint": "Enter this code on {{name}}'s device under \"Enter Family Code\" to link their profile.",
+    "yourChild": "your child",
+    "done": "Done"
+  },
+  "days": {
+    "mon": "Mon",
+    "tue": "Tue",
+    "wed": "Wed",
+    "thu": "Thu",
+    "fri": "Fri",
+    "sat": "Sat",
+    "sun": "Sun"
   }
 }

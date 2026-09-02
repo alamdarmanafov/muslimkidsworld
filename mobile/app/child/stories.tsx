@@ -1,4 +1,5 @@
 import { router } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../../src/components/icons";
@@ -6,6 +7,7 @@ import { stories } from "../../src/data/mock";
 import { colors, fonts, radii, shadow, spacing } from "../../src/theme/theme";
 
 export default function Stories() {
+  const { t } = useTranslation();
   const [featured, ...rest] = stories;
 
   return (
@@ -14,7 +16,7 @@ export default function Stories() {
         <Pressable onPress={() => router.back()} style={styles.backBtn}>
           <Icon name="arrowRight" size={18} color={colors.ink} style={styles.backIcon} />
         </Pressable>
-        <Text style={styles.title}>Stories</Text>
+        <Text style={styles.title}>{t("stories.title")}</Text>
         <Icon name="star" size={20} color={colors.gold} />
       </View>
 
@@ -25,7 +27,7 @@ export default function Stories() {
           <Text style={styles.featuredSubtitle}>{featured.subtitle}</Text>
         </Pressable>
 
-        <Text style={styles.sectionTitle}>More Stories</Text>
+        <Text style={styles.sectionTitle}>{t("stories.moreStories")}</Text>
         <View style={styles.grid}>
           {rest.map((s) => (
             <Pressable key={s.id} style={[styles.tile, s.locked && styles.tileLocked]}>

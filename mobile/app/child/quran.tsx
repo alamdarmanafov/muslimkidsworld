@@ -1,4 +1,5 @@
 import { router } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../../src/components/icons";
@@ -6,6 +7,7 @@ import { quranSurahs } from "../../src/data/mock";
 import { colors, fonts, radii, shadow, spacing } from "../../src/theme/theme";
 
 export default function Quran() {
+  const { t } = useTranslation();
   const [featured, ...rest] = quranSurahs;
 
   return (
@@ -14,14 +16,14 @@ export default function Quran() {
         <Pressable onPress={() => router.back()} style={styles.backBtn}>
           <Icon name="arrowRight" size={18} color={colors.ink} style={styles.backIcon} />
         </Pressable>
-        <Text style={styles.title}>Quran</Text>
+        <Text style={styles.title}>{t("quran.title")}</Text>
         <Icon name="star" size={20} color={colors.gold} />
       </View>
 
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.featuredCard}>
           <View style={styles.featuredTop}>
-            <Text style={styles.featuredLabel}>Surah {featured.name}</Text>
+            <Text style={styles.featuredLabel}>{t("quran.surah", { name: featured.name })}</Text>
             <Pressable style={styles.playBtn}>
               <Icon name="play" size={18} color={colors.successDark} />
             </Pressable>
@@ -32,7 +34,7 @@ export default function Quran() {
         {rest.map((s) => (
           <View key={s.id} style={[styles.row, s.locked && styles.rowLocked]}>
             <View>
-              <Text style={styles.rowName}>Surah {s.name}</Text>
+              <Text style={styles.rowName}>{t("quran.surah", { name: s.name })}</Text>
               <Text style={styles.rowJuz}>{s.juz}</Text>
             </View>
             <View style={styles.rowRight}>

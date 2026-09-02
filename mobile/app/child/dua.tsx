@@ -1,5 +1,6 @@
 import { router } from "expo-router";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../../src/components/icons";
@@ -7,8 +8,15 @@ import { duas, type DuaCategory } from "../../src/data/mock";
 import { colors, fonts, radii, shadow, spacing } from "../../src/theme/theme";
 
 const categories: DuaCategory[] = ["Morning", "Evening", "Sleep", "Eat"];
+const categoryLabelKeys: Record<DuaCategory, string> = {
+  Morning: "dua.categoryMorning",
+  Evening: "dua.categoryEvening",
+  Sleep: "dua.categorySleep",
+  Eat: "dua.categoryEat",
+};
 
 export default function Dua() {
+  const { t } = useTranslation();
   const [category, setCategory] = useState<DuaCategory>("Morning");
   const active = duas.find((d) => d.category === category) ?? duas[0];
 
@@ -18,7 +26,7 @@ export default function Dua() {
         <Pressable onPress={() => router.back()} style={styles.backBtn}>
           <Icon name="arrowRight" size={18} color={colors.ink} style={styles.backIcon} />
         </Pressable>
-        <Text style={styles.title}>Dua</Text>
+        <Text style={styles.title}>{t("dua.title")}</Text>
         <Icon name="star" size={20} color={colors.gold} />
       </View>
 
@@ -49,7 +57,7 @@ export default function Dua() {
               onPress={() => setCategory(c)}
             >
               <Text style={[styles.categoryText, c === category && styles.categoryTextActive]}>
-                {c}
+                {t(categoryLabelKeys[c])}
               </Text>
             </Pressable>
           ))}
