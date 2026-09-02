@@ -58,6 +58,8 @@ export type QuizQuestion = {
   id: string;
   category: QuizCategory;
   targetLang?: ForeignTargetLang;
+  /** Set only for procedurally generated questions (e.g. math) — used instead of a content.quiz.* translation key. */
+  promptText?: string;
   options: QuizOption[];
   correctOptionId: string;
   xp: number;
@@ -193,65 +195,124 @@ export const quizBank: QuizQuestion[] = [
     correctOptionId: "c",
     xp: 20,
   },
-  // Riyaziyyat
   {
-    id: "m1",
-    category: "riyaziyyat",
+    id: "q11",
+    category: "din",
     options: [
-      { id: "a", label: "A", emoji: "6" },
-      { id: "b", label: "B", emoji: "7" },
-      { id: "c", label: "C", emoji: "8" },
-      { id: "d", label: "D", emoji: "9" },
+      { id: "a", label: "A", emoji: "20" },
+      { id: "b", label: "B", emoji: "25" },
+      { id: "c", label: "C", emoji: "30" },
+      { id: "d", label: "D", emoji: "35" },
     ],
     correctOptionId: "c",
     xp: 20,
   },
   {
-    id: "m2",
-    category: "riyaziyyat",
+    id: "q12",
+    category: "din",
     options: [
-      { id: "a", label: "A", emoji: "5" },
-      { id: "b", label: "B", emoji: "6" },
-      { id: "c", label: "C", emoji: "7" },
-      { id: "d", label: "D", emoji: "8" },
+      { id: "a", label: "A", emoji: "1️⃣" },
+      { id: "b", label: "B", emoji: "2️⃣" },
+      { id: "c", label: "C", emoji: "3️⃣" },
+      { id: "d", label: "D", emoji: "4️⃣" },
     ],
     correctOptionId: "b",
     xp: 20,
   },
   {
-    id: "m3",
-    category: "riyaziyyat",
+    id: "q13",
+    category: "din",
     options: [
-      { id: "a", label: "A", emoji: "5" },
-      { id: "b", label: "B", emoji: "6" },
-      { id: "c", label: "C", emoji: "7" },
-      { id: "d", label: "D", emoji: "8" },
+      { id: "a", label: "A", emoji: "5️⃣" },
+      { id: "b", label: "B", emoji: "6️⃣" },
+      { id: "c", label: "C", emoji: "7️⃣" },
+      { id: "d", label: "D", emoji: "8️⃣" },
+    ],
+    correctOptionId: "c",
+    xp: 20,
+  },
+  {
+    id: "q14",
+    category: "din",
+    options: [
+      { id: "a", label: "A", emoji: "3️⃣" },
+      { id: "b", label: "B", emoji: "4️⃣" },
+      { id: "c", label: "C", emoji: "5️⃣" },
+      { id: "d", label: "D", emoji: "6️⃣" },
+    ],
+    correctOptionId: "c",
+    xp: 20,
+  },
+  {
+    id: "q15",
+    category: "din",
+    options: [
+      { id: "a", label: "A", emoji: "1️⃣" },
+      { id: "b", label: "B", emoji: "2️⃣" },
+      { id: "c", label: "C", emoji: "3️⃣" },
+      { id: "d", label: "D", emoji: "4️⃣" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "q16",
+    category: "din",
+    options: [
+      { id: "a", label: "A", emoji: "6️⃣" },
+      { id: "b", label: "B", emoji: "7️⃣" },
+      { id: "c", label: "C", emoji: "8️⃣" },
+      { id: "d", label: "D", emoji: "9️⃣" },
+    ],
+    correctOptionId: "c",
+    xp: 20,
+  },
+  {
+    id: "q17",
+    category: "din",
+    options: [
+      { id: "a", label: "A", emoji: "5️⃣" },
+      { id: "b", label: "B", emoji: "6️⃣" },
+      { id: "c", label: "C", emoji: "7️⃣" },
+      { id: "d", label: "D", emoji: "8️⃣" },
+    ],
+    correctOptionId: "c",
+    xp: 20,
+  },
+  {
+    id: "q18",
+    category: "din",
+    options: [
+      { id: "a", label: "A", emoji: "1️⃣" },
+      { id: "b", label: "B", emoji: "2️⃣" },
+      { id: "c", label: "C", emoji: "3️⃣" },
+      { id: "d", label: "D", emoji: "4️⃣" },
     ],
     correctOptionId: "b",
     xp: 20,
   },
   {
-    id: "m4",
-    category: "riyaziyyat",
+    id: "q19",
+    category: "din",
     options: [
-      { id: "a", label: "A", emoji: "2" },
-      { id: "b", label: "B", emoji: "3" },
-      { id: "c", label: "C", emoji: "4" },
-      { id: "d", label: "D", emoji: "5" },
+      { id: "a", label: "A", emoji: "2️⃣" },
+      { id: "b", label: "B", emoji: "3️⃣" },
+      { id: "c", label: "C", emoji: "4️⃣" },
+      { id: "d", label: "D", emoji: "5️⃣" },
     ],
-    correctOptionId: "b",
+    correctOptionId: "c",
     xp: 20,
   },
   {
-    id: "m5",
-    category: "riyaziyyat",
+    id: "q20",
+    category: "din",
     options: [
-      { id: "a", label: "A", emoji: "12" },
-      { id: "b", label: "B", emoji: "13" },
-      { id: "c", label: "C", emoji: "14" },
-      { id: "d", label: "D", emoji: "15" },
+      { id: "a", label: "A", emoji: "2️⃣" },
+      { id: "b", label: "B", emoji: "3️⃣" },
+      { id: "c", label: "C", emoji: "4️⃣" },
+      { id: "d", label: "D", emoji: "5️⃣" },
     ],
-    correctOptionId: "b",
+    correctOptionId: "c",
     xp: 20,
   },
   // Yaxşı Əməllər
@@ -303,6 +364,78 @@ export const quizBank: QuizQuestion[] = [
     correctOptionId: "a",
     xp: 20,
   },
+  {
+    id: "e5",
+    category: "yaxsiEmeller",
+    options: [
+      { id: "a", label: "A", emoji: "🤲" },
+      { id: "b", label: "B", emoji: "🗑️" },
+      { id: "c", label: "C", emoji: "🙊" },
+      { id: "d", label: "D", emoji: "😤" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "e6",
+    category: "yaxsiEmeller",
+    options: [
+      { id: "a", label: "A", emoji: "🙋" },
+      { id: "b", label: "B", emoji: "🙉" },
+      { id: "c", label: "C", emoji: "😤" },
+      { id: "d", label: "D", emoji: "😂" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "e7",
+    category: "yaxsiEmeller",
+    options: [
+      { id: "a", label: "A", emoji: "🤫" },
+      { id: "b", label: "B", emoji: "📢" },
+      { id: "c", label: "C", emoji: "🏃" },
+      { id: "d", label: "D", emoji: "😤" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "e8",
+    category: "yaxsiEmeller",
+    options: [
+      { id: "a", label: "A", emoji: "🤝" },
+      { id: "b", label: "B", emoji: "😠" },
+      { id: "c", label: "C", emoji: "😢" },
+      { id: "d", label: "D", emoji: "🙈" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "e9",
+    category: "yaxsiEmeller",
+    options: [
+      { id: "a", label: "A", emoji: "🙏" },
+      { id: "b", label: "B", emoji: "🤥" },
+      { id: "c", label: "C", emoji: "🏃" },
+      { id: "d", label: "D", emoji: "😆" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "e10",
+    category: "yaxsiEmeller",
+    options: [
+      { id: "a", label: "A", emoji: "😌" },
+      { id: "b", label: "B", emoji: "👊" },
+      { id: "c", label: "C", emoji: "😢" },
+      { id: "d", label: "D", emoji: "🗣️" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
   // Elm və Təbiət
   {
     id: "sc1",
@@ -348,6 +481,102 @@ export const quizBank: QuizQuestion[] = [
       { id: "b", label: "B", emoji: "6️⃣" },
       { id: "c", label: "C", emoji: "7️⃣" },
       { id: "d", label: "D", emoji: "8️⃣" },
+    ],
+    correctOptionId: "c",
+    xp: 20,
+  },
+  {
+    id: "sc5",
+    category: "elm",
+    options: [
+      { id: "a", label: "A", emoji: "10" },
+      { id: "b", label: "B", emoji: "11" },
+      { id: "c", label: "C", emoji: "12" },
+      { id: "d", label: "D", emoji: "13" },
+    ],
+    correctOptionId: "c",
+    xp: 20,
+  },
+  {
+    id: "sc6",
+    category: "elm",
+    options: [
+      { id: "a", label: "A", emoji: "1️⃣" },
+      { id: "b", label: "B", emoji: "2️⃣" },
+      { id: "c", label: "C", emoji: "3️⃣" },
+      { id: "d", label: "D", emoji: "4️⃣" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "sc7",
+    category: "elm",
+    options: [
+      { id: "a", label: "A", emoji: "90°" },
+      { id: "b", label: "B", emoji: "100°" },
+      { id: "c", label: "C", emoji: "110°" },
+      { id: "d", label: "D", emoji: "120°" },
+    ],
+    correctOptionId: "b",
+    xp: 20,
+  },
+  {
+    id: "sc8",
+    category: "elm",
+    options: [
+      { id: "a", label: "A", emoji: "50" },
+      { id: "b", label: "B", emoji: "60" },
+      { id: "c", label: "C", emoji: "70" },
+      { id: "d", label: "D", emoji: "80" },
+    ],
+    correctOptionId: "b",
+    xp: 20,
+  },
+  {
+    id: "sc9",
+    category: "elm",
+    options: [
+      { id: "a", label: "A", emoji: "50" },
+      { id: "b", label: "B", emoji: "60" },
+      { id: "c", label: "C", emoji: "70" },
+      { id: "d", label: "D", emoji: "80" },
+    ],
+    correctOptionId: "b",
+    xp: 20,
+  },
+  {
+    id: "sc10",
+    category: "elm",
+    options: [
+      { id: "a", label: "A", emoji: "7" },
+      { id: "b", label: "B", emoji: "15" },
+      { id: "c", label: "C", emoji: "30" },
+      { id: "d", label: "D", emoji: "60" },
+    ],
+    correctOptionId: "c",
+    xp: 20,
+  },
+  {
+    id: "sc11",
+    category: "elm",
+    options: [
+      { id: "a", label: "A", emoji: "6" },
+      { id: "b", label: "B", emoji: "8" },
+      { id: "c", label: "C", emoji: "10" },
+      { id: "d", label: "D", emoji: "12" },
+    ],
+    correctOptionId: "b",
+    xp: 20,
+  },
+  {
+    id: "sc12",
+    category: "elm",
+    options: [
+      { id: "a", label: "A", emoji: "3️⃣" },
+      { id: "b", label: "B", emoji: "4️⃣" },
+      { id: "c", label: "C", emoji: "5️⃣" },
+      { id: "d", label: "D", emoji: "6️⃣" },
     ],
     correctOptionId: "c",
     xp: 20,
@@ -418,6 +647,97 @@ export const quizBank: QuizQuestion[] = [
     correctOptionId: "a",
     xp: 20,
   },
+  {
+    id: "f6",
+    category: "xariciDil",
+    targetLang: "en",
+    options: [
+      { id: "a", label: "A", emoji: "🐶" },
+      { id: "b", label: "B", emoji: "🐱" },
+      { id: "c", label: "C", emoji: "🐰" },
+      { id: "d", label: "D", emoji: "🐭" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "f7",
+    category: "xariciDil",
+    targetLang: "en",
+    options: [
+      { id: "a", label: "A", emoji: "⭐" },
+      { id: "b", label: "B", emoji: "🌙" },
+      { id: "c", label: "C", emoji: "☀️" },
+      { id: "d", label: "D", emoji: "🌧️" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "f8",
+    category: "xariciDil",
+    targetLang: "en",
+    options: [
+      { id: "a", label: "A", emoji: "🌳" },
+      { id: "b", label: "B", emoji: "🌸" },
+      { id: "c", label: "C", emoji: "🍂" },
+      { id: "d", label: "D", emoji: "🌵" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "f9",
+    category: "xariciDil",
+    targetLang: "en",
+    options: [
+      { id: "a", label: "A", emoji: "🐟" },
+      { id: "b", label: "B", emoji: "🐦" },
+      { id: "c", label: "C", emoji: "🐍" },
+      { id: "d", label: "D", emoji: "🦋" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "f10",
+    category: "xariciDil",
+    targetLang: "en",
+    options: [
+      { id: "a", label: "A", emoji: "🏠" },
+      { id: "b", label: "B", emoji: "🏫" },
+      { id: "c", label: "C", emoji: "🏥" },
+      { id: "d", label: "D", emoji: "🏰" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "f11",
+    category: "xariciDil",
+    targetLang: "en",
+    options: [
+      { id: "a", label: "A", emoji: "🥛" },
+      { id: "b", label: "B", emoji: "🧃" },
+      { id: "c", label: "C", emoji: "🍯" },
+      { id: "d", label: "D", emoji: "🍵" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "f12",
+    category: "xariciDil",
+    targetLang: "en",
+    options: [
+      { id: "a", label: "A", emoji: "🌙" },
+      { id: "b", label: "B", emoji: "⭐" },
+      { id: "c", label: "C", emoji: "☀️" },
+      { id: "d", label: "D", emoji: "🌈" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
   // Xarici Dil — Russian
   {
     id: "g1",
@@ -471,9 +791,182 @@ export const quizBank: QuizQuestion[] = [
     correctOptionId: "a",
     xp: 20,
   },
+  {
+    id: "g5",
+    category: "xariciDil",
+    targetLang: "ru",
+    options: [
+      { id: "a", label: "A", emoji: "🐶" },
+      { id: "b", label: "B", emoji: "🐱" },
+      { id: "c", label: "C", emoji: "🐰" },
+      { id: "d", label: "D", emoji: "🐭" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "g6",
+    category: "xariciDil",
+    targetLang: "ru",
+    options: [
+      { id: "a", label: "A", emoji: "☀️" },
+      { id: "b", label: "B", emoji: "🌙" },
+      { id: "c", label: "C", emoji: "⭐" },
+      { id: "d", label: "D", emoji: "🌧️" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "g7",
+    category: "xariciDil",
+    targetLang: "ru",
+    options: [
+      { id: "a", label: "A", emoji: "🌳" },
+      { id: "b", label: "B", emoji: "🌸" },
+      { id: "c", label: "C", emoji: "🍂" },
+      { id: "d", label: "D", emoji: "🌵" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "g8",
+    category: "xariciDil",
+    targetLang: "ru",
+    options: [
+      { id: "a", label: "A", emoji: "🐟" },
+      { id: "b", label: "B", emoji: "🐦" },
+      { id: "c", label: "C", emoji: "🐍" },
+      { id: "d", label: "D", emoji: "🦋" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "g9",
+    category: "xariciDil",
+    targetLang: "ru",
+    options: [
+      { id: "a", label: "A", emoji: "🏠" },
+      { id: "b", label: "B", emoji: "🏫" },
+      { id: "c", label: "C", emoji: "🏥" },
+      { id: "d", label: "D", emoji: "🏰" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
+  {
+    id: "g10",
+    category: "xariciDil",
+    targetLang: "ru",
+    options: [
+      { id: "a", label: "A", emoji: "🌙" },
+      { id: "b", label: "B", emoji: "⭐" },
+      { id: "c", label: "C", emoji: "☀️" },
+      { id: "d", label: "D", emoji: "🌈" },
+    ],
+    correctOptionId: "a",
+    xp: 20,
+  },
 ];
 
+function randInt(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+type MathOp = "+" | "-" | "×" | "÷";
+
+function buildMathProblem(): { promptText: string; answer: number } {
+  const op = shuffle<MathOp>(["+", "-", "×", "÷"])[0];
+  let a: number;
+  let b: number;
+  let answer: number;
+  if (op === "+") {
+    a = randInt(1, 20);
+    b = randInt(1, 20);
+    answer = a + b;
+  } else if (op === "-") {
+    a = randInt(5, 20);
+    b = randInt(1, a);
+    answer = a - b;
+  } else if (op === "×") {
+    a = randInt(1, 12);
+    b = randInt(1, 12);
+    answer = a * b;
+  } else {
+    b = randInt(1, 12);
+    answer = randInt(1, 12);
+    a = b * answer;
+  }
+  return { promptText: `${a} ${op} ${b} = ?`, answer };
+}
+
+function buildMathDistractors(answer: number): number[] {
+  const candidates = new Set<number>();
+  for (const d of shuffle([1, -1, 2, -2, 3, -3, 4, -4, 5, -5])) {
+    const val = answer + d;
+    if (val >= 0 && val !== answer) candidates.add(val);
+    if (candidates.size >= 3) break;
+  }
+  return Array.from(candidates);
+}
+
+const optionLetters = ["a", "b", "c", "d"];
+
+/**
+ * Generates fresh, never-repeating arithmetic questions on the fly instead of
+ * storing thousands of near-identical entries — the combinatorial space of
+ * possible problems (addition, subtraction, multiplication, division within
+ * a kid-appropriate range) is already in the thousands.
+ */
+export function generateMathQuestions(count: number): QuizQuestion[] {
+  const questions: QuizQuestion[] = [];
+  const seenPrompts = new Set<string>();
+
+  while (questions.length < count) {
+    const { promptText, answer } = buildMathProblem();
+    if (seenPrompts.has(promptText)) continue;
+
+    const distractors = buildMathDistractors(answer);
+    if (distractors.length < 3) continue;
+    seenPrompts.add(promptText);
+
+    const values = shuffle([answer, ...distractors.slice(0, 3)]);
+    const correctIndex = values.indexOf(answer);
+
+    const options: QuizOption[] = values.map((v, i) => ({
+      id: optionLetters[i],
+      label: optionLetters[i].toUpperCase(),
+      emoji: String(v),
+    }));
+
+    questions.push({
+      id: `math-${questions.length}`,
+      category: "riyaziyyat",
+      promptText,
+      options,
+      correctOptionId: optionLetters[correctIndex],
+      xp: 20,
+    });
+  }
+
+  return questions;
+}
+
 export function getQuizQuestions(category: QuizCategory, targetLang?: ForeignTargetLang): QuizQuestion[] {
+  if (category === "riyaziyyat") {
+    return generateMathQuestions(10);
+  }
   return quizBank.filter(
     (q) => q.category === category && (category !== "xariciDil" || q.targetLang === targetLang),
   );
