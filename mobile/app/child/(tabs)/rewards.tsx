@@ -44,7 +44,7 @@ export default function Achievements() {
               <View style={[styles.badgeIconWrap, { backgroundColor: a.tone[0] }]}>
                 <Icon name={a.icon} size={26} color={a.tone[1]} />
               </View>
-              <Text style={styles.badgeLabel}>{a.label}</Text>
+              <Text style={styles.badgeLabel}>{t(`content.achievements.${a.id}`)}</Text>
             </View>
           ))}
         </View>

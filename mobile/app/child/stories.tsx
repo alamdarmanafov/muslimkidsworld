@@ -23,8 +23,8 @@ export default function Stories() {
       <ScrollView contentContainerStyle={styles.content}>
         <Pressable style={[styles.featuredCard, { backgroundColor: colors.fire }]}>
           <Icon name={featured.icon} size={40} color="#FFFFFF" />
-          <Text style={styles.featuredTitle}>{featured.title}</Text>
-          <Text style={styles.featuredSubtitle}>{featured.subtitle}</Text>
+          <Text style={styles.featuredTitle}>{t(`content.stories.${featured.id}.title`)}</Text>
+          <Text style={styles.featuredSubtitle}>{t(`content.stories.${featured.id}.subtitle`)}</Text>
         </Pressable>
 
         <Text style={styles.sectionTitle}>{t("stories.moreStories")}</Text>
@@ -34,7 +34,7 @@ export default function Stories() {
               <View style={[styles.tileIconWrap, { backgroundColor: s.tone[0] }]}>
                 <Icon name={s.icon} size={26} color={s.tone[1]} />
               </View>
-              <Text style={styles.tileTitle}>{s.title}</Text>
+              <Text style={styles.tileTitle}>{t(`content.stories.${s.id}.title`)}</Text>
               {s.locked ? <Icon name="lock" size={14} color={colors.locked} /> : null}
             </Pressable>
           ))}

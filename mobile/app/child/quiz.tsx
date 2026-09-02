@@ -57,7 +57,7 @@ export default function Quiz() {
               size={112}
             />
           </View>
-          <Text style={styles.rewardName}>{latestReward.name}</Text>
+          <Text style={styles.rewardName}>{t(`content.rewards.${latestReward.id}`)}</Text>
           <Text style={styles.rewardLevel}>
             {t("quiz.levelReward", { level: latestReward.unlockLevel })}
           </Text>
@@ -122,7 +122,7 @@ export default function Quiz() {
         />
       </View>
 
-      <Text style={styles.prompt}>{question.prompt}</Text>
+      <Text style={styles.prompt}>{t(`content.quiz.${question.id}`)}</Text>
 
       <View style={styles.optionsGrid}>
         {question.options.map((option, i) => (

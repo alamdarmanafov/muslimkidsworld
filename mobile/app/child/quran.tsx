@@ -23,19 +23,23 @@ export default function Quran() {
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.featuredCard}>
           <View style={styles.featuredTop}>
-            <Text style={styles.featuredLabel}>{t("quran.surah", { name: featured.name })}</Text>
+            <Text style={styles.featuredLabel}>
+              {t("quran.surah", { name: t(`content.quran.${featured.id}`) })}
+            </Text>
             <Pressable style={styles.playBtn}>
               <Icon name="play" size={18} color={colors.successDark} />
             </Pressable>
           </View>
-          <Text style={styles.featuredJuz}>{featured.juz}</Text>
+          <Text style={styles.featuredJuz}>{t("content.quran.juzAmma")}</Text>
         </View>
 
         {rest.map((s) => (
           <View key={s.id} style={[styles.row, s.locked && styles.rowLocked]}>
             <View>
-              <Text style={styles.rowName}>{t("quran.surah", { name: s.name })}</Text>
-              <Text style={styles.rowJuz}>{s.juz}</Text>
+              <Text style={styles.rowName}>
+                {t("quran.surah", { name: t(`content.quran.${s.id}`) })}
+              </Text>
+              <Text style={styles.rowJuz}>{t("content.quran.juzAmma")}</Text>
             </View>
             <View style={styles.rowRight}>
               <Text style={styles.rowArabic}>{s.arabicName}</Text>

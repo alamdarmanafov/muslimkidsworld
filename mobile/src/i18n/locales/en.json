@@ -224,5 +224,64 @@
     "fri": "Fri",
     "sat": "Sat",
     "sun": "Sun"
+  },
+  "content": {
+    "quran": {
+      "al-fatiha": "Al-Fatiha",
+      "an-nas": "An-Nas",
+      "al-falaq": "Al-Falaq",
+      "al-ikhlas": "Al-Ikhlas",
+      "juzAmma": "Juz Amma"
+    },
+    "dua": {
+      "morning": "Morning Dua",
+      "evening": "Evening Dua",
+      "sleep": "Before Sleep",
+      "eat": "Before Eating"
+    },
+    "stories": {
+      "yunus": { "title": "The Story of Prophet Yunus (AS)", "subtitle": "Inside the whale" },
+      "ibrahim": { "title": "Prophet Ibrahim (AS)", "subtitle": "The friend of Allah" },
+      "musa": { "title": "Prophet Musa (AS)", "subtitle": "The staff and the sea" }
+    },
+    "games": {
+      "find-pair": { "title": "Find the Pair", "subtitle": "Match Islamic landmarks" },
+      "memory": { "title": "Memory", "subtitle": "Train your memory" },
+      "word-puzzle": { "title": "Islamic Word Puzzle", "subtitle": "Arrange the Arabic letters" }
+    },
+    "achievements": {
+      "first-star": "First Star",
+      "book-lover": "Book Lover",
+      "mosque-visitor": "Mosque Visitor",
+      "week-streak": "7 Day Streak",
+      "quiz-master": "Quiz Master",
+      "storyteller": "Storyteller"
+    },
+    "rewards": {
+      "blue-cap": "Blue Cap"
+    },
+    "quiz": {
+      "q1": "Which one is a mosque?",
+      "q2": "How many times a day do Muslims pray?",
+      "q3": "What is the holy book of Islam called?"
+    },
+    "plans": {
+      "single": {
+        "name": "Single Child",
+        "childLimit": "1 Child",
+        "features": ["Unlimited Daily 10", "Full World Access", "Basic Reports"]
+      },
+      "family": {
+        "name": "Family",
+        "childLimit": "Up to 3 Children",
+        "features": [
+          "Unlimited Daily 10",
+          "Full World Access",
+          "Advanced Progress & Reports",
+          "Premium Rewards",
+          "Cancel Anytime"
+        ]
+      }
+    }
   }
 }

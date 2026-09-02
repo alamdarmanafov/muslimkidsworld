@@ -26,8 +26,8 @@ export default function Games() {
               <Icon name={g.icon} size={28} color={g.tone[1]} />
             </View>
             <View style={styles.rowText}>
-              <Text style={styles.rowTitle}>{g.title}</Text>
-              <Text style={styles.rowSubtitle}>{g.subtitle}</Text>
+              <Text style={styles.rowTitle}>{t(`content.games.${g.id}.title`)}</Text>
+              <Text style={styles.rowSubtitle}>{t(`content.games.${g.id}.subtitle`)}</Text>
             </View>
             <Icon name="arrowRight" size={18} color={colors.inkMuted} />
           </Pressable>

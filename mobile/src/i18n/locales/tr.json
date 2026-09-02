@@ -224,5 +224,64 @@
     "fri": "Cum",
     "sat": "Cmt",
     "sun": "Paz"
+  },
+  "content": {
+    "quran": {
+      "al-fatiha": "Fatiha",
+      "an-nas": "Nas",
+      "al-falaq": "Felak",
+      "al-ikhlas": "İhlas",
+      "juzAmma": "Amme Cüzü"
+    },
+    "dua": {
+      "morning": "Sabah Duası",
+      "evening": "Akşam Duası",
+      "sleep": "Uyumadan Önce",
+      "eat": "Yemekten Önce"
+    },
+    "stories": {
+      "yunus": { "title": "Peygamber Yunus'un (AS) Hikayesi", "subtitle": "Balığın içinde" },
+      "ibrahim": { "title": "Peygamber İbrahim (AS)", "subtitle": "Allah'ın dostu" },
+      "musa": { "title": "Peygamber Musa (AS)", "subtitle": "Asa ve deniz" }
+    },
+    "games": {
+      "find-pair": { "title": "Eşi Bul", "subtitle": "İslami mekanları eşleştir" },
+      "memory": { "title": "Hafıza", "subtitle": "Hafızanı geliştir" },
+      "word-puzzle": { "title": "İslami Kelime Bulmacası", "subtitle": "Arap harflerini sırala" }
+    },
+    "achievements": {
+      "first-star": "İlk Yıldız",
+      "book-lover": "Kitap Sevdalısı",
+      "mosque-visitor": "Cami Ziyaretçisi",
+      "week-streak": "7 Günlük Seri",
+      "quiz-master": "Test Ustası",
+      "storyteller": "Hikaye Anlatıcısı"
+    },
+    "rewards": {
+      "blue-cap": "Mavi Şapka"
+    },
+    "quiz": {
+      "q1": "Bunlardan hangisi camidir?",
+      "q2": "Müslümanlar günde kaç kez namaz kılar?",
+      "q3": "İslam'ın kutsal kitabının adı nedir?"
+    },
+    "plans": {
+      "single": {
+        "name": "Tek Çocuk",
+        "childLimit": "1 Çocuk",
+        "features": ["Sınırsız Günlük 10", "Tam Dünya Erişimi", "Temel Raporlar"]
+      },
+      "family": {
+        "name": "Aile",
+        "childLimit": "3 Çocuğa kadar",
+        "features": [
+          "Sınırsız Günlük 10",
+          "Tam Dünya Erişimi",
+          "Gelişmiş İlerleme ve Raporlar",
+          "Premium Ödüller",
+          "İstediğin zaman iptal et"
+        ]
+      }
+    }
   }
 }

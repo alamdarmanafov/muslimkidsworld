@@ -52,7 +52,6 @@ export type QuizOption = { id: string; label: string; emoji: string };
 
 export type QuizQuestion = {
   id: string;
-  prompt: string;
   options: QuizOption[];
   correctOptionId: string;
   xp: number;
@@ -61,7 +60,6 @@ export type QuizQuestion = {
 export const dailyTen: QuizQuestion[] = [
   {
     id: "q1",
-    prompt: "Which one is a mosque?",
     options: [
       { id: "a", label: "A", emoji: "🏠" },
       { id: "b", label: "B", emoji: "🕌" },
@@ -73,7 +71,6 @@ export const dailyTen: QuizQuestion[] = [
   },
   {
     id: "q2",
-    prompt: "How many times a day do Muslims pray?",
     options: [
       { id: "a", label: "A", emoji: "3️⃣" },
       { id: "b", label: "B", emoji: "4️⃣" },
@@ -85,7 +82,6 @@ export const dailyTen: QuizQuestion[] = [
   },
   {
     id: "q3",
-    prompt: "What is the holy book of Islam called?",
     options: [
       { id: "a", label: "A", emoji: "📖" },
       { id: "b", label: "B", emoji: "📗" },
@@ -136,7 +132,6 @@ export const worldLocations: WorldLocation[] = [
 
 export type Reward = {
   id: string;
-  name: string;
   icon: IconName;
   tone: IconBadgeTone;
   unlockLevel: number;
@@ -144,7 +139,6 @@ export type Reward = {
 
 export const latestReward: Reward = {
   id: "blue-cap",
-  name: "Blue Cap",
   icon: "gift",
   tone: tones.blue,
   unlockLevel: 12,
@@ -152,24 +146,21 @@ export const latestReward: Reward = {
 
 export type QuranSurah = {
   id: string;
-  name: string;
   arabicName: string;
-  juz: string;
   locked: boolean;
 };
 
 export const quranSurahs: QuranSurah[] = [
-  { id: "al-fatiha", name: "Al-Fatiha", arabicName: "الفاتحة", juz: "Juz Amma", locked: false },
-  { id: "an-nas", name: "An-Nas", arabicName: "الناس", juz: "Juz Amma", locked: true },
-  { id: "al-falaq", name: "Al-Falaq", arabicName: "الفلق", juz: "Juz Amma", locked: true },
-  { id: "al-ikhlas", name: "Al-Ikhlas", arabicName: "الإخلاص", juz: "Juz Amma", locked: true },
+  { id: "al-fatiha", arabicName: "الفاتحة", locked: false },
+  { id: "an-nas", arabicName: "الناس", locked: true },
+  { id: "al-falaq", arabicName: "الفلق", locked: true },
+  { id: "al-ikhlas", arabicName: "الإخلاص", locked: true },
 ];
 
 export type DuaCategory = "Morning" | "Evening" | "Sleep" | "Eat";
 
 export type Dua = {
   id: string;
-  title: string;
   category: DuaCategory;
   arabic: string;
   transliteration: string;
@@ -178,28 +169,24 @@ export type Dua = {
 export const duas: Dua[] = [
   {
     id: "morning",
-    title: "Morning Dua",
     category: "Morning",
     arabic: "اللَّهُمَّ بِكَ أَصْبَحْنَا وَبِكَ أَمْسَيْنَا",
     transliteration: "Allahumma bika asbahna wa bika amsaina",
   },
   {
     id: "evening",
-    title: "Evening Dua",
     category: "Evening",
     arabic: "اللَّهُمَّ بِكَ أَمْسَيْنَا وَبِكَ أَصْبَحْنَا",
     transliteration: "Allahumma bika amsaina wa bika asbahna",
   },
   {
     id: "sleep",
-    title: "Before Sleep",
     category: "Sleep",
     arabic: "بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا",
     transliteration: "Bismika Allahumma amutu wa ahya",
   },
   {
     id: "eat",
-    title: "Before Eating",
     category: "Eat",
     arabic: "بِسْمِ اللَّهِ",
     transliteration: "Bismillah",
@@ -208,87 +195,43 @@ export const duas: Dua[] = [
 
 export type Story = {
   id: string;
-  title: string;
-  subtitle: string;
   icon: IconName;
   tone: IconBadgeTone;
   locked: boolean;
 };
 
 export const stories: Story[] = [
-  {
-    id: "yunus",
-    title: "The Story of Prophet Yunus (AS)",
-    subtitle: "Inside the whale",
-    icon: "globe",
-    tone: tones.blue,
-    locked: false,
-  },
-  {
-    id: "ibrahim",
-    title: "Prophet Ibrahim (AS)",
-    subtitle: "The friend of Allah",
-    icon: "mosque",
-    tone: tones.gold,
-    locked: false,
-  },
-  {
-    id: "musa",
-    title: "Prophet Musa (AS)",
-    subtitle: "The staff and the sea",
-    icon: "star",
-    tone: tones.teal,
-    locked: true,
-  },
+  { id: "yunus", icon: "globe", tone: tones.blue, locked: false },
+  { id: "ibrahim", icon: "mosque", tone: tones.gold, locked: false },
+  { id: "musa", icon: "star", tone: tones.teal, locked: true },
 ];
 
 export type Game = {
   id: string;
-  title: string;
-  subtitle: string;
   icon: IconName;
   tone: IconBadgeTone;
 };
 
 export const games: Game[] = [
-  {
-    id: "find-pair",
-    title: "Find the Pair",
-    subtitle: "Match Islamic landmarks",
-    icon: "mosque",
-    tone: tones.blue,
-  },
-  {
-    id: "memory",
-    title: "Memory",
-    subtitle: "Train your memory",
-    icon: "quiz",
-    tone: tones.purple,
-  },
-  {
-    id: "word-puzzle",
-    title: "Islamic Word Puzzle",
-    subtitle: "Arrange the Arabic letters",
-    icon: "puzzle",
-    tone: tones.green,
-  },
+  { id: "find-pair", icon: "mosque", tone: tones.blue },
+  { id: "memory", icon: "quiz", tone: tones.purple },
+  { id: "word-puzzle", icon: "puzzle", tone: tones.green },
 ];
 
 export type Achievement = {
   id: string;
-  label: string;
   icon: IconName;
   tone: IconBadgeTone;
   earned: boolean;
 };
 
 export const achievements: Achievement[] = [
-  { id: "first-star", label: "First Star", icon: "star", tone: tones.gold, earned: true },
-  { id: "book-lover", label: "Book Lover", icon: "book", tone: tones.purple, earned: true },
-  { id: "mosque-visitor", label: "Mosque Visitor", icon: "mosque", tone: tones.blue, earned: true },
-  { id: "week-streak", label: "7 Day Streak", icon: "flame", tone: tones.red, earned: true },
-  { id: "quiz-master", label: "Quiz Master", icon: "quiz", tone: tones.pink, earned: false },
-  { id: "storyteller", label: "Storyteller", icon: "globe", tone: tones.teal, earned: false },
+  { id: "first-star", icon: "star", tone: tones.gold, earned: true },
+  { id: "book-lover", icon: "book", tone: tones.purple, earned: true },
+  { id: "mosque-visitor", icon: "mosque", tone: tones.blue, earned: true },
+  { id: "week-streak", icon: "flame", tone: tones.red, earned: true },
+  { id: "quiz-master", icon: "quiz", tone: tones.pink, earned: false },
+  { id: "storyteller", icon: "globe", tone: tones.teal, earned: false },
 ];
 
 export const childStats = { badges: 12, stars: 120, days: 15 };
@@ -330,25 +273,13 @@ export const parentPin = "1234";
 export const plans = [
   {
     id: "single",
-    name: "Single Child",
     price: "$4.99",
     period: "/month",
-    childLimit: "1 Child",
-    features: ["Unlimited Daily 10", "Full World Access", "Basic Reports"],
   },
   {
     id: "family",
-    name: "Family",
     price: "$7.99",
     period: "/month",
-    childLimit: "Up to 3 Children",
-    features: [
-      "Unlimited Daily 10",
-      "Full World Access",
-      "Advanced Progress & Reports",
-      "Premium Rewards",
-      "Cancel Anytime",
-    ],
     bestValue: true,
   },
 ];

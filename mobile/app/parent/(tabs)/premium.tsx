@@ -34,12 +34,12 @@ export default function Premium() {
                 {p.bestValue ? (
                   <Text style={styles.bestValue}>{t("parentPremium.bestValue")}</Text>
                 ) : null}
-                <Text style={styles.planName}>{p.name}</Text>
+                <Text style={styles.planName}>{t(`content.plans.${p.id}.name`)}</Text>
                 <Text style={styles.planPrice}>
                   {p.price}
                   <Text style={styles.planPeriod}> {p.period}</Text>
                 </Text>
-                <Text style={styles.planLimit}>{p.childLimit}</Text>
+                <Text style={styles.planLimit}>{t(`content.plans.${p.id}.childLimit`)}</Text>
                 <View
                   style={[styles.radio, selected && styles.radioSelected]}
                 >
@@ -51,7 +51,7 @@ export default function Premium() {
         </View>
 
         <Card style={styles.featuresCard}>
-          {plan.features.map((f) => (
+          {(t(`content.plans.${plan.id}.features`, { returnObjects: true }) as string[]).map((f) => (
             <View key={f} style={styles.featureRow}>
               <Text style={styles.check}>✅</Text>
               <Text style={styles.featureText}>{f}</Text>

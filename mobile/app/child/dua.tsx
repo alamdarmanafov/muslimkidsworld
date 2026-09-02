@@ -32,7 +32,7 @@ export default function Dua() {
 
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>{active.title}</Text>
+          <Text style={styles.cardTitle}>{t(`content.dua.${active.id}`)}</Text>
           <Text style={styles.arabic}>{active.arabic}</Text>
           <Text style={styles.transliteration}>{active.transliteration}</Text>
 

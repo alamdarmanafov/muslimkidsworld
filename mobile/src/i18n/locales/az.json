@@ -224,5 +224,64 @@
     "fri": "Cüm",
     "sat": "Şən",
     "sun": "Baz"
+  },
+  "content": {
+    "quran": {
+      "al-fatiha": "əl-Fatihə",
+      "an-nas": "ən-Nas",
+      "al-falaq": "əl-Fələq",
+      "al-ikhlas": "əl-İxlas",
+      "juzAmma": "Amma Cüzü"
+    },
+    "dua": {
+      "morning": "Səhər duası",
+      "evening": "Axşam duası",
+      "sleep": "Yatmazdan əvvəl",
+      "eat": "Yeməkdən əvvəl"
+    },
+    "stories": {
+      "yunus": { "title": "Peyğəmbər Yunusun (ə.s) hekayəsi", "subtitle": "Balığın içində" },
+      "ibrahim": { "title": "Peyğəmbər İbrahim (ə.s)", "subtitle": "Allahın dostu" },
+      "musa": { "title": "Peyğəmbər Musa (ə.s)", "subtitle": "Əsa və dəniz" }
+    },
+    "games": {
+      "find-pair": { "title": "Cütü tap", "subtitle": "İslam abidələrini uyğunlaşdır" },
+      "memory": { "title": "Yaddaş oyunu", "subtitle": "Yaddaşını inkişaf etdir" },
+      "word-puzzle": { "title": "İslami söz tapmacası", "subtitle": "Ərəb hərflərini düz" }
+    },
+    "achievements": {
+      "first-star": "İlk Ulduz",
+      "book-lover": "Kitabsevər",
+      "mosque-visitor": "Məscid Ziyarətçisi",
+      "week-streak": "7 Günlük Seriya",
+      "quiz-master": "Test Ustası",
+      "storyteller": "Hekayəçi"
+    },
+    "rewards": {
+      "blue-cap": "Mavi Papaq"
+    },
+    "quiz": {
+      "q1": "Bunlardan hansı məsciddir?",
+      "q2": "Müsəlmanlar gündə neçə dəfə namaz qılır?",
+      "q3": "İslamın müqəddəs kitabına nə deyilir?"
+    },
+    "plans": {
+      "single": {
+        "name": "Tək uşaq",
+        "childLimit": "1 Uşaq",
+        "features": ["Limitsiz Gündəlik 10", "Tam Dünya Girişi", "Əsas Hesabatlar"]
+      },
+      "family": {
+        "name": "Ailə",
+        "childLimit": "3 Uşağa qədər",
+        "features": [
+          "Limitsiz Gündəlik 10",
+          "Tam Dünya Girişi",
+          "Ətraflı İrəliləyiş və Hesabatlar",
+          "Premium Mükafatlar",
+          "İstənilən vaxt ləğv et"
+        ]
+      }
+    }
   }
 }
