@@ -147,26 +147,28 @@ export default function Quiz() {
         />
       </View>
 
-      <Text style={styles.prompt}>
-        {question.promptText ??
-          t(question.promptKey ?? `content.quiz.${question.id}`, question.promptParams)}
-      </Text>
+      <View style={styles.questionBlock}>
+        <Text style={styles.prompt}>
+          {question.promptText ??
+            t(question.promptKey ?? `content.quiz.${question.id}`, question.promptParams)}
+        </Text>
 
-      <View style={styles.optionsGrid}>
-        {question.options.map((option, i) => (
-          <Pressable
-            key={option.id}
-            style={styles.optionCard}
-            onPress={() => selectOption(option.id)}
-          >
-            <View style={[styles.optionBadge, { backgroundColor: optionColors[i] }]}>
-              <Text style={styles.optionBadgeText}>{option.label}</Text>
-            </View>
-            <Text style={option.textKey || option.text ? styles.optionText : styles.optionEmoji}>
-              {resolveOptionText(option, t)}
-            </Text>
-          </Pressable>
-        ))}
+        <View style={styles.optionsGrid}>
+          {question.options.map((option, i) => (
+            <Pressable
+              key={option.id}
+              style={styles.optionCard}
+              onPress={() => selectOption(option.id)}
+            >
+              <View style={[styles.optionBadge, { backgroundColor: optionColors[i] }]}>
+                <Text style={styles.optionBadgeText}>{option.label}</Text>
+              </View>
+              <Text style={option.textKey || option.text ? styles.optionText : styles.optionEmoji}>
+                {resolveOptionText(option, t)}
+              </Text>
+            </Pressable>
+          ))}
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -193,6 +195,10 @@ const styles = StyleSheet.create({
     height: 8,
     borderRadius: radii.pill,
     backgroundColor: colors.success,
+  },
+  questionBlock: {
+    flex: 1,
+    justifyContent: "center",
   },
   prompt: {
     fontSize: 22,
