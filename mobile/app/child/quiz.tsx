@@ -24,13 +24,13 @@ function resolveOptionText(option: { textKey?: string; text?: string; emoji: str
 }
 
 export default function Quiz() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { category, targetLang, difficulty } = useLocalSearchParams<{
     category: QuizCategory;
     targetLang?: ForeignTargetLang;
     difficulty?: QuizDifficulty;
   }>();
-  const questions = getQuizQuestions(category ?? "din", targetLang, difficulty);
+  const questions = getQuizQuestions(category ?? "din", targetLang, difficulty, i18n.language);
   const [index, setIndex] = useState(0);
   const [phase, setPhase] = useState<Phase>("question");
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -162,8 +162,8 @@ export default function Quiz() {
             <View style={[styles.optionBadge, { backgroundColor: optionColors[i] }]}>
               <Text style={styles.optionBadgeText}>{option.label}</Text>
             </View>
-            <Text style={option.textKey ? styles.optionText : styles.optionEmoji}>
-              {option.textKey ? t(option.textKey) : option.emoji}
+            <Text style={option.textKey || option.text ? styles.optionText : styles.optionEmoji}>
+              {resolveOptionText(option, t)}
             </Text>
           </Pressable>
         ))}

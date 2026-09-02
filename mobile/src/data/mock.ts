@@ -1775,7 +1775,7 @@ function buildMathProblem(difficulty: QuizDifficulty): { promptText: string; ans
   const ops: MathOp[] =
     difficulty === "easy" ? ["+", "-"] : ["+", "-", "×", "÷"];
   const op = shuffle(ops)[0];
-  const range = difficulty === "easy" ? 10 : difficulty === "medium" ? 20 : 50;
+  const range = difficulty === "easy" ? 12 : difficulty === "medium" ? 30 : 100;
   const mulRange = difficulty === "hard" ? 12 : difficulty === "medium" ? 10 : 5;
   let a: number;
   let b: number;
@@ -1856,6 +1856,102 @@ export function generateMathQuestions(
   return questions;
 }
 
+type WordProblemOp = "subtract" | "multiply" | "divide";
+
+type WordProblemTemplate = {
+  promptKey: string;
+  op: WordProblemOp;
+};
+
+/**
+ * Each template is written once per language (content.quiz.<key>, using
+ * {{a}}/{{b}} interpolation) and reused with endless random number pairs —
+ * the same "1 sentence → thousands of questions" idea behind the pure
+ * arithmetic generator above, applied to word problems.
+ */
+const WORD_PROBLEM_TEMPLATES: WordProblemTemplate[] = [
+  { promptKey: "content.quiz.mathWordApples", op: "subtract" },
+  { promptKey: "content.quiz.mathWordBirds", op: "subtract" },
+  { promptKey: "content.quiz.mathWordStudents", op: "subtract" },
+  { promptKey: "content.quiz.mathWordBoxes", op: "multiply" },
+  { promptKey: "content.quiz.mathWordBaskets", op: "multiply" },
+  { promptKey: "content.quiz.mathWordMilk", op: "multiply" },
+  { promptKey: "content.quiz.mathWordCandy", op: "divide" },
+  { promptKey: "content.quiz.mathWordBooks", op: "divide" },
+];
+
+function buildWordProblem(
+  difficulty: QuizDifficulty,
+): { promptKey: string; a: number; b: number; answer: number } {
+  const template = shuffle(WORD_PROBLEM_TEMPLATES)[0];
+  const range = difficulty === "easy" ? 10 : difficulty === "medium" ? 25 : 60;
+  const mulRange = difficulty === "hard" ? 12 : difficulty === "medium" ? 9 : 5;
+  let a: number;
+  let b: number;
+  let answer: number;
+  if (template.op === "subtract") {
+    a = randInt(Math.ceil(range / 2), range);
+    b = randInt(1, a);
+    answer = a - b;
+  } else if (template.op === "multiply") {
+    a = randInt(2, mulRange);
+    b = randInt(2, mulRange);
+    answer = a * b;
+  } else {
+    b = randInt(2, mulRange);
+    answer = randInt(2, mulRange);
+    a = b * answer;
+  }
+  return { promptKey: template.promptKey, a, b, answer };
+}
+
+/**
+ * Word-problem counterpart to generateMathQuestions() — 8 reusable sentence
+ * templates × the full range of number pairs for each difficulty, so the
+ * combined pool (with the pure-arithmetic generator) comfortably clears
+ * thousands of distinct questions per difficulty tier without hand-writing
+ * more than a handful of sentences per language.
+ */
+export function generateMathWordProblemQuestions(
+  count: number,
+  difficulty: QuizDifficulty = "medium",
+): QuizQuestion[] {
+  const questions: QuizQuestion[] = [];
+  const seen = new Set<string>();
+
+  while (questions.length < count) {
+    const { promptKey, a, b, answer } = buildWordProblem(difficulty);
+    const dedupeKey = `${promptKey}-${a}-${b}`;
+    if (seen.has(dedupeKey)) continue;
+
+    const distractors = buildMathDistractors(answer);
+    if (distractors.length < 3) continue;
+    seen.add(dedupeKey);
+
+    const values = shuffle([answer, ...distractors.slice(0, 3)]);
+    const correctIndex = values.indexOf(answer);
+
+    const options: QuizOption[] = values.map((v, i) => ({
+      id: optionLetters[i],
+      label: optionLetters[i].toUpperCase(),
+      emoji: String(v),
+    }));
+
+    questions.push({
+      id: `mathword-${questions.length}-${a}-${b}`,
+      category: "riyaziyyat",
+      difficulty,
+      promptKey,
+      promptParams: { a, b },
+      options,
+      correctOptionId: optionLetters[correctIndex],
+      xp: 20,
+    });
+  }
+
+  return questions;
+}
+
 type SurahMeta = { chapter: number; name: string; verses: number; revelation: string };
 const surahIndex = surahIndexData as SurahMeta[];
 
@@ -1902,24 +1998,204 @@ export function generateSurahFactQuestions(count: number): QuizQuestion[] {
   });
 }
 
+function nameOptions(pool: SurahMeta[]): QuizOption[] {
+  return pool.map((s, idx) => ({
+    id: optionLetters[idx],
+    label: optionLetters[idx].toUpperCase(),
+    emoji: s.name,
+  }));
+}
+
+/**
+ * "Which of these was revealed in Mecca/Madina?" — one correct surah plus 3
+ * distractors drawn from the opposite revelation place, so the question is
+ * always answerable from surahIndex.json alone (86 Meccan / 28 Madinan
+ * surahs give a large, accurate combinatorial space).
+ */
+export function generateSurahRevelationQuestions(count: number): QuizQuestion[] {
+  const meccan = surahIndex.filter((s) => s.revelation === "Mecca");
+  const madinan = surahIndex.filter((s) => s.revelation === "Madina");
+  const pool = shuffle(surahIndex).slice(0, count);
+  return pool.map((s, i) => {
+    const isMeccan = s.revelation === "Mecca";
+    const distractorSource = isMeccan ? madinan : meccan;
+    const distractors = shuffle(distractorSource).slice(0, 3);
+    const names = shuffle([s, ...distractors]);
+    const correctIndex = names.findIndex((n) => n.chapter === s.chapter);
+    return {
+      id: `surah-rev-${s.chapter}-${i}`,
+      category: "din",
+      difficulty: "hard",
+      promptKey: isMeccan ? "content.quiz.dinRevelationMecca" : "content.quiz.dinRevelationMadina",
+      options: nameOptions(names),
+      correctOptionId: optionLetters[correctIndex],
+      xp: 20,
+    };
+  });
+}
+
+/**
+ * Chapter-order questions in both directions: "which surah is #N?" and
+ * "what number is surah X?" — again grounded entirely in surahIndex.json.
+ */
+export function generateSurahOrderQuestions(count: number): QuizQuestion[] {
+  const pool = shuffle(surahIndex).slice(0, count);
+  return pool.map((s, i) => {
+    const distractors = shuffle(surahIndex.filter((o) => o.chapter !== s.chapter)).slice(0, 3);
+    const askForName = i % 2 === 0;
+
+    if (askForName) {
+      const names = shuffle([s, ...distractors]);
+      const correctIndex = names.findIndex((n) => n.chapter === s.chapter);
+      return {
+        id: `surah-order-name-${s.chapter}-${i}`,
+        category: "din",
+        difficulty: "hard",
+        promptKey: "content.quiz.dinOrderName",
+        promptParams: { number: s.chapter } as Record<string, string | number>,
+        options: nameOptions(names),
+        correctOptionId: optionLetters[correctIndex],
+        xp: 20,
+      };
+    }
+
+    const numberPool = shuffle([s, ...distractors]);
+    const correctIndex = numberPool.findIndex((n) => n.chapter === s.chapter);
+    const options: QuizOption[] = numberPool.map((n, idx) => ({
+      id: optionLetters[idx],
+      label: optionLetters[idx].toUpperCase(),
+      emoji: String(n.chapter),
+    }));
+    return {
+      id: `surah-order-number-${s.chapter}-${i}`,
+      category: "din",
+      difficulty: "hard",
+      promptKey: "content.quiz.dinOrderNumber",
+      promptParams: { name: s.name },
+      options,
+      correctOptionId: optionLetters[correctIndex],
+      xp: 20,
+    };
+  });
+}
+
+/**
+ * "Which of these 4 surahs has the most/fewest verses?" — a pure numeric
+ * comparison over verified verse counts, so any group of 4 surahs (~10
+ * million possible combinations) makes a valid, accurate question.
+ */
+export function generateSurahCompareQuestions(count: number): QuizQuestion[] {
+  const questions: QuizQuestion[] = [];
+  for (let i = 0; i < count; i++) {
+    const group = shuffle(surahIndex).slice(0, 4);
+    const askMost = i % 2 === 0;
+    const target = askMost
+      ? group.reduce((max, s) => (s.verses > max.verses ? s : max))
+      : group.reduce((min, s) => (s.verses < min.verses ? s : min));
+    const correctIndex = group.findIndex((s) => s.chapter === target.chapter);
+    questions.push({
+      id: `surah-compare-${askMost ? "most" : "least"}-${i}-${group.map((s) => s.chapter).join("-")}`,
+      category: "din",
+      difficulty: "hard",
+      promptKey: askMost ? "content.quiz.dinCompareMost" : "content.quiz.dinCompareLeast",
+      options: nameOptions(group),
+      correctOptionId: optionLetters[correctIndex],
+      xp: 20,
+    });
+  }
+  return questions;
+}
+
+type DivineNameEntry = {
+  id: string;
+  number: number;
+  name: string;
+  meaning: string;
+};
+
+/**
+ * Questions built from the verified 99-Names dataset: "which name is
+ * number N?" and "what does name X mean?" — 2 templates × 99 names give
+ * ~200 grounded questions with zero risk of new, unverified religious
+ * claims (every fact already lives in divineNames.json).
+ */
+export function generateDivineNameQuestions(count: number, lang: string): QuizQuestion[] {
+  const names = getDivineNames(lang) as DivineNameEntry[];
+  const pool = shuffle(names).slice(0, count);
+  return pool.map((entry, i) => {
+    const askForName = i % 2 === 0;
+    const distractors = shuffle(names.filter((n) => n.id !== entry.id)).slice(0, 3);
+
+    if (askForName) {
+      const group = shuffle([entry, ...distractors]);
+      const correctIndex = group.findIndex((n) => n.id === entry.id);
+      const options: QuizOption[] = group.map((n, idx) => ({
+        id: optionLetters[idx],
+        label: optionLetters[idx].toUpperCase(),
+        emoji: "",
+        text: n.name,
+      }));
+      return {
+        id: `divine-number-${entry.number}-${i}`,
+        category: "din",
+        difficulty: "hard",
+        promptKey: "content.quiz.divineNameFromNumber",
+        promptParams: { number: entry.number } as Record<string, string | number>,
+        options,
+        correctOptionId: optionLetters[correctIndex],
+        xp: 20,
+      };
+    }
+
+    const group = shuffle([entry, ...distractors]);
+    const correctIndex = group.findIndex((n) => n.id === entry.id);
+    const options: QuizOption[] = group.map((n, idx) => ({
+      id: optionLetters[idx],
+      label: optionLetters[idx].toUpperCase(),
+      emoji: "",
+      text: n.meaning,
+    }));
+    return {
+      id: `divine-meaning-${entry.number}-${i}`,
+      category: "din",
+      difficulty: "hard",
+      promptKey: "content.quiz.divineNameMeaning",
+      promptParams: { name: entry.name },
+      options,
+      correctOptionId: optionLetters[correctIndex],
+      xp: 20,
+    };
+  });
+}
+
 export function getQuizQuestions(
   category: QuizCategory,
   targetLang?: ForeignTargetLang,
   difficulty?: QuizDifficulty,
+  lang: string = "az",
 ): QuizQuestion[] {
   if (category === "riyaziyyat") {
     const staticMath = quizBank
       .filter((q) => q.category === "riyaziyyat")
       .filter((q) => !difficulty || getDifficulty(q) === difficulty);
-    const generated = generateMathQuestions(10, difficulty ?? "medium");
-    return shuffle([...staticMath, ...generated]);
+    const generated = generateMathQuestions(12, difficulty ?? "medium");
+    const wordProblems = generateMathWordProblemQuestions(8, difficulty ?? "medium");
+    return shuffle([...staticMath, ...generated, ...wordProblems]);
   }
   if (category === "din") {
     const staticDin = quizBank
       .filter((q) => q.category === "din")
       .filter((q) => !difficulty || getDifficulty(q) === difficulty);
     const generated =
-      !difficulty || difficulty === "hard" ? generateSurahFactQuestions(10) : [];
+      !difficulty || difficulty === "hard"
+        ? [
+            ...generateSurahFactQuestions(6),
+            ...generateSurahRevelationQuestions(6),
+            ...generateSurahOrderQuestions(6),
+            ...generateSurahCompareQuestions(6),
+            ...generateDivineNameQuestions(6, lang),
+          ]
+        : [];
     return shuffle([...staticDin, ...generated]);
   }
   return quizBank.filter(
@@ -1933,6 +2209,7 @@ export function getQuizQuestions(
 import { IconBadgeTone, tones } from "../components/IconBadge";
 import type { IconName } from "../components/icons";
 import surahIndexData from "./quran/surahIndex.json";
+import { getDivineNames } from "./divineNamesLoader";
 
 export type WorldLocation = {
   id: string;
