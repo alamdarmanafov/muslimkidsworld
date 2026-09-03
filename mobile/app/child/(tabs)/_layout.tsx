@@ -1,5 +1,6 @@
 import { Tabs } from "expo-router";
 import { useTranslation } from "react-i18next";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Icon, type IconName } from "../../../src/components/icons";
 import { colors, radii, shadow, spacing } from "../../../src/theme/theme";
 
@@ -9,6 +10,7 @@ function TabIcon({ name, focused }: { name: IconName; focused: boolean }) {
 
 export default function ChildTabsLayout() {
   const { t } = useTranslation();
+  const insets = useSafeAreaInsets();
 
   return (
     <Tabs
@@ -19,9 +21,10 @@ export default function ChildTabsLayout() {
         tabBarLabelStyle: { fontSize: 11, fontWeight: "700" },
         tabBarItemStyle: { paddingVertical: spacing.xs },
         tabBarStyle: {
-          height: 66,
+          height: 56 + insets.bottom,
           paddingHorizontal: spacing.lg,
           paddingTop: spacing.sm,
+          paddingBottom: insets.bottom,
           borderTopWidth: 0,
           borderTopLeftRadius: radii.lg,
           borderTopRightRadius: radii.lg,

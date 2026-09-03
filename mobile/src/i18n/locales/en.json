@@ -122,7 +122,8 @@
   },
   "childProfile": {
     "parentMode": "Parent Mode",
-    "levelAge": "Level {{level}} · {{age}} years old"
+    "levelAge": "Level {{level}} · {{age}} years old",
+    "language": "Language"
   },
   "parentProfile": {
     "account": "Account",

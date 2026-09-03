@@ -4,6 +4,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Avatar } from "../../../src/components/Avatar";
 import { Icon } from "../../../src/components/icons";
+import { LanguageSwitcher } from "../../../src/components/LanguageSwitcher";
 import { activeChild } from "../../../src/data/mock";
 import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
 
@@ -18,6 +19,11 @@ export default function ChildProfile() {
         <Text style={styles.subtitle}>
           {t("childProfile.levelAge", { level: activeChild.level, age: activeChild.age })}
         </Text>
+
+        <View style={styles.languageRow}>
+          <Text style={styles.languageLabel}>{t("childProfile.language")}</Text>
+          <LanguageSwitcher />
+        </View>
       </View>
 
       <Pressable style={styles.parentLink} onPress={() => router.push("/parent-pin")}>
@@ -33,6 +39,18 @@ const styles = StyleSheet.create({
   body: { flex: 1, alignItems: "center", justifyContent: "center", gap: spacing.sm },
   name: { fontFamily: fonts.heading, fontSize: 22, color: colors.ink, marginTop: spacing.sm },
   subtitle: { fontFamily: fonts.body, fontSize: 13, color: colors.inkMuted },
+  languageRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.md,
+    backgroundColor: colors.card,
+    borderRadius: radii.md,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.lg,
+    marginTop: spacing.xl,
+    ...shadow,
+  },
+  languageLabel: { fontFamily: fonts.bodyBold, fontSize: 13, color: colors.ink },
   parentLink: {
     flexDirection: "row",
     alignItems: "center",

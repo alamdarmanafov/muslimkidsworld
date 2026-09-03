@@ -122,7 +122,8 @@
   },
   "childProfile": {
     "parentMode": "Valideyn rejimi",
-    "levelAge": "Səviyyə {{level}} · {{age}} yaşında"
+    "levelAge": "Səviyyə {{level}} · {{age}} yaşında",
+    "language": "Dil"
   },
   "parentProfile": {
     "account": "Hesab",

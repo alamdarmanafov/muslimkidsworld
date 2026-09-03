@@ -18,15 +18,17 @@ export type ParentChild = {
   emoji: string;
   color: string;
   accuracy: number;
+  level: number;
+  streak: number;
 };
 
 /**
  * Fetches every child in the signed-in parent's family, with each
- * child's current accuracy from child_progress (0 if that child has
- * no progress row yet — shouldn't normally happen, see
- * handle_new_child() in 0001_core_schema.sql, but a child can exist
- * for a moment before it does). Returns null on any failure (no
- * session, network error, backend not configured).
+ * child's current accuracy/level/streak from child_progress (zeroed
+ * out / level 1 if that child has no progress row yet — shouldn't
+ * normally happen, see handle_new_child() in 0001_core_schema.sql,
+ * but a child can exist for a moment before it does). Returns null on
+ * any failure (no session, network error, backend not configured).
  */
 export async function fetchChildren(): Promise<ParentChild[] | null> {
   try {
@@ -41,19 +43,22 @@ export async function fetchChildren(): Promise<ParentChild[] | null> {
 
     const { data: progressRows } = await supabase
       .from("child_progress")
-      .select("child_id, accuracy")
+      .select("child_id, accuracy, level, streak")
       .in(
         "child_id",
         rows.map((r) => r.id),
       );
-    const accuracyByChildId = new Map(
-      (progressRows ?? []).map((p) => [p.child_id, p.accuracy]),
-    );
+    const progressByChildId = new Map((progressRows ?? []).map((p) => [p.child_id, p]));
 
-    return rows.map((r) => ({
-      ...r,
-      accuracy: accuracyByChildId.get(r.id) ?? 0,
-    }));
+    return rows.map((r) => {
+      const progress = progressByChildId.get(r.id);
+      return {
+        ...r,
+        accuracy: progress?.accuracy ?? 0,
+        level: progress?.level ?? 1,
+        streak: progress?.streak ?? 0,
+      };
+    });
   } catch {
     return null;
   }

@@ -13,8 +13,10 @@ export default function ParentProfile() {
   const { t } = useTranslation();
 
   const menuItems: { icon: IconName; label: string; onPress: () => void }[] = [
-    { icon: "crown", label: t("tabs.premium"), onPress: () => router.push("/parent/premium") },
+    { icon: "users", label: t("parentHome.manageChildren"), onPress: () => router.push("/parent/children") },
     { icon: "chartBar", label: t("tabs.progress"), onPress: () => router.push("/parent/progress") },
+    { icon: "clock", label: t("parentHome.dailyLimit"), onPress: () => router.push("/parent/daily-limit") },
+    { icon: "crown", label: t("tabs.premium"), onPress: () => router.push("/parent/premium") },
     { icon: "shield", label: t("parentProfile.privacyPolicy"), onPress: () => router.push("/parent/privacy") },
   ];
 

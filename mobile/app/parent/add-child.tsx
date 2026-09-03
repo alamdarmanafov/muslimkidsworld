@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { router } from "expo-router";
 import { useTranslation } from "react-i18next";
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Keyboard, Pressable, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../src/components/Button";
 import { Card } from "../../src/components/Card";
@@ -39,60 +39,65 @@ export default function AddChild() {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Text style={styles.title}>{t("addChild.title")}</Text>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={styles.flex}>
+          <Text style={styles.title}>{t("addChild.title")}</Text>
 
-      <Card style={styles.form}>
-        <Text style={styles.label}>{t("addChild.avatar")}</Text>
-        <View style={styles.avatarRow}>
-          {avatarOptions.map((emoji) => (
-            <Pressable
-              key={emoji}
-              onPress={() => setAvatar(emoji)}
-              style={[
-                styles.avatarOption,
-                avatar === emoji && styles.avatarOptionSelected,
-              ]}
-            >
-              <Text style={styles.avatarEmoji}>{emoji}</Text>
-            </Pressable>
-          ))}
+          <Card style={styles.form}>
+            <Text style={styles.label}>{t("addChild.avatar")}</Text>
+            <View style={styles.avatarRow}>
+              {avatarOptions.map((emoji) => (
+                <Pressable
+                  key={emoji}
+                  onPress={() => setAvatar(emoji)}
+                  style={[
+                    styles.avatarOption,
+                    avatar === emoji && styles.avatarOptionSelected,
+                  ]}
+                >
+                  <Text style={styles.avatarEmoji}>{emoji}</Text>
+                </Pressable>
+              ))}
+            </View>
+
+            <Text style={styles.label}>{t("addChild.name")}</Text>
+            <TextInput
+              style={styles.input}
+              value={name}
+              onChangeText={setName}
+              placeholder={t("addChild.namePlaceholder")}
+              placeholderTextColor={colors.inkMuted}
+            />
+
+            <Text style={styles.label}>{t("addChild.age")}</Text>
+            <TextInput
+              style={styles.input}
+              value={age}
+              onChangeText={setAge}
+              placeholder={t("addChild.agePlaceholder")}
+              keyboardType="number-pad"
+              placeholderTextColor={colors.inkMuted}
+            />
+          </Card>
+
+          {error ? <Text style={styles.errorText}>{error}</Text> : null}
+
+          <View style={styles.footer}>
+            <Button
+              label={loading ? t("addChild.creating") : t("addChild.generateCode")}
+              disabled={!canGenerate || loading}
+              onPress={handleSubmit}
+            />
+          </View>
         </View>
-
-        <Text style={styles.label}>{t("addChild.name")}</Text>
-        <TextInput
-          style={styles.input}
-          value={name}
-          onChangeText={setName}
-          placeholder={t("addChild.namePlaceholder")}
-          placeholderTextColor={colors.inkMuted}
-        />
-
-        <Text style={styles.label}>{t("addChild.age")}</Text>
-        <TextInput
-          style={styles.input}
-          value={age}
-          onChangeText={setAge}
-          placeholder={t("addChild.agePlaceholder")}
-          keyboardType="number-pad"
-          placeholderTextColor={colors.inkMuted}
-        />
-      </Card>
-
-      {error ? <Text style={styles.errorText}>{error}</Text> : null}
-
-      <View style={styles.footer}>
-        <Button
-          label={loading ? t("addChild.creating") : t("addChild.generateCode")}
-          disabled={!canGenerate || loading}
-          onPress={handleSubmit}
-        />
-      </View>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.background, padding: spacing.lg },
+  flex: { flex: 1 },
   title: { fontSize: 22, fontWeight: "800", color: colors.ink, marginBottom: spacing.md },
   form: { gap: spacing.xs },
   label: { fontSize: 13, fontWeight: "600", color: colors.inkMuted, marginTop: spacing.md },

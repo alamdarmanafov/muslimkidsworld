@@ -1,12 +1,14 @@
-import { router } from "expo-router";
+import { useCallback, useState } from "react";
+import { router, useFocusEffect } from "expo-router";
 import { useTranslation } from "react-i18next";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Avatar } from "../../../src/components/Avatar";
+import { Button } from "../../../src/components/Button";
 import { Card } from "../../../src/components/Card";
-import { Icon, type IconName } from "../../../src/components/icons";
+import { Icon } from "../../../src/components/icons";
 import { IconBadge, tones } from "../../../src/components/IconBadge";
-import { children } from "../../../src/data/mock";
+import { fetchChildren, type ParentChild } from "../../../src/lib/children";
 import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
 
 const weekStats = [
@@ -16,16 +18,19 @@ const weekStats = [
   { icon: "gift" as const, tone: tones.gold, labelKey: "parentHome.rewardsLabel", value: 3 },
 ];
 
-const parentTools: { icon: IconName; labelKey: string; href: string }[] = [
-  { icon: "chartBar", labelKey: "parentHome.learningProgress", href: "/parent/progress" },
-  { icon: "users", labelKey: "parentHome.manageChildren", href: "/parent/children" },
-  { icon: "clock", labelKey: "parentHome.dailyLimit", href: "/parent/daily-limit" },
-  { icon: "lock", labelKey: "parentHome.parentPinSafety", href: "/parent/profile" },
-  { icon: "smile", labelKey: "parentHome.settings", href: "/parent/profile" },
-];
-
 export default function ParentHome() {
   const { t } = useTranslation();
+  const [loading, setLoading] = useState(true);
+  const [children, setChildren] = useState<ParentChild[]>([]);
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchChildren().then((result) => {
+        setChildren(result ?? []);
+        setLoading(false);
+      });
+    }, []),
+  );
 
   return (
     <SafeAreaView style={styles.screen} edges={["top"]}>
@@ -33,7 +38,6 @@ export default function ParentHome() {
         <View style={styles.header}>
           <View>
             <Text style={styles.greeting}>{t("parentHome.goodEvening")}</Text>
-            <Text style={styles.name}>Ahmed 👋</Text>
           </View>
           <Text style={styles.bell}>🔔</Text>
         </View>
@@ -51,17 +55,23 @@ export default function ParentHome() {
           </Pressable>
         </View>
 
-        <View style={styles.childrenRow}>
-          {children.slice(0, 2).map((child) => (
-            <Card key={child.id} style={styles.childCard}>
-              <Avatar emoji={child.emoji} color={child.color} size={44} />
-              <Text style={styles.childName}>{child.name}</Text>
-              <Text style={styles.childMeta}>
-                {t("parentHome.level")} {child.level} · 🔥 {child.streak}
-              </Text>
-            </Card>
-          ))}
-        </View>
+        {loading ? (
+          <ActivityIndicator color={colors.primary} />
+        ) : children.length === 0 ? (
+          <Button label={t("parentChildren.addChild")} onPress={() => router.push("/parent/add-child")} />
+        ) : (
+          <View style={styles.childrenRow}>
+            {children.slice(0, 2).map((child) => (
+              <Card key={child.id} style={styles.childCard}>
+                <Avatar emoji={child.emoji} color={child.color} size={44} />
+                <Text style={styles.childName}>{child.name}</Text>
+                <Text style={styles.childMeta}>
+                  {t("parentHome.level")} {child.level} · 🔥 {child.streak}
+                </Text>
+              </Card>
+            ))}
+          </View>
+        )}
 
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>{t("parentHome.thisWeek")}</Text>
@@ -84,21 +94,6 @@ export default function ParentHome() {
           <Icon name="crown" size={18} color={colors.night} />
           <Text style={styles.premiumButtonText}>{t("parentHome.managePremium")}</Text>
         </Pressable>
-
-        <Text style={styles.sectionTitle}>{t("parentHome.parentTools")}</Text>
-        <View style={styles.toolsList}>
-          {parentTools.map((tool) => (
-            <Pressable
-              key={tool.labelKey}
-              style={styles.toolRow}
-              onPress={() => router.push(tool.href as never)}
-            >
-              <Icon name={tool.icon} size={18} color={colors.ink} />
-              <Text style={styles.toolLabel}>{t(tool.labelKey)}</Text>
-              <Icon name="arrowRight" size={16} color={colors.inkMuted} />
-            </Pressable>
-          ))}
-        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -114,7 +109,6 @@ const styles = StyleSheet.create({
     marginBottom: spacing.lg,
   },
   greeting: { fontFamily: fonts.body, fontSize: 14, color: colors.inkMuted },
-  name: { fontFamily: fonts.heading, fontSize: 22, color: colors.ink },
   bell: { fontSize: 22 },
   codeBox: {
     backgroundColor: colors.night,
@@ -170,16 +164,4 @@ const styles = StyleSheet.create({
     marginTop: spacing.lg,
   },
   premiumButtonText: { fontFamily: fonts.bodyBold, fontSize: 14, color: colors.night },
-  toolsList: { gap: spacing.sm },
-  toolRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: spacing.sm,
-    backgroundColor: colors.card,
-    borderRadius: radii.md,
-    paddingVertical: spacing.md,
-    paddingHorizontal: spacing.md,
-    ...shadow,
-  },
-  toolLabel: { flex: 1, fontFamily: fonts.bodyBold, fontSize: 14, color: colors.ink },
 });

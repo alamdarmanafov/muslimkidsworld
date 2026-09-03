@@ -122,7 +122,8 @@
   },
   "childProfile": {
     "parentMode": "Ebeveyn Modu",
-    "levelAge": "Seviye {{level}} · {{age}} yaşında"
+    "levelAge": "Seviye {{level}} · {{age}} yaşında",
+    "language": "Dil"
   },
   "parentProfile": {
     "account": "Hesap",

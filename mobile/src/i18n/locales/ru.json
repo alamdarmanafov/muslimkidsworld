@@ -124,7 +124,8 @@
   },
   "childProfile": {
     "parentMode": "Режим родителя",
-    "levelAge": "Уровень {{level}} · {{age}} лет"
+    "levelAge": "Уровень {{level}} · {{age}} лет",
+    "language": "Язык"
   },
   "parentProfile": {
     "account": "Аккаунт",
