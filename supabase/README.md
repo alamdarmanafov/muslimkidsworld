@@ -277,6 +277,32 @@ for real queries later is a small diff, not a rewrite.
       the hour; `select cron.unschedule('send-daily-reminders');` to
       stop it.
 
+## Admin panel
+
+`admin/index.html` — a single, dependency-free static file (loads
+`@supabase/supabase-js` from a CDN, no build step) for editing the
+content that's actually live-read from the database today: Quran text
+and translations, and achievements. Duas, Stories, and Quiz content
+still come from `mobile/src/data/mock.ts` + i18n, not these tables
+(see the stub note below), so this deliberately doesn't cover them
+yet — an editor for tables the app doesn't read would just be
+confusing.
+
+1. Run `0015_admin_panel.sql` (already included if you ran `supabase
+   db push` per the steps above).
+2. Flag your own account as admin, in the Supabase SQL Editor:
+   ```sql
+   update public.parents set is_admin = true where email = 'you@example.com';
+   ```
+3. Open `admin/index.html` directly in a browser (double-click it, or
+   `open admin/index.html`) — no server needed. First run asks for
+   your Project URL and anon key (Project Settings → API), which it
+   saves only in that browser's `localStorage`. Then sign in with the
+   same email/password as your parent account.
+4. To share it with other admins without emailing a file around, host
+   it anywhere that serves static files (Netlify, Vercel, GitHub
+   Pages, an S3 bucket) — it's one HTML file, nothing to build.
+
 ## What's still a stub / explicitly out of scope here
 
 - **Parent + child onboarding, the parent's Children list, and
@@ -359,10 +385,14 @@ for real queries later is a small diff, not a rewrite.
   (`external_provider`, `external_subscription_id`), but nothing
   writes to them yet — a real subscription still has to be created via
   `service_role` (e.g. from a billing webhook you'd add later).
-- **No admin-panel content management UI.** Content tables are
-  seeded once from mock data; there's no UI yet for editing
-  quran_surahs/duas/stories/quizzes/games/achievements beyond running
-  SQL or using the Supabase dashboard's table editor directly.
+- **Admin panel covers Quran + achievements, not everything.**
+  `admin/index.html` (see above) edits `quran_surahs`/`quran_verses`/
+  `quran_translations` and `achievements` — the content types the app
+  actually reads from the database. `duas`/`stories`/`quizzes`/`games`
+  still read from `mobile/src/data/mock.ts` + i18n (see below), so an
+  editor for those tables wouldn't do anything yet; extending the
+  admin panel to them is only worthwhile once those screens move off
+  mock data.
 - **"Daily limit reached" push notification wasn't built.** No table
   tracks minutes actually spent in the app — `daily_journeys.daily_limit_minutes`
   is a stub (see above), and `child_daily_activity` tracks whether

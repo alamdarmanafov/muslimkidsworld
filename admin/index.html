@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Muslim Kids World — Admin</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.4/dist/umd/supabase.js"></script>
+<style>
+  :root {
+    --ink: #1F2937;
+    --muted: #6B7280;
+    --bg: #F5F6FA;
+    --card: #FFFFFF;
+    --border: #E5E7EB;
+    --primary: #0C7BF1;
+    --primary-dark: #0A63C2;
+    --danger: #DC2626;
+    --danger-bg: #FEE2E2;
+    --success: #16A34A;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+  }
+  .center-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .card h1 { font-size: 18px; margin: 0 0 6px; }
+  .card p.hint { font-size: 13px; color: var(--muted); margin: 0 0 18px; line-height: 1.5; }
+  label { display: block; font-size: 13px; font-weight: 600; margin: 12px 0 4px; }
+  input, textarea, select {
+    width: 100%;
+    padding: 9px 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    background: #fff;
+    color: var(--ink);
+  }
+  textarea { resize: vertical; }
+  button {
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: var(--primary);
+    color: #fff;
+    padding: 10px 16px;
+    width: 100%;
+    margin-top: 18px;
+  }
+  .btn-primary:hover { background: var(--primary-dark); }
+  .btn-secondary {
+    background: var(--card);
+    color: var(--ink);
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+  }
+  .btn-danger {
+    background: var(--danger-bg);
+    color: var(--danger);
+    padding: 6px 10px;
+  }
+  .btn-small { font-size: 12px; padding: 5px 10px; }
+  .error-text { color: var(--danger); font-size: 13px; margin-top: 10px; }
+  .app-shell { min-height: 100vh; }
+  header.topbar {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  header.topbar h1 { font-size: 16px; margin: 0; }
+  .tabs { display: flex; gap: 8px; padding: 14px 20px 0; }
+  .tab-btn {
+    background: transparent;
+    padding: 8px 14px;
+    border-radius: 8px 8px 0 0;
+    color: var(--muted);
+    border-bottom: 2px solid transparent;
+  }
+  .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); background: var(--card); }
+  main { padding: 20px; max-width: 1200px; margin: 0 auto; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+  .quran-layout { display: grid; grid-template-columns: 260px 1fr; gap: 16px; align-items: start; }
+  .surah-list {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    max-height: 78vh;
+    overflow-y: auto;
+  }
+  .surah-list input { border-radius: 0; border: none; border-bottom: 1px solid var(--border); }
+  .surah-row {
+    padding: 9px 12px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+  }
+  .surah-row:hover { background: #F0F5FF; }
+  .surah-row.active { background: var(--primary); color: #fff; }
+  .surah-row .num { color: var(--muted); font-weight: 700; width: 28px; }
+  .surah-row.active .num { color: rgba(255,255,255,0.8); }
+  .verses-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .verses-toolbar { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+  .verses-toolbar select { width: auto; }
+  .verse-row { border-bottom: 1px solid var(--border); padding: 12px 0; display: grid; grid-template-columns: 40px 1fr; gap: 10px; }
+  .verse-row:last-child { border-bottom: none; }
+  .verse-num { font-weight: 700; color: var(--muted); padding-top: 8px; }
+  .verse-fields { display: flex; flex-direction: column; gap: 6px; }
+  .verse-fields textarea[dir="rtl"] { text-align: right; font-size: 16px; }
+  .verse-actions { display: flex; align-items: center; gap: 10px; }
+  .saved-tag { font-size: 12px; color: var(--success); opacity: 0; transition: opacity 0.3s; }
+  .saved-tag.show { opacity: 1; }
+  table.ach-table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  table.ach-table th, table.ach-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); font-size: 13px; text-align: left; vertical-align: top; }
+  table.ach-table th { background: #FAFAFC; font-weight: 700; color: var(--muted); }
+  table.ach-table input, table.ach-table textarea { font-size: 13px; padding: 6px 8px; }
+  table.ach-table textarea { min-height: 44px; }
+  .muted { color: var(--muted); font-size: 12px; }
+  .empty-state { text-align: center; color: var(--muted); padding: 40px; }
+</style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script>
+const LS_URL = "mkw_admin_sb_url";
+const LS_KEY = "mkw_admin_sb_anon_key";
+
+const root = document.getElementById("root");
+
+function el(tag, attrs, children) {
+  const node = document.createElement(tag);
+  if (attrs) for (const [k, v] of Object.entries(attrs)) {
+    if (k === "text") node.textContent = v;
+    else if (k.startsWith("on")) node.addEventListener(k.slice(2).toLowerCase(), v);
+    else node.setAttribute(k, v);
+  }
+  if (children) children.forEach((c) => c && node.appendChild(c));
+  return node;
+}
+
+// ---------------------------------------------------------------------
+// Step 1: Supabase project config (URL + anon key). Stored only in
+// this browser's localStorage, never in the repo — same "public but
+// project-specific" values mobile/.env holds for the app itself. The
+// anon key is safe to expose (RLS is what actually protects data);
+// what protects writes here is the is_admin flag + RLS policies from
+// 0015_admin_panel.sql, not this key.
+// ---------------------------------------------------------------------
+function renderSetup() {
+  root.innerHTML = "";
+  const urlInput = el("input", { type: "text", placeholder: "https://xxxx.supabase.co" });
+  const keyInput = el("input", { type: "text", placeholder: "anon public key" });
+  const err = el("p", { class: "error-text" });
+
+  const form = el("div", { class: "card" }, [
+    el("h1", { text: "Supabase layihəni bağla" }),
+    el("p", { class: "hint", text: "Supabase Dashboard → Project Settings → API səhifəsindən Project URL və anon/public key-i buraya köçür. Bu, yalnız bu brauzerdə saxlanılır." }),
+    el("label", { text: "Project URL" }),
+    urlInput,
+    el("label", { text: "Anon public key" }),
+    keyInput,
+    err,
+    el("button", { class: "btn-primary", text: "Davam et", onClick: () => {
+      const url = urlInput.value.trim();
+      const key = keyInput.value.trim();
+      if (!url || !key) { err.textContent = "Hər iki sahəni doldur."; return; }
+      localStorage.setItem(LS_URL, url);
+      localStorage.setItem(LS_KEY, key);
+      init();
+    }}),
+  ]);
+  root.appendChild(el("div", { class: "center-screen" }, [form]));
+}
+
+// ---------------------------------------------------------------------
+// Step 2: login (Supabase Auth email/password — the same accounts the
+// mobile app's parents sign in with; is_admin decides who actually
+// gets in here).
+// ---------------------------------------------------------------------
+function renderLogin(supabase) {
+  root.innerHTML = "";
+  const emailInput = el("input", { type: "email", placeholder: "sen@example.com" });
+  const passInput = el("input", { type: "password", placeholder: "••••••••" });
+  const err = el("p", { class: "error-text" });
+
+  const submit = async () => {
+    err.textContent = "";
+    const { error } = await supabase.auth.signInWithPassword({
+      email: emailInput.value.trim(),
+      password: passInput.value,
+    });
+    if (error) { err.textContent = error.message; return; }
+    checkAdminAndRender(supabase);
+  };
+
+  const form = el("div", { class: "card" }, [
+    el("h1", { text: "Admin girişi" }),
+    el("p", { class: "hint", text: "Yalnız admin işarəli hesablar giriş edə bilər." }),
+    el("label", { text: "E-poçt" }),
+    emailInput,
+    el("label", { text: "Şifrə" }),
+    passInput,
+    err,
+    el("button", { class: "btn-primary", text: "Daxil ol", onClick: submit }),
+  ]);
+  passInput.addEventListener("keydown", (e) => { if (e.key === "Enter") submit(); });
+  root.appendChild(el("div", { class: "center-screen" }, [form]));
+}
+
+function renderDenied(supabase) {
+  root.innerHTML = "";
+  const card = el("div", { class: "card" }, [
+    el("h1", { text: "İcazə yoxdur" }),
+    el("p", { class: "hint", text: "Bu hesabın admin girişi yoxdur. Öz hesabını admin etmək üçün Supabase SQL Editor-da: update public.parents set is_admin = true where email = '...';" }),
+    el("button", { class: "btn-primary", text: "Çıxış", onClick: async () => { await supabase.auth.signOut(); renderLogin(supabase); } }),
+  ]);
+  root.appendChild(el("div", { class: "center-screen" }, [card]));
+}
+
+async function checkAdminAndRender(supabase) {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) { renderLogin(supabase); return; }
+  const { data: parent, error } = await supabase.from("parents").select("is_admin").eq("id", user.id).maybeSingle();
+  if (error || !parent || !parent.is_admin) { renderDenied(supabase); return; }
+  renderApp(supabase);
+}
+
+// ---------------------------------------------------------------------
+// Step 3: the admin app itself — Quran text/translations and
+// achievements, the two content types actually read from the
+// database today (see 0015_admin_panel.sql's header comment).
+// ---------------------------------------------------------------------
+const LANGS = [
+  { code: "az", label: "Azərbaycan" },
+  { code: "en", label: "English" },
+  { code: "ru", label: "Русский" },
+  { code: "tr", label: "Türkçe" },
+];
+
+function renderApp(supabase) {
+  root.innerHTML = "";
+
+  const quranPanel = el("div", { class: "panel active", id: "panel-quran" });
+  const achPanel = el("div", { class: "panel", id: "panel-ach" });
+
+  const tabQuran = el("button", { class: "tab-btn active", text: "Quran" });
+  const tabAch = el("button", { class: "tab-btn", text: "Nailiyyətlər" });
+
+  function activateTab(name) {
+    tabQuran.classList.toggle("active", name === "quran");
+    tabAch.classList.toggle("active", name === "ach");
+    quranPanel.classList.toggle("active", name === "quran");
+    achPanel.classList.toggle("active", name === "ach");
+  }
+  tabQuran.addEventListener("click", () => activateTab("quran"));
+  tabAch.addEventListener("click", () => activateTab("ach"));
+
+  const shell = el("div", { class: "app-shell" }, [
+    el("header", { class: "topbar" }, [
+      el("h1", { text: "Muslim Kids World — Admin" }),
+      el("button", { class: "btn-secondary btn-small", text: "Çıxış", onClick: async () => {
+        await supabase.auth.signOut();
+        renderLogin(supabase);
+      }}),
+    ]),
+    el("div", { class: "tabs" }, [tabQuran, tabAch]),
+    el("main", {}, [quranPanel, achPanel]),
+  ]);
+  root.appendChild(shell);
+
+  mountQuranPanel(supabase, quranPanel);
+  mountAchievementsPanel(supabase, achPanel);
+}
+
+async function mountQuranPanel(supabase, panel) {
+  panel.innerHTML = "";
+  const searchInput = el("input", { type: "text", placeholder: "Axtar (ad və ya nömrə)..." });
+  const listEl = el("div", {});
+  const detailEl = el("div", { class: "verses-card" }, [el("p", { class: "empty-state", text: "Soldan bir surə seç." })]);
+
+  panel.appendChild(el("div", { class: "quran-layout" }, [
+    el("div", { class: "surah-list" }, [searchInput, listEl]),
+    detailEl,
+  ]));
+
+  const { data: surahs, error } = await supabase
+    .from("quran_surahs")
+    .select("id, chapter, name, arabic_name")
+    .order("chapter", { ascending: true });
+
+  if (error) {
+    listEl.appendChild(el("p", { class: "empty-state", text: "Yüklənmədi: " + error.message }));
+    return;
+  }
+
+  let activeChapter = null;
+
+  function renderList(filterText) {
+    listEl.innerHTML = "";
+    const q = (filterText || "").trim().toLowerCase();
+    (surahs || [])
+      .filter((s) => !q || s.name.toLowerCase().includes(q) || String(s.chapter).includes(q))
+      .forEach((s) => {
+        const row = el("div", { class: "surah-row" + (s.chapter === activeChapter ? " active" : "") }, [
+          el("span", { class: "num", text: s.chapter }),
+          el("span", { text: s.name }),
+        ]);
+        row.addEventListener("click", () => {
+          activeChapter = s.chapter;
+          renderList(searchInput.value);
+          loadSurahDetail(supabase, detailEl, s);
+        });
+        listEl.appendChild(row);
+      });
+  }
+  searchInput.addEventListener("input", () => renderList(searchInput.value));
+  renderList("");
+}
+
+async function loadSurahDetail(supabase, detailEl, surah) {
+  detailEl.innerHTML = "";
+  detailEl.appendChild(el("p", { class: "muted", text: "Yüklənir..." }));
+
+  const langSelect = el("select", {});
+  LANGS.forEach((l) => langSelect.appendChild(el("option", { value: l.code, text: l.label })));
+
+  const [{ data: verses, error: vErr }, { data: translations, error: tErr }] = await Promise.all([
+    supabase.from("quran_verses").select("verse_number, arabic_text").eq("chapter", surah.chapter).order("verse_number"),
+    supabase.from("quran_translations").select("verse_number, lang, translation_text").eq("chapter", surah.chapter),
+  ]);
+
+  detailEl.innerHTML = "";
+  if (vErr || tErr) {
+    detailEl.appendChild(el("p", { class: "empty-state", text: "Yüklənmədi: " + (vErr || tErr).message }));
+    return;
+  }
+
+  const versesList = el("div", {});
+
+  function translationFor(verseNumber, lang) {
+    const row = (translations || []).find((t) => t.verse_number === verseNumber && t.lang === lang);
+    return row ? row.translation_text : "";
+  }
+
+  function renderVerses(lang) {
+    versesList.innerHTML = "";
+    (verses || []).forEach((v) => {
+      const arabicArea = el("textarea", { dir: "rtl", rows: "2" });
+      arabicArea.value = v.arabic_text;
+      const translationArea = el("textarea", { rows: "2" });
+      translationArea.value = translationFor(v.verse_number, lang);
+      const savedTag = el("span", { class: "saved-tag", text: "✓ Saxlanıldı" });
+
+      const saveBtn = el("button", { class: "btn-secondary btn-small", text: "Saxla", onClick: async () => {
+        saveBtn.disabled = true;
+        const [{ error: e1 }, { error: e2 }] = await Promise.all([
+          supabase.from("quran_verses").update({ arabic_text: arabicArea.value }).eq("chapter", surah.chapter).eq("verse_number", v.verse_number),
+          supabase.from("quran_translations").upsert(
+            { chapter: surah.chapter, verse_number: v.verse_number, lang, translator: "admin", translation_text: translationArea.value },
+            { onConflict: "chapter,verse_number,lang" },
+          ),
+        ]);
+        saveBtn.disabled = false;
+        if (e1 || e2) { alert("Xəta: " + (e1 || e2).message); return; }
+        savedTag.classList.add("show");
+        setTimeout(() => savedTag.classList.remove("show"), 1500);
+      }});
+
+      versesList.appendChild(el("div", { class: "verse-row" }, [
+        el("div", { class: "verse-num", text: v.verse_number }),
+        el("div", { class: "verse-fields" }, [
+          arabicArea,
+          translationArea,
+          el("div", { class: "verse-actions" }, [saveBtn, savedTag]),
+        ]),
+      ]));
+    });
+  }
+
+  langSelect.addEventListener("change", () => renderVerses(langSelect.value));
+
+  detailEl.appendChild(el("div", { class: "verses-toolbar" }, [
+    el("strong", { text: surah.name + " (" + surah.arabic_name + ")" }),
+    el("span", { class: "muted", text: "Tərcümə dili:" }),
+    langSelect,
+  ]));
+  detailEl.appendChild(versesList);
+  renderVerses(langSelect.value);
+}
+
+async function mountAchievementsPanel(supabase, panel) {
+  panel.innerHTML = "";
+  const table = el("table", { class: "ach-table" });
+  const thead = el("thead", {}, [el("tr", {}, [
+    el("th", { text: "Slug" }),
+    el("th", { text: "Ad (label)" }),
+    el("th", { text: "İkon" }),
+    el("th", { text: "Ton" }),
+    el("th", { text: "Sıra" }),
+    el("th", { text: "Şərt (JSON)" }),
+    el("th", { text: "" }),
+  ])]);
+  const tbody = el("tbody", {});
+  table.appendChild(thead);
+  table.appendChild(tbody);
+
+  const addBtn = el("button", { class: "btn-secondary btn-small", text: "+ Yeni nailiyyət" });
+  panel.appendChild(el("div", { style: "margin-bottom: 12px;" }, [addBtn]));
+  panel.appendChild(table);
+
+  async function load() {
+    tbody.innerHTML = "";
+    const { data, error } = await supabase.from("achievements").select("*").order("sort_order");
+    if (error) {
+      tbody.appendChild(el("tr", {}, [el("td", { colspan: "7", text: "Yüklənmədi: " + error.message })]));
+      return;
+    }
+    (data || []).forEach((a) => tbody.appendChild(achievementRow(a)));
+  }
+
+  function achievementRow(a) {
+    const slugInput = el("input", { value: a.slug || "" });
+    const labelInput = el("input", { value: a.label || "" });
+    const iconInput = el("input", { value: a.icon || "" });
+    const toneInput = el("input", { value: a.tone || "" });
+    const sortInput = el("input", { type: "number", value: a.sort_order ?? 0 });
+    const criteriaArea = el("textarea", { rows: "2" });
+    criteriaArea.value = a.criteria ? JSON.stringify(a.criteria) : "";
+
+    const saveBtn = el("button", { class: "btn-secondary btn-small", text: "Saxla" });
+    const delBtn = el("button", { class: "btn-danger btn-small", text: "Sil" });
+
+    saveBtn.addEventListener("click", async () => {
+      let criteria = null;
+      if (criteriaArea.value.trim()) {
+        try { criteria = JSON.parse(criteriaArea.value); }
+        catch { alert("Şərt sahəsi düzgün JSON deyil."); return; }
+      }
+      saveBtn.disabled = true;
+      const { error } = await supabase.from("achievements").update({
+        slug: slugInput.value.trim(),
+        label: labelInput.value.trim(),
+        icon: iconInput.value.trim(),
+        tone: toneInput.value.trim(),
+        sort_order: Number(sortInput.value) || 0,
+        criteria,
+      }).eq("id", a.id);
+      saveBtn.disabled = false;
+      if (error) { alert("Xəta: " + error.message); return; }
+      saveBtn.textContent = "✓";
+      setTimeout(() => { saveBtn.textContent = "Saxla"; }, 1200);
+    });
+
+    delBtn.addEventListener("click", async () => {
+      if (!confirm(a.slug + " silinsin?")) return;
+      const { error } = await supabase.from("achievements").delete().eq("id", a.id);
+      if (error) { alert("Xəta: " + error.message); return; }
+      load();
+    });
+
+    return el("tr", {}, [
+      el("td", {}, [slugInput]),
+      el("td", {}, [labelInput]),
+      el("td", {}, [iconInput]),
+      el("td", {}, [toneInput]),
+      el("td", {}, [sortInput]),
+      el("td", {}, [criteriaArea]),
+      el("td", {}, [saveBtn, delBtn]),
+    ]);
+  }
+
+  addBtn.addEventListener("click", async () => {
+    const slug = prompt("Yeni nailiyyətin slug-ı (məs: night-owl):");
+    if (!slug) return;
+    const { error } = await supabase.from("achievements").insert({
+      slug: slug.trim(),
+      label: slug.trim(),
+      icon: "star",
+      tone: "gold",
+      sort_order: 99,
+    });
+    if (error) { alert("Xəta: " + error.message); return; }
+    load();
+  });
+
+  load();
+}
+
+// ---------------------------------------------------------------------
+function init() {
+  const url = localStorage.getItem(LS_URL);
+  const key = localStorage.getItem(LS_KEY);
+  if (!url || !key) { renderSetup(); return; }
+
+  const supabase = window.supabase.createClient(url, key);
+  supabase.auth.getSession().then(({ data: { session } }) => {
+    if (session) checkAdminAndRender(supabase);
+    else renderLogin(supabase);
+  });
+}
+
+init();
+</script>
+</body>
+</html>
