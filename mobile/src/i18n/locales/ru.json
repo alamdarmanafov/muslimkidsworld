@@ -183,7 +183,8 @@
     "title": "Коран",
     "surah": "Сура {{name}}",
     "translatedBy": "Перевод: {{name}}",
-    "nextSurah": "Далее: {{name}}"
+    "nextSurah": "Далее: {{name}}",
+    "unavailable": "Содержимое Корана ещё не загружено. Загляните позже."
   },
   "dua": {
     "title": "Дуа",

@@ -1,0 +1,8 @@
+{
+  "name": "muslim-kids-world-supabase-scripts",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.112.4"
+  }
+}

@@ -2728,20 +2728,6 @@ export const latestReward: Reward = {
   unlockLevel: 12,
 };
 
-export type QuranSurah = {
-  id: string;
-  chapter: number;
-  arabicName: string;
-  locked: boolean;
-};
-
-export const quranSurahs: QuranSurah[] = [
-  { id: "al-fatiha", chapter: 1, arabicName: "الفاتحة", locked: false },
-  { id: "an-nas", chapter: 114, arabicName: "الناس", locked: false },
-  { id: "al-falaq", chapter: 113, arabicName: "الفلق", locked: false },
-  { id: "al-ikhlas", chapter: 112, arabicName: "الإخلاص", locked: false },
-];
-
 export type DuaCategory = "Morning" | "Evening" | "Sleep" | "Eat";
 
 export type Dua = {

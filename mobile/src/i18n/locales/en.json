@@ -181,7 +181,8 @@
     "title": "Quran",
     "surah": "Surah {{name}}",
     "translatedBy": "Translation: {{name}}",
-    "nextSurah": "Next: {{name}}"
+    "nextSurah": "Next: {{name}}",
+    "unavailable": "Quran content hasn't loaded yet. Check back soon."
   },
   "dua": {
     "title": "Dua",

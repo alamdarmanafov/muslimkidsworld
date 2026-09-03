@@ -181,7 +181,8 @@
     "title": "Kur'an",
     "surah": "{{name}} Suresi",
     "translatedBy": "Çeviri: {{name}}",
-    "nextSurah": "Sıradaki: {{name}}"
+    "nextSurah": "Sıradaki: {{name}}",
+    "unavailable": "Kuran içeriği henüz yüklenmedi. Daha sonra tekrar dene."
   },
   "dua": {
     "title": "Dua",

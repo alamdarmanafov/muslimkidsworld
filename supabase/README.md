@@ -6,18 +6,20 @@ can be reviewed before being applied. A live project now exists
 (`EXPO_PUBLIC_SUPABASE_URL` / `EXPO_PUBLIC_SUPABASE_ANON_KEY` are set
 in `mobile/.env`) and its tables are up through migration `0008`, with
 `get-child-progress` and `record-quiz-result` (achievement-aware)
-deployed. **`0009_parent_pin.sql` and the `delete-account` /
-`set-parent-pin` / `verify-parent-pin` functions have been written but
-not yet deployed to that project** — the environment these were
-written in has no network access to `supabase.co` (organization
-egress policy), so `supabase db push` and `supabase functions deploy`
-for those still need to be run from a machine that does. See "Taking
-this live" below for the exact commands. Most of the app — Quran,
-Dua, Stories, quiz content, Games — still reads from
-`mobile/src/data/mock.ts`; parent/child onboarding, the parent's real
-Children list (add/delete), progress tracking, achievement badges,
-account deletion, and the real Parent Gate PIN call this backend so
-far.
+deployed. **`0009_parent_pin.sql`, `0010_quran_verses.sql`, and the
+`delete-account` / `set-parent-pin` / `verify-parent-pin` functions
+have been written but not yet deployed to that project** — the
+environment these were written in has no network access to
+`supabase.co` (organization egress policy), so `supabase db push` and
+`supabase functions deploy` for those still need to be run from a
+machine that does. See "Taking this live" below for the exact
+commands. The Quran is now a real, live-fetched 114-surah feature (see
+`0010_quran_verses.sql` and `supabase/scripts/import-quran.mjs`
+below) — everything else (Dua, Stories, quiz content, Games) still
+reads from `mobile/src/data/mock.ts`. Parent/child onboarding, the
+parent's real Children list (add/delete), progress tracking,
+achievement badges, account deletion, and the real Parent Gate PIN
+call this backend too.
 
 ## What's here
 
@@ -43,10 +45,28 @@ supabase/
 │   │                                criteria onto the 6 achievements
 │   │                                from 0005, so record-quiz-result
 │   │                                can award them automatically
-│   └── 0009_parent_pin.sql         adds families.pin_hash — a real,
-│                                    parent-set Parent Gate PIN,
-│                                    replacing mock.ts's hard-coded
-│                                    "1234" every install used to share
+│   ├── 0009_parent_pin.sql         adds families.pin_hash — a real,
+│   │                                parent-set Parent Gate PIN,
+│   │                                replacing mock.ts's hard-coded
+│   │                                "1234" every install used to share
+│   └── 0010_quran_verses.sql       adds a `chapter` number to
+│                                    quran_surahs (it only ever had 4
+│                                    hand-picked rows, keyed by slug,
+│                                    before) plus quran_verses /
+│                                    quran_translations — schema only,
+│                                    see scripts/import-quran.mjs below
+│                                    for how the actual 114 surahs get
+│                                    in
+├── scripts/
+│   └── import-quran.mjs            one-time script, run from a machine
+│                                    with real internet access: pulls
+│                                    all 114 surahs (Arabic + 4
+│                                    translations) from a public Quran
+│                                    API and upserts them into the
+│                                    tables above — see its header
+│                                    comment for why this is a script
+│                                    you run rather than verse text
+│                                    typed into a migration
 └── functions/
     ├── generate-family-code/       parent generates a 6-digit code
     ├── redeem-family-code/         child device redeems a code once
@@ -147,6 +167,18 @@ for real queries later is a small diff, not a rewrite.
    supabase gen types typescript --linked > mobile/src/lib/database.types.ts
    ```
 
+8. **Import the full Quran** (once, after `0010_quran_verses.sql` has
+   been pushed) — from a machine with real internet access:
+   ```
+   cd supabase/scripts
+   npm install
+   SUPABASE_URL=https://<your-project-ref>.supabase.co \
+   SUPABASE_SERVICE_ROLE_KEY=<service role key, from Settings → API> \
+   node import-quran.mjs
+   ```
+   Takes a few minutes (114 surahs × Arabic + 4 translations, ~31,000
+   rows). Safe to re-run — every write is an upsert.
+
 ## What's still a stub / explicitly out of scope here
 
 - **Parent + child onboarding, the parent's Children list, and
@@ -167,11 +199,15 @@ for real queries later is a small diff, not a rewrite.
   Progress and Rewards tabs (`mobile/app/child/(tabs)/progress.tsx`,
   `rewards.tsx`) and the quiz screen (`mobile/app/child/quiz.tsx`)
   call `get-child-progress` / `record-quiz-result` through
-  `mobile/src/lib/childProgress.ts`. Everything else (Quran, Dua,
-  Stories, the quiz *content* itself, Games, the achievement-badge
-  grid on the Rewards tab) still reads from `mobile/src/data/mock.ts`
-  — swapping each of those over to the matching content table is
-  still a follow-up, one screen at a time.
+  `mobile/src/lib/childProgress.ts`. The Quran (`app/child/quran.tsx`,
+  `app/child/quran/[id].tsx`) is real too, via `mobile/src/lib/quran.ts`
+  — all 114 surahs, Arabic text and 4 translations, from
+  `quran_surahs`/`quran_verses`/`quran_translations` (see
+  `0010_quran_verses.sql` and `scripts/import-quran.mjs` above).
+  Everything else (Dua, Stories, the quiz *content* itself, Games, the
+  achievement-badge grid on the Rewards tab) still reads from
+  `mobile/src/data/mock.ts` — swapping each of those over to the
+  matching content table is still a follow-up, one screen at a time.
 - **No child auth.** There is no separate Supabase auth role for a
   child's own session. Today, "child access" means either the parent's
   authenticated session (RLS-scoped to their family) or a service-role

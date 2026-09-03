@@ -1,22 +1,42 @@
+import { useEffect, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import { useTranslation } from "react-i18next";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../../../src/components/icons";
-import { quranSurahs } from "../../../src/data/mock";
-import { getArabicVerses, getSurahVerses, getTranslatorName } from "../../../src/data/quran";
+import {
+  fetchQuranSurahList,
+  fetchSurahDetail,
+  type QuranSurahDetail,
+  type QuranSurahListItem,
+} from "../../../src/lib/quran";
 import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
 
 export default function SurahDetail() {
   const { t, i18n } = useTranslation();
   const { id } = useLocalSearchParams<{ id: string }>();
-  const surahIndex = quranSurahs.findIndex((s) => s.id === id);
-  const surah = quranSurahs[surahIndex] ?? quranSurahs[0];
-  const nextSurah = quranSurahs[surahIndex + 1];
+  const [loading, setLoading] = useState(true);
+  const [surah, setSurah] = useState<QuranSurahDetail | null>(null);
+  const [nextSurah, setNextSurah] = useState<QuranSurahListItem | null>(null);
 
-  const arabicVerses = getArabicVerses(surah.chapter);
-  const translatedVerses = getSurahVerses(surah.chapter, i18n.language);
-  const translator = getTranslatorName(i18n.language);
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    Promise.all([fetchSurahDetail(id, i18n.language), fetchQuranSurahList()]).then(
+      ([detail, list]) => {
+        if (cancelled) return;
+        setSurah(detail);
+        if (detail && list) {
+          const next = list.find((s) => s.chapter === detail.chapter + 1);
+          setNextSurah(next ?? null);
+        }
+        setLoading(false);
+      },
+    );
+    return () => {
+      cancelled = true;
+    };
+  }, [id, i18n.language]);
 
   return (
     <SafeAreaView style={styles.screen} edges={["top"]}>
@@ -24,35 +44,45 @@ export default function SurahDetail() {
         <Pressable onPress={() => router.back()} style={styles.backBtn}>
           <Icon name="arrowRight" size={18} color={colors.ink} style={styles.backIcon} />
         </Pressable>
-        <Text style={styles.title}>{t(`content.quran.${surah.id}`)}</Text>
-        <Text style={styles.arabicTitle}>{surah.arabicName}</Text>
+        <Text style={styles.title}>{surah?.name ?? ""}</Text>
+        <Text style={styles.arabicTitle}>{surah?.arabicName ?? ""}</Text>
       </View>
 
-      <ScrollView contentContainerStyle={styles.content}>
-        {arabicVerses.map((arabic, i) => (
-          <View key={i} style={styles.verseCard}>
-            <View style={styles.verseBadge}>
-              <Text style={styles.verseBadgeText}>{i + 1}</Text>
+      {loading ? (
+        <ActivityIndicator color={colors.primary} style={{ marginTop: spacing.xl }} />
+      ) : !surah ? (
+        <Text style={styles.emptyText}>{t("quran.unavailable")}</Text>
+      ) : (
+        <ScrollView contentContainerStyle={styles.content}>
+          {surah.verses.map((verse) => (
+            <View key={verse.verseNumber} style={styles.verseCard}>
+              <View style={styles.verseBadge}>
+                <Text style={styles.verseBadgeText}>{verse.verseNumber}</Text>
+              </View>
+              <Text style={styles.arabicText}>{verse.arabic}</Text>
+              <Text style={styles.translationText}>{verse.translation}</Text>
             </View>
-            <Text style={styles.arabicText}>{arabic}</Text>
-            <Text style={styles.translationText}>{translatedVerses[i]}</Text>
-          </View>
-        ))}
+          ))}
 
-        <Text style={styles.translatorNote}>{t("quran.translatedBy", { name: translator })}</Text>
-
-        {nextSurah ? (
-          <Pressable
-            style={styles.nextBtn}
-            onPress={() => router.replace(`/child/quran/${nextSurah.id}`)}
-          >
-            <Text style={styles.nextBtnText}>
-              {t("quran.nextSurah", { name: t(`content.quran.${nextSurah.id}`) })}
+          {surah.translator ? (
+            <Text style={styles.translatorNote}>
+              {t("quran.translatedBy", { name: surah.translator })}
             </Text>
-            <Icon name="arrowRight" size={16} color="#FFFFFF" />
-          </Pressable>
-        ) : null}
-      </ScrollView>
+          ) : null}
+
+          {nextSurah ? (
+            <Pressable
+              style={styles.nextBtn}
+              onPress={() => router.replace(`/child/quran/${nextSurah.slug}`)}
+            >
+              <Text style={styles.nextBtnText}>
+                {t("quran.nextSurah", { name: nextSurah.name })}
+              </Text>
+              <Icon name="arrowRight" size={16} color="#FFFFFF" />
+            </Pressable>
+          ) : null}
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 }
@@ -80,6 +110,14 @@ const styles = StyleSheet.create({
   title: { fontFamily: fonts.heading, fontSize: 16, color: colors.ink },
   arabicTitle: { fontFamily: fonts.bodyBold, fontSize: 16, color: colors.ink },
   content: { padding: spacing.lg, paddingTop: 0, gap: spacing.md },
+  emptyText: {
+    fontFamily: fonts.body,
+    fontSize: 13,
+    color: colors.inkMuted,
+    textAlign: "center",
+    marginTop: spacing.xl,
+    paddingHorizontal: spacing.xl,
+  },
   verseCard: {
     backgroundColor: colors.card,
     borderRadius: radii.lg,

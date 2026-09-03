@@ -230,6 +230,7 @@ export type Database = {
         Row: {
           id: string;
           slug: string;
+          chapter: number | null;
           name: string;
           arabic_name: string;
           juz: string;
@@ -242,6 +243,7 @@ export type Database = {
         Insert: {
           id?: string;
           slug: string;
+          chapter?: number | null;
           name: string;
           arabic_name: string;
           juz: string;
@@ -252,6 +254,38 @@ export type Database = {
           updated_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["quran_surahs"]["Insert"]>;
+        Relationships: [];
+      };
+      quran_verses: {
+        Row: {
+          chapter: number;
+          verse_number: number;
+          arabic_text: string;
+        };
+        Insert: {
+          chapter: number;
+          verse_number: number;
+          arabic_text: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["quran_verses"]["Insert"]>;
+        Relationships: [];
+      };
+      quran_translations: {
+        Row: {
+          chapter: number;
+          verse_number: number;
+          lang: string;
+          translator: string;
+          translation_text: string;
+        };
+        Insert: {
+          chapter: number;
+          verse_number: number;
+          lang: string;
+          translator: string;
+          translation_text: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["quran_translations"]["Insert"]>;
         Relationships: [];
       };
       duas: {
