@@ -22,6 +22,7 @@
 
 import { createClient } from "npm:@supabase/supabase-js@2.112.4";
 import { corsHeaders, jsonResponse } from "../_shared/cors.ts";
+import { isResolveError, resolveDeviceChild } from "../_shared/resolveChild.ts";
 
 type Body = { token?: unknown; deviceId?: unknown };
 
@@ -86,37 +87,13 @@ Deno.serve(async (req: Request) => {
       return jsonResponse({ error: "deviceId is required" }, 400);
     }
 
-    const { data: boundCode, error: codeError } = await adminClient
-      .from("family_codes")
-      .select("family_id")
-      .eq("bound_device_id", body.deviceId)
-      .is("revoked_at", null)
-      .order("bound_at", { ascending: false })
-      .limit(1)
-      .maybeSingle();
-    if (codeError) {
-      return jsonResponse({ error: codeError.message }, 500);
-    }
-    if (!boundCode) {
-      return jsonResponse({ error: "Device is not bound to a family" }, 404);
-    }
-
-    const { data: child, error: childError } = await adminClient
-      .from("children")
-      .select("id")
-      .eq("family_id", boundCode.family_id)
-      .order("created_at", { ascending: true })
-      .limit(1)
-      .maybeSingle();
-    if (childError) {
-      return jsonResponse({ error: childError.message }, 500);
-    }
-    if (!child) {
-      return jsonResponse({ error: "No child found for this family" }, 404);
+    const resolved = await resolveDeviceChild(adminClient, body.deviceId);
+    if (isResolveError(resolved)) {
+      return jsonResponse({ error: resolved.error }, resolved.status);
     }
 
     ownerType = "child";
-    ownerId = child.id as string;
+    ownerId = resolved.childId;
   }
 
   const { error: upsertError } = await adminClient.from("push_tokens").upsert(

@@ -127,11 +127,19 @@
   },
   "childProfile": {
     "parentMode": "Valideyn rejimi",
+    "switchChild": "Uşaq dəyiş",
     "levelAge": "Səviyyə {{level}} · {{age}} yaşında",
     "language": "Dil",
     "signOutConfirmTitle": "Çıxış edilsin?",
     "signOutConfirmBody": "Bu cihaz ailə koduna görə bağlantısını itirəcək. Yenidən bağlamaq üçün valideyndən yeni kod lazım olacaq.",
     "signedOut": "Çıxış edildi"
+  },
+  "childSelect": {
+    "title": "Uşaq seç",
+    "subtitle": "Bu cihazda hansı uşağın aktiv olduğunu seç. Dəyişmək üçün Valideyn PIN-i lazımdır.",
+    "confirmPinTitle": "{{name}} üçün aktivləşdir",
+    "confirmPinSubtitle": "Təsdiqləmək üçün Valideyn PIN-ini daxil et",
+    "switched": "{{name}} bu cihazda aktivləşdirildi"
   },
   "parentProfile": {
     "account": "Hesab",

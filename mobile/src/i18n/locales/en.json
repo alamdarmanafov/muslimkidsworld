@@ -127,11 +127,19 @@
   },
   "childProfile": {
     "parentMode": "Parent Mode",
+    "switchChild": "Switch child",
     "levelAge": "Level {{level}} · {{age}} years old",
     "language": "Language",
     "signOutConfirmTitle": "Sign out?",
     "signOutConfirmBody": "This device will lose its connection to the family code. A parent will need to give it a new code to reconnect.",
     "signedOut": "Signed out"
+  },
+  "childSelect": {
+    "title": "Choose child",
+    "subtitle": "Pick which child is active on this device. Switching needs the Parent Gate PIN.",
+    "confirmPinTitle": "Activate for {{name}}",
+    "confirmPinSubtitle": "Enter the Parent Gate PIN to confirm",
+    "switched": "{{name}} is now active on this device"
   },
   "parentProfile": {
     "account": "Account",

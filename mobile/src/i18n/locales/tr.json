@@ -127,11 +127,19 @@
   },
   "childProfile": {
     "parentMode": "Ebeveyn Modu",
+    "switchChild": "Çocuk değiştir",
     "levelAge": "Seviye {{level}} · {{age}} yaşında",
     "language": "Dil",
     "signOutConfirmTitle": "Çıkış yapılsın mı?",
     "signOutConfirmBody": "Bu cihaz aile koduyla bağlantısını kaybedecek. Yeniden bağlanmak için bir ebeveynin yeni bir kod vermesi gerekecek.",
     "signedOut": "Çıkış yapıldı"
+  },
+  "childSelect": {
+    "title": "Çocuk seç",
+    "subtitle": "Bu cihazda hangi çocuğun aktif olduğunu seç. Değiştirmek için Ebeveyn Kapısı PIN'i gerekir.",
+    "confirmPinTitle": "{{name}} için etkinleştir",
+    "confirmPinSubtitle": "Onaylamak için Ebeveyn Kapısı PIN'ini gir",
+    "switched": "{{name}} artık bu cihazda aktif"
   },
   "parentProfile": {
     "account": "Hesap",

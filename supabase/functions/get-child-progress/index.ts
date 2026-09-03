@@ -7,17 +7,11 @@
 // 0004_rls_policies.sql, 0007_progress_tracking.sql), so a child
 // device (which never signs in) has no way to read them directly.
 // This function is the deliberate, narrow exception: given a device
-// id, it resolves the family that device is bound to
-// (family_codes.bound_device_id, set once by redeem-family-code) and
-// returns that family's first child's progress using the service
-// role key.
-//
-// Today's UI (mobile/app/child/(tabs)/progress.tsx, rewards.tsx)
-// assumes a single active child per device, matching the mock
-// `activeChild` it replaces — a family with more than one child
-// always gets its oldest (first-created) child here. Multi-child
-// device selection is a follow-up, not something this function
-// decides on its own.
+// id, it resolves the family that device is bound to and which child
+// is active on it (see _shared/resolveChild.ts — family_codes.
+// active_child_id when a parent has set one via set-active-child,
+// otherwise the family's oldest child) and returns that child's
+// progress using the service role key.
 //
 // Request:
 //   POST /functions/v1/get-child-progress
@@ -35,6 +29,7 @@
 
 import { createClient } from "npm:@supabase/supabase-js@2.112.4";
 import { corsHeaders, jsonResponse } from "../_shared/cors.ts";
+import { isResolveError, resolveDeviceChild } from "../_shared/resolveChild.ts";
 
 type Body = {
   deviceId?: unknown;
@@ -74,28 +69,16 @@ Deno.serve(async (req: Request) => {
     auth: { persistSession: false },
   });
 
-  const { data: boundCode, error: codeError } = await adminClient
-    .from("family_codes")
-    .select("family_id")
-    .eq("bound_device_id", deviceId)
-    .is("revoked_at", null)
-    .order("bound_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
-
-  if (codeError) {
-    return jsonResponse({ error: codeError.message }, 500);
+  const resolved = await resolveDeviceChild(adminClient, deviceId);
+  if (isResolveError(resolved)) {
+    return jsonResponse({ error: resolved.error }, resolved.status);
   }
-  if (!boundCode) {
-    return jsonResponse({ error: "Device is not bound to a family" }, 404);
-  }
+  const { childId } = resolved;
 
   const { data: child, error: childError } = await adminClient
     .from("children")
     .select("id, name, age, emoji, color")
-    .eq("family_id", boundCode.family_id)
-    .order("created_at", { ascending: true })
-    .limit(1)
+    .eq("id", childId)
     .maybeSingle();
 
   if (childError) {

@@ -1,37 +1,44 @@
-// supabase/functions/verify-parent-pin/index.ts
+// supabase/functions/set-active-child/index.ts
 //
-// Lets a child's device check a PIN against its family's real Parent
-// Gate PIN (mobile/app/parent-pin.tsx) without ever handing the hash
-// — or the plaintext PIN — to a device that has no auth session at
-// all. Same device-id -> family_codes -> family resolution as
-// get-child-progress / record-quiz-result; see that function's header
-// comment for why this has to be a service-role edge function rather
-// than a direct table read.
+// Lets a parent pick which child a shared device is currently acting
+// as (mobile/app/child-select.tsx) — the write half of multi-child
+// support. A child device never has a parent auth session (see
+// get-child-progress's header comment on why), so this can't check
+// "is the caller a parent" the way an authenticated-parent function
+// would; instead it re-verifies the Parent Gate PIN itself, hashing
+// and comparing against families.pin_hash exactly like
+// verify-parent-pin does — the PIN is the authorization here, and
+// nothing about it (hash or plaintext) ever reaches the client either
+// way.
+//
+// Sets family_codes.active_child_id on this device's binding row;
+// _shared/resolveChild.ts (used by get-child-progress,
+// record-quiz-result, mark-journey-item, register-push-token) reads
+// it back from there.
 //
 // Request:
-//   POST /functions/v1/verify-parent-pin
-//   { "deviceId": "dev_abc123", "pin": "1234" }
+//   POST /functions/v1/set-active-child
+//   { "deviceId": "dev_abc123", "pin": "1234", "childId": "<uuid>" }
 //
 // Response:
-//   200 { valid: boolean, pinSet: boolean }  — pinSet is false (valid
-//                                              always false too) if no
-//                                              parent has set a PIN
-//                                              yet; the caller must
-//                                              treat that as "denied",
-//                                              never "no PIN needed"
-//   404 { error: "Device is not bound to a family" }
+//   200 { ok: true }
+//   401 { error: "Incorrect PIN" | "No Parent Gate PIN has been set for this family" }
+//   404 { error: "Device is not bound to a family" | "Child not found in this family" }
 //   400 { error: "..." }
 
 import { createClient } from "npm:@supabase/supabase-js@2.112.4";
 import { corsHeaders, jsonResponse } from "../_shared/cors.ts";
 
-type Body = { deviceId?: unknown; pin?: unknown };
+type Body = { deviceId?: unknown; pin?: unknown; childId?: unknown };
 
 function isValidDeviceId(v: unknown): v is string {
   return typeof v === "string" && v.length > 0 && v.length <= 256;
 }
 function isValidPin(v: unknown): v is string {
   return typeof v === "string" && /^[0-9]{4}$/.test(v);
+}
+function isValidChildId(v: unknown): v is string {
+  return typeof v === "string" && v.length > 0 && v.length <= 64;
 }
 
 async function hashPin(pin: string): Promise<string> {
@@ -63,8 +70,12 @@ Deno.serve(async (req: Request) => {
   if (!isValidPin(body.pin)) {
     return jsonResponse({ error: "pin must be exactly 4 digits" }, 400);
   }
+  if (!isValidChildId(body.childId)) {
+    return jsonResponse({ error: "childId is required" }, 400);
+  }
   const deviceId = body.deviceId;
   const pin = body.pin;
+  const childId = body.childId;
 
   const supabaseUrl = Deno.env.get("SUPABASE_URL");
   const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
@@ -78,7 +89,7 @@ Deno.serve(async (req: Request) => {
 
   const { data: boundCode, error: codeError } = await adminClient
     .from("family_codes")
-    .select("family_id")
+    .select("id, family_id")
     .eq("bound_device_id", deviceId)
     .is("revoked_at", null)
     .order("bound_at", { ascending: false })
@@ -100,9 +111,34 @@ Deno.serve(async (req: Request) => {
     return jsonResponse({ error: familyError.message }, 500);
   }
   if (!family?.pin_hash) {
-    return jsonResponse({ valid: false, pinSet: false });
+    return jsonResponse({ error: "No Parent Gate PIN has been set for this family" }, 401);
   }
 
   const submittedHash = await hashPin(pin);
-  return jsonResponse({ valid: submittedHash === family.pin_hash, pinSet: true });
+  if (submittedHash !== family.pin_hash) {
+    return jsonResponse({ error: "Incorrect PIN" }, 401);
+  }
+
+  const { data: child, error: childError } = await adminClient
+    .from("children")
+    .select("id")
+    .eq("id", childId)
+    .eq("family_id", boundCode.family_id)
+    .maybeSingle();
+  if (childError) {
+    return jsonResponse({ error: childError.message }, 500);
+  }
+  if (!child) {
+    return jsonResponse({ error: "Child not found in this family" }, 404);
+  }
+
+  const { error: updateError } = await adminClient
+    .from("family_codes")
+    .update({ active_child_id: childId })
+    .eq("id", boundCode.id);
+  if (updateError) {
+    return jsonResponse({ error: updateError.message }, 500);
+  }
+
+  return jsonResponse({ ok: true });
 });

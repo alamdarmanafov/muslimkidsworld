@@ -1,4 +1,5 @@
-import { router } from "expo-router";
+import { useCallback, useState } from "react";
+import { router, useFocusEffect } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -6,12 +7,39 @@ import { Avatar } from "../../../src/components/Avatar";
 import { Icon } from "../../../src/components/icons";
 import { LanguageSwitcher } from "../../../src/components/LanguageSwitcher";
 import { activeChild } from "../../../src/data/mock";
+import { fetchChildProgress } from "../../../src/lib/childProgress";
 import { clearDeviceBinding } from "../../../src/lib/deviceBinding";
 import { toast } from "../../../src/lib/toast";
 import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
 
 export default function ChildProfile() {
   const { t } = useTranslation();
+  const [child, setChild] = useState({
+    name: activeChild.name,
+    age: activeChild.age as number | null,
+    level: activeChild.level,
+    emoji: activeChild.emoji,
+    color: activeChild.color,
+  });
+
+  useFocusEffect(
+    useCallback(() => {
+      let cancelled = false;
+      fetchChildProgress().then((result) => {
+        if (cancelled || !result) return;
+        setChild({
+          name: result.child.name,
+          age: result.child.age,
+          level: result.progress.level,
+          emoji: result.child.emoji,
+          color: result.child.color,
+        });
+      });
+      return () => {
+        cancelled = true;
+      };
+    }, []),
+  );
 
   const handleSignOut = () => {
     Alert.alert(t("childProfile.signOutConfirmTitle"), t("childProfile.signOutConfirmBody"), [
@@ -31,10 +59,10 @@ export default function ChildProfile() {
   return (
     <SafeAreaView style={styles.screen} edges={["top"]}>
       <View style={styles.body}>
-        <Avatar emoji={activeChild.emoji} color={activeChild.color} size={88} />
-        <Text style={styles.name}>{activeChild.name}</Text>
+        <Avatar emoji={child.emoji} color={child.color} size={88} />
+        <Text style={styles.name}>{child.name}</Text>
         <Text style={styles.subtitle}>
-          {t("childProfile.levelAge", { level: activeChild.level, age: activeChild.age })}
+          {t("childProfile.levelAge", { level: child.level, age: child.age })}
         </Text>
 
         <View style={styles.languageRow}>
@@ -44,6 +72,10 @@ export default function ChildProfile() {
       </View>
 
       <View style={styles.footer}>
+        <Pressable style={styles.parentLink} onPress={() => router.push("/child-select")}>
+          <Icon name="users" size={16} color={colors.inkMuted} />
+          <Text style={styles.parentLinkText}>{t("childProfile.switchChild")}</Text>
+        </Pressable>
         <Pressable style={styles.parentLink} onPress={() => router.push("/parent-pin")}>
           <Icon name="lock" size={16} color={colors.inkMuted} />
           <Text style={styles.parentLinkText}>{t("childProfile.parentMode")}</Text>

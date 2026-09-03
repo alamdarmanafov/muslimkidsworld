@@ -3,8 +3,8 @@
 // Called once per finished quiz session (mobile/app/child/quiz.tsx,
 // when the session reaches its reward screen) to fold that session's
 // score into the child's lifetime child_progress row and today's
-// child_daily_activity row. Uses the same device-id → family_codes →
-// children resolution as get-child-progress — see that function's
+// child_daily_activity row. Uses the same device-id resolution as
+// get-child-progress (_shared/resolveChild.ts) — see that function's
 // header comment for why a service-role function is the only way a
 // child device (no auth session) can write here at all.
 //
@@ -37,6 +37,7 @@
 import { createClient } from "npm:@supabase/supabase-js@2.112.4";
 import { corsHeaders, jsonResponse } from "../_shared/cors.ts";
 import { sendExpoPush } from "../_shared/push.ts";
+import { isResolveError, resolveDeviceChild } from "../_shared/resolveChild.ts";
 
 // achievements.label is plain English (0005_seed_content.sql) — the
 // app itself renders localized names by slug (see
@@ -212,41 +213,16 @@ Deno.serve(async (req: Request) => {
     auth: { persistSession: false },
   });
 
-  const { data: boundCode, error: codeError } = await adminClient
-    .from("family_codes")
-    .select("family_id")
-    .eq("bound_device_id", deviceId)
-    .is("revoked_at", null)
-    .order("bound_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
-
-  if (codeError) {
-    return jsonResponse({ error: codeError.message }, 500);
+  const resolved = await resolveDeviceChild(adminClient, deviceId);
+  if (isResolveError(resolved)) {
+    return jsonResponse({ error: resolved.error }, resolved.status);
   }
-  if (!boundCode) {
-    return jsonResponse({ error: "Device is not bound to a family" }, 404);
-  }
-
-  const { data: child, error: childError } = await adminClient
-    .from("children")
-    .select("id")
-    .eq("family_id", boundCode.family_id)
-    .order("created_at", { ascending: true })
-    .limit(1)
-    .maybeSingle();
-
-  if (childError) {
-    return jsonResponse({ error: childError.message }, 500);
-  }
-  if (!child) {
-    return jsonResponse({ error: "No child found for this family" }, 404);
-  }
+  const { familyId, childId } = resolved;
 
   const { data: existing, error: existingError } = await adminClient
     .from("child_progress")
     .select("*")
-    .eq("child_id", child.id)
+    .eq("child_id", childId)
     .maybeSingle();
 
   if (existingError) {
@@ -292,7 +268,7 @@ Deno.serve(async (req: Request) => {
   let newBadgesCount = existing?.badges_count ?? 0;
   let newlyEarnedSlugs: string[] = [];
   try {
-    const awarded = await awardAchievements(adminClient, child.id, {
+    const awarded = await awardAchievements(adminClient, childId, {
       totalCorrect: newTotalCorrect,
       totalQuestions: newTotalQuestions,
       streak: newStreak,
@@ -307,7 +283,7 @@ Deno.serve(async (req: Request) => {
     .from("child_progress")
     .upsert(
       {
-        child_id: child.id,
+        child_id: childId,
         level: newLevel,
         xp: newXp,
         streak: newStreak,
@@ -332,7 +308,7 @@ Deno.serve(async (req: Request) => {
   const { data: existingDay, error: existingDayError } = await adminClient
     .from("child_daily_activity")
     .select("questions_answered, xp_earned")
-    .eq("child_id", child.id)
+    .eq("child_id", childId)
     .eq("activity_date", todayStr)
     .maybeSingle();
 
@@ -342,7 +318,7 @@ Deno.serve(async (req: Request) => {
 
   const { error: dayError } = await adminClient.from("child_daily_activity").upsert(
     {
-      child_id: child.id,
+      child_id: childId,
       activity_date: todayStr,
       questions_answered: (existingDay?.questions_answered ?? 0) + total,
       xp_earned: (existingDay?.xp_earned ?? 0) + xpEarned,
@@ -354,7 +330,7 @@ Deno.serve(async (req: Request) => {
     return jsonResponse({ error: dayError.message }, 500);
   }
 
-  await notifyParentsOfAchievements(adminClient, boundCode.family_id as string, newlyEarnedSlugs);
+  await notifyParentsOfAchievements(adminClient, familyId, newlyEarnedSlugs);
 
   return jsonResponse({ progress: updatedProgress });
 });

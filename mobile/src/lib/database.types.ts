@@ -153,6 +153,7 @@ export type Database = {
           revoked_at: string | null;
           expires_at: string;
           created_at: string;
+          active_child_id: string | null;
         };
         Insert: {
           id?: string;
@@ -164,6 +165,7 @@ export type Database = {
           revoked_at?: string | null;
           expires_at?: string;
           created_at?: string;
+          active_child_id?: string | null;
         };
         Update: Partial<Database["public"]["Tables"]["family_codes"]["Insert"]>;
         Relationships: [];

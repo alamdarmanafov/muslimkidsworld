@@ -26,6 +26,7 @@
 
 import { createClient } from "npm:@supabase/supabase-js@2.112.4";
 import { corsHeaders, jsonResponse } from "../_shared/cors.ts";
+import { isResolveError, resolveDeviceChild } from "../_shared/resolveChild.ts";
 
 const VALID_ITEMS = ["quran", "dua", "story", "game"] as const;
 type JourneyItem = (typeof VALID_ITEMS)[number];
@@ -73,41 +74,18 @@ Deno.serve(async (req: Request) => {
     auth: { persistSession: false },
   });
 
-  const { data: boundCode, error: codeError } = await adminClient
-    .from("family_codes")
-    .select("family_id")
-    .eq("bound_device_id", deviceId)
-    .is("revoked_at", null)
-    .order("bound_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
-  if (codeError) {
-    return jsonResponse({ error: codeError.message }, 500);
+  const resolved = await resolveDeviceChild(adminClient, deviceId);
+  if (isResolveError(resolved)) {
+    return jsonResponse({ error: resolved.error }, resolved.status);
   }
-  if (!boundCode) {
-    return jsonResponse({ error: "Device is not bound to a family" }, 404);
-  }
-
-  const { data: child, error: childError } = await adminClient
-    .from("children")
-    .select("id")
-    .eq("family_id", boundCode.family_id)
-    .order("created_at", { ascending: true })
-    .limit(1)
-    .maybeSingle();
-  if (childError) {
-    return jsonResponse({ error: childError.message }, 500);
-  }
-  if (!child) {
-    return jsonResponse({ error: "No child found for this family" }, 404);
-  }
+  const { childId } = resolved;
 
   const todayStr = new Date().toISOString().slice(0, 10);
 
   const { data: existing, error: existingError } = await adminClient
     .from("child_daily_activity")
     .select("questions_answered, xp_earned, quran_done, dua_done, story_done, game_done")
-    .eq("child_id", child.id)
+    .eq("child_id", childId)
     .eq("activity_date", todayStr)
     .maybeSingle();
   if (existingError) {
@@ -116,7 +94,7 @@ Deno.serve(async (req: Request) => {
 
   const { error: upsertError } = await adminClient.from("child_daily_activity").upsert(
     {
-      child_id: child.id,
+      child_id: childId,
       activity_date: todayStr,
       questions_answered: existing?.questions_answered ?? 0,
       xp_earned: existing?.xp_earned ?? 0,

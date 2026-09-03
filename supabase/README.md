@@ -316,12 +316,18 @@ for real queries later is a small diff, not a rewrite.
   this reason. A real device-scoped child session (so a child's device
   can talk to the database directly, not just through edge functions)
   is future work.
-- **Single-child-per-device assumption.** `get-child-progress` and
-  `record-quiz-result` both resolve "the" child for a bound device as
-  that family's oldest (first-created) child — matching the single
-  `activeChild` the mock data always assumed. A family with more than
-  one child, and a way for a device to pick which one it's playing as,
-  is a follow-up.
+- **Multi-child devices are supported.** `family_codes.active_child_id`
+  (`0014_active_child.sql`) records which child a shared device is
+  currently acting as; `_shared/resolveChild.ts` (used by
+  `get-child-progress`, `record-quiz-result`, `mark-journey-item`,
+  `register-push-token`) reads it, falling back to the family's oldest
+  child when it's never been set — the original single-child
+  behavior, unchanged for families that never touch this. Only a
+  parent can change it: `app/child-select.tsx` lists the family's
+  children (`list-family-children`, unauthenticated — the list itself
+  isn't sensitive) and switching one in re-verifies the Parent Gate
+  PIN server-side (`set-active-child`), since a child device has no
+  parent auth session to authorize the write with otherwise.
 - **The achievement-badge grid is real for 3 of 6 badges.**
   `record-quiz-result` now evaluates each achievement's `criteria`
   (`0008_achievement_criteria.sql`) against the child's up-to-date
