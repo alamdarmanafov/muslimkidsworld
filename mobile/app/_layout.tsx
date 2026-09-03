@@ -9,6 +9,7 @@ import {
   Nunito_700Bold,
   Nunito_800ExtraBold,
 } from "@expo-google-fonts/nunito";
+import { ToastHost } from "../src/components/ToastHost";
 import { initI18n } from "../src/i18n";
 import { colors } from "../src/theme/theme";
 
@@ -40,6 +41,7 @@ export default function RootLayout() {
         <Stack.Screen name="parent-auth" />
         <Stack.Screen name="parent" />
       </Stack>
+      <ToastHost />
     </SafeAreaProvider>
   );
 }

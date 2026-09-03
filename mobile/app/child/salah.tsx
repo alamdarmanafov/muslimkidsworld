@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../../src/components/icons";
-import { prayers, salahStepIds } from "../../src/data/salah";
+import { prayers, salahStepEmoji, salahStepIds } from "../../src/data/salah";
 import { colors, fonts, radii, shadow, spacing } from "../../src/theme/theme";
 
 export default function Salah() {
@@ -26,8 +26,11 @@ export default function Salah() {
         <ScrollView contentContainerStyle={styles.content}>
           {salahStepIds.map((stepId, i) => (
             <View key={stepId} style={styles.stepCard}>
-              <View style={styles.stepBadge}>
-                <Text style={styles.stepBadgeText}>{i + 1}</Text>
+              <View style={styles.stepPictureWrap}>
+                <Text style={styles.stepPicture}>{salahStepEmoji[stepId]}</Text>
+                <View style={styles.stepBadge}>
+                  <Text style={styles.stepBadgeText}>{i + 1}</Text>
+                </View>
               </View>
               <View style={styles.stepText}>
                 <Text style={styles.stepName}>{t(`content.salahSteps.${stepId}.name`)}</Text>
@@ -131,15 +134,29 @@ const styles = StyleSheet.create({
     padding: spacing.lg,
     ...shadow,
   },
-  stepBadge: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: colors.successDark,
+  stepPictureWrap: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: colors.background,
     alignItems: "center",
     justifyContent: "center",
   },
-  stepBadgeText: { color: "#FFFFFF", fontFamily: fonts.bodyBold, fontSize: 13 },
+  stepPicture: { fontSize: 30 },
+  stepBadge: {
+    position: "absolute",
+    bottom: -4,
+    right: -4,
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    backgroundColor: colors.successDark,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 2,
+    borderColor: colors.card,
+  },
+  stepBadgeText: { color: "#FFFFFF", fontFamily: fonts.bodyBold, fontSize: 11 },
   stepText: { flex: 1 },
   stepName: { fontFamily: fonts.bodyBold, fontSize: 15, color: colors.ink },
   stepDesc: { fontFamily: fonts.body, fontSize: 13, color: colors.inkMuted, marginTop: 2, lineHeight: 19 },

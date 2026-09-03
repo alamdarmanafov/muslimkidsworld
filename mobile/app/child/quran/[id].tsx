@@ -10,7 +10,9 @@ import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme"
 export default function SurahDetail() {
   const { t, i18n } = useTranslation();
   const { id } = useLocalSearchParams<{ id: string }>();
-  const surah = quranSurahs.find((s) => s.id === id) ?? quranSurahs[0];
+  const surahIndex = quranSurahs.findIndex((s) => s.id === id);
+  const surah = quranSurahs[surahIndex] ?? quranSurahs[0];
+  const nextSurah = quranSurahs[surahIndex + 1];
 
   const arabicVerses = getArabicVerses(surah.chapter);
   const translatedVerses = getSurahVerses(surah.chapter, i18n.language);
@@ -38,6 +40,18 @@ export default function SurahDetail() {
         ))}
 
         <Text style={styles.translatorNote}>{t("quran.translatedBy", { name: translator })}</Text>
+
+        {nextSurah ? (
+          <Pressable
+            style={styles.nextBtn}
+            onPress={() => router.replace(`/child/quran/${nextSurah.id}`)}
+          >
+            <Text style={styles.nextBtnText}>
+              {t("quran.nextSurah", { name: t(`content.quran.${nextSurah.id}`) })}
+            </Text>
+            <Icon name="arrowRight" size={16} color="#FFFFFF" />
+          </Pressable>
+        ) : null}
       </ScrollView>
     </SafeAreaView>
   );
@@ -104,4 +118,15 @@ const styles = StyleSheet.create({
     marginTop: spacing.sm,
     marginBottom: spacing.lg,
   },
+  nextBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: spacing.sm,
+    backgroundColor: colors.successDark,
+    borderRadius: radii.lg,
+    paddingVertical: spacing.md,
+    marginBottom: spacing.lg,
+  },
+  nextBtnText: { fontFamily: fonts.bodyBold, fontSize: 15, color: "#FFFFFF" },
 });

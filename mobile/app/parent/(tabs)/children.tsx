@@ -8,6 +8,7 @@ import { Button } from "../../../src/components/Button";
 import { Card } from "../../../src/components/Card";
 import { ProgressRing } from "../../../src/components/ProgressRing";
 import { deleteChild, fetchChildren, type ParentChild } from "../../../src/lib/children";
+import { toast } from "../../../src/lib/toast";
 import { colors, spacing } from "../../../src/theme/theme";
 
 const MAX_SLOTS = 3;
@@ -44,9 +45,10 @@ export default function Children() {
           onPress: async () => {
             const ok = await deleteChild(child.id);
             if (!ok) {
-              Alert.alert(t("parentChildren.deleteFailed"));
+              toast.error(t("parentChildren.deleteFailed"));
               return;
             }
+            toast.success(t("parentChildren.deleted", { name: child.name }));
             setChildren((prev) => prev.filter((c) => c.id !== child.id));
           },
         },

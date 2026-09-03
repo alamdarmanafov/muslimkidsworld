@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../src/components/icons";
 import { bindDeviceToFamilyCode, getDeviceId } from "../src/lib/deviceBinding";
 import { getSupabaseClient } from "../src/lib/supabase";
+import { toast } from "../src/lib/toast";
 import { colors, fonts, radii, spacing } from "../src/theme/theme";
 
 const SERVER_ERROR_KEYS: Record<string, string> = {
@@ -44,13 +45,18 @@ export default function ChildCode() {
       if (fnError) {
         const serverMessage = await readServerErrorMessage(fnError);
         const key = serverMessage ? SERVER_ERROR_KEYS[serverMessage] : undefined;
-        setError(key ? t(key) : t("childCode.somethingWrong"));
+        const message = key ? t(key) : t("childCode.somethingWrong");
+        setError(message);
+        toast.error(message);
         return;
       }
       await bindDeviceToFamilyCode(code);
+      toast.success(t("childCode.connected"));
       router.replace("/child");
     } catch {
-      setError(t("childCode.somethingWrong"));
+      const message = t("childCode.somethingWrong");
+      setError(message);
+      toast.error(message);
     } finally {
       setLoading(false);
     }

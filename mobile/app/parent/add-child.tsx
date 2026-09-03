@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../src/components/Button";
 import { Card } from "../../src/components/Card";
 import { addChild } from "../../src/lib/children";
+import { toast } from "../../src/lib/toast";
 import { colors, radii, spacing } from "../../src/theme/theme";
 
 const avatarOptions = ["👦", "👧", "🧒", "👶"];
@@ -31,9 +32,12 @@ export default function AddChild() {
     );
     setLoading(false);
     if ("error" in result) {
-      setError(`${t("addChild.somethingWrong")} (${result.error})`);
+      const message = `${t("addChild.somethingWrong")} (${result.error})`;
+      setError(message);
+      toast.error(message);
       return;
     }
+    toast.success(t("addChild.added", { name: name.trim() }));
     router.replace("/parent/family-code");
   };
 

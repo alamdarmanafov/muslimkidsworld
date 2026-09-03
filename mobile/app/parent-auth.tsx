@@ -14,6 +14,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../src/components/icons";
 import { getSupabaseClient } from "../src/lib/supabase";
+import { toast } from "../src/lib/toast";
 import { colors, fonts, radii, spacing } from "../src/theme/theme";
 
 type Mode = "signIn" | "signUp";
@@ -56,6 +57,7 @@ export default function ParentAuth() {
         }
 
         if (!data.session) {
+          toast.success(t("parentAuth.checkEmail"));
           setError(t("parentAuth.checkEmail"));
           setMode("signIn");
           setLoading(false);
@@ -69,9 +71,12 @@ export default function ParentAuth() {
         if (signInError) throw signInError;
       }
 
+      toast.success(isSignUp ? t("parentAuth.accountCreated") : t("parentAuth.signedIn"));
       router.replace("/parent");
     } catch (e) {
-      setError(e instanceof Error ? e.message : t("parentAuth.somethingWrong"));
+      const message = e instanceof Error ? e.message : t("parentAuth.somethingWrong");
+      setError(message);
+      toast.error(message);
     } finally {
       setLoading(false);
     }
