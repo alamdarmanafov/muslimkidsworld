@@ -24,9 +24,14 @@
 //   { "deviceId": "dev_abc123" }
 //
 // Response:
-//   200 { child: {...}, progress: {...}, week: [...] }
+//   200 { child: {...}, progress: {...}, week: [...], achievements: ["first-star", ...] }
 //   404 { error: "Device is not bound to a family" | "No child found for this family" }
 //   400 { error: "..." }                             — bad request body
+//
+// `achievements` is the list of achievement slugs
+// (supabase/migrations/0002_content_tables.sql `achievements.slug`)
+// this child has actually earned, per child_achievements — awarded by
+// record-quiz-result, not decided here.
 
 import { createClient } from "npm:@supabase/supabase-js@2.112.4";
 import { corsHeaders, jsonResponse } from "../_shared/cors.ts";
@@ -125,8 +130,22 @@ Deno.serve(async (req: Request) => {
     return jsonResponse({ error: weekError.message }, 500);
   }
 
+  const { data: earnedRows, error: earnedError } = await adminClient
+    .from("child_achievements")
+    .select("achievement:achievements(slug)")
+    .eq("child_id", child.id);
+
+  if (earnedError) {
+    return jsonResponse({ error: earnedError.message }, 500);
+  }
+
+  const achievementSlugs = (earnedRows ?? [])
+    .map((r) => (r.achievement as { slug: string } | null)?.slug)
+    .filter((slug): slug is string => Boolean(slug));
+
   return jsonResponse({
     child,
+    achievements: achievementSlugs,
     progress: progress ?? {
       child_id: child.id,
       level: 1,

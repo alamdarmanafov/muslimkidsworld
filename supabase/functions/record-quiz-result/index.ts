@@ -21,6 +21,9 @@
 //   - active_days_count: +1 only the first time a given UTC date is
 //                recorded, mirrored into child_daily_activity's
 //                per-day upsert so the two never disagree
+//   - badges_count: recomputed from child_achievements after awarding
+//                any newly-met achievements (see awardAchievements
+//                below) — always the real row count, never guessed
 //
 // Request:
 //   POST /functions/v1/record-quiz-result
@@ -46,6 +49,69 @@ function isValidDeviceId(v: unknown): v is string {
 }
 function isNonNegInt(v: unknown): v is number {
   return typeof v === "number" && Number.isInteger(v) && v >= 0;
+}
+
+type AchievementCriteria =
+  | { type: "correct_answers"; min: number }
+  | { type: "streak"; min: number }
+  | { type: "questions_answered"; min: number }
+  | { type: string; [key: string]: unknown };
+
+type Stats = {
+  totalCorrect: number;
+  totalQuestions: number;
+  streak: number;
+};
+
+function criteriaMet(criteria: AchievementCriteria, stats: Stats): boolean {
+  switch (criteria.type) {
+    case "correct_answers":
+      return stats.totalCorrect >= criteria.min;
+    case "streak":
+      return stats.streak >= criteria.min;
+    case "questions_answered":
+      return stats.totalQuestions >= criteria.min;
+    default:
+      // stories_read / world_visited / any future type: not trackable by
+      // this function yet (no Stories/world-map data in this backend) —
+      // never award, never error.
+      return false;
+  }
+}
+
+// Awards every achievement whose criteria this session's new totals now
+// satisfy and the child doesn't already have, and returns the child's
+// up-to-date total earned-achievement count (for child_progress.badges_count).
+async function awardAchievements(
+  adminClient: ReturnType<typeof createClient>,
+  childId: string,
+  stats: Stats,
+): Promise<number> {
+  const { data: allAchievements, error: achievementsError } = await adminClient
+    .from("achievements")
+    .select("id, criteria")
+    .not("criteria", "is", null);
+  if (achievementsError) throw achievementsError;
+
+  const { data: earnedRows, error: earnedError } = await adminClient
+    .from("child_achievements")
+    .select("achievement_id")
+    .eq("child_id", childId);
+  if (earnedError) throw earnedError;
+
+  const earnedIds = new Set((earnedRows ?? []).map((r) => r.achievement_id as string));
+  const newlyEarned = (allAchievements ?? [])
+    .filter((a) => !earnedIds.has(a.id as string))
+    .filter((a) => criteriaMet(a.criteria as AchievementCriteria, stats));
+
+  if (newlyEarned.length > 0) {
+    const { error: insertError } = await adminClient.from("child_achievements").insert(
+      newlyEarned.map((a) => ({ child_id: childId, achievement_id: a.id })),
+    );
+    if (insertError) throw insertError;
+  }
+
+  return earnedIds.size + newlyEarned.length;
 }
 
 Deno.serve(async (req: Request) => {
@@ -167,6 +233,17 @@ Deno.serve(async (req: Request) => {
   }
   const newActiveDaysCount = prevActiveDays + (isNewActiveDay ? 1 : 0);
 
+  let newBadgesCount = existing?.badges_count ?? 0;
+  try {
+    newBadgesCount = await awardAchievements(adminClient, child.id, {
+      totalCorrect: newTotalCorrect,
+      totalQuestions: newTotalQuestions,
+      streak: newStreak,
+    });
+  } catch (err) {
+    return jsonResponse({ error: err instanceof Error ? err.message : String(err) }, 500);
+  }
+
   const { data: updatedProgress, error: upsertError } = await adminClient
     .from("child_progress")
     .upsert(
@@ -176,7 +253,7 @@ Deno.serve(async (req: Request) => {
         xp: newXp,
         streak: newStreak,
         accuracy: newAccuracy,
-        badges_count: existing?.badges_count ?? 0,
+        badges_count: newBadgesCount,
         stars_count: existing?.stars_count ?? 0,
         active_days_count: newActiveDaysCount,
         total_questions_answered: newTotalQuestions,

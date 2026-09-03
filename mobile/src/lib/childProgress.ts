@@ -52,6 +52,8 @@ export type ChildProgressResult = {
   child: ChildInfo;
   progress: ChildProgressStats;
   week: DailyActivity[];
+  /** Slugs of achievements this child has actually earned (achievements.slug). */
+  achievements: string[];
 };
 
 /**

@@ -13,12 +13,15 @@ export default function Achievements() {
   const [badges, setBadges] = useState(0);
   const [stars, setStars] = useState(0);
   const [days, setDays] = useState(0);
+  const [earnedSlugs, setEarnedSlugs] = useState<string[]>([]);
 
-  // The specific-badge grid below (`earned`) still comes from mock.ts —
-  // matching it to real unlock criteria needs a child_achievements
-  // table and evaluation logic this pass doesn't add. The 3 counters
-  // above it (badges/stars/days) are real, from child_progress.
-  const earned = achievements.filter((a) => a.earned);
+  // The badge catalog (icon/tone) still comes from mock.ts, but which
+  // ones actually show as earned now comes from record-quiz-result's
+  // criteria evaluation (see supabase/migrations/0008_achievement_criteria.sql) —
+  // only badges backed by data this backend tracks (quiz results,
+  // streak) can ever appear here; book-lover/storyteller/mosque-visitor
+  // stay unearned until Stories/the world map get their own tracking.
+  const earned = achievements.filter((a) => earnedSlugs.includes(a.id));
 
   useEffect(() => {
     let cancelled = false;
@@ -28,6 +31,7 @@ export default function Achievements() {
         setBadges(result.progress.badges_count);
         setStars(result.progress.stars_count);
         setDays(result.progress.active_days_count);
+        setEarnedSlugs(result.achievements);
       }
       setLoading(false);
     });

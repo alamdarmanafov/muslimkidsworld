@@ -4,16 +4,19 @@ This directory holds the SQL migrations, RLS policies, and edge
 functions for the app's real backend, built entirely as code so they
 can be reviewed before being applied. A live project now exists
 (`EXPO_PUBLIC_SUPABASE_URL` / `EXPO_PUBLIC_SUPABASE_ANON_KEY` are set
-in `mobile/.env`) and its tables are up through migration `0006`.
-**`0007_progress_tracking.sql` and the `get-child-progress` /
-`record-quiz-result` functions have been written but not yet pushed to
-that project** — the environment these were written in has no network
-access to `supabase.co` (organization egress policy), so `supabase db
-push` and `supabase functions deploy` for those two still need to be
-run from a machine that does. See "Taking this live" below for the
-exact commands. Most of the app — Quran, Dua, Stories, quiz content,
-Games — still reads from `mobile/src/data/mock.ts`; only parent/child
-onboarding and progress tracking call this backend so far.
+in `mobile/.env`) and its tables are up through migration `0007`, with
+`get-child-progress` and `record-quiz-result` deployed.
+**`0008_achievement_criteria.sql`, and the updated
+`get-child-progress` / `record-quiz-result` functions that award and
+report real achievement badges, have been written but not yet pushed
+to that project** — the environment these were written in has no
+network access to `supabase.co` (organization egress policy), so
+`supabase db push` and `supabase functions deploy` for those two still
+need to be run from a machine that does. See "Taking this live" below
+for the exact commands. Most of the app — Quran, Dua, Stories, quiz
+content, Games — still reads from `mobile/src/data/mock.ts`; only
+parent/child onboarding, progress tracking, and now achievement badges
+call this backend so far.
 
 ## What's here
 
@@ -31,10 +34,14 @@ supabase/
 │   ├── 0005_seed_content.sql       seeds subscription_plans + content
 │   │                                tables with the same data currently
 │   │                                hard-coded in mock.ts
-│   └── 0007_progress_tracking.sql  adds child_progress lifetime totals
-│                                    (total_questions_answered,
-│                                    total_correct_answers) and the new
-│                                    child_daily_activity table
+│   ├── 0007_progress_tracking.sql  adds child_progress lifetime totals
+│   │                                (total_questions_answered,
+│   │                                total_correct_answers) and the new
+│   │                                child_daily_activity table
+│   └── 0008_achievement_criteria.sql  seeds machine-readable unlock
+│                                    criteria onto the 6 achievements
+│                                    from 0005, so record-quiz-result
+│                                    can award them automatically
 └── functions/
     ├── generate-family-code/       parent generates a 6-digit code
     ├── redeem-family-code/         child device redeems a code once
@@ -159,14 +166,32 @@ for real queries later is a small diff, not a rewrite.
   `activeChild` the mock data always assumed. A family with more than
   one child, and a way for a device to pick which one it's playing as,
   is a follow-up.
-- **The achievement-badge grid isn't real yet.** `child_progress`'s
-  `badges_count` / `stars_count` / `active_days_count` are real
-  numbers now, but which *specific* badges (`content.achievements.*`)
-  a child has actually earned still comes from mock.ts's hard-coded
-  `earned: true` flags — wiring that up needs the `achievements` /
-  `child_achievements` tables from `0002_content_tables.sql` plus
-  server-side criteria evaluation (e.g. "5-day streak" →
-  `child_achievements` row), which this pass doesn't add.
+- **The achievement-badge grid is real for 3 of 6 badges.**
+  `record-quiz-result` now evaluates each achievement's `criteria`
+  (`0008_achievement_criteria.sql`) against the child's up-to-date
+  totals and awards a `child_achievements` row the moment it's met;
+  `get-child-progress` returns the earned slugs and
+  `app/child/(tabs)/rewards.tsx` only shows a badge as earned if it's
+  in that list — `badges_count` is the real `child_achievements` row
+  count, not a static number. But only `first-star`
+  (`correct_answers`), `week-streak` (`streak`), and `quiz-master`
+  (`questions_answered`) are things this backend actually tracks yet;
+  `book-lover` / `storyteller` (`stories_read`) and `mosque-visitor`
+  (`world_visited`) have criteria seeded for documentation but are
+  never awarded until Stories and the world map get their own
+  read/visit tracking — a real follow-up, not started here.
+- **Quiz content staying in `mock.ts` is deliberate, not an
+  oversight.** The `quizzes` / `quiz_questions` tables and their seed
+  (`0002_content_tables.sql`, `0005_seed_content.sql`) predate the
+  category quiz screen (`app/child/quiz.tsx`) that now ships 5
+  categories, difficulty levels, and foreign-language variants — one
+  of which (`riyaziyyat`/math) generates its questions procedurally in
+  `getQuizQuestions`/`buildMathProblem` rather than storing them at
+  all. Moving quiz *content* to the database needs a schema that
+  actually matches that shape (category, difficulty, target language,
+  a way to represent "generated, not stored") — a redesign, not a
+  wire-up — so it's left as its own future pass instead of forcing the
+  current stale schema into use.
 - **No billing/payment provider integration.** `subscriptions` has the
   columns to represent App Store/Play Store/Stripe state
   (`external_provider`, `external_subscription_id`), but nothing
