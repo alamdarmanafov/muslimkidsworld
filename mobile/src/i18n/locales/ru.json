@@ -575,6 +575,12 @@
       "taif": "Таиф",
       "damascus": "Дамаск"
     },
+    "quizSymbols": {
+      "moon": "Луна",
+      "star": "Звезда",
+      "sun": "Солнце",
+      "lightning": "Молния"
+    },
     "quizPeople": {
       "abdullah": "Абдуллах",
       "abuTalib": "Абу Талиб",

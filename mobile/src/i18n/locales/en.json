@@ -569,6 +569,12 @@
       "taif": "Taif",
       "damascus": "Damascus"
     },
+    "quizSymbols": {
+      "moon": "Moon",
+      "star": "Star",
+      "sun": "Sun",
+      "lightning": "Lightning"
+    },
     "quizPeople": {
       "abdullah": "Abdullah",
       "abuTalib": "Abu Talib",

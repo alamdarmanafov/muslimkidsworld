@@ -569,6 +569,12 @@
       "taif": "Taif",
       "damascus": "Şam"
     },
+    "quizSymbols": {
+      "moon": "Ay",
+      "star": "Ulduz",
+      "sun": "Günəş",
+      "lightning": "İldırım"
+    },
     "quizPeople": {
       "abdullah": "Abdullah",
       "abuTalib": "Əbu Talib",
