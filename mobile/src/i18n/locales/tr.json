@@ -7,6 +7,28 @@
     "signOut": "Çıkış yap",
     "delete": "Sil"
   },
+  "onboarding": {
+    "skip": "Geç",
+    "back": "Geri",
+    "next": "İleri",
+    "getStarted": "Başla"
+  },
+  "parentOnboarding": {
+    "step1Title": "Çocuğunu bağla",
+    "step1Body": "Ebeveyn uygulamasından bir \"Aile Kodu\" oluştur ve çocuğunun cihazına gir — bu, profilini ailenle ilişkilendirir.",
+    "step2Title": "Ebeveyn Kapısı",
+    "step2Body": "Çocuğunun izinsiz ebeveyn ayarlarına giremesin diye 4 haneli bir PIN belirle.",
+    "step3Title": "Bugünkü Yolculuk",
+    "step3Body": "Çocuğun her gün Kuran, Dua, Hikaye, Test ve Oyun bölümlerinden geçerek öğrenir — ilerlemesini Rapor sekmesinden takip edebilirsin."
+  },
+  "childOnboarding": {
+    "step1Title": "Bugünkü Yolculuğun",
+    "step1Body": "Her gün Kuran oku, dua öğren, bir hikaye dinle, test çöz ve oyna — hepsini tamamlayınca bahçen çiçek açacak!",
+    "step2Title": "Keşfet",
+    "step2Body": "Alfabe, 99 İsim, Namaz ve Müslüman Dünyası gibi keşfedilecek daha çok şey var — aşağı kaydır ve keşfet!",
+    "step3Title": "Yıldız Kazan",
+    "step3Body": "Her doğru cevap ve tamamlanan etkinlik sana yıldız ve rozet kazandırır. Ne kadar çok öğrenirsen o kadar çok ödül kazanırsın!"
+  },
   "welcome": {
     "titleMuslim": "Muslim",
     "titleKids": "Kids",
@@ -76,6 +98,7 @@
     "salah": "Namaz",
     "alphabet": "Alfabe",
     "divineNames": "99 İsim",
+    "world": "Dünya",
     "story": "Hikaye",
     "game": "Oyun",
     "gardenTitle": "Bahçem",
@@ -123,7 +146,8 @@
     "subtitle": "Çocuğun bu dakikaya ulaştığında bugünün yolculuğu tamamlanmış sayılır ve uygulama daha fazla içerik göstermez.",
     "custom": "Özel",
     "customPlaceholder": "örn. 40",
-    "minUnit": "dk"
+    "minUnit": "dk",
+    "saveFailed": "Kaydedilemedi. Tekrar dene."
   },
   "childProfile": {
     "parentMode": "Ebeveyn Modu",
@@ -206,6 +230,10 @@
   "stories": {
     "title": "Hikayeler",
     "moreStories": "Daha Fazla Hikaye"
+  },
+  "world": {
+    "title": "Müslüman Dünyası",
+    "moreSites": "Daha Fazla Yer"
   },
   "games": {
     "title": "Oyunlar",
@@ -310,6 +338,17 @@
     "title": "Haftalık Rapor",
     "subtitle": "Her çocuk için doğruluk, öğrenme süresi, güçlü alanlar ve seriler."
   },
+  "parentProgress": {
+    "thisWeek": "Bu Hafta",
+    "minutesThisWeek_one": "Bu hafta toplam {{count}} dakika geçirdi.",
+    "minutesThisWeek_other": "Bu hafta toplam {{count}} dakika geçirdi.",
+    "streak": "Seri",
+    "newBadges": "Yeni Rozet",
+    "subjects": "Dersler",
+    "strongest": "En Güçlü Ders",
+    "needsPractice": "Pratik Gerekiyor",
+    "notEnoughData": "Ders dağılımını göstermek için birkaç test daha gerekiyor."
+  },
   "addChild": {
     "title": "Çocuk Ekle",
     "avatar": "Avatar",
@@ -381,6 +420,28 @@
       "yusuf": {
         "title": "Peygamber Yusuf'un (AS) Hikayesi",
         "subtitle": "Kuyudan saraya"
+      }
+    },
+    "worldSites": {
+      "mosque": {
+        "name": "Mescid-i Haram",
+        "fact": "Mekke'deki bu cami dünyanın en büyük camisidir ve ortasında Kâbe vardır — tüm Müslümanlar namaz kılarken buraya döner."
+      },
+      "medina": {
+        "name": "Mescid-i Nebevi",
+        "fact": "Medine'deki bu camiyi Peygamberimiz (s.a.v) bizzat inşa ettirmiştir. Dünyanın en büyük camilerinden biridir."
+      },
+      "al-aqsa": {
+        "name": "Mescid-i Aksa",
+        "fact": "Kudüs'teki bu cami, Müslümanlar için en kutsal üç mescitten biridir ve Peygamberimizin gece yolculuğu (İsra ve Miraç) ile ilişkilidir."
+      },
+      "istanbul": {
+        "name": "Sultanahmet Camii",
+        "fact": "İstanbul, Türkiye'deki bu güzel cami mavi çinileriyle ünlüdür — bu yüzden ona Mavi Cami de denir."
+      },
+      "andalusia": {
+        "name": "Kurtuba Camii",
+        "fact": "İspanya'nın Kurtuba (Córdoba) şehrindeki bu kadim cami, binlerce güzel sütunuyla tanınır."
       }
     },
     "games": {

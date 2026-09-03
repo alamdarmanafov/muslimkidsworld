@@ -1,27 +1,53 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { router } from "expo-router";
 import { useTranslation } from "react-i18next";
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { ActivityIndicator, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../src/components/Button";
 import { Icon } from "../../src/components/icons";
-import { dailyLimitOptions, getDailyLimitMinutes, setDailyLimitMinutes } from "../../src/data/mock";
+import { dailyLimitOptions } from "../../src/data/mock";
+import { fetchDailyLimitMinutes, setFamilyDailyLimitMinutes } from "../../src/lib/screenTime";
+import { toast } from "../../src/lib/toast";
 import { colors, fonts, radii, shadow, spacing } from "../../src/theme/theme";
 
 export default function DailyLimit() {
   const { t } = useTranslation();
-  const current = getDailyLimitMinutes();
-  const isPreset = (dailyLimitOptions as readonly number[]).includes(current);
-  const [selected, setSelected] = useState<number | "custom">(isPreset ? current : "custom");
-  const [customValue, setCustomValue] = useState(isPreset ? "" : String(current));
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [selected, setSelected] = useState<number | "custom">(60);
+  const [customValue, setCustomValue] = useState("");
+
+  useEffect(() => {
+    fetchDailyLimitMinutes().then((current) => {
+      const minutes = current ?? 60;
+      const isPreset = (dailyLimitOptions as readonly number[]).includes(minutes);
+      setSelected(isPreset ? minutes : "custom");
+      setCustomValue(isPreset ? "" : String(minutes));
+      setLoading(false);
+    });
+  }, []);
 
   const finalMinutes = selected === "custom" ? parseInt(customValue, 10) || 0 : selected;
-  const canSave = finalMinutes > 0;
+  const canSave = finalMinutes > 0 && !saving;
 
-  const handleSave = () => {
-    setDailyLimitMinutes(finalMinutes);
+  const handleSave = async () => {
+    setSaving(true);
+    const ok = await setFamilyDailyLimitMinutes(finalMinutes);
+    setSaving(false);
+    if (!ok) {
+      toast.error(t("dailyLimit.saveFailed"));
+      return;
+    }
     router.back();
   };
+
+  if (loading) {
+    return (
+      <SafeAreaView style={[styles.screen, styles.loadingScreen]}>
+        <ActivityIndicator color={colors.primary} />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -75,6 +101,7 @@ export default function DailyLimit() {
 
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.background, padding: spacing.lg },
+  loadingScreen: { alignItems: "center", justifyContent: "center" },
   backBtn: {
     width: 34,
     height: 34,

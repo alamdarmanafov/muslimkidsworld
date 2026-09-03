@@ -384,6 +384,16 @@ deno_version = 2
 # [edge_runtime.secrets]
 # secret_key = "env(SECRET_VALUE)"
 
+# Apple calls this endpoint directly (App Store Server Notifications
+# V2) — it can't send a Supabase anon/user JWT, so the platform's
+# default "every function requires a valid Supabase JWT" gate has to
+# be turned off for this one function specifically. Every other
+# function keeps the default (verify_jwt = true, i.e. unset here).
+# `supabase functions deploy apple-server-notifications` picks this up
+# automatically; see supabase/README.md's "In-app purchases" section.
+[functions.apple-server-notifications]
+verify_jwt = false
+
 [analytics]
 enabled = true
 port = 54327

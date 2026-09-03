@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon, type IconName } from "../../../src/components/icons";
-import { activeChild, dailyJourney, getDailyLimitMinutes, type JourneyItem } from "../../../src/data/mock";
+import { activeChild, dailyJourney, type JourneyItem } from "../../../src/data/mock";
 import { fetchChildProgress } from "../../../src/lib/childProgress";
 import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
 
@@ -17,6 +17,7 @@ const exploreTiles: { labelKey: string; icon: IconName; bg: string; href: string
   { labelKey: "childHome.salah", icon: "mosque", bg: colors.teal, href: "/child/salah" },
   { labelKey: "childHome.alphabet", icon: "globe", bg: colors.goldDark, href: "/child/alphabet" },
   { labelKey: "childHome.divineNames", icon: "star", bg: colors.purple, href: "/child/divine-names" },
+  { labelKey: "childHome.world", icon: "moon", bg: colors.night, href: "/child/world" },
 ];
 
 const journeyLabelKeys: Record<string, string> = {
@@ -39,6 +40,8 @@ export default function ChildHome() {
   const [name, setName] = useState(activeChild.name);
   const [xp, setXp] = useState(0);
   const [journey, setJourney] = useState<JourneyItem[]>(dailyJourney);
+  const [dailyGoalMinutes, setDailyGoalMinutes] = useState(60);
+  const [minutesDone, setMinutesDone] = useState(0);
 
   useFocusEffect(
     useCallback(() => {
@@ -47,6 +50,7 @@ export default function ChildHome() {
         if (cancelled || !result) return;
         setName(result.child.name);
         setXp(result.progress.xp);
+        setDailyGoalMinutes(result.dailyLimitMinutes);
 
         // Real per-item signal for all five, from today's
         // child_daily_activity row: "quiz" from questions_answered
@@ -54,6 +58,7 @@ export default function ChildHome() {
         // mark-journey-item sets when that screen is opened.
         const todayStr = new Date().toISOString().slice(0, 10);
         const today = result.week.find((d) => d.activity_date === todayStr);
+        setMinutesDone(today?.minutes_spent ?? 0);
         const doneById: Record<string, boolean> = {
           quiz: (today?.questions_answered ?? 0) > 0,
           quran: today?.quran_done ?? false,
@@ -71,8 +76,6 @@ export default function ChildHome() {
     }, []),
   );
 
-  const dailyGoalMinutes = getDailyLimitMinutes();
-  const minutesDone = journey.filter((i) => i.done).reduce((sum, i) => sum + i.minutes, 0);
   const remaining = Math.max(dailyGoalMinutes - minutesDone, 0);
   const progress = Math.round((minutesDone / dailyGoalMinutes) * 100);
   const complete = minutesDone >= dailyGoalMinutes;

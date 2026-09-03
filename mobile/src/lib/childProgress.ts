@@ -51,6 +51,7 @@ export type DailyActivity = {
   dua_done: boolean;
   story_done: boolean;
   game_done: boolean;
+  minutes_spent: number;
 };
 
 export type ChildProgressResult = {
@@ -59,6 +60,8 @@ export type ChildProgressResult = {
   week: DailyActivity[];
   /** Slugs of achievements this child has actually earned (achievements.slug). */
   achievements: string[];
+  /** The family's real, parent-set screen-time limit (families.daily_limit_minutes). */
+  dailyLimitMinutes: number;
 };
 
 /**
@@ -106,11 +109,12 @@ export async function recordQuizResult(
   correct: number,
   total: number,
   xpEarned: number,
+  category?: string,
 ): Promise<void> {
   try {
     const deviceId = await getDeviceId();
     const { error } = await getSupabaseClient().functions.invoke("record-quiz-result", {
-      body: { deviceId, correct, total, xpEarned },
+      body: { deviceId, correct, total, xpEarned, category },
     });
     if (error) {
       const serverMessage = await readServerErrorMessage(error);
@@ -144,6 +148,29 @@ export async function markJourneyItem(item: "quran" | "dua" | "story" | "game"):
   } catch (err) {
     if (__DEV__) {
       console.warn("markJourneyItem failed", err instanceof Error ? err.message : String(err));
+    }
+  }
+}
+
+/**
+ * Records that a child opened a specific story (by mock.ts Story.id) —
+ * separate from markJourneyItem("story"), which only flips today's
+ * done flag and has no memory of *which* story. This is what lets
+ * book-lover/storyteller ever actually be earned. Fails silently, same
+ * reasoning as markJourneyItem.
+ */
+export async function markStoryRead(storySlug: string): Promise<void> {
+  try {
+    const deviceId = await getDeviceId();
+    const { error } = await getSupabaseClient().functions.invoke("mark-story-read", {
+      body: { deviceId, storySlug },
+    });
+    if (error && __DEV__) {
+      console.warn("markStoryRead failed", error.message);
+    }
+  } catch (err) {
+    if (__DEV__) {
+      console.warn("markStoryRead failed", err instanceof Error ? err.message : String(err));
     }
   }
 }

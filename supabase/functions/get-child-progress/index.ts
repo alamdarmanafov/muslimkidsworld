@@ -17,8 +17,15 @@
 //   POST /functions/v1/get-child-progress
 //   { "deviceId": "dev_abc123" }
 //
+// `dailyLimitMinutes` is the family's real, parent-set screen-time
+// limit (families.daily_limit_minutes, 0019_screen_time.sql) — the
+// child app used to have no way to read this at all, since it has no
+// auth session and the setting used to just be an in-memory client
+// constant that could never actually sync between a parent's device
+// and a child's.
+//
 // Response:
-//   200 { child: {...}, progress: {...}, week: [...], achievements: ["first-star", ...] }
+//   200 { child: {...}, progress: {...}, week: [...], achievements: [...], dailyLimitMinutes: 60 }
 //   404 { error: "Device is not bound to a family" | "No child found for this family" }
 //   400 { error: "..." }                             — bad request body
 //
@@ -105,13 +112,25 @@ Deno.serve(async (req: Request) => {
 
   const { data: week, error: weekError } = await adminClient
     .from("child_daily_activity")
-    .select("activity_date, questions_answered, xp_earned, quran_done, dua_done, story_done, game_done")
+    .select(
+      "activity_date, questions_answered, xp_earned, quran_done, dua_done, story_done, game_done, minutes_spent",
+    )
     .eq("child_id", child.id)
     .gte("activity_date", sevenDaysAgoStr)
     .order("activity_date", { ascending: true });
 
   if (weekError) {
     return jsonResponse({ error: weekError.message }, 500);
+  }
+
+  const { data: family, error: familyError } = await adminClient
+    .from("families")
+    .select("daily_limit_minutes")
+    .eq("id", resolved.familyId)
+    .maybeSingle();
+
+  if (familyError) {
+    return jsonResponse({ error: familyError.message }, 500);
   }
 
   const { data: earnedRows, error: earnedError } = await adminClient
@@ -130,6 +149,7 @@ Deno.serve(async (req: Request) => {
   return jsonResponse({
     child,
     achievements: achievementSlugs,
+    dailyLimitMinutes: family?.daily_limit_minutes ?? 60,
     progress: progress ?? {
       child_id: child.id,
       level: 1,

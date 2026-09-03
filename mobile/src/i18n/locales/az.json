@@ -7,6 +7,28 @@
     "signOut": "Çıxış",
     "delete": "Sil"
   },
+  "onboarding": {
+    "skip": "Keç",
+    "back": "Geri",
+    "next": "Növbəti",
+    "getStarted": "Başla"
+  },
+  "parentOnboarding": {
+    "step1Title": "Uşağını qoş",
+    "step1Body": "Valideyn tətbiqindən \"Ailə Kodu\" yarat və uşağının cihazında daxil et — beləcə onun profili sənin ailənə bağlanır.",
+    "step2Title": "Valideyn Qapısı",
+    "step2Body": "4 rəqəmli PIN təyin et ki, uşağın icazən olmadan valideyn tənzimləmələrinə keçə bilməsin.",
+    "step3Title": "Bugünkü Səyahət",
+    "step3Body": "Hər gün uşağın Quran, Dua, Hekayə, Test və Oyun bölmələrindən keçərək öyrənir — irəliləyişini Hesabat bölməsindən izləyə bilərsən."
+  },
+  "childOnboarding": {
+    "step1Title": "Bugünkü Səyahətin",
+    "step1Body": "Hər gün Quran oxu, dua öyrən, hekayəyə qulaq as, test həll et və oyna — hamısını tamamlayanda bağçan çiçəklənəcək!",
+    "step2Title": "Kəşf et",
+    "step2Body": "Əlifba, 99 Ad, Namaz və Müsəlman Dünyası kimi daha çox əyləncəli bölmələr də var — aşağı sürüşdür və kəşf et!",
+    "step3Title": "Ulduz qazan",
+    "step3Body": "Hər düzgün cavab və tamamlanan fəaliyyət sənə ulduz və nailiyyət qazandırır. Nə qədər çox öyrənsən, bir o qədər çox mükafat!"
+  },
   "welcome": {
     "titleMuslim": "Muslim",
     "titleKids": "Kids",
@@ -76,6 +98,7 @@
     "salah": "Namaz",
     "alphabet": "Əlifba",
     "divineNames": "99 Ad",
+    "world": "Dünya",
     "story": "Hekayə",
     "game": "Oyun",
     "gardenTitle": "Mənim Bağçam",
@@ -123,7 +146,8 @@
     "subtitle": "Uşağın bu qədər dəqiqəyə çatanda bugünkü səyahət tamamlanmış sayılır və tətbiq daha çox məzmun təklif etmir.",
     "custom": "Fərdi",
     "customPlaceholder": "məs. 40",
-    "minUnit": "dəq"
+    "minUnit": "dəq",
+    "saveFailed": "Saxlanılmadı. Yenidən cəhd et."
   },
   "childProfile": {
     "parentMode": "Valideyn rejimi",
@@ -206,6 +230,10 @@
   "stories": {
     "title": "Hekayələr",
     "moreStories": "Daha çox hekayə"
+  },
+  "world": {
+    "title": "Müsəlman Dünyası",
+    "moreSites": "Daha çox yer"
   },
   "games": {
     "title": "Oyunlar",
@@ -310,6 +338,17 @@
     "title": "Həftəlik Hesabat",
     "subtitle": "Hər uşaq üçün dəqiqlik, öyrənmə vaxtı, güclü sahələr və ardıcıllıq."
   },
+  "parentProgress": {
+    "thisWeek": "Bu həftə",
+    "minutesThisWeek_one": "Bu həftə cəmi {{count}} dəqiqə keçirdi.",
+    "minutesThisWeek_other": "Bu həftə cəmi {{count}} dəqiqə keçirdi.",
+    "streak": "Seriya",
+    "newBadges": "Yeni nailiyyət",
+    "subjects": "Fənlər",
+    "strongest": "Ən güclü fənn",
+    "needsPractice": "Təkrar lazımdır",
+    "notEnoughData": "Fənn üzrə göstərici üçün daha çox test lazımdır."
+  },
   "addChild": {
     "title": "Uşaq əlavə et",
     "avatar": "Avatar",
@@ -381,6 +420,28 @@
       "yusuf": {
         "title": "Peyğəmbər Yusufun (ə.s) hekayəsi",
         "subtitle": "Quyudan saraya"
+      }
+    },
+    "worldSites": {
+      "mosque": {
+        "name": "Məscidül-Haram",
+        "fact": "Məkkədə yerləşən bu məscid dünyanın ən böyük məscididir və mərkəzində Kəbə var — bütün müsəlmanlar namaz qılarkən buraya tərəf dönür."
+      },
+      "medina": {
+        "name": "Məscidün-Nəbəvi",
+        "fact": "Mədinə şəhərindəki bu məscidi Peyğəmbərimiz (s.ə.s) özü tikdirmişdir. O, dünyanın ən böyük məscidlərindən biridir."
+      },
+      "al-aqsa": {
+        "name": "Məscidül-Əqsa",
+        "fact": "Qüds şəhərindəki bu məscid müsəlmanlar üçün ən müqəddəs üç məsciddən biridir və Merac gecəsi ilə bağlıdır."
+      },
+      "istanbul": {
+        "name": "Sultanəhməd Məscidi",
+        "fact": "İstanbulda, Türkiyədə yerləşən bu gözəl məscid mavi kaşıları ilə məşhurdur, ona görə də «Göy Məscid» adlanır."
+      },
+      "andalusia": {
+        "name": "Kordoba Məscidi",
+        "fact": "İspaniyanın Kordoba şəhərində tikilmiş bu qədim məscid minlərlə gözəl sütunu ilə tanınır."
       }
     },
     "games": {

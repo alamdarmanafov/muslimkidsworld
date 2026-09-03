@@ -4094,6 +4094,28 @@ export const stories: Story[] = [
   { id: "yusuf", icon: "crown", tone: tones.purple, locked: true },
 ];
 
+export type WorldSite = {
+  id: string;
+  icon: IconName;
+  tone: IconBadgeTone;
+};
+
+// Content (name/fact) lives in i18n under content.worldSites.<id>, same
+// deliberate mock.ts+i18n pattern as Stories/Dua/Quiz (see
+// supabase/README.md) — not a content table, since nothing else in
+// this feature is admin-editable either. `id` doubles as the
+// `worldSlug` mark-world-visit expects and mosque-visitor's criteria
+// checks against ({"type":"world_visited","world":"mosque"},
+// 0008_achievement_criteria.sql) — keep the two lists in sync if a
+// site is ever added or renamed.
+export const worldSites: WorldSite[] = [
+  { id: "mosque", icon: "mosque", tone: tones.gold },
+  { id: "medina", icon: "moon", tone: tones.green },
+  { id: "al-aqsa", icon: "shield", tone: tones.blue },
+  { id: "istanbul", icon: "crown", tone: tones.purple },
+  { id: "andalusia", icon: "book", tone: tones.teal },
+];
+
 export type Game = {
   id: string;
   icon: IconName;
@@ -4147,18 +4169,10 @@ export const dailyJourney: JourneyItem[] = [
   { id: "game", label: "Game", icon: "controller", minutes: 10, href: "/child/games", done: false },
 ];
 
+// Just the preset choices shown on app/parent/daily-limit.tsx — the
+// actual current value lives server-side now (families.daily_limit_minutes,
+// see mobile/src/lib/screenTime.ts), not here.
 export const dailyLimitOptions = [30, 45, 60, 90] as const;
-
-let _dailyLimitMinutes = 60;
-
-export function getDailyLimitMinutes() {
-  return _dailyLimitMinutes;
-}
-
-export function setDailyLimitMinutes(minutes: number) {
-  _dailyLimitMinutes = minutes;
-}
-
 
 export const plans = [
   {

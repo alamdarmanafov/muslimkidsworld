@@ -29,6 +29,7 @@ export type Database = {
           id: string;
           name: string | null;
           pin_hash: string | null;
+          daily_limit_minutes: number;
           created_at: string;
           updated_at: string;
         };
@@ -36,6 +37,7 @@ export type Database = {
           id?: string;
           name?: string | null;
           pin_hash?: string | null;
+          daily_limit_minutes?: number;
           created_at?: string;
           updated_at?: string;
         };
@@ -128,6 +130,7 @@ export type Database = {
           dua_done: boolean;
           story_done: boolean;
           game_done: boolean;
+          minutes_spent: number;
         };
         Insert: {
           child_id: string;
@@ -138,8 +141,53 @@ export type Database = {
           dua_done?: boolean;
           story_done?: boolean;
           game_done?: boolean;
+          minutes_spent?: number;
         };
         Update: Partial<Database["public"]["Tables"]["child_daily_activity"]["Insert"]>;
+        Relationships: [];
+      };
+      child_category_stats: {
+        Row: {
+          child_id: string;
+          category: string;
+          questions_answered: number;
+          correct_answers: number;
+        };
+        Insert: {
+          child_id: string;
+          category: string;
+          questions_answered?: number;
+          correct_answers?: number;
+        };
+        Update: Partial<Database["public"]["Tables"]["child_category_stats"]["Insert"]>;
+        Relationships: [];
+      };
+      child_story_reads: {
+        Row: {
+          child_id: string;
+          story_slug: string;
+          first_read_at: string;
+        };
+        Insert: {
+          child_id: string;
+          story_slug: string;
+          first_read_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["child_story_reads"]["Insert"]>;
+        Relationships: [];
+      };
+      child_world_visits: {
+        Row: {
+          child_id: string;
+          world_slug: string;
+          first_visited_at: string;
+        };
+        Insert: {
+          child_id: string;
+          world_slug: string;
+          first_visited_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["child_world_visits"]["Insert"]>;
         Relationships: [];
       };
       family_codes: {

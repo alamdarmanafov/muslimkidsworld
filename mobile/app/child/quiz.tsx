@@ -65,7 +65,7 @@ export default function Quiz() {
 
   function next() {
     if (isLast) {
-      recordQuizResult(sessionCorrect, questions.length, sessionXp);
+      recordQuizResult(sessionCorrect, questions.length, sessionXp, category);
       setPhase("reward");
       return;
     }

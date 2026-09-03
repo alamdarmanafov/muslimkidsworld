@@ -4,20 +4,18 @@ import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../../../src/components/icons";
-import { markJourneyItem, markStoryRead } from "../../../src/lib/childProgress";
-import { stories } from "../../../src/data/mock";
+import { worldSites } from "../../../src/data/mock";
+import { markWorldVisited } from "../../../src/lib/world";
 import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
 
-export default function StoryDetail() {
+export default function WorldSiteDetail() {
   const { t } = useTranslation();
   const { id } = useLocalSearchParams<{ id: string }>();
-  const story = stories.find((s) => s.id === id) ?? stories[0];
-  const paragraphs = t(`content.storyContent.${story.id}`, { returnObjects: true }) as string[];
+  const site = worldSites.find((s) => s.id === id) ?? worldSites[0];
 
   useEffect(() => {
-    markJourneyItem("story");
-    markStoryRead(story.id);
-  }, [story.id]);
+    markWorldVisited(site.id);
+  }, [site.id]);
 
   return (
     <SafeAreaView style={styles.screen} edges={["top"]}>
@@ -26,24 +24,19 @@ export default function StoryDetail() {
           <Icon name="arrowRight" size={18} color={colors.ink} style={styles.backIcon} />
         </Pressable>
         <Text style={styles.title} numberOfLines={1}>
-          {t(`content.stories.${story.id}.title`)}
+          {t(`content.worldSites.${site.id}.name`)}
         </Text>
         <View style={{ width: 34 }} />
       </View>
 
       <ScrollView contentContainerStyle={styles.content}>
-        <View style={[styles.banner, { backgroundColor: story.tone[0] }]}>
-          <Icon name={story.icon} size={36} color={story.tone[1]} />
-          <Text style={[styles.bannerSubtitle, { color: story.tone[1] }]}>
-            {t(`content.stories.${story.id}.subtitle`)}
-          </Text>
+        <View style={[styles.banner, { backgroundColor: site.tone[0] }]}>
+          <Icon name={site.icon} size={36} color={site.tone[1]} />
         </View>
 
-        {paragraphs.map((p, i) => (
-          <View key={i} style={styles.paragraphCard}>
-            <Text style={styles.paragraphText}>{p}</Text>
-          </View>
-        ))}
+        <View style={styles.factCard}>
+          <Text style={styles.factText}>{t(`content.worldSites.${site.id}.fact`)}</Text>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -75,17 +68,15 @@ const styles = StyleSheet.create({
     borderRadius: radii.lg,
     padding: spacing.lg,
     alignItems: "center",
-    gap: spacing.xs,
     marginBottom: spacing.sm,
   },
-  bannerSubtitle: { fontFamily: fonts.bodyBold, fontSize: 13 },
-  paragraphCard: {
+  factCard: {
     backgroundColor: colors.card,
     borderRadius: radii.lg,
     padding: spacing.lg,
     ...shadow,
   },
-  paragraphText: {
+  factText: {
     fontFamily: fonts.body,
     fontSize: 15,
     color: colors.ink,

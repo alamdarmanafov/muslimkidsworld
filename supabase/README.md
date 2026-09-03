@@ -61,8 +61,22 @@ supabase/
 │   │                                multi-child shared devices
 │   ├── 0015_admin_panel.sql        parents.is_admin + admin RLS
 │   │                                policies for admin/index.html
-│   └── 0016_iap.sql                subscription_plans.apple_product_id,
-│                                    for verify-apple-purchase
+│   ├── 0016_iap.sql                subscription_plans.apple_product_id,
+│   │                                for verify-apple-purchase
+│   ├── 0017_category_stats.sql     child_category_stats, for the
+│   │                                parent Weekly Report's
+│   │                                strongest/weakest subject
+│   ├── 0018_stories_world_tracking.sql  child_story_reads,
+│   │                                child_world_visits — makes
+│   │                                book-lover/storyteller/
+│   │                                mosque-visitor awardable
+│   └── 0019_screen_time.sql        families.daily_limit_minutes (a
+│                                    real, shared setting — see its own
+│                                    header comment for why it used to
+│                                    be fake), child_daily_activity.
+│                                    minutes_spent, and a trigger
+│                                    hardening families.pin_hash
+│                                    against direct client writes
 ├── scripts/
 │   └── import-quran.mjs            one-time script, run from a machine
 │                                    with real internet access: pulls
@@ -91,12 +105,29 @@ supabase/
     ├── list-family-children/       shared device lists its family's children
     ├── set-active-child/           parent switches which child a shared
     │                                device is currently acting as
+    ├── mark-story-read/            child device records which story it
+    │                                opened, for book-lover/storyteller
+    ├── mark-world-visit/            child device records visiting a
+    │                                "Muslim World" site, for mosque-visitor
+    ├── record-screen-time/          child device reports ~1 real minute
+    │                                of foreground time
     ├── verify-apple-purchase/      confirms an App Store transaction
     │                                with Apple and updates `subscriptions`
+    ├── apple-server-notifications/ Apple's own renewal/cancellation
+    │                                webhook — re-verifies with Apple
+    │                                rather than trusting the payload
+    │                                (see its own header comment)
     └── _shared/                    cors.ts, push.ts (Expo push sender),
-                                     resolveChild.ts (device → family →
-                                     child lookup, shared by the child-
-                                     facing functions above)
+                                     notifyParents.ts (push to every
+                                     parent in a family), resolveChild.ts
+                                     (device → family → child lookup,
+                                     shared by the child-facing
+                                     functions above), achievements.ts
+                                     (criteria evaluation, shared by
+                                     record-quiz-result/mark-story-read/
+                                     mark-world-visit), appleIap.ts (App
+                                     Store Server API calls, shared by
+                                     both Apple IAP functions)
 ```
 
 The SQL has been validated by actually running it against a local
@@ -162,13 +193,18 @@ for real queries later is a small diff, not a rewrite.
    supabase functions deploy mark-journey-item
    supabase functions deploy list-family-children
    supabase functions deploy set-active-child
+   supabase functions deploy mark-story-read
+   supabase functions deploy mark-world-visit
+   supabase functions deploy record-screen-time
    supabase functions deploy verify-apple-purchase
+   supabase functions deploy apple-server-notifications
    ```
    All of these read `SUPABASE_URL`, `SUPABASE_ANON_KEY`, and
    `SUPABASE_SERVICE_ROLE_KEY` — Supabase injects these automatically
    into every deployed function, nothing to configure there.
-   `verify-apple-purchase` additionally needs the `APPLE_IAP_*` secrets
-   from step 12 below before it'll work.
+   `verify-apple-purchase` and `apple-server-notifications` additionally
+   need the `APPLE_IAP_*` secrets from step 12 below before they'll
+   work.
 
 6. **Set the two client env vars.**
 
@@ -368,17 +404,36 @@ for real queries later is a small diff, not a rewrite.
       production ones; the function tries Apple's production endpoint
       first and automatically falls back to the sandbox endpoint on a
       404, so no separate sandbox configuration is needed.
-    - This only covers the *purchase* moment (a new purchase, or
-      "Restore purchases" on `premium.tsx`) — each one calls
-      `verify-apple-purchase`, which is the only thing that ever
-      writes to `subscriptions`. Apple can also change a subscription's
-      state on its own between app opens — a renewal, a cancellation,
-      a billing failure — and nothing here hears about that until the
-      parent buys or restores again, since `subscriptions` is only
-      ever updated by that verify call, not re-checked on a schedule.
-      A listener for [App Store Server
-      Notifications V2](https://developer.apple.com/documentation/appstoreservernotifications)
-      would close that gap but is future work, not part of this pass.
+    - **Renewals/cancellations Apple processes on its own** (not just
+      a purchase or "Restore purchases") reach `subscriptions` too, via
+      `apple-server-notifications` — [App Store Server Notifications
+      V2](https://developer.apple.com/documentation/appstoreservernotifications).
+      Deploy it and turn off its JWT check (Apple can't send a
+      Supabase key — this is already set in `supabase/config.toml`,
+      just needs to actually be deployed):
+      ```
+      supabase functions deploy apple-server-notifications
+      ```
+      Then in App Store Connect → your app → App Information → App
+      Store Server Notifications, set the **Production Server URL**
+      (and, if you want sandbox notifications delivered too, the
+      **Sandbox Server URL**) to:
+      ```
+      https://<project-ref>.supabase.co/functions/v1/apple-server-notifications
+      ```
+      Read `supabase/functions/apple-server-notifications/index.ts`'s
+      header comment for why this doesn't need Apple's full x5c
+      certificate-chain verification to be trustworthy: it never
+      trusts the incoming notification's contents, only uses them to
+      look up which family's subscription to re-check, then asks
+      Apple's App Store Server API directly (the same
+      `resolveSubscriptionFromApple()` call `verify-apple-purchase`
+      uses) — the write always comes from that authenticated response,
+      never from the notification body itself.
+    - Both functions share `_shared/appleIap.ts` (JWT signing, calling
+      Apple's API, decoding its JWS responses) — extend that one file
+      if Apple's API surface changes rather than touching either
+      function's own logic.
 
 ## Admin panel
 
@@ -457,20 +512,26 @@ confusing.
   isn't sensitive) and switching one in re-verifies the Parent Gate
   PIN server-side (`set-active-child`), since a child device has no
   parent auth session to authorize the write with otherwise.
-- **The achievement-badge grid is real for 3 of 6 badges.**
-  `record-quiz-result` now evaluates each achievement's `criteria`
-  (`0008_achievement_criteria.sql`) against the child's up-to-date
-  totals and awards a `child_achievements` row the moment it's met;
-  `get-child-progress` returns the earned slugs and
-  `app/child/(tabs)/rewards.tsx` only shows a badge as earned if it's
-  in that list — `badges_count` is the real `child_achievements` row
-  count, not a static number. But only `first-star`
-  (`correct_answers`), `week-streak` (`streak`), and `quiz-master`
-  (`questions_answered`) are things this backend actually tracks yet;
-  `book-lover` / `storyteller` (`stories_read`) and `mosque-visitor`
-  (`world_visited`) have criteria seeded for documentation but are
-  never awarded until Stories and the world map get their own
-  read/visit tracking — a real follow-up, not started here.
+- **The achievement-badge grid is fully real now, all 6 badges.**
+  `_shared/achievements.ts` (extracted from `record-quiz-result`, now
+  also called by `mark-story-read` and `mark-world-visit`) evaluates
+  every achievement's `criteria` (`0008_achievement_criteria.sql`)
+  against the child's up-to-date totals and awards a
+  `child_achievements` row the moment it's met; `get-child-progress`
+  returns the earned slugs and `app/child/(tabs)/rewards.tsx` only
+  shows a badge as earned if it's in that list — `badges_count` is the
+  real `child_achievements` row count, not a static number.
+  `first-star` (`correct_answers`), `week-streak` (`streak`), and
+  `quiz-master` (`questions_answered`) come from quiz results;
+  `book-lover` / `storyteller` (`stories_read`, `child_story_reads`)
+  come from opening a story (`app/child/stories/[id].tsx` calls
+  `mark-story-read` alongside its existing `markJourneyItem("story")`);
+  `mosque-visitor` (`world_visited`, `child_world_visits`) comes from
+  opening the "mosque" site in the new "Muslim World" explore feature
+  (`app/child/world.tsx`, `app/child/world/[id].tsx` — content in
+  `mobile/src/data/mock.ts` `worldSites` + i18n
+  `content.worldSites.*`, same deliberate mock.ts+i18n pattern as
+  Stories/Dua, see below).
 - **Quiz content staying in `mock.ts` is deliberate, not an
   oversight.** The `quizzes` / `quiz_questions` tables and their seed
   (`0002_content_tables.sql`, `0005_seed_content.sql`) predate the
@@ -484,14 +545,14 @@ confusing.
   wire-up — so it's left as its own future pass instead of forcing the
   current stale schema into use.
 - **iOS in-app purchases are wired up; other providers aren't.**
-  `verify-apple-purchase` (see "In-app purchases" above) writes real
-  `subscriptions` rows once it's independently confirmed a
-  transaction with Apple — `external_provider` is `'apple'`,
-  `external_subscription_id` is Apple's `originalTransactionId`. It
-  only reacts to a purchase or restore, not to renewals/cancellations
-  Apple processes on its own (no App Store Server Notifications
-  listener yet — see above), and there's no Play Store or Stripe path
-  at all, since the user scoped this pass to iOS only.
+  `verify-apple-purchase` and `apple-server-notifications` (see
+  "In-app purchases" above) both write real `subscriptions` rows once
+  they've independently confirmed a transaction with Apple —
+  `external_provider` is `'apple'`, `external_subscription_id` is
+  Apple's `originalTransactionId`. Between the two, both an in-app
+  purchase/restore and a renewal/cancellation Apple processes on its
+  own are covered; there's no Play Store or Stripe path at all, since
+  the user scoped this pass to iOS only.
 - **Admin panel covers Quran + achievements, not everything.**
   `admin/index.html` (see above) edits `quran_surahs`/`quran_verses`/
   `quran_translations` and `achievements` — the content types the app
@@ -500,10 +561,16 @@ confusing.
   editor for those tables wouldn't do anything yet; extending the
   admin panel to them is only worthwhile once those screens move off
   mock data.
-- **"Daily limit reached" push notification wasn't built.** No table
-  tracks minutes actually spent in the app — `daily_journeys.daily_limit_minutes`
-  is a stub (see above), and `child_daily_activity` tracks whether
-  each journey item was opened today (see `mark-journey-item`), not
-  how long the child spent on it — so there's no real signal to fire
-  that notification from yet. Achievement-earned and the daily
-  reminder (`send-daily-reminders`) both use signals that do exist.
+- **"Daily limit reached" push notification is built.**
+  `families.daily_limit_minutes` (`0019_screen_time.sql`) is a real,
+  parent-set, shared setting now — `app/parent/daily-limit.tsx` writes
+  it directly (RLS-scoped, same as other parent writes), and
+  `get-child-progress` returns it to the child app. Actual elapsed
+  time is tracked too: `ScreenTimeTracker` (mounted in
+  `app/child/_layout.tsx`) reports ~1 real foreground minute at a time
+  to `record-screen-time`, which accumulates
+  `child_daily_activity.minutes_spent` and pushes every parent once,
+  the moment that day's total first reaches the limit (not on every
+  call after, so it doesn't spam). The child home screen's progress
+  bar (`app/child/(tabs)/index.tsx`) now reflects this real value
+  instead of a fake per-item-minutes sum.

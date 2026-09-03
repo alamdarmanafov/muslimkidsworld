@@ -7,6 +7,28 @@
     "signOut": "Sign Out",
     "delete": "Delete"
   },
+  "onboarding": {
+    "skip": "Skip",
+    "back": "Back",
+    "next": "Next",
+    "getStarted": "Get Started"
+  },
+  "parentOnboarding": {
+    "step1Title": "Connect your child",
+    "step1Body": "Create a Family Code from the parent app and enter it on your child's device — that links their profile to your family.",
+    "step2Title": "The Parent Gate",
+    "step2Body": "Set a 4-digit PIN so your child can't get into parent settings without your permission.",
+    "step3Title": "Today's Journey",
+    "step3Body": "Every day your child learns through Quran, Dua, Story, Quiz, and Game sections — you can track their progress from the Report tab."
+  },
+  "childOnboarding": {
+    "step1Title": "Your Today's Journey",
+    "step1Body": "Every day, read Quran, learn a dua, listen to a story, take a quiz, and play — finish them all and your garden will bloom!",
+    "step2Title": "Explore",
+    "step2Body": "There's more to discover too — Alphabet, 99 Names, Salah, and the Muslim World. Scroll down to explore!",
+    "step3Title": "Earn Stars",
+    "step3Body": "Every correct answer and finished activity earns you stars and badges. The more you learn, the more rewards you get!"
+  },
   "welcome": {
     "titleMuslim": "Muslim",
     "titleKids": "Kids",
@@ -76,6 +98,7 @@
     "salah": "Salah",
     "alphabet": "Alphabet",
     "divineNames": "99 Names",
+    "world": "World",
     "story": "Story",
     "game": "Game",
     "gardenTitle": "My Garden",
@@ -123,7 +146,8 @@
     "subtitle": "Once your child reaches this many minutes, today's journey is marked complete and the app won't push more content.",
     "custom": "Custom",
     "customPlaceholder": "e.g. 40",
-    "minUnit": "min"
+    "minUnit": "min",
+    "saveFailed": "Couldn't save. Please try again."
   },
   "childProfile": {
     "parentMode": "Parent Mode",
@@ -206,6 +230,10 @@
   "stories": {
     "title": "Stories",
     "moreStories": "More Stories"
+  },
+  "world": {
+    "title": "Muslim World",
+    "moreSites": "More Sites"
   },
   "games": {
     "title": "Games",
@@ -310,6 +338,17 @@
     "title": "Weekly Report",
     "subtitle": "Accuracy, learning time, strong areas, and streaks per child."
   },
+  "parentProgress": {
+    "thisWeek": "This Week",
+    "minutesThisWeek_one": "{{count}} minute spent this week.",
+    "minutesThisWeek_other": "{{count}} minutes spent this week.",
+    "streak": "Streak",
+    "newBadges": "New Badges",
+    "subjects": "Subjects",
+    "strongest": "Strongest Subject",
+    "needsPractice": "Needs Practice",
+    "notEnoughData": "Needs a few more quizzes to show a subject breakdown."
+  },
   "addChild": {
     "title": "Add Child",
     "avatar": "Avatar",
@@ -381,6 +420,28 @@
       "yusuf": {
         "title": "The Story of Prophet Yusuf (AS)",
         "subtitle": "From the well to the palace"
+      }
+    },
+    "worldSites": {
+      "mosque": {
+        "name": "Masjid al-Haram",
+        "fact": "This mosque in Mecca is the largest in the world, built around the Kaaba — the direction every Muslim faces to pray."
+      },
+      "medina": {
+        "name": "Masjid an-Nabawi",
+        "fact": "This mosque in Medina was built by the Prophet (peace be upon him) himself. It's one of the largest mosques in the world."
+      },
+      "al-aqsa": {
+        "name": "Al-Aqsa Mosque",
+        "fact": "This mosque in Jerusalem is one of the three holiest sites for Muslims, linked to the Prophet's night journey (Isra and Mi'raj)."
+      },
+      "istanbul": {
+        "name": "Sultan Ahmed Mosque",
+        "fact": "This beautiful mosque in Istanbul, Turkey is famous for its blue tiles — which is why people also call it the Blue Mosque."
+      },
+      "andalusia": {
+        "name": "Mosque of Córdoba",
+        "fact": "This ancient mosque in Córdoba, Spain is known for its thousands of beautiful columns."
       }
     },
     "games": {

@@ -1,10 +1,14 @@
 import { useEffect } from "react";
-import { Stack } from "expo-router";
+import { router, Stack } from "expo-router";
+import { hasSeenParentOnboarding } from "../../src/lib/onboarding";
 import { registerForPushNotifications } from "../../src/lib/pushNotifications";
 
 export default function ParentLayout() {
   useEffect(() => {
     registerForPushNotifications();
+    hasSeenParentOnboarding().then((seen) => {
+      if (!seen) router.push("/parent/onboarding");
+    });
   }, []);
 
   return (
@@ -16,6 +20,7 @@ export default function ParentLayout() {
       <Stack.Screen name="privacy" options={{ presentation: "modal" }} />
       <Stack.Screen name="parent-pin-setup" options={{ presentation: "modal" }} />
       <Stack.Screen name="devices" options={{ presentation: "modal" }} />
+      <Stack.Screen name="onboarding" options={{ presentation: "modal" }} />
     </Stack>
   );
 }
