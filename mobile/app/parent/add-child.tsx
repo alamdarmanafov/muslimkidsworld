@@ -5,46 +5,37 @@ import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../src/components/Button";
 import { Card } from "../../src/components/Card";
+import { addChild } from "../../src/lib/children";
 import { colors, radii, spacing } from "../../src/theme/theme";
 
 const avatarOptions = ["👦", "👧", "🧒", "👶"];
-const genderOptions = ["Boy", "Girl"] as const;
-const genderLabelKeys: Record<(typeof genderOptions)[number], string> = {
-  Boy: "addChild.boy",
-  Girl: "addChild.girl",
-};
-
-function generateChildCode() {
-  return String(Math.floor(100000 + Math.random() * 900000));
-}
 
 export default function AddChild() {
   const { t } = useTranslation();
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
-  const [gender, setGender] = useState<(typeof genderOptions)[number]>("Boy");
   const [avatar, setAvatar] = useState(avatarOptions[0]);
-  const [code, setCode] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const canGenerate = name.trim().length > 0 && age.trim().length > 0;
 
-  if (code) {
-    return (
-      <SafeAreaView style={styles.screen}>
-        <View style={styles.codeBody}>
-          <Text style={styles.codeLabel}>{t("addChild.childCode")}</Text>
-          <Text style={styles.code}>{code}</Text>
-          <Text style={styles.expiry}>{t("addChild.expiresIn10")}</Text>
-          <Text style={styles.hint}>
-            {t("addChild.hint", { name: name || t("addChild.yourChild") })}
-          </Text>
-        </View>
-        <View style={styles.footer}>
-          <Button label={t("addChild.done")} onPress={() => router.replace("/parent/children")} />
-        </View>
-      </SafeAreaView>
+  const handleSubmit = async () => {
+    setError(null);
+    setLoading(true);
+    const parsedAge = Number(age);
+    const childId = await addChild(
+      name.trim(),
+      Number.isFinite(parsedAge) && parsedAge > 0 ? parsedAge : null,
+      avatar,
     );
-  }
+    setLoading(false);
+    if (!childId) {
+      setError(t("addChild.somethingWrong"));
+      return;
+    }
+    router.replace("/parent/family-code");
+  };
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -85,33 +76,15 @@ export default function AddChild() {
           keyboardType="number-pad"
           placeholderTextColor={colors.inkMuted}
         />
-
-        <Text style={styles.label}>{t("addChild.gender")}</Text>
-        <View style={styles.genderRow}>
-          {genderOptions.map((g) => (
-            <Pressable
-              key={g}
-              onPress={() => setGender(g)}
-              style={[styles.genderOption, gender === g && styles.genderOptionSelected]}
-            >
-              <Text
-                style={[
-                  styles.genderText,
-                  gender === g && styles.genderTextSelected,
-                ]}
-              >
-                {t(genderLabelKeys[g])}
-              </Text>
-            </Pressable>
-          ))}
-        </View>
       </Card>
+
+      {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
       <View style={styles.footer}>
         <Button
-          label={t("addChild.generateCode")}
-          disabled={!canGenerate}
-          onPress={() => setCode(generateChildCode())}
+          label={loading ? t("addChild.creating") : t("addChild.generateCode")}
+          disabled={!canGenerate || loading}
+          onPress={handleSubmit}
         />
       </View>
     </SafeAreaView>
@@ -146,28 +119,11 @@ const styles = StyleSheet.create({
   },
   avatarOptionSelected: { borderColor: colors.primary },
   avatarEmoji: { fontSize: 24 },
-  genderRow: { flexDirection: "row", gap: spacing.sm, marginTop: spacing.xs },
-  genderOption: {
-    flex: 1,
-    paddingVertical: spacing.sm,
-    borderRadius: radii.sm,
-    borderWidth: 1,
-    borderColor: colors.border,
-    alignItems: "center",
-  },
-  genderOptionSelected: { backgroundColor: colors.primary, borderColor: colors.primary },
-  genderText: { fontWeight: "600", color: colors.ink },
-  genderTextSelected: { color: "#fff" },
-  footer: { marginTop: "auto", paddingBottom: spacing.md },
-  codeBody: { flex: 1, alignItems: "center", justifyContent: "center", gap: spacing.sm },
-  codeLabel: { fontSize: 14, color: colors.inkMuted },
-  code: { fontSize: 48, fontWeight: "800", color: colors.ink, letterSpacing: 6 },
-  expiry: { fontSize: 13, color: colors.fire, fontWeight: "600" },
-  hint: {
-    marginTop: spacing.md,
+  errorText: {
     fontSize: 13,
-    color: colors.inkMuted,
+    color: colors.pink,
     textAlign: "center",
-    paddingHorizontal: spacing.lg,
+    marginTop: spacing.md,
   },
+  footer: { marginTop: "auto", paddingBottom: spacing.md },
 });

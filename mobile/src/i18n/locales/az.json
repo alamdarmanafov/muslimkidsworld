@@ -4,7 +4,8 @@
     "tryAgain": "Yenidən cəhd et",
     "cancel": "Ləğv et",
     "save": "Saxla",
-    "signOut": "Çıxış"
+    "signOut": "Çıxış",
+    "delete": "Sil"
   },
   "welcome": {
     "titleMuslim": "Muslim",
@@ -128,7 +129,12 @@
     "accountSubtitle": "Cihazlar, bildirişlər və Valideyn Girişi burada olacaq.",
     "language": "Dil",
     "signOutConfirmTitle": "Çıxış edilsin?",
-    "signOutConfirmBody": "Ailəni idarə etmək üçün yenidən daxil olmalı olacaqsan."
+    "signOutConfirmBody": "Ailəni idarə etmək üçün yenidən daxil olmalı olacaqsan.",
+    "privacyPolicy": "Məxfilik Siyasəti",
+    "deleteAccount": "Hesabı sil",
+    "deleteAccountConfirmTitle": "Hesab silinsin?",
+    "deleteAccountConfirmBody": "Bu, hesabını həmişəlik siləcək. Ailədə yeganə valideynsənsə, bütün uşaq profilləri və irəliləyişləri də silinəcək. Bu geri qaytarıla bilməz.",
+    "deleteAccountFailed": "Hesab silinmədi. Yenidən cəhd et."
   },
   "tabs": {
     "home": "Əsas",
@@ -233,7 +239,12 @@
     "slots": "{{used}}/{{max}} yer",
     "yearsOld": "{{age}} yaşında",
     "addChild": "Uşaq əlavə et",
-    "noSlotsAvailable": "Uşaq üçün yer qalmayıb"
+    "noSlotsAvailable": "Uşaq üçün yer qalmayıb",
+    "emptyTitle": "Hələ uşaq yoxdur",
+    "emptySubtitle": "Başlamaq üçün ilk uşağını əlavə et.",
+    "deleteConfirmTitle": "Uşaq silinsin?",
+    "deleteConfirmBody": "{{name}} silinəcək və bütün irəliləyişi itiriləcək. Bu geri qaytarıla bilməz.",
+    "deleteFailed": "Silinmədi. Yenidən cəhd et."
   },
   "parentPremium": {
     "title": "Premium ol",
@@ -255,6 +266,8 @@
     "gender": "Cins",
     "boy": "Oğlan",
     "girl": "Qız",
+    "somethingWrong": "Nəsə səhv getdi. Yenidən cəhd et.",
+    "creating": "Yaradılır...",
     "generateCode": "Uşaq Kodu Yarat",
     "childCode": "Uşaq Kodu",
     "expiresIn10": "10 dəqiqəyə etibarsız olacaq",

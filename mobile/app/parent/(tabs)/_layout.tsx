@@ -48,14 +48,14 @@ export default function ParentTabsLayout() {
         name="progress"
         options={{
           title: t("tabs.progress"),
-          tabBarIcon: ({ focused }) => <TabIcon name="chartBar" focused={focused} />,
+          href: null,
         }}
       />
       <Tabs.Screen
         name="premium"
         options={{
           title: t("tabs.premium"),
-          tabBarIcon: ({ focused }) => <TabIcon name="crown" focused={focused} />,
+          href: null,
         }}
       />
       <Tabs.Screen

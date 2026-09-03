@@ -4,7 +4,8 @@
     "tryAgain": "Повторить",
     "cancel": "Отмена",
     "save": "Сохранить",
-    "signOut": "Выйти"
+    "signOut": "Выйти",
+    "delete": "Удалить"
   },
   "welcome": {
     "titleMuslim": "Muslim",
@@ -130,7 +131,12 @@
     "accountSubtitle": "Здесь будут устройства, уведомления и родительский доступ.",
     "language": "Язык",
     "signOutConfirmTitle": "Выйти?",
-    "signOutConfirmBody": "Чтобы снова управлять семьёй, нужно будет войти заново."
+    "signOutConfirmBody": "Чтобы снова управлять семьёй, нужно будет войти заново.",
+    "privacyPolicy": "Политика конфиденциальности",
+    "deleteAccount": "Удалить аккаунт",
+    "deleteAccountConfirmTitle": "Удалить аккаунт?",
+    "deleteAccountConfirmBody": "Это навсегда удалит ваш аккаунт. Если вы единственный родитель, все профили детей и их прогресс тоже будут удалены. Это необратимо.",
+    "deleteAccountFailed": "Не удалось удалить аккаунт. Попробуйте снова."
   },
   "tabs": {
     "home": "Главная",
@@ -239,7 +245,12 @@
     "slots": "{{used}}/{{max}} мест",
     "yearsOld": "{{age}} лет",
     "addChild": "Добавить ребёнка",
-    "noSlotsAvailable": "Нет свободных мест для ребёнка"
+    "noSlotsAvailable": "Нет свободных мест для ребёнка",
+    "emptyTitle": "Пока нет детей",
+    "emptySubtitle": "Добавьте первого ребёнка, чтобы начать.",
+    "deleteConfirmTitle": "Удалить ребёнка?",
+    "deleteConfirmBody": "{{name}} будет удалён(а), весь прогресс будет потерян. Это необратимо.",
+    "deleteFailed": "Не удалось удалить. Попробуйте снова."
   },
   "parentPremium": {
     "title": "Перейти на Premium",
@@ -261,6 +272,8 @@
     "gender": "Пол",
     "boy": "Мальчик",
     "girl": "Девочка",
+    "somethingWrong": "Что-то пошло не так. Попробуйте снова.",
+    "creating": "Создание...",
     "generateCode": "Создать код ребёнка",
     "childCode": "Код ребёнка",
     "expiresIn10": "Истекает через 10 минут",

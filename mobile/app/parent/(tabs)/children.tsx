@@ -1,20 +1,58 @@
-import { router } from "expo-router";
+import { useCallback, useState } from "react";
+import { router, useFocusEffect } from "expo-router";
 import { useTranslation } from "react-i18next";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Alert, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Avatar } from "../../../src/components/Avatar";
 import { Button } from "../../../src/components/Button";
 import { Card } from "../../../src/components/Card";
 import { ProgressRing } from "../../../src/components/ProgressRing";
-import { children } from "../../../src/data/mock";
+import { deleteChild, fetchChildren, type ParentChild } from "../../../src/lib/children";
 import { colors, spacing } from "../../../src/theme/theme";
 
 const MAX_SLOTS = 3;
 
 export default function Children() {
   const { t } = useTranslation();
+  const [loading, setLoading] = useState(true);
+  const [children, setChildren] = useState<ParentChild[]>([]);
+
+  const load = useCallback(async () => {
+    const result = await fetchChildren();
+    setChildren(result ?? []);
+    setLoading(false);
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      load();
+    }, [load]),
+  );
+
   const slotsUsed = children.length;
   const slotsFull = slotsUsed >= MAX_SLOTS;
+
+  const handleDelete = (child: ParentChild) => {
+    Alert.alert(
+      t("parentChildren.deleteConfirmTitle"),
+      t("parentChildren.deleteConfirmBody", { name: child.name }),
+      [
+        { text: t("common.cancel"), style: "cancel" },
+        {
+          text: t("common.delete"),
+          style: "destructive",
+          onPress: async () => {
+            const ok = await deleteChild(child.id);
+            if (!ok) {
+              Alert.alert(t("parentChildren.deleteFailed"));
+              return;
+            }
+            setChildren((prev) => prev.filter((c) => c.id !== child.id));
+          },
+        },
+      ],
+    );
+  };
 
   return (
     <SafeAreaView style={styles.screen} edges={["top"]}>
@@ -25,18 +63,33 @@ export default function Children() {
         </Text>
       </View>
 
-      <ScrollView contentContainerStyle={styles.list}>
-        {children.map((child) => (
-          <Card key={child.id} style={styles.row}>
-            <Avatar emoji={child.emoji} color={child.color} size={48} />
-            <View style={styles.rowInfo}>
-              <Text style={styles.rowName}>{child.name}</Text>
-              <Text style={styles.rowMeta}>{t("parentChildren.yearsOld", { age: child.age })}</Text>
-            </View>
-            <ProgressRing percent={child.accuracy} size={48} strokeWidth={4} />
-          </Card>
-        ))}
-      </ScrollView>
+      {loading ? (
+        <ActivityIndicator color={colors.primary} style={{ marginTop: spacing.xl }} />
+      ) : children.length === 0 ? (
+        <View style={styles.empty}>
+          <Text style={styles.emptyTitle}>{t("parentChildren.emptyTitle")}</Text>
+          <Text style={styles.emptySubtitle}>{t("parentChildren.emptySubtitle")}</Text>
+        </View>
+      ) : (
+        <ScrollView contentContainerStyle={styles.list}>
+          {children.map((child) => (
+            <Pressable key={child.id} onPress={() => handleDelete(child)}>
+              <Card style={styles.row}>
+                <Avatar emoji={child.emoji} color={child.color} size={48} />
+                <View style={styles.rowInfo}>
+                  <Text style={styles.rowName}>{child.name}</Text>
+                  {child.age != null ? (
+                    <Text style={styles.rowMeta}>
+                      {t("parentChildren.yearsOld", { age: child.age })}
+                    </Text>
+                  ) : null}
+                </View>
+                <ProgressRing percent={Math.round(child.accuracy)} size={48} strokeWidth={4} />
+              </Card>
+            </Pressable>
+          ))}
+        </ScrollView>
+      )}
 
       <View style={styles.footer}>
         <Button
@@ -69,5 +122,14 @@ const styles = StyleSheet.create({
   rowInfo: { flex: 1 },
   rowName: { fontSize: 16, fontWeight: "700", color: colors.ink },
   rowMeta: { fontSize: 13, color: colors.inkMuted },
+  empty: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: spacing.xl,
+    gap: spacing.xs,
+  },
+  emptyTitle: { fontSize: 17, fontWeight: "800", color: colors.ink, textAlign: "center" },
+  emptySubtitle: { fontSize: 13, color: colors.inkMuted, textAlign: "center" },
   footer: { padding: spacing.lg },
 });

@@ -4,7 +4,8 @@
     "tryAgain": "Try Again",
     "cancel": "Cancel",
     "save": "Save",
-    "signOut": "Sign Out"
+    "signOut": "Sign Out",
+    "delete": "Delete"
   },
   "welcome": {
     "titleMuslim": "Muslim",
@@ -128,7 +129,12 @@
     "accountSubtitle": "Devices, notifications, and the Parent Gate live here.",
     "language": "Language",
     "signOutConfirmTitle": "Sign out?",
-    "signOutConfirmBody": "You'll need to sign in again to manage your family."
+    "signOutConfirmBody": "You'll need to sign in again to manage your family.",
+    "privacyPolicy": "Privacy Policy",
+    "deleteAccount": "Delete Account",
+    "deleteAccountConfirmTitle": "Delete account?",
+    "deleteAccountConfirmBody": "This permanently deletes your account. If you're the only parent on it, every child profile and their progress is deleted too. This cannot be undone.",
+    "deleteAccountFailed": "Couldn't delete your account. Please try again."
   },
   "tabs": {
     "home": "Home",
@@ -233,7 +239,12 @@
     "slots": "{{used}}/{{max}} slots",
     "yearsOld": "{{age}} years old",
     "addChild": "Add Child",
-    "noSlotsAvailable": "No child slots available"
+    "noSlotsAvailable": "No child slots available",
+    "emptyTitle": "No children yet",
+    "emptySubtitle": "Add your first child to get started.",
+    "deleteConfirmTitle": "Delete this child?",
+    "deleteConfirmBody": "{{name}} will be removed and all their progress lost. This cannot be undone.",
+    "deleteFailed": "Couldn't delete. Please try again."
   },
   "parentPremium": {
     "title": "Go Premium",
@@ -255,6 +266,8 @@
     "gender": "Gender",
     "boy": "Boy",
     "girl": "Girl",
+    "somethingWrong": "Something went wrong. Please try again.",
+    "creating": "Creating...",
     "generateCode": "Generate Child Code",
     "childCode": "Child Code",
     "expiresIn10": "Expires in 10 minutes",
