@@ -222,14 +222,60 @@ for real queries later is a small diff, not a rewrite.
       (`com.googleusercontent.apps.<...>`) and paste it into
       `mobile/app.json`'s `@react-native-google-signin/google-signin`
       plugin config, replacing `REPLACE_WITH_IOS_CLIENT_ID`.
-    - In the Supabase dashboard → Authentication → Providers → Google:
-      enable it and add the same Client ID under "Authorized Client
-      IDs" (Client Secret can stay empty — this native flow doesn't
-      use it).
+    - In the Supabase dashboard → Authentication → Providers → Google,
+      enable it. Its form requires both a **Client ID** and a
+      **Client Secret**, but an iOS OAuth client never has a secret —
+      so create a second OAuth client, this time type **Web
+      application** (Google Cloud Console → Credentials → Create
+      Credentials → OAuth client ID → Web application), with
+      Authorized redirect URI `https://<project-ref>.supabase.co/auth/v1/callback`
+      (project-ref is in Project Settings → API → Project URL). Paste
+      *that* client's ID + Secret into Supabase's Client ID / Client
+      Secret fields, and add the original **iOS** client ID to
+      "Authorized Client IDs" — that's the one actually used by native
+      sign-in, the Web client only exists to satisfy this form.
     - This also only works in a real build, not Expo Go —
       `@react-native-google-signin/google-signin` needs to be compiled
       in, and changing `app.json`'s plugin config requires a fresh
       prebuild (a new EAS build).
+
+11. **Push notifications** (`mobile/src/lib/pushNotifications.ts`,
+    `register-push-token`, `record-quiz-result`,
+    `send-daily-reminders`) — iOS only, via Expo's push service (no
+    Firebase needed; Expo's service talks to APNs directly for iOS):
+    - EAS manages the APNs push key automatically the first time you
+      build with push notifications configured — no manual Apple
+      Developer step needed, just run `eas build` and answer its
+      credentials prompts (or `eas credentials` beforehand if you want
+      to review them first).
+    - Achievement-earned notifications to parents work automatically
+      once a build with `expo-notifications` compiled in is installed
+      and the parent has granted notification permission — no extra
+      setup.
+    - The daily reminder (`send-daily-reminders`) needs a cron job to
+      actually call it — Supabase doesn't schedule edge functions on
+      its own. In the Supabase Dashboard → SQL Editor, run once:
+      ```sql
+      create extension if not exists pg_cron with schema extensions;
+      create extension if not exists pg_net with schema extensions;
+
+      select cron.schedule(
+        'send-daily-reminders',
+        '0 15 * * *', -- 15:00 UTC ≈ 19:00 Baku time (UTC+4) — adjust as you like
+        $$
+        select net.http_post(
+          url := 'https://<project-ref>.supabase.co/functions/v1/send-daily-reminders',
+          headers := jsonb_build_object(
+            'Authorization', 'Bearer <service role key, from Settings → API>',
+            'Content-Type', 'application/json'
+          )
+        );
+        $$
+      );
+      ```
+      Re-run `cron.schedule` with the same job name any time to change
+      the hour; `select cron.unschedule('send-daily-reminders');` to
+      stop it.
 
 ## What's still a stub / explicitly out of scope here
 
@@ -316,3 +362,9 @@ for real queries later is a small diff, not a rewrite.
   there's no function or screen exposing that yet — only issuing a new
   code (`generate-family-code`) and redeeming one
   (`redeem-family-code`) are implemented.
+- **"Daily limit reached" push notification wasn't built.** No table
+  tracks minutes actually spent in the app — `daily_journeys.daily_limit_minutes`
+  is a stub (see above), and `child_daily_activity` only counts
+  questions answered, not screen time — so there's no real signal to
+  fire that notification from yet. Achievement-earned and the daily
+  reminder (`send-daily-reminders`) both use signals that do exist.

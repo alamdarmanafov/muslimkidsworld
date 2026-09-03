@@ -36,6 +36,21 @@
 
 import { createClient } from "npm:@supabase/supabase-js@2.112.4";
 import { corsHeaders, jsonResponse } from "../_shared/cors.ts";
+import { sendExpoPush } from "../_shared/push.ts";
+
+// achievements.label is plain English (0005_seed_content.sql) — the
+// app itself renders localized names by slug (see
+// mobile/src/i18n/locales/*.json "achievements"). Mirrored here in
+// Azerbaijani, the app's primary parent-facing language, so the push
+// notification reads naturally rather than switching to English.
+const ACHIEVEMENT_LABELS_AZ: Record<string, string> = {
+  "first-star": "İlk Ulduz",
+  "book-lover": "Kitabsevər",
+  "mosque-visitor": "Məscid Ziyarətçisi",
+  "week-streak": "7 Günlük Seriya",
+  "quiz-master": "Test Ustası",
+  storyteller: "Hekayəçi",
+};
 
 type Body = {
   deviceId?: unknown;
@@ -81,15 +96,16 @@ function criteriaMet(criteria: AchievementCriteria, stats: Stats): boolean {
 
 // Awards every achievement whose criteria this session's new totals now
 // satisfy and the child doesn't already have, and returns the child's
-// up-to-date total earned-achievement count (for child_progress.badges_count).
+// up-to-date total earned-achievement count (for child_progress.badges_count)
+// plus the slugs newly earned this call, so the caller can notify the parent.
 async function awardAchievements(
   adminClient: ReturnType<typeof createClient>,
   childId: string,
   stats: Stats,
-): Promise<number> {
+): Promise<{ count: number; newlyEarnedSlugs: string[] }> {
   const { data: allAchievements, error: achievementsError } = await adminClient
     .from("achievements")
-    .select("id, criteria")
+    .select("id, slug, criteria")
     .not("criteria", "is", null);
   if (achievementsError) throw achievementsError;
 
@@ -111,7 +127,46 @@ async function awardAchievements(
     if (insertError) throw insertError;
   }
 
-  return earnedIds.size + newlyEarned.length;
+  return {
+    count: earnedIds.size + newlyEarned.length,
+    newlyEarnedSlugs: newlyEarned.map((a) => a.slug as string),
+  };
+}
+
+// Best-effort: notifies every parent in the family that their child earned
+// achievement(s). Never throws — a push failure must not fail the request
+// that recorded the quiz result.
+async function notifyParentsOfAchievements(
+  adminClient: ReturnType<typeof createClient>,
+  familyId: string,
+  slugs: string[],
+): Promise<void> {
+  if (slugs.length === 0) return;
+  try {
+    const { data: parentRows } = await adminClient.from("parents").select("id").eq(
+      "family_id",
+      familyId,
+    );
+    const parentIds = (parentRows ?? []).map((p) => p.id as string);
+    if (parentIds.length === 0) return;
+
+    const { data: tokenRows } = await adminClient
+      .from("push_tokens")
+      .select("expo_push_token")
+      .eq("owner_type", "parent")
+      .in("owner_id", parentIds);
+    const tokens = (tokenRows ?? []).map((r) => r.expo_push_token as string);
+    if (tokens.length === 0) return;
+
+    const labels = slugs.map((slug) => ACHIEVEMENT_LABELS_AZ[slug] ?? slug);
+    const body =
+      labels.length === 1
+        ? `Uşağınız "${labels[0]}" nailiyyətini qazandı!`
+        : `Uşağınız ${labels.length} yeni nailiyyət qazandı!`;
+    await sendExpoPush(tokens, "Yeni nailiyyət! 🏆", body, { type: "achievement" });
+  } catch (err) {
+    console.error("notifyParentsOfAchievements failed", err instanceof Error ? err.message : String(err));
+  }
 }
 
 Deno.serve(async (req: Request) => {
@@ -234,12 +289,15 @@ Deno.serve(async (req: Request) => {
   const newActiveDaysCount = prevActiveDays + (isNewActiveDay ? 1 : 0);
 
   let newBadgesCount = existing?.badges_count ?? 0;
+  let newlyEarnedSlugs: string[] = [];
   try {
-    newBadgesCount = await awardAchievements(adminClient, child.id, {
+    const awarded = await awardAchievements(adminClient, child.id, {
       totalCorrect: newTotalCorrect,
       totalQuestions: newTotalQuestions,
       streak: newStreak,
     });
+    newBadgesCount = awarded.count;
+    newlyEarnedSlugs = awarded.newlyEarnedSlugs;
   } catch (err) {
     return jsonResponse({ error: err instanceof Error ? err.message : String(err) }, 500);
   }
@@ -294,6 +352,8 @@ Deno.serve(async (req: Request) => {
   if (dayError) {
     return jsonResponse({ error: dayError.message }, 500);
   }
+
+  await notifyParentsOfAchievements(adminClient, boundCode.family_id as string, newlyEarnedSlugs);
 
   return jsonResponse({ progress: updatedProgress });
 });

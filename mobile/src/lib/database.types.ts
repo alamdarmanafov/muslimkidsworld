@@ -521,6 +521,26 @@ export type Database = {
         Update: Partial<Database["public"]["Tables"]["daily_journey_items"]["Insert"]>;
         Relationships: [];
       };
+      push_tokens: {
+        Row: {
+          id: string;
+          owner_type: "parent" | "child";
+          owner_id: string;
+          expo_push_token: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          owner_type: "parent" | "child";
+          owner_id: string;
+          expo_push_token: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["push_tokens"]["Insert"]>;
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;

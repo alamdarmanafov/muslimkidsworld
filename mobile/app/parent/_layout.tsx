@@ -1,6 +1,12 @@
+import { useEffect } from "react";
 import { Stack } from "expo-router";
+import { registerForPushNotifications } from "../../src/lib/pushNotifications";
 
 export default function ParentLayout() {
+  useEffect(() => {
+    registerForPushNotifications();
+  }, []);
+
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="(tabs)" />
