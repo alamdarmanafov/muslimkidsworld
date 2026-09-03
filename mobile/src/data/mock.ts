@@ -2864,9 +2864,15 @@ export type JourneyItem = {
   done: boolean;
 };
 
+// `done` here is just the static fallback shape — none of Quran, Dua,
+// Story, or Game read/watch/play state is tracked yet (see
+// supabase/README.md's stub list), so there's no honest way to mark
+// them complete. Only "quiz" is real: app/child/(tabs)/index.tsx
+// overrides it from today's actual child_daily_activity row before
+// rendering, via mobile/src/lib/childProgress.ts.
 export const dailyJourney: JourneyItem[] = [
-  { id: "quran", label: "Quran", icon: "book", minutes: 15, href: "/child/quran", done: true },
-  { id: "dua", label: "Dua", icon: "heart", minutes: 10, href: "/child/dua", done: true },
+  { id: "quran", label: "Quran", icon: "book", minutes: 15, href: "/child/quran", done: false },
+  { id: "dua", label: "Dua", icon: "heart", minutes: 10, href: "/child/dua", done: false },
   { id: "story", label: "Story", icon: "star", minutes: 15, href: "/child/stories", done: false },
   { id: "quiz", label: "Quiz", icon: "quiz", minutes: 10, href: "/child/quiz-categories", done: false },
   { id: "game", label: "Game", icon: "controller", minutes: 10, href: "/child/games", done: false },
@@ -2884,9 +2890,6 @@ export function setDailyLimitMinutes(minutes: number) {
   _dailyLimitMinutes = minutes;
 }
 
-export const dailyMinutesDone = dailyJourney
-  .filter((i) => i.done)
-  .reduce((sum, i) => sum + i.minutes, 0);
 
 export const plans = [
   {

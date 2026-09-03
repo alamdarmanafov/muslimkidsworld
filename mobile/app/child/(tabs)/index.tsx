@@ -4,12 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon, type IconName } from "../../../src/components/icons";
-import {
-  activeChild,
-  dailyJourney,
-  dailyMinutesDone,
-  getDailyLimitMinutes,
-} from "../../../src/data/mock";
+import { activeChild, dailyJourney, getDailyLimitMinutes, type JourneyItem } from "../../../src/data/mock";
 import { fetchChildProgress } from "../../../src/lib/childProgress";
 import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
 
@@ -43,6 +38,7 @@ export default function ChildHome() {
   const { t } = useTranslation();
   const [name, setName] = useState(activeChild.name);
   const [xp, setXp] = useState(0);
+  const [journey, setJourney] = useState<JourneyItem[]>(dailyJourney);
 
   useEffect(() => {
     let cancelled = false;
@@ -50,6 +46,17 @@ export default function ChildHome() {
       if (cancelled || !result) return;
       setName(result.child.name);
       setXp(result.progress.xp);
+
+      // Only "quiz" has a real, tracked signal today (child_daily_activity);
+      // Quran/Dua/Story/Game stay whatever mock.ts's dailyJourney already
+      // has them as (not done) since nothing tracks those yet.
+      const todayStr = new Date().toISOString().slice(0, 10);
+      const quizDoneToday = result.week.some(
+        (d) => d.activity_date === todayStr && d.questions_answered > 0,
+      );
+      setJourney((prev) =>
+        prev.map((item) => (item.id === "quiz" ? { ...item, done: quizDoneToday } : item)),
+      );
     });
     return () => {
       cancelled = true;
@@ -57,9 +64,10 @@ export default function ChildHome() {
   }, []);
 
   const dailyGoalMinutes = getDailyLimitMinutes();
-  const remaining = Math.max(dailyGoalMinutes - dailyMinutesDone, 0);
-  const progress = Math.round((dailyMinutesDone / dailyGoalMinutes) * 100);
-  const complete = dailyMinutesDone >= dailyGoalMinutes;
+  const minutesDone = journey.filter((i) => i.done).reduce((sum, i) => sum + i.minutes, 0);
+  const remaining = Math.max(dailyGoalMinutes - minutesDone, 0);
+  const progress = Math.round((minutesDone / dailyGoalMinutes) * 100);
+  const complete = minutesDone >= dailyGoalMinutes;
   const almostThere = !complete && remaining <= 5;
   const garden = gardenStageKey(progress);
 
@@ -95,7 +103,7 @@ export default function ChildHome() {
             <>
               <Text style={styles.heroTitle}>{t("childHome.todaysJourney")}</Text>
               <Text style={styles.heroSubtitle}>
-                {t("childHome.progressStatus", { done: dailyMinutesDone, goal: dailyGoalMinutes })}
+                {t("childHome.progressStatus", { done: minutesDone, goal: dailyGoalMinutes })}
               </Text>
             </>
           )}
@@ -104,7 +112,7 @@ export default function ChildHome() {
           </View>
 
           <View style={styles.journeyList}>
-            {dailyJourney.map((item) => (
+            {journey.map((item) => (
               <Pressable
                 key={item.id}
                 style={styles.journeyRow}
@@ -142,7 +150,9 @@ export default function ChildHome() {
               style={[styles.tile, { backgroundColor: tile.bg }]}
               onPress={() => router.push(tile.href as never)}
             >
-              <Icon name={tile.icon} size={34} color="#FFFFFF" />
+              <View style={styles.tileIconWrap}>
+                <Icon name={tile.icon} size={34} color="#FFFFFF" />
+              </View>
               <Text style={styles.tileLabel}>{t(tile.labelKey)}</Text>
             </Pressable>
           ))}
@@ -246,5 +256,6 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
     ...shadow,
   },
+  tileIconWrap: { width: 34, height: 34, alignItems: "center", justifyContent: "center" },
   tileLabel: { fontFamily: fonts.bodyBold, fontSize: 12, color: "#FFFFFF", textAlign: "center" },
 });
