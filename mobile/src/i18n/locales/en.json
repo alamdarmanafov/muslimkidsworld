@@ -127,7 +127,10 @@
   "childProfile": {
     "parentMode": "Parent Mode",
     "levelAge": "Level {{level}} · {{age}} years old",
-    "language": "Language"
+    "language": "Language",
+    "signOutConfirmTitle": "Sign out?",
+    "signOutConfirmBody": "This device will lose its connection to the family code. A parent will need to give it a new code to reconnect.",
+    "signedOut": "Signed out"
   },
   "parentProfile": {
     "account": "Account",

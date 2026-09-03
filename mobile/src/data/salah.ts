@@ -15,16 +15,3 @@ export const prayers: Prayer[] = [
 ];
 
 export const salahStepIds = ["niyyah", "takbir", "qiyam", "ruku", "sujud", "tashahhud"] as const;
-
-// A simple pictorial cue for each step's posture — there's no photo
-// asset pipeline in this app, so an emoji illustration is the
-// lightest honest way to show "what this looks like" next to the
-// text description in app/child/salah.tsx.
-export const salahStepEmoji: Record<(typeof salahStepIds)[number], string> = {
-  niyyah: "🤲",
-  takbir: "🙌",
-  qiyam: "🧍",
-  ruku: "🙇",
-  sujud: "🛐",
-  tashahhud: "🧎",
-};

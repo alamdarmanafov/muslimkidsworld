@@ -127,7 +127,10 @@
   "childProfile": {
     "parentMode": "Valideyn rejimi",
     "levelAge": "Səviyyə {{level}} · {{age}} yaşında",
-    "language": "Dil"
+    "language": "Dil",
+    "signOutConfirmTitle": "Çıxış edilsin?",
+    "signOutConfirmBody": "Bu cihaz ailə koduna görə bağlantısını itirəcək. Yenidən bağlamaq üçün valideyndən yeni kod lazım olacaq.",
+    "signedOut": "Çıxış edildi"
   },
   "parentProfile": {
     "account": "Hesab",

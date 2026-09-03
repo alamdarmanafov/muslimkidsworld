@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../../src/components/icons";
-import { prayers, salahStepEmoji, salahStepIds } from "../../src/data/salah";
+import { SalahPosture } from "../../src/components/SalahPosture";
+import { prayers, salahStepIds } from "../../src/data/salah";
 import { colors, fonts, radii, shadow, spacing } from "../../src/theme/theme";
 
 export default function Salah() {
@@ -27,7 +28,7 @@ export default function Salah() {
           {salahStepIds.map((stepId, i) => (
             <View key={stepId} style={styles.stepCard}>
               <View style={styles.stepPictureWrap}>
-                <Text style={styles.stepPicture}>{salahStepEmoji[stepId]}</Text>
+                <SalahPosture step={stepId} size={44} />
                 <View style={styles.stepBadge}>
                   <Text style={styles.stepBadgeText}>{i + 1}</Text>
                 </View>
@@ -142,7 +143,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  stepPicture: { fontSize: 30 },
   stepBadge: {
     position: "absolute",
     bottom: -4,

@@ -129,7 +129,10 @@
   "childProfile": {
     "parentMode": "Режим родителя",
     "levelAge": "Уровень {{level}} · {{age}} лет",
-    "language": "Язык"
+    "language": "Язык",
+    "signOutConfirmTitle": "Выйти?",
+    "signOutConfirmBody": "Это устройство потеряет связь с семейным кодом. Родителю нужно будет выдать новый код для повторного подключения.",
+    "signedOut": "Вы вышли"
   },
   "parentProfile": {
     "account": "Аккаунт",

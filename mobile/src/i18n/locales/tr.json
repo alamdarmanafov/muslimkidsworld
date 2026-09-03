@@ -127,7 +127,10 @@
   "childProfile": {
     "parentMode": "Ebeveyn Modu",
     "levelAge": "Seviye {{level}} · {{age}} yaşında",
-    "language": "Dil"
+    "language": "Dil",
+    "signOutConfirmTitle": "Çıkış yapılsın mı?",
+    "signOutConfirmBody": "Bu cihaz aile koduyla bağlantısını kaybedecek. Yeniden bağlanmak için bir ebeveynin yeni bir kod vermesi gerekecek.",
+    "signedOut": "Çıkış yapıldı"
   },
   "parentProfile": {
     "account": "Hesap",
