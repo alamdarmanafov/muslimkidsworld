@@ -77,10 +77,12 @@ export default function Welcome() {
                 style={[styles.card, { backgroundColor: "#E4F1FF" }]}
                 onPress={() => router.push("/parent-auth")}
               >
-                <View style={[styles.cardBadge, { backgroundColor: colors.primary }]}>
-                  <Icon name="users" size={20} color="#FFFFFF" />
+                <View style={styles.cardHeaderRow}>
+                  <View style={[styles.cardBadge, { backgroundColor: colors.primary }]}>
+                    <Icon name="users" size={20} color="#FFFFFF" />
+                  </View>
+                  <Text style={styles.cardEyebrow}>{t("welcome.imA")}</Text>
                 </View>
-                <Text style={styles.cardEyebrow}>{t("welcome.imA")}</Text>
                 <Text style={[styles.cardTitle, { color: colors.primaryDark }]}>
                   {t("welcome.parentTitle")}
                 </Text>
@@ -94,10 +96,12 @@ export default function Welcome() {
                 style={[styles.card, { backgroundColor: "#FFF3D6" }]}
                 onPress={() => router.push("/child-code")}
               >
-                <View style={[styles.cardBadge, { backgroundColor: colors.gold }]}>
-                  <Icon name="smile" size={20} color={colors.night} />
+                <View style={styles.cardHeaderRow}>
+                  <View style={[styles.cardBadge, { backgroundColor: colors.gold }]}>
+                    <Icon name="smile" size={20} color={colors.night} />
+                  </View>
+                  <Text style={styles.cardEyebrow}>{t("welcome.imA")}</Text>
                 </View>
-                <Text style={styles.cardEyebrow}>{t("welcome.imA")}</Text>
                 <Text style={[styles.cardTitle, { color: colors.goldDark }]}>
                   {t("welcome.childTitle")}
                 </Text>
@@ -213,13 +217,18 @@ const styles = StyleSheet.create({
     padding: spacing.md,
     alignItems: "flex-start",
   },
+  cardHeaderRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.sm,
+    marginBottom: spacing.sm,
+  },
   cardBadge: {
     width: 36,
     height: 36,
     borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: spacing.sm,
   },
   cardEyebrow: { fontFamily: fonts.body, fontSize: 12, color: colors.inkMuted },
   cardTitle: { fontFamily: fonts.heading, fontSize: 20, marginTop: 2 },

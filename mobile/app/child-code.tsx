@@ -58,6 +58,10 @@ export default function ChildCode() {
 
   return (
     <SafeAreaView style={styles.screen}>
+      <Pressable onPress={() => router.back()} style={styles.backBtn}>
+        <Icon name="arrowRight" size={18} color={colors.ink} style={styles.backIcon} />
+      </Pressable>
+
       <View style={styles.moonWrap}>
         <Icon name="moon" size={48} color={colors.gold} />
       </View>
@@ -101,6 +105,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  backBtn: {
+    position: "absolute",
+    top: spacing.lg,
+    left: spacing.lg,
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    backgroundColor: colors.card,
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 1,
+  },
+  backIcon: { transform: [{ scaleX: -1 }] },
   moonWrap: {
     width: 96,
     height: 96,
