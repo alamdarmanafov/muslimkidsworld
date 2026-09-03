@@ -100,7 +100,11 @@ export default function MemoryGame() {
                   style={[styles.card, faceUp && styles.cardFaceUp]}
                   onPress={() => pressCard(card)}
                 >
-                  <Text style={styles.cardEmoji}>{faceUp ? card.emoji : "❓"}</Text>
+                  {faceUp ? (
+                    <Text style={styles.cardEmoji}>{card.emoji}</Text>
+                  ) : (
+                    <Icon name="quiz" size={26} color="#FFFFFF" />
+                  )}
                 </Pressable>
               );
             })}

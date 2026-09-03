@@ -24,14 +24,14 @@ export default function AddChild() {
     setError(null);
     setLoading(true);
     const parsedAge = Number(age);
-    const childId = await addChild(
+    const result = await addChild(
       name.trim(),
       Number.isFinite(parsedAge) && parsedAge > 0 ? parsedAge : null,
       avatar,
     );
     setLoading(false);
-    if (!childId) {
-      setError(t("addChild.somethingWrong"));
+    if ("error" in result) {
+      setError(`${t("addChild.somethingWrong")} (${result.error})`);
       return;
     }
     router.replace("/parent/family-code");

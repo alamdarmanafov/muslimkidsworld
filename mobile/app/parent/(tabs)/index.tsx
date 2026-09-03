@@ -8,26 +8,33 @@ import { Button } from "../../../src/components/Button";
 import { Card } from "../../../src/components/Card";
 import { Icon } from "../../../src/components/icons";
 import { IconBadge, tones } from "../../../src/components/IconBadge";
-import { fetchChildren, type ParentChild } from "../../../src/lib/children";
+import { fetchChildren, fetchWeeklyFamilyStats, type ParentChild } from "../../../src/lib/children";
 import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
-
-const weekStats = [
-  { icon: "book" as const, tone: tones.blue, labelKey: "parentHome.lessons", value: 4 },
-  { icon: "quiz" as const, tone: tones.pink, labelKey: "parentHome.questions", value: 70 },
-  { icon: "clock" as const, tone: tones.teal, labelKey: "parentHome.time", value: "42 min" },
-  { icon: "gift" as const, tone: tones.gold, labelKey: "parentHome.rewardsLabel", value: 3 },
-];
 
 export default function ParentHome() {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [children, setChildren] = useState<ParentChild[]>([]);
+  const [questionsAnswered, setQuestionsAnswered] = useState(0);
+  const [badgesEarned, setBadgesEarned] = useState(0);
+
+  const weekStats = [
+    { icon: "book" as const, tone: tones.blue, labelKey: "parentHome.lessons", value: 0 },
+    { icon: "quiz" as const, tone: tones.pink, labelKey: "parentHome.questions", value: questionsAnswered },
+    { icon: "clock" as const, tone: tones.teal, labelKey: "parentHome.time", value: "0 min" },
+    { icon: "gift" as const, tone: tones.gold, labelKey: "parentHome.rewardsLabel", value: badgesEarned },
+  ];
 
   useFocusEffect(
     useCallback(() => {
       fetchChildren().then((result) => {
         setChildren(result ?? []);
         setLoading(false);
+      });
+      fetchWeeklyFamilyStats().then((result) => {
+        if (!result) return;
+        setQuestionsAnswered(result.questionsAnswered);
+        setBadgesEarned(result.badgesEarned);
       });
     }, []),
   );

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text, View } from "react-native";
@@ -31,7 +31,16 @@ export default function Quiz() {
     targetLang?: ForeignTargetLang;
     difficulty?: QuizDifficulty;
   }>();
-  const questions = getQuizQuestions(category ?? "din", targetLang, difficulty, i18n.language);
+  // Computed once per quiz session, not on every render: getQuizQuestions
+  // reshuffles (and, for generated categories, re-randomizes) its result
+  // on every call, so calling it fresh on each render could hand back a
+  // different array — sometimes a different length — out from under
+  // `index`, which is exactly what crashed with "Cannot read property
+  // 'promptText' of undefined" once `index` no longer fit.
+  const questions = useMemo(
+    () => getQuizQuestions(category ?? "din", targetLang, difficulty, i18n.language),
+    [category, targetLang, difficulty, i18n.language],
+  );
   const [index, setIndex] = useState(0);
   const [phase, setPhase] = useState<Phase>("question");
   const [selectedId, setSelectedId] = useState<string | null>(null);

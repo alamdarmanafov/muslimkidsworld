@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { router } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
@@ -9,6 +10,7 @@ import {
   dailyMinutesDone,
   getDailyLimitMinutes,
 } from "../../../src/data/mock";
+import { fetchChildProgress } from "../../../src/lib/childProgress";
 import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
 
 const exploreTiles: { labelKey: string; icon: IconName; bg: string; href: string }[] = [
@@ -39,6 +41,21 @@ function gardenStageKey(percent: number) {
 
 export default function ChildHome() {
   const { t } = useTranslation();
+  const [name, setName] = useState(activeChild.name);
+  const [xp, setXp] = useState(0);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchChildProgress().then((result) => {
+      if (cancelled || !result) return;
+      setName(result.child.name);
+      setXp(result.progress.xp);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const dailyGoalMinutes = getDailyLimitMinutes();
   const remaining = Math.max(dailyGoalMinutes - dailyMinutesDone, 0);
   const progress = Math.round((dailyMinutesDone / dailyGoalMinutes) * 100);
@@ -52,11 +69,11 @@ export default function ChildHome() {
         <View style={styles.header}>
           <View>
             <Text style={styles.greeting}>{t("childHome.greeting")}</Text>
-            <Text style={styles.name}>{activeChild.name}! 👋</Text>
+            <Text style={styles.name}>{name}! 👋</Text>
           </View>
           <View style={styles.starPill}>
             <Icon name="star" size={14} color={colors.goldDark} />
-            <Text style={styles.starPillText}>{activeChild.xp}</Text>
+            <Text style={styles.starPillText}>{xp}</Text>
           </View>
         </View>
 

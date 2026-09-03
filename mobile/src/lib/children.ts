@@ -69,37 +69,44 @@ export async function fetchChildren(): Promise<ParentChild[] | null> {
  * family id from the parent's own row (RLS lets a parent SELECT only
  * their own `parents` row — see 0004_rls_policies.sql) since the
  * INSERT policy on `children` requires family_id to match it exactly.
- * Returns the new child's id, or null on any failure.
+ * Returns the new child's id on success. On failure returns the
+ * underlying error message (surfaced in the UI, not just swallowed —
+ * "something went wrong" with no detail is nearly impossible to
+ * debug against a device the developer can't attach to directly).
  */
 export async function addChild(
   name: string,
   age: number | null,
   emoji: string,
-): Promise<string | null> {
+): Promise<{ id: string } | { error: string }> {
   try {
     const supabase = getSupabaseClient();
     const {
       data: { user },
+      error: userError,
     } = await supabase.auth.getUser();
-    if (!user) return null;
+    if (userError) return { error: userError.message };
+    if (!user) return { error: "Not signed in" };
 
     const { data: parent, error: parentError } = await supabase
       .from("parents")
       .select("family_id")
       .eq("id", user.id)
       .maybeSingle();
-    if (parentError || !parent) return null;
+    if (parentError) return { error: parentError.message };
+    if (!parent) return { error: "No family found for this account" };
 
     const { data: child, error: insertError } = await supabase
       .from("children")
       .insert({ family_id: parent.family_id, name, age, emoji })
       .select("id")
       .single();
-    if (insertError || !child) return null;
+    if (insertError) return { error: insertError.message };
+    if (!child) return { error: "No child returned after insert" };
 
-    return child.id;
-  } catch {
-    return null;
+    return { id: child.id };
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : String(err) };
   }
 }
 
@@ -110,6 +117,47 @@ export async function deleteChild(childId: string): Promise<boolean> {
     return !error;
   } catch {
     return false;
+  }
+}
+
+export type WeeklyFamilyStats = {
+  questionsAnswered: number;
+  badgesEarned: number;
+};
+
+/**
+ * Sums quiz activity and newly-earned badges across every child in the
+ * signed-in parent's family over the last 7 days, for the Home tab's
+ * "This Week" card. Both tables are already RLS-scoped to the parent's
+ * own family (0004_rls_policies.sql, 0007_progress_tracking.sql), so
+ * this is a direct query — no edge function needed, unlike the child
+ * device's equivalent in childProgress.ts. Returns null on failure.
+ */
+export async function fetchWeeklyFamilyStats(): Promise<WeeklyFamilyStats | null> {
+  try {
+    const supabase = getSupabaseClient();
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setUTCDate(sevenDaysAgo.getUTCDate() - 6);
+    const sevenDaysAgoStr = sevenDaysAgo.toISOString().slice(0, 10);
+
+    const { data: activityRows, error: activityError } = await supabase
+      .from("child_daily_activity")
+      .select("questions_answered")
+      .gte("activity_date", sevenDaysAgoStr);
+    if (activityError) return null;
+
+    const { count: badgesEarned, error: badgesError } = await supabase
+      .from("child_achievements")
+      .select("id", { count: "exact", head: true })
+      .gte("earned_at", sevenDaysAgo.toISOString());
+    if (badgesError) return null;
+
+    return {
+      questionsAnswered: (activityRows ?? []).reduce((sum, r) => sum + r.questions_answered, 0),
+      badgesEarned: badgesEarned ?? 0,
+    };
+  } catch {
+    return null;
   }
 }
 
