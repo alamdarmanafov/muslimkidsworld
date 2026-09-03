@@ -8,6 +8,7 @@ export default function ParentLayout() {
       <Stack.Screen name="daily-limit" options={{ presentation: "modal" }} />
       <Stack.Screen name="family-code" options={{ presentation: "modal" }} />
       <Stack.Screen name="privacy" options={{ presentation: "modal" }} />
+      <Stack.Screen name="parent-pin-setup" options={{ presentation: "modal" }} />
     </Stack>
   );
 }

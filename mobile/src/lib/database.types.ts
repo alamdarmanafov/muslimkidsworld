@@ -28,12 +28,14 @@ export type Database = {
         Row: {
           id: string;
           name: string | null;
+          pin_hash: string | null;
           created_at: string;
           updated_at: string;
         };
         Insert: {
           id?: string;
           name?: string | null;
+          pin_hash?: string | null;
           created_at?: string;
           updated_at?: string;
         };

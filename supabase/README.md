@@ -6,15 +6,18 @@ can be reviewed before being applied. A live project now exists
 (`EXPO_PUBLIC_SUPABASE_URL` / `EXPO_PUBLIC_SUPABASE_ANON_KEY` are set
 in `mobile/.env`) and its tables are up through migration `0008`, with
 `get-child-progress` and `record-quiz-result` (achievement-aware)
-deployed. **The new `delete-account` function has been written but not
-yet deployed to that project** — the environment these were written in
-has no network access to `supabase.co` (organization egress policy),
-so `supabase functions deploy delete-account` still needs to be run
-from a machine that does. See "Taking this live" below for the exact
-commands. Most of the app — Quran, Dua, Stories, quiz content, Games —
-still reads from `mobile/src/data/mock.ts`; parent/child onboarding,
-the parent's real Children list (add/delete), progress tracking,
-achievement badges, and account deletion call this backend so far.
+deployed. **`0009_parent_pin.sql` and the `delete-account` /
+`set-parent-pin` / `verify-parent-pin` functions have been written but
+not yet deployed to that project** — the environment these were
+written in has no network access to `supabase.co` (organization
+egress policy), so `supabase db push` and `supabase functions deploy`
+for those still need to be run from a machine that does. See "Taking
+this live" below for the exact commands. Most of the app — Quran,
+Dua, Stories, quiz content, Games — still reads from
+`mobile/src/data/mock.ts`; parent/child onboarding, the parent's real
+Children list (add/delete), progress tracking, achievement badges,
+account deletion, and the real Parent Gate PIN call this backend so
+far.
 
 ## What's here
 
@@ -36,16 +39,22 @@ supabase/
 │   │                                (total_questions_answered,
 │   │                                total_correct_answers) and the new
 │   │                                child_daily_activity table
-│   └── 0008_achievement_criteria.sql  seeds machine-readable unlock
-│                                    criteria onto the 6 achievements
-│                                    from 0005, so record-quiz-result
-│                                    can award them automatically
+│   ├── 0008_achievement_criteria.sql  seeds machine-readable unlock
+│   │                                criteria onto the 6 achievements
+│   │                                from 0005, so record-quiz-result
+│   │                                can award them automatically
+│   └── 0009_parent_pin.sql         adds families.pin_hash — a real,
+│                                    parent-set Parent Gate PIN,
+│                                    replacing mock.ts's hard-coded
+│                                    "1234" every install used to share
 └── functions/
     ├── generate-family-code/       parent generates a 6-digit code
     ├── redeem-family-code/         child device redeems a code once
     ├── get-child-progress/         child device reads its own progress
     ├── record-quiz-result/         child device reports a finished quiz
     ├── delete-account/             parent permanently deletes their account
+    ├── set-parent-pin/             parent sets/changes the Parent Gate PIN
+    ├── verify-parent-pin/          child device checks a PIN against it
     └── _shared/cors.ts             shared CORS headers
 ```
 
@@ -104,6 +113,8 @@ for real queries later is a small diff, not a rewrite.
    supabase functions deploy get-child-progress
    supabase functions deploy record-quiz-result
    supabase functions deploy delete-account
+   supabase functions deploy set-parent-pin
+   supabase functions deploy verify-parent-pin
    ```
    All four read `SUPABASE_URL`, `SUPABASE_ANON_KEY`, and
    `SUPABASE_SERVICE_ROLE_KEY` — Supabase injects these automatically
@@ -147,7 +158,12 @@ for real queries later is a small diff, not a rewrite.
   directly through `mobile/src/lib/children.ts` (RLS-scoped to the
   signed-in parent's family, no edge function needed since a parent
   has a real session); `app/parent/(tabs)/profile.tsx`'s Delete
-  Account calls the `delete-account` function. The child app's
+  Account calls the `delete-account` function.
+  `app/parent/parent-pin-setup.tsx` (parent sets/changes the PIN) and
+  `app/parent-pin.tsx` (child device checks one) call `set-parent-pin`
+  / `verify-parent-pin` through `mobile/src/lib/parentPin.ts` — the
+  real PIN hash never reaches either client, both functions hash and
+  compare server-side. The child app's
   Progress and Rewards tabs (`mobile/app/child/(tabs)/progress.tsx`,
   `rewards.tsx`) and the quiz screen (`mobile/app/child/quiz.tsx`)
   call `get-child-progress` / `record-quiz-result` through

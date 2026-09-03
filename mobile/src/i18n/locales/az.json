@@ -31,7 +31,8 @@
     "note": "Uşaq rejimində abunə və ödəniş məlumatları heç vaxt göstərilmir.",
     "invalidOrExpired": "Bu kod uyğun gəlmir və ya vaxtı bitib. Yenidən cəhd et.",
     "alreadyLinked": "Bu kod artıq başqa bir cihaza bağlanıb.",
-    "somethingWrong": "Nəsə səhv getdi. Yenidən cəhd et."
+    "somethingWrong": "Nəsə səhv getdi. Yenidən cəhd et.",
+    "connected": "Qoşuldu! Xoş gəldin 🎉"
   },
   "parentAuth": {
     "signInTitle": "Xoş gəldin",
@@ -51,7 +52,9 @@
     "continueWithApple": " Apple ilə davam et",
     "continueWithGoogle": "G  Google ilə davam et",
     "checkEmail": "Hesabını təsdiqləmək üçün e-poçtunu yoxla, sonra daxil ol.",
-    "somethingWrong": "Nəsə səhv getdi. Yenidən cəhd et."
+    "somethingWrong": "Nəsə səhv getdi. Yenidən cəhd et.",
+    "accountCreated": "Hesab yaradıldı!",
+    "signedIn": "Xoş gəldin!"
   },
   "childHome": {
     "greeting": "Assalamu Alaikum,",
@@ -111,7 +114,8 @@
   "parentPin": {
     "title": "Valideyn PIN-i daxil et",
     "subtitle": "Valideyndən 4 rəqəmli PIN-i daxil etməsini xahiş et.",
-    "wrongPin": "Yanlış PIN, yenidən cəhd et."
+    "wrongPin": "Yanlış PIN, yenidən cəhd et.",
+    "noPinSet": "Valideyn hələ PIN təyin etməyib. Bunu Valideyn tətbiqindən et."
   },
   "dailyLimit": {
     "title": "Gündəlik öyrənmə limiti",
@@ -135,7 +139,18 @@
     "deleteAccount": "Hesabı sil",
     "deleteAccountConfirmTitle": "Hesab silinsin?",
     "deleteAccountConfirmBody": "Bu, hesabını həmişəlik siləcək. Ailədə yeganə valideynsənsə, bütün uşaq profilləri və irəliləyişləri də silinəcək. Bu geri qaytarıla bilməz.",
-    "deleteAccountFailed": "Hesab silinmədi. Yenidən cəhd et."
+    "deleteAccountFailed": "Hesab silinmədi. Yenidən cəhd et.",
+    "deleteAccountSucceeded": "Hesab silindi",
+    "signedOut": "Çıxış edildi",
+    "parentPin": "Valideyn PIN-i"
+  },
+  "parentPinSetup": {
+    "title": "Yeni PIN təyin et",
+    "confirmTitle": "PIN-i təkrar daxil et",
+    "subtitle": "Bu PIN uşağın cihazında Valideyn rejiminə keçmək üçün lazım olacaq.",
+    "mismatch": "PIN-lər uyğun gəlmədi. Yenidən cəhd et.",
+    "saved": "Valideyn PIN-i saxlanıldı",
+    "saveFailed": "PIN saxlanılmadı. Yenidən cəhd et."
   },
   "tabs": {
     "home": "Əsas",
@@ -165,7 +180,8 @@
   "quran": {
     "title": "Quran",
     "surah": "{{name}} surəsi",
-    "translatedBy": "Tərcümə: {{name}}"
+    "translatedBy": "Tərcümə: {{name}}",
+    "nextSurah": "Növbəti: {{name}}"
   },
   "dua": {
     "title": "Dua",
@@ -245,7 +261,8 @@
     "emptySubtitle": "Başlamaq üçün ilk uşağını əlavə et.",
     "deleteConfirmTitle": "Uşaq silinsin?",
     "deleteConfirmBody": "{{name}} silinəcək və bütün irəliləyişi itiriləcək. Bu geri qaytarıla bilməz.",
-    "deleteFailed": "Silinmədi. Yenidən cəhd et."
+    "deleteFailed": "Silinmədi. Yenidən cəhd et.",
+    "deleted": "{{name}} silindi"
   },
   "parentPremium": {
     "title": "Premium ol",
@@ -269,6 +286,7 @@
     "girl": "Qız",
     "somethingWrong": "Nəsə səhv getdi. Yenidən cəhd et.",
     "creating": "Yaradılır...",
+    "added": "{{name}} əlavə olundu!",
     "generateCode": "Uşaq Kodu Yarat",
     "childCode": "Uşaq Kodu",
     "expiresIn10": "10 dəqiqəyə etibarsız olacaq",

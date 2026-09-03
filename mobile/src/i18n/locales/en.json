@@ -31,7 +31,8 @@
     "note": "Your child experience never shows subscription or payment information.",
     "invalidOrExpired": "That code doesn't match or has expired. Try again.",
     "alreadyLinked": "This code is already linked to another device.",
-    "somethingWrong": "Something went wrong. Try again."
+    "somethingWrong": "Something went wrong. Try again.",
+    "connected": "Connected! Welcome 🎉"
   },
   "parentAuth": {
     "signInTitle": "Welcome back",
@@ -51,7 +52,9 @@
     "continueWithApple": " Continue with Apple",
     "continueWithGoogle": "G  Continue with Google",
     "checkEmail": "Check your email to confirm your account, then sign in.",
-    "somethingWrong": "Something went wrong. Try again."
+    "somethingWrong": "Something went wrong. Try again.",
+    "accountCreated": "Account created!",
+    "signedIn": "Welcome back!"
   },
   "childHome": {
     "greeting": "Assalamu Alaikum,",
@@ -111,7 +114,8 @@
   "parentPin": {
     "title": "Enter Parent PIN",
     "subtitle": "Ask a parent to enter their 4-digit PIN.",
-    "wrongPin": "Wrong PIN, try again."
+    "wrongPin": "Wrong PIN, try again.",
+    "noPinSet": "A parent hasn't set a PIN yet. Do this from the Parent app."
   },
   "dailyLimit": {
     "title": "Daily Learning Limit",
@@ -135,7 +139,18 @@
     "deleteAccount": "Delete Account",
     "deleteAccountConfirmTitle": "Delete account?",
     "deleteAccountConfirmBody": "This permanently deletes your account. If you're the only parent on it, every child profile and their progress is deleted too. This cannot be undone.",
-    "deleteAccountFailed": "Couldn't delete your account. Please try again."
+    "deleteAccountFailed": "Couldn't delete your account. Please try again.",
+    "deleteAccountSucceeded": "Account deleted",
+    "signedOut": "Signed out",
+    "parentPin": "Parent PIN"
+  },
+  "parentPinSetup": {
+    "title": "Set a new PIN",
+    "confirmTitle": "Re-enter the PIN",
+    "subtitle": "Your child's device will need this PIN to enter Parent Mode.",
+    "mismatch": "PINs didn't match. Try again.",
+    "saved": "Parent PIN saved",
+    "saveFailed": "Couldn't save the PIN. Try again."
   },
   "tabs": {
     "home": "Home",
@@ -165,7 +180,8 @@
   "quran": {
     "title": "Quran",
     "surah": "Surah {{name}}",
-    "translatedBy": "Translation: {{name}}"
+    "translatedBy": "Translation: {{name}}",
+    "nextSurah": "Next: {{name}}"
   },
   "dua": {
     "title": "Dua",
@@ -245,7 +261,8 @@
     "emptySubtitle": "Add your first child to get started.",
     "deleteConfirmTitle": "Delete this child?",
     "deleteConfirmBody": "{{name}} will be removed and all their progress lost. This cannot be undone.",
-    "deleteFailed": "Couldn't delete. Please try again."
+    "deleteFailed": "Couldn't delete. Please try again.",
+    "deleted": "{{name}} deleted"
   },
   "parentPremium": {
     "title": "Go Premium",
@@ -269,6 +286,7 @@
     "girl": "Girl",
     "somethingWrong": "Something went wrong. Please try again.",
     "creating": "Creating...",
+    "added": "{{name}} added!",
     "generateCode": "Generate Child Code",
     "childCode": "Child Code",
     "expiresIn10": "Expires in 10 minutes",

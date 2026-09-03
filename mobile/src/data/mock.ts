@@ -2737,9 +2737,9 @@ export type QuranSurah = {
 
 export const quranSurahs: QuranSurah[] = [
   { id: "al-fatiha", chapter: 1, arabicName: "الفاتحة", locked: false },
-  { id: "an-nas", chapter: 114, arabicName: "الناس", locked: true },
-  { id: "al-falaq", chapter: 113, arabicName: "الفلق", locked: true },
-  { id: "al-ikhlas", chapter: 112, arabicName: "الإخلاص", locked: true },
+  { id: "an-nas", chapter: 114, arabicName: "الناس", locked: false },
+  { id: "al-falaq", chapter: 113, arabicName: "الفلق", locked: false },
+  { id: "al-ikhlas", chapter: 112, arabicName: "الإخلاص", locked: false },
 ];
 
 export type DuaCategory = "Morning" | "Evening" | "Sleep" | "Eat";
@@ -2901,7 +2901,6 @@ export function setDailyLimitMinutes(minutes: number) {
 export const dailyMinutesDone = dailyJourney
   .filter((i) => i.done)
   .reduce((sum, i) => sum + i.minutes, 0);
-export const parentPin = "1234";
 
 export const plans = [
   {

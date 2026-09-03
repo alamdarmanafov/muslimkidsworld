@@ -31,7 +31,8 @@
     "note": "Çocuk modunda abonelik veya ödeme bilgileri asla gösterilmez.",
     "invalidOrExpired": "Bu kod eşleşmiyor veya süresi doldu. Tekrar dene.",
     "alreadyLinked": "Bu kod zaten başka bir cihaza bağlı.",
-    "somethingWrong": "Bir şeyler ters gitti. Tekrar dene."
+    "somethingWrong": "Bir şeyler ters gitti. Tekrar dene.",
+    "connected": "Bağlandı! Hoş geldin 🎉"
   },
   "parentAuth": {
     "signInTitle": "Tekrar hoş geldin",
@@ -51,7 +52,9 @@
     "continueWithApple": " Apple ile devam et",
     "continueWithGoogle": "G  Google ile devam et",
     "checkEmail": "Hesabını onaylamak için e-postanı kontrol et, ardından giriş yap.",
-    "somethingWrong": "Bir şeyler ters gitti. Tekrar dene."
+    "somethingWrong": "Bir şeyler ters gitti. Tekrar dene.",
+    "accountCreated": "Hesap oluşturuldu!",
+    "signedIn": "Tekrar hoş geldin!"
   },
   "childHome": {
     "greeting": "Assalamu Alaikum,",
@@ -111,7 +114,8 @@
   "parentPin": {
     "title": "Ebeveyn PIN'ini gir",
     "subtitle": "Bir ebeveynden 4 haneli PIN'i girmesini iste.",
-    "wrongPin": "Yanlış PIN, tekrar dene."
+    "wrongPin": "Yanlış PIN, tekrar dene.",
+    "noPinSet": "Ebeveyn henüz PIN belirlemedi. Bunu Ebeveyn uygulamasından yap."
   },
   "dailyLimit": {
     "title": "Günlük öğrenme sınırı",
@@ -135,7 +139,18 @@
     "deleteAccount": "Hesabı Sil",
     "deleteAccountConfirmTitle": "Hesap silinsin mi?",
     "deleteAccountConfirmBody": "Bu, hesabını kalıcı olarak siler. Ailedeki tek ebeveynsen, tüm çocuk profilleri ve ilerlemeleri de silinir. Bu geri alınamaz.",
-    "deleteAccountFailed": "Hesap silinemedi. Tekrar dene."
+    "deleteAccountFailed": "Hesap silinemedi. Tekrar dene.",
+    "deleteAccountSucceeded": "Hesap silindi",
+    "signedOut": "Çıkış yapıldı",
+    "parentPin": "Ebeveyn PIN'i"
+  },
+  "parentPinSetup": {
+    "title": "Yeni PIN belirle",
+    "confirmTitle": "PIN'i tekrar gir",
+    "subtitle": "Çocuğunun cihazı Ebeveyn Moduna girmek için bu PIN'e ihtiyaç duyacak.",
+    "mismatch": "PIN'ler eşleşmedi. Tekrar dene.",
+    "saved": "Ebeveyn PIN'i kaydedildi",
+    "saveFailed": "PIN kaydedilemedi. Tekrar dene."
   },
   "tabs": {
     "home": "Ana Sayfa",
@@ -165,7 +180,8 @@
   "quran": {
     "title": "Kur'an",
     "surah": "{{name}} Suresi",
-    "translatedBy": "Çeviri: {{name}}"
+    "translatedBy": "Çeviri: {{name}}",
+    "nextSurah": "Sıradaki: {{name}}"
   },
   "dua": {
     "title": "Dua",
@@ -245,7 +261,8 @@
     "emptySubtitle": "Başlamak için ilk çocuğunu ekle.",
     "deleteConfirmTitle": "Bu çocuk silinsin mi?",
     "deleteConfirmBody": "{{name}} kaldırılacak ve tüm ilerlemesi kaybolacak. Bu geri alınamaz.",
-    "deleteFailed": "Silinemedi. Tekrar dene."
+    "deleteFailed": "Silinemedi. Tekrar dene.",
+    "deleted": "{{name}} silindi"
   },
   "parentPremium": {
     "title": "Premium'a Geç",
@@ -269,6 +286,7 @@
     "girl": "Kız",
     "somethingWrong": "Bir şeyler ters gitti. Tekrar dene.",
     "creating": "Oluşturuluyor...",
+    "added": "{{name}} eklendi!",
     "generateCode": "Çocuk Kodu Oluştur",
     "childCode": "Çocuk Kodu",
     "expiresIn10": "10 dakika içinde sona erer",

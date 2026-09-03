@@ -7,6 +7,7 @@ import { IconBadge, tones } from "../../../src/components/IconBadge";
 import { LanguageSwitcher } from "../../../src/components/LanguageSwitcher";
 import { deleteAccount } from "../../../src/lib/children";
 import { getSupabaseClient } from "../../../src/lib/supabase";
+import { toast } from "../../../src/lib/toast";
 import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
 
 export default function ParentProfile() {
@@ -16,6 +17,7 @@ export default function ParentProfile() {
     { icon: "users", label: t("parentHome.manageChildren"), onPress: () => router.push("/parent/children") },
     { icon: "chartBar", label: t("tabs.progress"), onPress: () => router.push("/parent/progress") },
     { icon: "clock", label: t("parentHome.dailyLimit"), onPress: () => router.push("/parent/daily-limit") },
+    { icon: "lock", label: t("parentProfile.parentPin"), onPress: () => router.push("/parent/parent-pin-setup") },
     { icon: "crown", label: t("tabs.premium"), onPress: () => router.push("/parent/premium") },
     { icon: "shield", label: t("parentProfile.privacyPolicy"), onPress: () => router.push("/parent/privacy") },
   ];
@@ -32,6 +34,7 @@ export default function ParentProfile() {
           } catch {
             // ignore — env not configured or already signed out
           }
+          toast.success(t("parentProfile.signedOut"));
           router.replace("/welcome");
         },
       },
@@ -50,7 +53,7 @@ export default function ParentProfile() {
           onPress: async () => {
             const ok = await deleteAccount();
             if (!ok) {
-              Alert.alert(t("parentProfile.deleteAccountFailed"));
+              toast.error(t("parentProfile.deleteAccountFailed"));
               return;
             }
             try {
@@ -58,6 +61,7 @@ export default function ParentProfile() {
             } catch {
               // ignore — the account is already gone server-side
             }
+            toast.success(t("parentProfile.deleteAccountSucceeded"));
             router.replace("/welcome");
           },
         },
