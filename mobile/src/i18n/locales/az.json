@@ -294,7 +294,17 @@
     "title": "Premium ol",
     "subtitle": "Uşaqların üçün tam təcrübəni aç.",
     "bestValue": "Ən sərfəli",
-    "continue": "Davam et"
+    "continue": "Davam et",
+    "purchasing": "Alış həyata keçirilir...",
+    "iosOnly": "Premium alışı hazırda yalnız iOS-da mövcuddur.",
+    "purchaseSuccess": "Təbriklər! Premium aktivdir 🎉",
+    "purchaseFailed": "Alış uğursuz oldu. Yenidən cəhd et.",
+    "restore": "Alışları bərpa et",
+    "restoring": "Bərpa edilir...",
+    "restoreFailed": "Bərpa ediləcək alış tapılmadı.",
+    "activeTitle": "Premium aktivdir",
+    "activeBody": "\"{{plan}}\" planı aktivdir.",
+    "manageNote": "Abunəliyi idarə etmək və ya ləğv etmək üçün: Tənzimləmələr → [Adın] → Abunəliklər."
   },
   "parentProgressPlaceholder": {
     "title": "Həftəlik Hesabat",

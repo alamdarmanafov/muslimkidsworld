@@ -1,11 +1,21 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Platform, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { useIAP } from "expo-iap";
+import { useFocusEffect } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../../src/components/Button";
 import { Card } from "../../../src/components/Card";
 import { IconBadge, tones } from "../../../src/components/IconBadge";
 import { plans } from "../../../src/data/mock";
+import {
+  fetchFamilySubscription,
+  fetchPlanProducts,
+  verifyApplePurchase,
+  type FamilySubscription,
+  type PlanProduct,
+} from "../../../src/lib/iap";
+import { toast } from "../../../src/lib/toast";
 import { colors, radii, spacing } from "../../../src/theme/theme";
 
 export default function Premium() {
@@ -14,6 +24,110 @@ export default function Premium() {
     plans.find((p) => p.bestValue)?.id ?? plans[0].id,
   );
   const plan = plans.find((p) => p.id === selectedPlan)!;
+
+  const [planProducts, setPlanProducts] = useState<PlanProduct[]>([]);
+  const [subscription, setSubscription] = useState<FamilySubscription | null>(null);
+  const [purchasing, setPurchasing] = useState(false);
+  const [restoring, setRestoring] = useState(false);
+
+  const {
+    connected,
+    subscriptions: storeSubscriptions,
+    fetchProducts,
+    requestPurchase,
+    finishTransaction,
+    restorePurchases,
+  } = useIAP({
+    onPurchaseSuccess: async (purchase) => {
+      if (Platform.OS !== "ios") return;
+      const transactionId = (purchase as { transactionId?: string }).transactionId;
+      if (!transactionId) {
+        setPurchasing(false);
+        setRestoring(false);
+        return;
+      }
+      const result = await verifyApplePurchase(transactionId);
+      if (result.ok) {
+        await finishTransaction({ purchase, isConsumable: false });
+        toast.success(t("parentPremium.purchaseSuccess"));
+        setSubscription(await fetchFamilySubscription());
+      } else {
+        toast.error(t("parentPremium.purchaseFailed"));
+      }
+      setPurchasing(false);
+      setRestoring(false);
+    },
+    onPurchaseError: () => {
+      setPurchasing(false);
+      setRestoring(false);
+      toast.error(t("parentPremium.purchaseFailed"));
+    },
+  });
+
+  useEffect(() => {
+    fetchPlanProducts().then(setPlanProducts);
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchFamilySubscription().then(setSubscription);
+    }, []),
+  );
+
+  useEffect(() => {
+    if (Platform.OS === "ios" && connected && planProducts.length > 0) {
+      fetchProducts({ skus: planProducts.map((p) => p.appleProductId), type: "subs" });
+    }
+  }, [connected, planProducts, fetchProducts]);
+
+  const onContinue = async () => {
+    if (Platform.OS !== "ios") {
+      toast.error(t("parentPremium.iosOnly"));
+      return;
+    }
+    const productId = planProducts.find((p) => p.slug === plan.id)?.appleProductId;
+    if (!productId) {
+      toast.error(t("parentPremium.purchaseFailed"));
+      return;
+    }
+    setPurchasing(true);
+    try {
+      await requestPurchase({ request: { apple: { sku: productId } }, type: "subs" });
+    } catch {
+      setPurchasing(false);
+    }
+  };
+
+  const onRestore = async () => {
+    if (Platform.OS !== "ios") {
+      toast.error(t("parentPremium.iosOnly"));
+      return;
+    }
+    setRestoring(true);
+    try {
+      await restorePurchases();
+    } catch {
+      setRestoring(false);
+    }
+  };
+
+  if (subscription?.status === "active") {
+    const activePlanLabel = plans.find((p) => p.id === subscription.planSlug)?.id;
+    return (
+      <SafeAreaView style={styles.screen} edges={["top"]}>
+        <View style={styles.content}>
+          <IconBadge icon="crown" tone={tones.gold} size={72} />
+          <Text style={styles.title}>{t("parentPremium.activeTitle")}</Text>
+          <Text style={styles.subtitle}>
+            {t("parentPremium.activeBody", {
+              plan: activePlanLabel ? t(`content.plans.${activePlanLabel}.name`) : "",
+            })}
+          </Text>
+          <Text style={styles.manageNote}>{t("parentPremium.manageNote")}</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.screen} edges={["top"]}>
@@ -25,6 +139,9 @@ export default function Premium() {
         <View style={styles.plansRow}>
           {plans.map((p) => {
             const selected = p.id === selectedPlan;
+            const storeProduct = storeSubscriptions.find(
+              (s) => s.id === planProducts.find((pp) => pp.slug === p.id)?.appleProductId,
+            );
             return (
               <Pressable
                 key={p.id}
@@ -36,8 +153,8 @@ export default function Premium() {
                 ) : null}
                 <Text style={styles.planName}>{t(`content.plans.${p.id}.name`)}</Text>
                 <Text style={styles.planPrice}>
-                  {p.price}
-                  <Text style={styles.planPeriod}> {p.period}</Text>
+                  {storeProduct?.displayPrice ?? p.price}
+                  {storeProduct ? null : <Text style={styles.planPeriod}> {p.period}</Text>}
                 </Text>
                 <Text style={styles.planLimit}>{t(`content.plans.${p.id}.childLimit`)}</Text>
                 <View
@@ -58,10 +175,25 @@ export default function Premium() {
             </View>
           ))}
         </Card>
+
+        {Platform.OS === "ios" ? (
+          <Pressable onPress={onRestore} disabled={restoring} style={styles.restoreButton}>
+            {restoring ? (
+              <ActivityIndicator size="small" color={colors.inkMuted} />
+            ) : (
+              <Text style={styles.restoreText}>{t("parentPremium.restore")}</Text>
+            )}
+          </Pressable>
+        ) : null}
       </ScrollView>
 
       <View style={styles.footer}>
-        <Button label={t("parentPremium.continue")} variant="success" onPress={() => {}} />
+        <Button
+          label={purchasing ? t("parentPremium.purchasing") : t("parentPremium.continue")}
+          variant="success"
+          onPress={onContinue}
+          disabled={purchasing}
+        />
       </View>
     </SafeAreaView>
   );
@@ -77,6 +209,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: spacing.xs,
     marginBottom: spacing.lg,
+  },
+  manageNote: {
+    fontSize: 12,
+    color: colors.inkMuted,
+    textAlign: "center",
+    marginTop: spacing.lg,
   },
   plansRow: { flexDirection: "row", gap: spacing.md, width: "100%" },
   planCard: {
@@ -125,5 +263,7 @@ const styles = StyleSheet.create({
   featureRow: { flexDirection: "row", alignItems: "center", gap: spacing.sm },
   check: { fontSize: 14 },
   featureText: { fontSize: 14, color: colors.ink },
+  restoreButton: { marginTop: spacing.lg, padding: spacing.sm },
+  restoreText: { fontSize: 13, color: colors.inkMuted, fontWeight: "600", textDecorationLine: "underline" },
   footer: { padding: spacing.lg },
 });

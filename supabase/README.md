@@ -2,24 +2,20 @@
 
 This directory holds the SQL migrations, RLS policies, and edge
 functions for the app's real backend, built entirely as code so they
-can be reviewed before being applied. A live project now exists
-(`EXPO_PUBLIC_SUPABASE_URL` / `EXPO_PUBLIC_SUPABASE_ANON_KEY` are set
-in `mobile/.env`) and its tables are up through migration `0008`, with
-`get-child-progress` and `record-quiz-result` (achievement-aware)
-deployed. **`0009_parent_pin.sql`, `0010_quran_verses.sql`, and the
-`delete-account` / `set-parent-pin` / `verify-parent-pin` functions
-have been written but not yet deployed to that project** — the
-environment these were written in has no network access to
-`supabase.co` (organization egress policy), so `supabase db push` and
-`supabase functions deploy` for those still need to be run from a
-machine that does. See "Taking this live" below for the exact
-commands. The Quran is now a real, live-fetched 114-surah feature (see
+can be reviewed before being applied. Migrations run through `0016`
+and every function below has been written and validated locally, but
+**deploying a new migration/function to your linked project still
+needs `supabase db push` / `supabase functions deploy` run from a
+machine with network access to `supabase.co`** — see "Taking this
+live" below for the exact commands and secrets each one needs. The
+Quran is a real, live-fetched 114-surah feature (see
 `0010_quran_verses.sql` and `supabase/scripts/import-quran.mjs`
-below) — everything else (Dua, Stories, quiz content, Games) still
-reads from `mobile/src/data/mock.ts`. Parent/child onboarding, the
-parent's real Children list (add/delete), progress tracking,
-achievement badges, account deletion, and the real Parent Gate PIN
-call this backend too.
+below); Dua, Stories, quiz content, and Games still read from
+`mobile/src/data/mock.ts` (see "What's still a stub" below for why).
+Parent/child onboarding, the parent's real Children list, progress
+tracking, achievement badges, account deletion, the real Parent Gate
+PIN, push notifications, multi-child devices, device revocation, and
+iOS in-app purchases all call this backend too.
 
 ## What's here
 
@@ -49,14 +45,24 @@ supabase/
 │   │                                parent-set Parent Gate PIN,
 │   │                                replacing mock.ts's hard-coded
 │   │                                "1234" every install used to share
-│   └── 0010_quran_verses.sql       adds a `chapter` number to
-│                                    quran_surahs (it only ever had 4
-│                                    hand-picked rows, keyed by slug,
-│                                    before) plus quran_verses /
-│                                    quran_translations — schema only,
-│                                    see scripts/import-quran.mjs below
-│                                    for how the actual 114 surahs get
-│                                    in
+│   ├── 0010_quran_verses.sql       adds a `chapter` number to
+│   │                                quran_surahs (it only ever had 4
+│   │                                hand-picked rows, keyed by slug,
+│   │                                before) plus quran_verses /
+│   │                                quran_translations — schema only,
+│   │                                see scripts/import-quran.mjs below
+│   │                                for how the actual 114 surahs get in
+│   ├── 0011_push_tokens.sql        push_tokens table (Expo push tokens
+│   │                                for parents and children)
+│   ├── 0012_more_stories.sql       seeds the Nuh/Yusuf stories
+│   ├── 0013_journey_tracking.sql   quran_done/dua_done/story_done/
+│   │                                game_done on child_daily_activity
+│   ├── 0014_active_child.sql       family_codes.active_child_id, for
+│   │                                multi-child shared devices
+│   ├── 0015_admin_panel.sql        parents.is_admin + admin RLS
+│   │                                policies for admin/index.html
+│   └── 0016_iap.sql                subscription_plans.apple_product_id,
+│                                    for verify-apple-purchase
 ├── scripts/
 │   └── import-quran.mjs            one-time script, run from a machine
 │                                    with real internet access: pulls
@@ -75,7 +81,22 @@ supabase/
     ├── delete-account/             parent permanently deletes their account
     ├── set-parent-pin/             parent sets/changes the Parent Gate PIN
     ├── verify-parent-pin/          child device checks a PIN against it
-    └── _shared/cors.ts             shared CORS headers
+    ├── register-push-token/        parent or child device registers an
+    │                                Expo push token
+    ├── send-daily-reminders/       cron-triggered: nudges children who
+    │                                haven't opened the app today
+    ├── revoke-device/              parent cuts off one connected device
+    ├── mark-journey-item/          child device marks a Today's Journey
+    │                                item (Quran/Dua/Story/Game) done
+    ├── list-family-children/       shared device lists its family's children
+    ├── set-active-child/           parent switches which child a shared
+    │                                device is currently acting as
+    ├── verify-apple-purchase/      confirms an App Store transaction
+    │                                with Apple and updates `subscriptions`
+    └── _shared/                    cors.ts, push.ts (Expo push sender),
+                                     resolveChild.ts (device → family →
+                                     child lookup, shared by the child-
+                                     facing functions above)
 ```
 
 The SQL has been validated by actually running it against a local
@@ -135,10 +156,19 @@ for real queries later is a small diff, not a rewrite.
    supabase functions deploy delete-account
    supabase functions deploy set-parent-pin
    supabase functions deploy verify-parent-pin
+   supabase functions deploy register-push-token
+   supabase functions deploy send-daily-reminders
+   supabase functions deploy revoke-device
+   supabase functions deploy mark-journey-item
+   supabase functions deploy list-family-children
+   supabase functions deploy set-active-child
+   supabase functions deploy verify-apple-purchase
    ```
-   All four read `SUPABASE_URL`, `SUPABASE_ANON_KEY`, and
+   All of these read `SUPABASE_URL`, `SUPABASE_ANON_KEY`, and
    `SUPABASE_SERVICE_ROLE_KEY` — Supabase injects these automatically
    into every deployed function, nothing to configure there.
+   `verify-apple-purchase` additionally needs the `APPLE_IAP_*` secrets
+   from step 12 below before it'll work.
 
 6. **Set the two client env vars.**
 
@@ -277,6 +307,79 @@ for real queries later is a small diff, not a rewrite.
       the hour; `select cron.unschedule('send-daily-reminders');` to
       stop it.
 
+12. **In-app purchases** (`mobile/src/lib/iap.ts`,
+    `app/parent/(tabs)/premium.tsx`, `verify-apple-purchase`) — iOS
+    only, via [expo-iap](https://github.com/hyodotdev/openiap) and the
+    App Store Server API. The client asks the App Store to run the
+    purchase, but a purchase is only ever recorded as real once our
+    own backend has independently asked *Apple* whether that
+    transaction is genuine and currently active — never taken on the
+    client's word — so this step needs real App Store Connect
+    products and a server API key before purchases work end to end.
+
+    - **Create the subscription group and products**, in
+      [App Store Connect](https://appstoreconnect.apple.com) → your
+      app → Monetization → Subscriptions:
+      - Make sure Agreements, Tax, and Banking (App Store Connect →
+        Agreements, Tax, and Banking) are complete — Apple won't let a
+        subscription go live otherwise, though you can create and test
+        it in Sandbox before that's done.
+      - Create one subscription group (e.g. "Muslim Kids World
+        Premium"), then two auto-renewable subscriptions inside it,
+        with **exactly** these product IDs — `0016_iap.sql` already
+        maps these to the `single` / `family` plans:
+        - `com.muslimkidsworld.app.single.monthly`
+        - `com.muslimkidsworld.app.family.monthly`
+      - Set each one's price, subscription duration, and localized
+        display name/description to match `content.plans.*` in
+        `mobile/src/i18n/locales/*.json`. The price shown in the app
+        (`premium.tsx`) comes from the App Store itself once products
+        load — the `$4.99`/`$7.99` strings in `mobile/src/data/mock.ts`
+        are only the pre-load fallback.
+      - If you ever change a plan's `slug` or add a new plan, add a
+        matching `apple_product_id` to `subscription_plans` (SQL
+        Editor: `update public.subscription_plans set apple_product_id
+        = '...' where slug = '...';`) and create the matching product
+        in App Store Connect — the two have to stay in sync by hand.
+
+    - **Create an In-App Purchase API key**, in App Store Connect →
+      Users and Access → Integrations → In-App Purchase: generate a
+      key, note its **Key ID** and your account's **Issuer ID** (shown
+      on the same page), and download the `.p8` file (only downloadable
+      once). This is what lets `verify-apple-purchase` ask Apple
+      directly "is transaction X real and active" instead of trusting
+      whatever the client sends.
+
+    - **Set the function's secrets**, from the repo root:
+      ```
+      supabase secrets set APPLE_IAP_KEY_ID=<Key ID>
+      supabase secrets set APPLE_IAP_ISSUER_ID=<Issuer ID>
+      supabase secrets set APPLE_IAP_PRIVATE_KEY="$(cat /path/to/SubscriptionKey_XXXXXXXXXX.p8)"
+      supabase functions deploy verify-apple-purchase
+      ```
+
+    - **Testing**: use a
+      [Sandbox Apple ID](https://developer.apple.com/apple-developer-program/sandbox/)
+      signed into the Sandbox App Store account on your test device
+      (Settings → App Store → Sandbox Account, on the device, not the
+      simulator's regular Apple ID) and a real build (EAS build /
+      TestFlight, not Expo Go — `expo-iap` needs to be compiled in).
+      Sandbox purchases go through `verify-apple-purchase` exactly like
+      production ones; the function tries Apple's production endpoint
+      first and automatically falls back to the sandbox endpoint on a
+      404, so no separate sandbox configuration is needed.
+    - This only covers the *purchase* moment (a new purchase, or
+      "Restore purchases" on `premium.tsx`) — each one calls
+      `verify-apple-purchase`, which is the only thing that ever
+      writes to `subscriptions`. Apple can also change a subscription's
+      state on its own between app opens — a renewal, a cancellation,
+      a billing failure — and nothing here hears about that until the
+      parent buys or restores again, since `subscriptions` is only
+      ever updated by that verify call, not re-checked on a schedule.
+      A listener for [App Store Server
+      Notifications V2](https://developer.apple.com/documentation/appstoreservernotifications)
+      would close that gap but is future work, not part of this pass.
+
 ## Admin panel
 
 `admin/index.html` — a single, dependency-free static file (loads
@@ -380,11 +483,15 @@ confusing.
   a way to represent "generated, not stored") — a redesign, not a
   wire-up — so it's left as its own future pass instead of forcing the
   current stale schema into use.
-- **No billing/payment provider integration.** `subscriptions` has the
-  columns to represent App Store/Play Store/Stripe state
-  (`external_provider`, `external_subscription_id`), but nothing
-  writes to them yet — a real subscription still has to be created via
-  `service_role` (e.g. from a billing webhook you'd add later).
+- **iOS in-app purchases are wired up; other providers aren't.**
+  `verify-apple-purchase` (see "In-app purchases" above) writes real
+  `subscriptions` rows once it's independently confirmed a
+  transaction with Apple — `external_provider` is `'apple'`,
+  `external_subscription_id` is Apple's `originalTransactionId`. It
+  only reacts to a purchase or restore, not to renewals/cancellations
+  Apple processes on its own (no App Store Server Notifications
+  listener yet — see above), and there's no Play Store or Stripe path
+  at all, since the user scoped this pass to iOS only.
 - **Admin panel covers Quran + achievements, not everything.**
   `admin/index.html` (see above) edits `quran_surahs`/`quran_verses`/
   `quran_translations` and `achievements` — the content types the app

@@ -300,7 +300,17 @@
     "title": "Перейти на Premium",
     "subtitle": "Откройте полный опыт для ваших детей.",
     "bestValue": "Выгоднее всего",
-    "continue": "Продолжить"
+    "continue": "Продолжить",
+    "purchasing": "Обработка покупки...",
+    "iosOnly": "Покупка Premium сейчас доступна только на iOS.",
+    "purchaseSuccess": "Premium активирован! 🎉",
+    "purchaseFailed": "Покупка не удалась. Попробуйте снова.",
+    "restore": "Восстановить покупки",
+    "restoring": "Восстановление...",
+    "restoreFailed": "Нет покупок для восстановления.",
+    "activeTitle": "Premium активен",
+    "activeBody": "Ваш план «{{plan}}» активен.",
+    "manageNote": "Чтобы управлять подпиской или отменить её: Настройки → [Ваше имя] → Подписки."
   },
   "parentProgressPlaceholder": {
     "title": "Еженедельный отчёт",

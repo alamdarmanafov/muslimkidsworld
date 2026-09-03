@@ -294,7 +294,17 @@
     "title": "Go Premium",
     "subtitle": "Unlock the complete experience for your children.",
     "bestValue": "Best Value",
-    "continue": "Continue"
+    "continue": "Continue",
+    "purchasing": "Processing purchase...",
+    "iosOnly": "Premium purchases are currently available on iOS only.",
+    "purchaseSuccess": "You're Premium! 🎉",
+    "purchaseFailed": "Purchase failed. Please try again.",
+    "restore": "Restore purchases",
+    "restoring": "Restoring...",
+    "restoreFailed": "No purchase found to restore.",
+    "activeTitle": "Premium is active",
+    "activeBody": "Your \"{{plan}}\" plan is active.",
+    "manageNote": "To manage or cancel your subscription: Settings → [Your Name] → Subscriptions."
   },
   "parentProgressPlaceholder": {
     "title": "Weekly Report",

@@ -294,7 +294,17 @@
     "title": "Premium'a Geç",
     "subtitle": "Çocukların için tam deneyimin kilidini aç.",
     "bestValue": "En İyi Değer",
-    "continue": "Devam et"
+    "continue": "Devam et",
+    "purchasing": "Satın alma işleniyor...",
+    "iosOnly": "Premium satın alma şu anda yalnızca iOS'ta mevcuttur.",
+    "purchaseSuccess": "Premium aktif! 🎉",
+    "purchaseFailed": "Satın alma başarısız oldu. Tekrar dene.",
+    "restore": "Satın alımları geri yükle",
+    "restoring": "Geri yükleniyor...",
+    "restoreFailed": "Geri yüklenecek bir satın alma bulunamadı.",
+    "activeTitle": "Premium aktif",
+    "activeBody": "\"{{plan}}\" planın aktif.",
+    "manageNote": "Aboneliği yönetmek veya iptal etmek için: Ayarlar → [Adın] → Abonelikler."
   },
   "parentProgressPlaceholder": {
     "title": "Haftalık Rapor",

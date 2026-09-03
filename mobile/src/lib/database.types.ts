@@ -183,6 +183,7 @@ export type Database = {
           best_value: boolean;
           is_active: boolean;
           sort_order: number;
+          apple_product_id: string | null;
           created_at: string;
           updated_at: string;
         };
@@ -198,6 +199,7 @@ export type Database = {
           best_value?: boolean;
           is_active?: boolean;
           sort_order?: number;
+          apple_product_id?: string | null;
           created_at?: string;
           updated_at?: string;
         };
