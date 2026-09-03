@@ -355,6 +355,14 @@
       "musa": {
         "title": "Peygamber Musa (AS)",
         "subtitle": "Asa ve deniz"
+      },
+      "nuh": {
+        "title": "Peygamber Nuh'un (AS) Hikayesi",
+        "subtitle": "Büyük tufan"
+      },
+      "yusuf": {
+        "title": "Peygamber Yusuf'un (AS) Hikayesi",
+        "subtitle": "Kuyudan saraya"
       }
     },
     "games": {
@@ -1228,6 +1236,22 @@
         "Musa (a.s.) halkını geceleyin Mısır'dan çıkardı. Firavun ve ordusu onları takip ederek Kızıldeniz kıyısında yakaladı.",
         "Allah'ın emriyle Musa (a.s.) asasıyla denize vurdu ve deniz ikiye ayrıldı. Halkı kuru bir yoldan denizin diğer tarafına geçti; Firavun ve ordusu peşlerinden girince deniz yeniden birleşti.",
         "Bu hikaye bize şunu öğretir: Allah, en zor anlarda bile O'na güvenen ve sabreden kullarına her zaman bir çıkış yolu gösterir."
+      ],
+      "nuh": [
+        "Nuh Peygamber (a.s.), halkını uzun yıllar Allah'a ibadet etmeye ve doğru yola çağırdı, ama çok azı ona inandı.",
+        "Halkı onunla alay etti ve inanmadı. Allah, Nuh'a (a.s.) büyük bir gemi inşa etmesini emretti.",
+        "Nuh (a.s.) yıllarca sabırla gemiyi inşa etti, çevresindekiler ona gülse de Allah'ın emrine uymaya devam etti.",
+        "Gemi hazır olduğunda, Allah ona her hayvan türünden bir çift ile inananları gemiye almasını buyurdu.",
+        "Büyük bir tufan başladı ve tüm yeryüzü suyla kaplandı. Yalnızca gemidekiler kurtuldu.",
+        "Sular çekildikten sonra gemi bir dağın üzerinde durdu. Nuh (a.s.) ve inananlar yeryüzünde yeniden hayata başladı. Bu hikaye bize sabrın ve Allah'a güvenmenin değerini öğretir."
+      ],
+      "yusuf": [
+        "Yusuf (a.s.), babası Yakub Peygamberin çok sevdiği oğluydu. Bu durum bazı kardeşlerinde kıskançlığa yol açtı.",
+        "Kardeşleri onu bir kuyuya attı ve babalarına yalan söyledi.",
+        "Yusuf (a.s.) geçmekte olan bir kervan tarafından bulundu ve Mısır'da köle olarak satıldı.",
+        "Allah ona rüya yorumlama yeteneği verdi. Bu yetenek sayesinde Mısır hükümdarının güvenini kazandı.",
+        "Büyük bir kıtlık döneminde Yusuf (a.s.) ülkeyi bilgelikle yönetti ve halkını kurtardı.",
+        "Yıllar sonra kardeşleri tahıl almak için Mısır'a geldi ve onu tanımadılar. Yusuf (a.s.) onları affetti ve ailesiyle yeniden kavuştu. Bu hikaye bize sabrı, affetmeyi ve Allah'a güvenmeyi öğretir."
       ]
     },
     "duaMeaning": {

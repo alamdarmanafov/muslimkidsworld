@@ -4089,7 +4089,9 @@ export type Story = {
 export const stories: Story[] = [
   { id: "yunus", icon: "globe", tone: tones.blue, locked: false },
   { id: "ibrahim", icon: "mosque", tone: tones.gold, locked: false },
+  { id: "nuh", icon: "shield", tone: tones.green, locked: false },
   { id: "musa", icon: "star", tone: tones.teal, locked: true },
+  { id: "yusuf", icon: "crown", tone: tones.purple, locked: true },
 ];
 
 export type Game = {

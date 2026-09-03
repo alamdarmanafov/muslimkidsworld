@@ -355,6 +355,14 @@
       "musa": {
         "title": "Peyğəmbər Musa (ə.s)",
         "subtitle": "Əsa və dəniz"
+      },
+      "nuh": {
+        "title": "Peyğəmbər Nuhun (ə.s) hekayəsi",
+        "subtitle": "Böyük tufan"
+      },
+      "yusuf": {
+        "title": "Peyğəmbər Yusufun (ə.s) hekayəsi",
+        "subtitle": "Quyudan saraya"
       }
     },
     "games": {
@@ -1228,6 +1236,22 @@
         "Musa (ə.s) xalqını gecə vaxtı Misirdən çıxartdı. Firon və ordusu onları təqib edərək Qırmızı dənizin kənarında tutdular.",
         "Allahın əmri ilə Musa (ə.s) əsası ilə dənizə vurdu və dəniz iki yerə ayrıldı. Xalq quru yolla dənizin o tayına keçdi, Firon və ordusu isə arxalarınca girəndə dəniz yenidən birləşdi.",
         "Bu hekayə bizə öyrədir: Allah çətin anlarda Ona güvənən və səbir edən qullarına həmişə bir çıxış yolu göstərir."
+      ],
+      "nuh": [
+        "Nuh peyğəmbər (ə.s) xalqını uzun illər Allaha ibadət etməyə və doğru yola çağırdı, amma çox az adam ona inandı.",
+        "Xalqı ona istehza edir və inanmırdı. Allah Nuha (ə.s) böyük bir gəmi düzəltməsini əmr etdi.",
+        "Nuh (ə.s) illərlə səbrlə gəmini tikdi, ətrafındakılar ona gülsə də, o, Allahın əmrinə əməl etməkdə davam etdi.",
+        "Gəmi hazır olanda Allah ona hər heyvan növündən bir cüt və inananları gəmiyə mindirməsini buyurdu.",
+        "Böyük tufan başladı və bütün yer su altında qaldı. Yalnız gəmidəkilər xilas oldu.",
+        "Su çəkiləndən sonra gəmi bir dağın üstündə dayandı. Nuh (ə.s) və inananlar yenidən yer üzündə həyata başladılar. Bu hekayə bizə səbir və Allaha güvənməyin qiymətini öyrədir."
+      ],
+      "yusuf": [
+        "Yusuf (ə.s) atası Yaqub peyğəmbərin çox sevdiyi oğlu idi. Bu, bəzi qardaşlarında paxıllıq yaratdı.",
+        "Qardaşları onu bir quyuya atdılar və atalarına yalan danışdılar.",
+        "Yusuf (ə.s) bir karvan tərəfindən tapıldı və Misirdə kölə olaraq satıldı.",
+        "Allah ona yuxu yozmaq bacarığı verdi. Bu bacarıq sayəsində Misir hökmdarının etimadını qazandı.",
+        "Yusuf (ə.s) böyük bir aclıq zamanı ölkəni müdrikliklə idarə etdi və xalqı xilas etdi.",
+        "İllər sonra qardaşları taxıl almaq üçün Misirə gəldilər, onu tanımadılar. Yusuf (ə.s) onları bağışladı və ailəsi ilə yenidən qovuşdu. Bu hekayə bizə səbir, bağışlamaq və Allaha güvənməyi öyrədir."
       ]
     },
     "duaMeaning": {
