@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   },
   backBtn: {
     position: "absolute",
-    top: spacing.lg,
+    top: spacing.xl * 1.5,
     left: spacing.lg,
     width: 34,
     height: 34,
