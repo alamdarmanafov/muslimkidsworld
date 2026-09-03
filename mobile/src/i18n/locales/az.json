@@ -557,6 +557,18 @@
       "d22": "Beş vaxt fərz namazın rükətləri cəmi neçədir?",
       "d23": "Uşaqlar adətən neçə yaşından namaz qılmağa təşviq olunur?",
       "d24": "Həcc zamanı Kəbənin ətrafında neçə dəfə dövr vurulur (təvaf)?",
+      "d25": "Hansı peyğəmbər xalqını tufandan qorumaq üçün böyük bir gəmi düzəltdi?",
+      "d26": "Nuh (ə.s.)-ın gəmisinə hər heyvan növündən neçə ədəd mindirilib?",
+      "d27": "Nuh tufanından kimlər xilas oldu?",
+      "d28": "Hansı peyğəmbər böyük bir balıq tərəfindən udulmuşdu?",
+      "d29": "Musa (ə.s.)-nın əsası Allahın izni ilə nəyə çevrildi?",
+      "d30": "Musa (ə.s.) İsrail oğullarını hansı ölkədən azad etdi?",
+      "d31": "Yunus (ə.s.) hansı canlı tərəfindən udulmuşdu?",
+      "d32": "Yunus (ə.s.) balığın qarnında ikən nə etdi?",
+      "d33": "Quranda Yunus peyğəmbərin adını daşıyan surə neçənci surədir?",
+      "d34": "Yusuf (ə.s.) qardaşları tərəfindən haraya atıldı?",
+      "d35": "Yusuf peyğəmbərin hekayəsi Quranın neçənci surəsində ətraflı izah olunur?",
+      "d36": "Yusuf (ə.s.)-ın atasının adı nədir?",
       "e21": "Dostun bir yarışda uğur qazanıb. Nə hiss etməlisən?",
       "e22": "Kiməsə yaxşılıq etdin. Bunun qarşılığında nə gözləməlisən?",
       "e23": "Yerdə pul tapırsan, sahibi yaxınlıqdadır. Nə edirsən?",
@@ -592,7 +604,46 @@
       "mecca": "Məkkə",
       "medina": "Mədinə",
       "taif": "Taif",
-      "damascus": "Şam"
+      "damascus": "Şam",
+      "egypt": "Misir"
+    },
+    "quizProphets": {
+      "nuh": "Nuh",
+      "musa": "Musa",
+      "yunus": "Yunus",
+      "yusuf": "Yusuf",
+      "ibrahim": "İbrahim",
+      "yaqub": "Yaqub"
+    },
+    "quizGroups": {
+      "everyone": "Hamısı",
+      "believers": "İnananlar",
+      "richOnly": "Yalnız varlılar",
+      "noOne": "Heç kim"
+    },
+    "quizMiracleForms": {
+      "bird": "Quşa",
+      "fire": "Oda",
+      "snake": "İlana",
+      "stone": "Daşa"
+    },
+    "quizCreatures": {
+      "bird": "Quş",
+      "lion": "Aslan",
+      "rabbit": "Dovşan",
+      "fish": "Balıq"
+    },
+    "quizYunusActions": {
+      "prayed": "Allaha dua etdi",
+      "slept": "Yatdı",
+      "sang": "Mahnı oxudu",
+      "cried": "Sadəcə ağladı"
+    },
+    "quizYusufFate": {
+      "desert": "Səhraya",
+      "sea": "Dənizə",
+      "well": "Quyuya",
+      "cave": "Mağaraya"
     },
     "quizSymbols": {
       "moon": "Ay",
@@ -757,6 +808,18 @@
       "d22": "Sübh 2, Zöhr 4, Əsr 4, Məğrib 3, İşa 4 — cəmi 17 rükət fərz namaz var.",
       "d23": "Peyğəmbərimizin tövsiyəsinə görə uşaqlar 7 yaşından namaza öyrədilməyə başlanır.",
       "d24": "Təvaf zamanı Kəbənin ətrafında 7 dəfə dövr vurulur.",
+      "d25": "Nuh peyğəmbər (ə.s.) Allahın əmri ilə böyük bir gəmi düzəltdi və inananları tufandan xilas etdi.",
+      "d26": "Gəmiyə hər heyvan növündən bir cüt, yəni 2 ədəd mindirilmişdi.",
+      "d27": "Yalnız Nuha (ə.s.) inanıb gəmiyə minənlər tufandan xilas oldu.",
+      "d28": "Yunus peyğəmbər (ə.s.) bir müddət böyük bir balığın qarnında qalmışdı.",
+      "d29": "Musa peyğəmbərin (ə.s.) əsası Allahın izni ilə bir ilana çevrildi — bu, ona verilən möcüzələrdən biri idi.",
+      "d30": "Musa peyğəmbər (ə.s.) İsrail oğullarını Misirdəki zülmdən xilas etdi.",
+      "d31": "Yunus peyğəmbər (ə.s.) böyük bir balıq tərəfindən udulmuşdu.",
+      "d32": "Yunus peyğəmbər (ə.s.) balığın qarnında Allaha dua edib bağışlanma dilədi.",
+      "d33": "Yunus surəsi Quranın 10-cu surəsidir.",
+      "d34": "Yusuf peyğəmbərin (ə.s.) qardaşları paxıllıqdan onu quyuya atdılar.",
+      "d35": "Yusuf surəsi Quranın 12-ci surəsidir və Yusuf peyğəmbərin (ə.s.) hekayəsini ətraflı izah edir.",
+      "d36": "Yusuf peyğəmbərin (ə.s.) atası Yaqub peyğəmbərdir (ə.s.).",
       "e21": "Dostumuzun uğuruna həqiqi ürəkdən sevinmək gözəl bir xasiyyətdir.",
       "e22": "Yaxşılığı Allah rizası üçün etməliyik, qarşılıq gözləmədən — bu, ən dəyərli yaxşılıqdır.",
       "e23": "Tapılan əşyanı sahibinə qaytarmaq doğruluq və əmanətə sadiqliyin nişanəsidir.",

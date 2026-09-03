@@ -557,6 +557,18 @@
       "d22": "How many total rak'ahs are there in the five daily obligatory prayers?",
       "d23": "At what age are children usually encouraged to start praying?",
       "d24": "During Hajj, how many times do pilgrims circle the Kaaba (tawaf)?",
+      "d25": "Which prophet built a large ship to protect his people from the flood?",
+      "d26": "How many of each kind of animal were brought aboard Noah's ark?",
+      "d27": "Who was saved from Noah's flood?",
+      "d28": "Which prophet was swallowed by a great fish?",
+      "d29": "What did Musa's staff turn into by Allah's permission?",
+      "d30": "Which country did Musa free the Children of Israel from?",
+      "d31": "What creature swallowed Yunus?",
+      "d32": "What did Yunus do while inside the fish?",
+      "d33": "Which surah number bears the name of Prophet Yunus in the Quran?",
+      "d34": "Where was Yusuf thrown by his brothers?",
+      "d35": "Which surah number tells Prophet Yusuf's story in detail?",
+      "d36": "What is the name of Yusuf's father?",
       "e21": "Your friend succeeded in a competition. What should you feel?",
       "e22": "You did something kind for someone. What should you expect in return?",
       "e23": "You find money on the ground, and the owner is nearby. What do you do?",
@@ -592,7 +604,46 @@
       "mecca": "Mecca",
       "medina": "Medina",
       "taif": "Taif",
-      "damascus": "Damascus"
+      "damascus": "Damascus",
+      "egypt": "Egypt"
+    },
+    "quizProphets": {
+      "nuh": "Noah",
+      "musa": "Musa",
+      "yunus": "Yunus",
+      "yusuf": "Yusuf",
+      "ibrahim": "Ibrahim",
+      "yaqub": "Yaqub"
+    },
+    "quizGroups": {
+      "everyone": "Everyone",
+      "believers": "The believers",
+      "richOnly": "Only the rich",
+      "noOne": "No one"
+    },
+    "quizMiracleForms": {
+      "bird": "A bird",
+      "fire": "Fire",
+      "snake": "A snake",
+      "stone": "A stone"
+    },
+    "quizCreatures": {
+      "bird": "A bird",
+      "lion": "A lion",
+      "rabbit": "A rabbit",
+      "fish": "A fish"
+    },
+    "quizYunusActions": {
+      "prayed": "Prayed to Allah",
+      "slept": "Slept",
+      "sang": "Sang a song",
+      "cried": "Just cried"
+    },
+    "quizYusufFate": {
+      "desert": "Into the desert",
+      "sea": "Into the sea",
+      "well": "Into a well",
+      "cave": "Into a cave"
     },
     "quizSymbols": {
       "moon": "Moon",
@@ -757,6 +808,18 @@
       "d22": "Fajr 2, Dhuhr 4, Asr 4, Maghrib 3, Isha 4 — that's 17 obligatory rak'ahs in total.",
       "d23": "Following the Prophet's guidance, children are usually taught to pray starting at age 7.",
       "d24": "During tawaf, pilgrims circle the Kaaba 7 times.",
+      "d25": "Prophet Noah built a great ship by Allah's command and saved the believers from the flood.",
+      "d26": "A pair of every kind of animal — 2 of each — was brought aboard the ark.",
+      "d27": "Only those who believed in Noah and boarded the ark were saved from the flood.",
+      "d28": "Prophet Yunus stayed inside the belly of a great fish for a time.",
+      "d29": "Prophet Musa's staff turned into a snake by Allah's permission — one of the miracles given to him.",
+      "d30": "Prophet Musa freed the Children of Israel from oppression in Egypt.",
+      "d31": "Prophet Yunus was swallowed by a great fish.",
+      "d32": "Prophet Yunus prayed to Allah and asked for forgiveness while inside the fish.",
+      "d33": "Surah Yunus is the 10th surah of the Quran.",
+      "d34": "Prophet Yusuf's brothers threw him into a well out of jealousy.",
+      "d35": "Surah Yusuf is the 12th surah of the Quran and tells Prophet Yusuf's story in detail.",
+      "d36": "Prophet Yusuf's father is Prophet Yaqub.",
       "e21": "Being genuinely happy for a friend's success is a beautiful quality.",
       "e22": "We should do good deeds to please Allah, without expecting anything in return — that is the most valuable kind of good deed.",
       "e23": "Returning something you found to its owner shows honesty and trustworthiness.",

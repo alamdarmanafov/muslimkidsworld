@@ -557,6 +557,18 @@
       "d22": "Beş vakit farz namazın rekatları toplamı kaçtır?",
       "d23": "Çocuklar genellikle kaç yaşından itibaren namaza teşvik edilir?",
       "d24": "Hac sırasında Kabe'nin etrafında kaç kez tavaf yapılır?",
+      "d25": "Hangi peygamber, kavmini tufandan korumak için büyük bir gemi inşa etti?",
+      "d26": "Hz. Nuh'un gemisine her hayvan türünden kaç tane bindirildi?",
+      "d27": "Hz. Nuh'un tufanından kimler kurtuldu?",
+      "d28": "Hangi peygamber büyük bir balık tarafından yutuldu?",
+      "d29": "Hz. Musa'nın asası Allah'ın izniyle neye dönüştü?",
+      "d30": "Hz. Musa, İsrailoğullarını hangi ülkeden kurtardı?",
+      "d31": "Hz. Yunus'u hangi canlı yuttu?",
+      "d32": "Hz. Yunus, balığın karnındayken ne yaptı?",
+      "d33": "Kur'an'da Hz. Yunus'un adını taşıyan sure kaçıncı suredir?",
+      "d34": "Hz. Yusuf, kardeşleri tarafından nereye atıldı?",
+      "d35": "Hz. Yusuf'un hikayesi Kur'an'ın kaçıncı suresinde ayrıntılı anlatılır?",
+      "d36": "Hz. Yusuf'un babasının adı nedir?",
       "e21": "Arkadaşın bir yarışmada başarılı oldu. Ne hissetmelisin?",
       "e22": "Birine iyilik yaptın. Bunun karşılığında ne beklemelisin?",
       "e23": "Yerde para buluyorsun, sahibi yakında. Ne yaparsın?",
@@ -592,7 +604,46 @@
       "mecca": "Mekke",
       "medina": "Medine",
       "taif": "Taif",
-      "damascus": "Şam"
+      "damascus": "Şam",
+      "egypt": "Mısır"
+    },
+    "quizProphets": {
+      "nuh": "Hz. Nuh",
+      "musa": "Hz. Musa",
+      "yunus": "Hz. Yunus",
+      "yusuf": "Hz. Yusuf",
+      "ibrahim": "Hz. İbrahim",
+      "yaqub": "Hz. Yakup"
+    },
+    "quizGroups": {
+      "everyone": "Herkes",
+      "believers": "İnananlar",
+      "richOnly": "Sadece zenginler",
+      "noOne": "Hiç kimse"
+    },
+    "quizMiracleForms": {
+      "bird": "Kuşa",
+      "fire": "Ateşe",
+      "snake": "Yılana",
+      "stone": "Taşa"
+    },
+    "quizCreatures": {
+      "bird": "Kuş",
+      "lion": "Aslan",
+      "rabbit": "Tavşan",
+      "fish": "Balık"
+    },
+    "quizYunusActions": {
+      "prayed": "Allah'a dua etti",
+      "slept": "Uyudu",
+      "sang": "Şarkı söyledi",
+      "cried": "Sadece ağladı"
+    },
+    "quizYusufFate": {
+      "desert": "Çöle",
+      "sea": "Denize",
+      "well": "Kuyuya",
+      "cave": "Mağaraya"
     },
     "quizSymbols": {
       "moon": "Ay",
@@ -757,6 +808,18 @@
       "d22": "Sabah 2, Öğle 4, İkindi 4, Akşam 3, Yatsı 4 — toplam 17 rekat farz namaz vardır.",
       "d23": "Peygamberimizin tavsiyesine göre çocuklara genellikle 7 yaşından itibaren namaz öğretilmeye başlanır.",
       "d24": "Tavaf sırasında Kabe'nin etrafında 7 kez dönülür.",
+      "d25": "Hz. Nuh (a.s.), Allah'ın emriyle büyük bir gemi inşa etti ve inananları tufandan kurtardı.",
+      "d26": "Gemiye her hayvan türünden bir çift, yani 2 tane bindirildi.",
+      "d27": "Tufandan yalnızca Hz. Nuh'a inanıp gemiye binenler kurtuldu.",
+      "d28": "Hz. Yunus (a.s.), bir süre büyük bir balığın karnında kaldı.",
+      "d29": "Hz. Musa'nın (a.s.) asası Allah'ın izniyle bir yılana dönüştü — bu, ona verilen mucizelerden biriydi.",
+      "d30": "Hz. Musa (a.s.), İsrailoğullarını Mısır'daki zulümden kurtardı.",
+      "d31": "Hz. Yunus'u (a.s.) büyük bir balık yuttu.",
+      "d32": "Hz. Yunus (a.s.), balığın karnındayken Allah'a dua edip bağışlanma diledi.",
+      "d33": "Yunus suresi, Kur'an'ın 10. suresidir.",
+      "d34": "Hz. Yusuf'un (a.s.) kardeşleri onu kıskançlıktan kuyuya attı.",
+      "d35": "Yusuf suresi, Kur'an'ın 12. suresidir ve Hz. Yusuf'un (a.s.) hikayesini ayrıntılı anlatır.",
+      "d36": "Hz. Yusuf'un (a.s.) babası Hz. Yakup'tur (a.s.).",
       "e21": "Arkadaşımızın başarısına içtenlikle sevinmek güzel bir haslettir.",
       "e22": "İyiliği Allah rızası için, karşılık beklemeden yapmalıyız — bu en değerli iyiliktir.",
       "e23": "Bulduğun bir eşyayı sahibine geri vermek doğruluk ve güvenilirliğin göstergesidir.",
