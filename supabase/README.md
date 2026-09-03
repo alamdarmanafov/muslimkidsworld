@@ -190,13 +190,46 @@ for real queries later is a small diff, not a rewrite.
      once). Note your Team ID too (top-right of the Apple Developer
      dashboard).
    - In the Supabase dashboard → Authentication → Providers → Apple:
-     enable it, paste in the Team ID, Key ID, and the `.p8` file's
-     contents, and add `com.muslimkidsworld.app` under "Authorized
-     Client IDs" (this native flow uses the bundle ID directly — no
-     Services ID or redirect URL needed, unlike Apple's web OAuth
-     flow).
+     enable it, fill in the Team ID and Key ID, and add
+     `com.muslimkidsworld.app` under "Authorized Client IDs" (this
+     native flow uses the bundle ID directly — no Services ID or
+     redirect URL needed, unlike Apple's web OAuth flow).
+   - The "Secret Key" field wants a signed **JWT**, not the raw `.p8`
+     contents — generate one with `supabase/scripts/generate-apple-secret.mjs`:
+     ```
+     cd supabase/scripts
+     node generate-apple-secret.mjs --team <Team ID> --key <Key ID> \
+       --client com.muslimkidsworld.app --p8 /path/to/AuthKey_XXXXXXXXXX.p8
+     ```
+     Paste the printed JWT into the Secret Key field. It's valid 180
+     days — regenerate and re-paste before it expires (the `.p8` file
+     and Key ID don't change).
    - This only works in a real build (EAS build / TestFlight), not
      Expo Go — `expo-apple-authentication` needs to be compiled in.
+
+10. **Enable the Google auth provider**, for Sign in with Google
+    (`mobile/src/lib/googleAuth.ts`, `app/parent-auth.tsx`) — iOS only:
+    - In [Google Cloud Console](https://console.cloud.google.com/apis/credentials),
+      create (or pick) a project, then Credentials → Create Credentials
+      → OAuth client ID → Application type **iOS**. Bundle ID:
+      `com.muslimkidsworld.app`.
+    - Copy the generated **Client ID** (`....apps.googleusercontent.com`)
+      and set it in `mobile/.env`:
+      ```
+      EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID=<the client ID>
+      ```
+    - On the same client's details page, copy the **iOS URL scheme**
+      (`com.googleusercontent.apps.<...>`) and paste it into
+      `mobile/app.json`'s `@react-native-google-signin/google-signin`
+      plugin config, replacing `REPLACE_WITH_IOS_CLIENT_ID`.
+    - In the Supabase dashboard → Authentication → Providers → Google:
+      enable it and add the same Client ID under "Authorized Client
+      IDs" (Client Secret can stay empty — this native flow doesn't
+      use it).
+    - This also only works in a real build, not Expo Go —
+      `@react-native-google-signin/google-signin` needs to be compiled
+      in, and changing `app.json`'s plugin config requires a fresh
+      prebuild (a new EAS build).
 
 ## What's still a stub / explicitly out of scope here
 

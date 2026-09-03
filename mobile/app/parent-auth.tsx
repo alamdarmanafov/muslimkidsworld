@@ -12,9 +12,11 @@ import {
   View,
 } from "react-native";
 import * as AppleAuthentication from "expo-apple-authentication";
+import { GoogleSigninButton } from "@react-native-google-signin/google-signin";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../src/components/icons";
 import { signInWithApple } from "../src/lib/appleAuth";
+import { isGoogleSignInConfigured, signInWithGoogle } from "../src/lib/googleAuth";
 import { getSupabaseClient } from "../src/lib/supabase";
 import { toast } from "../src/lib/toast";
 import { colors, fonts, radii, spacing } from "../src/theme/theme";
@@ -31,6 +33,7 @@ export default function ParentAuth() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [appleAvailable, setAppleAvailable] = useState(false);
+  const googleAvailable = Platform.OS === "ios" && isGoogleSignInConfigured();
 
   useEffect(() => {
     if (Platform.OS !== "ios") return;
@@ -47,6 +50,22 @@ export default function ParentAuth() {
     setError(null);
     setLoading(true);
     const result = await signInWithApple();
+    setLoading(false);
+    if (!result.ok) {
+      if (result.cancelled) return;
+      const message = result.error ?? t("parentAuth.somethingWrong");
+      setError(message);
+      toast.error(message);
+      return;
+    }
+    toast.success(t("parentAuth.signedIn"));
+    router.replace("/parent");
+  };
+
+  const handleGoogleSignIn = async () => {
+    setError(null);
+    setLoading(true);
+    const result = await signInWithGoogle();
     setLoading(false);
     if (!result.ok) {
       if (result.cancelled) return;
@@ -195,7 +214,7 @@ export default function ParentAuth() {
             </Text>
           </Pressable>
 
-          {appleAvailable ? (
+          {appleAvailable || googleAvailable ? (
             <>
               <View style={styles.divider}>
                 <View style={styles.dividerLine} />
@@ -203,17 +222,28 @@ export default function ParentAuth() {
                 <View style={styles.dividerLine} />
               </View>
 
-              <AppleAuthentication.AppleAuthenticationButton
-                buttonType={
-                  isSignUp
-                    ? AppleAuthentication.AppleAuthenticationButtonType.SIGN_UP
-                    : AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN
-                }
-                buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
-                cornerRadius={radii.md}
-                style={styles.appleBtn}
-                onPress={handleAppleSignIn}
-              />
+              {appleAvailable ? (
+                <AppleAuthentication.AppleAuthenticationButton
+                  buttonType={
+                    isSignUp
+                      ? AppleAuthentication.AppleAuthenticationButtonType.SIGN_UP
+                      : AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN
+                  }
+                  buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
+                  cornerRadius={radii.md}
+                  style={styles.appleBtn}
+                  onPress={handleAppleSignIn}
+                />
+              ) : null}
+
+              {googleAvailable ? (
+                <GoogleSigninButton
+                  size={GoogleSigninButton.Size.Wide}
+                  color={GoogleSigninButton.Color.Dark}
+                  style={styles.googleBtn}
+                  onPress={handleGoogleSignIn}
+                />
+              ) : null}
             </>
           ) : null}
         </ScrollView>
@@ -289,4 +319,5 @@ const styles = StyleSheet.create({
   dividerLine: { flex: 1, height: 1, backgroundColor: colors.border },
   dividerText: { fontFamily: fonts.body, fontSize: 11, color: colors.inkMuted },
   appleBtn: { width: "100%", height: 48 },
+  googleBtn: { width: "100%", height: 48, marginTop: spacing.sm },
 });
