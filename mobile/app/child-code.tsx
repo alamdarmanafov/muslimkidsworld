@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { router } from "expo-router";
 import { useTranslation } from "react-i18next";
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Keyboard, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../src/components/icons";
 import { bindDeviceToFamilyCode, getDeviceId } from "../src/lib/deviceBinding";
@@ -77,8 +77,10 @@ export default function ChildCode() {
       <TextInput
         value={code}
         onChangeText={(v) => {
-          setCode(v.replace(/[^0-9]/g, ""));
+          const digits = v.replace(/[^0-9]/g, "");
+          setCode(digits);
           setError(null);
+          if (digits.length === 6) Keyboard.dismiss();
         }}
         keyboardType="number-pad"
         maxLength={6}
