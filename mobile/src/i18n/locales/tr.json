@@ -269,6 +269,19 @@
     "deleteFailed": "Silinemedi. Tekrar dene.",
     "deleted": "{{name}} silindi"
   },
+  "devices": {
+    "title": "Bağlı cihazlar",
+    "subtitle": "Ailene bağlı tüm çocuk cihazları burada görünür. Bir cihazı kaybettiysen veya artık kullanılmıyorsa, erişimini iptal edebilirsin.",
+    "emptyTitle": "Bağlı cihaz yok",
+    "emptySubtitle": "Bir çocuk cihazı, aile koduyla katıldığında burada görünecek.",
+    "deviceLabel": "Cihaz #{{id}}",
+    "connectedOn": "Bağlanma tarihi: {{date}}",
+    "revoke": "İptal et",
+    "revokeConfirmTitle": "Bu cihazın erişimi iptal edilsin mi?",
+    "revokeConfirmBody": "Bu cihaz artık ailenin verilerine erişemeyecek. Yeniden bağlanmak için yeni bir aile kodu gerekecek.",
+    "revokeFailed": "İptal edilemedi. Tekrar dene.",
+    "revoked": "Cihazın erişimi iptal edildi"
+  },
   "parentPremium": {
     "title": "Premium'a Geç",
     "subtitle": "Çocukların için tam deneyimin kilidini aç.",

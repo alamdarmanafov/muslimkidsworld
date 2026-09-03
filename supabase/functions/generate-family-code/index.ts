@@ -102,15 +102,21 @@ Deno.serve(async (req: Request) => {
 
   // This code rotates every 30 seconds (see
   // mobile/app/parent/family-code.tsx, which calls this function on
-  // that cadence): revoke whatever the family's previous code was
-  // before minting a new one, so only ever one code per family is
-  // usable at a time and old codes stop working the moment a fresh
-  // one is issued, not just when their 30s expiry passes.
+  // that cadence): revoke whatever the family's previous *unbound*
+  // code was before minting a new one, so only ever one rotating code
+  // per family is usable at a time and old codes stop working the
+  // moment a fresh one is issued, not just when their 30s expiry
+  // passes. Deliberately excludes rows that already have a
+  // bound_device_id — those are a connected child device, not a
+  // stale rotation code, and must survive a parent reopening this
+  // screen to connect a second child. Revoking an already-connected
+  // device is revoke-device's job, not this one's.
   const { error: revokeError } = await adminClient
     .from("family_codes")
     .update({ revoked_at: new Date().toISOString() })
     .eq("family_id", parent.family_id)
-    .is("revoked_at", null);
+    .is("revoked_at", null)
+    .is("bound_device_id", null);
 
   if (revokeError) {
     return jsonResponse({ error: revokeError.message }, 500);

@@ -216,6 +216,7 @@ Deno.serve(async (req: Request) => {
     .from("family_codes")
     .select("family_id")
     .eq("bound_device_id", deviceId)
+    .is("revoked_at", null)
     .order("bound_at", { ascending: false })
     .limit(1)
     .maybeSingle();

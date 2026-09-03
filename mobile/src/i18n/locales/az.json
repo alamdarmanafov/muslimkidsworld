@@ -269,6 +269,19 @@
     "deleteFailed": "Silinmədi. Yenidən cəhd et.",
     "deleted": "{{name}} silindi"
   },
+  "devices": {
+    "title": "Bağlı cihazlar",
+    "subtitle": "Ailənə bağlı bütün uşaq cihazları burada görünür. Cihazı itirmisənsə və ya artıq istifadə olunmursa, ona olan girişi ləğv edə bilərsən.",
+    "emptyTitle": "Bağlı cihaz yoxdur",
+    "emptySubtitle": "Uşaq ailə kodu ilə qoşulduqda burada görünəcək.",
+    "deviceLabel": "Cihaz #{{id}}",
+    "connectedOn": "Qoşulma tarixi: {{date}}",
+    "revoke": "Ləğv et",
+    "revokeConfirmTitle": "Cihazın girişi ləğv edilsin?",
+    "revokeConfirmBody": "Bu cihaz artıq ailə məlumatlarına giriş əldə edə bilməyəcək. Yenidən qoşulmaq üçün yeni ailə kodu lazım olacaq.",
+    "revokeFailed": "Ləğv edilmədi. Yenidən cəhd et.",
+    "revoked": "Cihazın girişi ləğv edildi"
+  },
   "parentPremium": {
     "title": "Premium ol",
     "subtitle": "Uşaqların üçün tam təcrübəni aç.",

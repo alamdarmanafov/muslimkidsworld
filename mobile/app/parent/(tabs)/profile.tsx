@@ -18,6 +18,7 @@ export default function ParentProfile() {
     { icon: "chartBar", label: t("tabs.progress"), onPress: () => router.push("/parent/progress") },
     { icon: "clock", label: t("parentHome.dailyLimit"), onPress: () => router.push("/parent/daily-limit") },
     { icon: "lock", label: t("parentProfile.parentPin"), onPress: () => router.push("/parent/parent-pin-setup") },
+    { icon: "shield", label: t("devices.title"), onPress: () => router.push("/parent/devices") },
     { icon: "crown", label: t("tabs.premium"), onPress: () => router.push("/parent/premium") },
     { icon: "shield", label: t("parentProfile.privacyPolicy"), onPress: () => router.push("/parent/privacy") },
   ];

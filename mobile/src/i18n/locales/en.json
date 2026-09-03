@@ -269,6 +269,19 @@
     "deleteFailed": "Couldn't delete. Please try again.",
     "deleted": "{{name}} deleted"
   },
+  "devices": {
+    "title": "Connected devices",
+    "subtitle": "Every child device connected to your family shows up here. If a device is lost or no longer used, you can revoke its access.",
+    "emptyTitle": "No connected devices",
+    "emptySubtitle": "A child device will appear here once it joins with a family code.",
+    "deviceLabel": "Device #{{id}}",
+    "connectedOn": "Connected on: {{date}}",
+    "revoke": "Revoke",
+    "revokeConfirmTitle": "Revoke this device's access?",
+    "revokeConfirmBody": "This device will no longer be able to reach your family's data. It will need a new family code to reconnect.",
+    "revokeFailed": "Could not revoke access. Please try again.",
+    "revoked": "Device access revoked"
+  },
   "parentPremium": {
     "title": "Go Premium",
     "subtitle": "Unlock the complete experience for your children.",
