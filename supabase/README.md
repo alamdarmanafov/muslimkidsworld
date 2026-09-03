@@ -4,19 +4,17 @@ This directory holds the SQL migrations, RLS policies, and edge
 functions for the app's real backend, built entirely as code so they
 can be reviewed before being applied. A live project now exists
 (`EXPO_PUBLIC_SUPABASE_URL` / `EXPO_PUBLIC_SUPABASE_ANON_KEY` are set
-in `mobile/.env`) and its tables are up through migration `0007`, with
-`get-child-progress` and `record-quiz-result` deployed.
-**`0008_achievement_criteria.sql`, and the updated
-`get-child-progress` / `record-quiz-result` functions that award and
-report real achievement badges, have been written but not yet pushed
-to that project** — the environment these were written in has no
-network access to `supabase.co` (organization egress policy), so
-`supabase db push` and `supabase functions deploy` for those two still
-need to be run from a machine that does. See "Taking this live" below
-for the exact commands. Most of the app — Quran, Dua, Stories, quiz
-content, Games — still reads from `mobile/src/data/mock.ts`; only
-parent/child onboarding, progress tracking, and now achievement badges
-call this backend so far.
+in `mobile/.env`) and its tables are up through migration `0008`, with
+`get-child-progress` and `record-quiz-result` (achievement-aware)
+deployed. **The new `delete-account` function has been written but not
+yet deployed to that project** — the environment these were written in
+has no network access to `supabase.co` (organization egress policy),
+so `supabase functions deploy delete-account` still needs to be run
+from a machine that does. See "Taking this live" below for the exact
+commands. Most of the app — Quran, Dua, Stories, quiz content, Games —
+still reads from `mobile/src/data/mock.ts`; parent/child onboarding,
+the parent's real Children list (add/delete), progress tracking,
+achievement badges, and account deletion call this backend so far.
 
 ## What's here
 
@@ -47,6 +45,7 @@ supabase/
     ├── redeem-family-code/         child device redeems a code once
     ├── get-child-progress/         child device reads its own progress
     ├── record-quiz-result/         child device reports a finished quiz
+    ├── delete-account/             parent permanently deletes their account
     └── _shared/cors.ts             shared CORS headers
 ```
 
@@ -104,6 +103,7 @@ for real queries later is a small diff, not a rewrite.
    supabase functions deploy redeem-family-code
    supabase functions deploy get-child-progress
    supabase functions deploy record-quiz-result
+   supabase functions deploy delete-account
    ```
    All four read `SUPABASE_URL`, `SUPABASE_ANON_KEY`, and
    `SUPABASE_SERVICE_ROLE_KEY` — Supabase injects these automatically
@@ -138,18 +138,24 @@ for real queries later is a small diff, not a rewrite.
 
 ## What's still a stub / explicitly out of scope here
 
-- **Parent + child onboarding, and child-side progress, are wired
-  up.** `app/parent-auth.tsx`, `app/child-code.tsx`,
-  `app/parent/family-code.tsx` call Supabase auth and the
-  `generate-family-code` / `redeem-family-code` functions; the child
-  app's Progress and Rewards tabs
-  (`mobile/app/child/(tabs)/progress.tsx`, `rewards.tsx`) and the quiz
-  screen (`mobile/app/child/quiz.tsx`) call `get-child-progress` /
-  `record-quiz-result` through `mobile/src/lib/childProgress.ts`.
-  Everything else (Quran, Dua, Stories, the quiz *content* itself,
-  Games, the achievement-badge grid on the Rewards tab) still reads
-  from `mobile/src/data/mock.ts` — swapping each of those over to the
-  matching content table is still a follow-up, one screen at a time.
+- **Parent + child onboarding, the parent's Children list, and
+  child-side progress, are wired up.** `app/parent-auth.tsx`,
+  `app/child-code.tsx`, `app/parent/family-code.tsx` call Supabase auth
+  and the `generate-family-code` / `redeem-family-code` functions;
+  `app/parent/add-child.tsx` and the parent's Children tab
+  (`app/parent/(tabs)/children.tsx`) read/write the `children` table
+  directly through `mobile/src/lib/children.ts` (RLS-scoped to the
+  signed-in parent's family, no edge function needed since a parent
+  has a real session); `app/parent/(tabs)/profile.tsx`'s Delete
+  Account calls the `delete-account` function. The child app's
+  Progress and Rewards tabs (`mobile/app/child/(tabs)/progress.tsx`,
+  `rewards.tsx`) and the quiz screen (`mobile/app/child/quiz.tsx`)
+  call `get-child-progress` / `record-quiz-result` through
+  `mobile/src/lib/childProgress.ts`. Everything else (Quran, Dua,
+  Stories, the quiz *content* itself, Games, the achievement-badge
+  grid on the Rewards tab) still reads from `mobile/src/data/mock.ts`
+  — swapping each of those over to the matching content table is
+  still a follow-up, one screen at a time.
 - **No child auth.** There is no separate Supabase auth role for a
   child's own session. Today, "child access" means either the parent's
   authenticated session (RLS-scoped to their family) or a service-role
