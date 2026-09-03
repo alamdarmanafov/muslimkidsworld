@@ -19,6 +19,7 @@
 
 import { getDeviceId } from "./deviceBinding";
 import { getSupabaseClient } from "./supabase";
+import { toast } from "./toast";
 
 export type ChildInfo = {
   id: string;
@@ -76,11 +77,26 @@ export async function fetchChildProgress(): Promise<ChildProgressResult | null> 
   }
 }
 
+async function readServerErrorMessage(error: unknown): Promise<string | null> {
+  const context = (error as { context?: Response } | null)?.context;
+  if (context && typeof context.json === "function") {
+    try {
+      const body = await context.json();
+      if (typeof body?.error === "string") return body.error;
+    } catch {
+      // fall through
+    }
+  }
+  return null;
+}
+
 /**
- * Reports one finished quiz session's score. Fire-and-forget from the
- * caller's point of view — failures are swallowed (logged in dev)
- * rather than surfaced, since a missed progress update shouldn't
- * block a child from seeing their reward screen.
+ * Reports one finished quiz session's score. Doesn't block the reward
+ * screen on failure, but does surface one via toast — this used to
+ * swallow the edge function's own error responses entirely (only a
+ * network-level exception would reach the catch block; `.invoke()`
+ * resolving with a non-null `error` was never checked), so a session
+ * could silently fail to record with nothing to debug from.
  */
 export async function recordQuizResult(
   correct: number,
@@ -89,12 +105,18 @@ export async function recordQuizResult(
 ): Promise<void> {
   try {
     const deviceId = await getDeviceId();
-    await getSupabaseClient().functions.invoke("record-quiz-result", {
+    const { error } = await getSupabaseClient().functions.invoke("record-quiz-result", {
       body: { deviceId, correct, total, xpEarned },
     });
-  } catch (err) {
-    if (__DEV__) {
-      console.warn("recordQuizResult failed", err);
+    if (error) {
+      const serverMessage = await readServerErrorMessage(error);
+      const message = serverMessage ?? error.message ?? "record-quiz-result failed";
+      if (__DEV__) console.warn("recordQuizResult failed", message);
+      toast.error(message);
     }
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    if (__DEV__) console.warn("recordQuizResult failed", message);
+    toast.error(message);
   }
 }
