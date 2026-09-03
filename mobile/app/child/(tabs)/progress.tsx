@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
+import { useFocusEffect } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -32,22 +33,24 @@ export default function ChildProgress() {
     buildWeekDisplay([]),
   );
 
-  useEffect(() => {
-    let cancelled = false;
-    fetchChildProgress().then((result) => {
-      if (cancelled) return;
-      if (result) {
-        setStreak(result.progress.streak);
-        setAccuracy(result.progress.accuracy);
-        setLevel(result.progress.level);
-        setWeek(buildWeekDisplay(result.week));
-      }
-      setLoading(false);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      let cancelled = false;
+      fetchChildProgress().then((result) => {
+        if (cancelled) return;
+        if (result) {
+          setStreak(result.progress.streak);
+          setAccuracy(result.progress.accuracy);
+          setLevel(result.progress.level);
+          setWeek(buildWeekDisplay(result.week));
+        }
+        setLoading(false);
+      });
+      return () => {
+        cancelled = true;
+      };
+    }, []),
+  );
 
   return (
     <SafeAreaView style={styles.screen} edges={["top"]}>

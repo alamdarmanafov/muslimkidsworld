@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
+import { useFocusEffect } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -23,22 +24,24 @@ export default function Achievements() {
   // stay unearned until Stories/the world map get their own tracking.
   const earned = achievements.filter((a) => earnedSlugs.includes(a.id));
 
-  useEffect(() => {
-    let cancelled = false;
-    fetchChildProgress().then((result) => {
-      if (cancelled) return;
-      if (result) {
-        setBadges(result.progress.badges_count);
-        setStars(result.progress.stars_count);
-        setDays(result.progress.active_days_count);
-        setEarnedSlugs(result.achievements);
-      }
-      setLoading(false);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      let cancelled = false;
+      fetchChildProgress().then((result) => {
+        if (cancelled) return;
+        if (result) {
+          setBadges(result.progress.badges_count);
+          setStars(result.progress.stars_count);
+          setDays(result.progress.active_days_count);
+          setEarnedSlugs(result.achievements);
+        }
+        setLoading(false);
+      });
+      return () => {
+        cancelled = true;
+      };
+    }, []),
+  );
 
   const stats = [
     { labelKey: "achievements.badges", value: badges },
