@@ -122,7 +122,7 @@ Deno.serve(async (req: Request) => {
 
   const { data: week, error: weekError } = await adminClient
     .from("child_daily_activity")
-    .select("activity_date, questions_answered, xp_earned")
+    .select("activity_date, questions_answered, xp_earned, quran_done, dua_done, story_done, game_done")
     .eq("child_id", child.id)
     .gte("activity_date", sevenDaysAgoStr)
     .order("activity_date", { ascending: true });

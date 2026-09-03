@@ -1,9 +1,10 @@
 import { router } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../../src/components/icons";
+import { markJourneyItem } from "../../src/lib/childProgress";
 import { duas, type DuaCategory } from "../../src/data/mock";
 import { colors, fonts, radii, shadow, spacing } from "../../src/theme/theme";
 
@@ -21,6 +22,10 @@ export default function Dua() {
   const [index, setIndex] = useState(0);
   const categoryDuas = duas.filter((d) => d.category === category);
   const active = categoryDuas[index] ?? categoryDuas[0] ?? duas[0];
+
+  useEffect(() => {
+    markJourneyItem("dua");
+  }, []);
 
   function changeCategory(c: DuaCategory) {
     setCategory(c);

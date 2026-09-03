@@ -1,8 +1,10 @@
 import { router, useLocalSearchParams } from "expo-router";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../../../src/components/icons";
+import { markJourneyItem } from "../../../src/lib/childProgress";
 import { stories } from "../../../src/data/mock";
 import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
 
@@ -11,6 +13,10 @@ export default function StoryDetail() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const story = stories.find((s) => s.id === id) ?? stories[0];
   const paragraphs = t(`content.storyContent.${story.id}`, { returnObjects: true }) as string[];
+
+  useEffect(() => {
+    markJourneyItem("story");
+  }, [story.id]);
 
   return (
     <SafeAreaView style={styles.screen} edges={["top"]}>

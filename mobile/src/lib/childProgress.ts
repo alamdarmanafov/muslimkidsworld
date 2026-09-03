@@ -47,6 +47,10 @@ export type DailyActivity = {
   activity_date: string;
   questions_answered: number;
   xp_earned: number;
+  quran_done: boolean;
+  dua_done: boolean;
+  story_done: boolean;
+  game_done: boolean;
 };
 
 export type ChildProgressResult = {
@@ -118,5 +122,28 @@ export async function recordQuizResult(
     const message = err instanceof Error ? err.message : String(err);
     if (__DEV__) console.warn("recordQuizResult failed", message);
     toast.error(message);
+  }
+}
+
+/**
+ * Marks one "Today's Journey" item as done for today (Quran, Dua,
+ * Story, or Game — quiz is tracked separately via recordQuizResult).
+ * Fails silently: a missed journey-tracking write shouldn't interrupt
+ * a child reading a surah or a dua, unlike a quiz result losing its
+ * reward.
+ */
+export async function markJourneyItem(item: "quran" | "dua" | "story" | "game"): Promise<void> {
+  try {
+    const deviceId = await getDeviceId();
+    const { error } = await getSupabaseClient().functions.invoke("mark-journey-item", {
+      body: { deviceId, item },
+    });
+    if (error && __DEV__) {
+      console.warn("markJourneyItem failed", error.message);
+    }
+  } catch (err) {
+    if (__DEV__) {
+      console.warn("markJourneyItem failed", err instanceof Error ? err.message : String(err));
+    }
   }
 }

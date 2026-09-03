@@ -124,12 +124,20 @@ export type Database = {
           activity_date: string;
           questions_answered: number;
           xp_earned: number;
+          quran_done: boolean;
+          dua_done: boolean;
+          story_done: boolean;
+          game_done: boolean;
         };
         Insert: {
           child_id: string;
           activity_date: string;
           questions_answered?: number;
           xp_earned?: number;
+          quran_done?: boolean;
+          dua_done?: boolean;
+          story_done?: boolean;
+          game_done?: boolean;
         };
         Update: Partial<Database["public"]["Tables"]["child_daily_activity"]["Insert"]>;
         Relationships: [];

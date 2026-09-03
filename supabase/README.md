@@ -357,14 +357,10 @@ for real queries later is a small diff, not a rewrite.
   seeded once from mock data; there's no UI yet for editing
   quran_surahs/duas/stories/quizzes/games/achievements beyond running
   SQL or using the Supabase dashboard's table editor directly.
-- **Family code revocation/rotation UI.** The schema supports revoking
-  a code (`family_codes.revoked_at`) and generating a fresh one, but
-  there's no function or screen exposing that yet — only issuing a new
-  code (`generate-family-code`) and redeeming one
-  (`redeem-family-code`) are implemented.
 - **"Daily limit reached" push notification wasn't built.** No table
   tracks minutes actually spent in the app — `daily_journeys.daily_limit_minutes`
-  is a stub (see above), and `child_daily_activity` only counts
-  questions answered, not screen time — so there's no real signal to
-  fire that notification from yet. Achievement-earned and the daily
+  is a stub (see above), and `child_daily_activity` tracks whether
+  each journey item was opened today (see `mark-journey-item`), not
+  how long the child spent on it — so there's no real signal to fire
+  that notification from yet. Achievement-earned and the daily
   reminder (`send-daily-reminders`) both use signals that do exist.

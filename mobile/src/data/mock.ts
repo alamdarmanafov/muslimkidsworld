@@ -4133,12 +4133,12 @@ export type JourneyItem = {
   done: boolean;
 };
 
-// `done` here is just the static fallback shape — none of Quran, Dua,
-// Story, or Game read/watch/play state is tracked yet (see
-// supabase/README.md's stub list), so there's no honest way to mark
-// them complete. Only "quiz" is real: app/child/(tabs)/index.tsx
-// overrides it from today's actual child_daily_activity row before
-// rendering, via mobile/src/lib/childProgress.ts.
+// `done` here is just the initial-render fallback (false, honestly) —
+// app/child/(tabs)/index.tsx overrides all five from today's actual
+// child_daily_activity row before rendering (quiz from
+// questions_answered, the rest from the booleans mark-journey-item
+// sets when that item's screen is opened), via
+// mobile/src/lib/childProgress.ts.
 export const dailyJourney: JourneyItem[] = [
   { id: "quran", label: "Quran", icon: "book", minutes: 15, href: "/child/quran", done: false },
   { id: "dua", label: "Dua", icon: "heart", minutes: 10, href: "/child/dua", done: false },

@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { router } from "expo-router";
+import { useCallback, useState } from "react";
+import { router, useFocusEffect } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -40,28 +40,36 @@ export default function ChildHome() {
   const [xp, setXp] = useState(0);
   const [journey, setJourney] = useState<JourneyItem[]>(dailyJourney);
 
-  useEffect(() => {
-    let cancelled = false;
-    fetchChildProgress().then((result) => {
-      if (cancelled || !result) return;
-      setName(result.child.name);
-      setXp(result.progress.xp);
+  useFocusEffect(
+    useCallback(() => {
+      let cancelled = false;
+      fetchChildProgress().then((result) => {
+        if (cancelled || !result) return;
+        setName(result.child.name);
+        setXp(result.progress.xp);
 
-      // Only "quiz" has a real, tracked signal today (child_daily_activity);
-      // Quran/Dua/Story/Game stay whatever mock.ts's dailyJourney already
-      // has them as (not done) since nothing tracks those yet.
-      const todayStr = new Date().toISOString().slice(0, 10);
-      const quizDoneToday = result.week.some(
-        (d) => d.activity_date === todayStr && d.questions_answered > 0,
-      );
-      setJourney((prev) =>
-        prev.map((item) => (item.id === "quiz" ? { ...item, done: quizDoneToday } : item)),
-      );
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+        // Real per-item signal for all five, from today's
+        // child_daily_activity row: "quiz" from questions_answered
+        // (recordQuizResult), the rest from the booleans
+        // mark-journey-item sets when that screen is opened.
+        const todayStr = new Date().toISOString().slice(0, 10);
+        const today = result.week.find((d) => d.activity_date === todayStr);
+        const doneById: Record<string, boolean> = {
+          quiz: (today?.questions_answered ?? 0) > 0,
+          quran: today?.quran_done ?? false,
+          dua: today?.dua_done ?? false,
+          story: today?.story_done ?? false,
+          game: today?.game_done ?? false,
+        };
+        setJourney((prev) =>
+          prev.map((item) => ({ ...item, done: doneById[item.id] ?? item.done })),
+        );
+      });
+      return () => {
+        cancelled = true;
+      };
+    }, []),
+  );
 
   const dailyGoalMinutes = getDailyLimitMinutes();
   const minutesDone = journey.filter((i) => i.done).reduce((sum, i) => sum + i.minutes, 0);

@@ -1,10 +1,11 @@
 import { router } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../../src/components/Button";
 import { Icon } from "../../../src/components/icons";
+import { markJourneyItem } from "../../../src/lib/childProgress";
 import { arabicWords, type ArabicWordDef } from "../../../src/data/gamesData";
 import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
 
@@ -39,6 +40,10 @@ export default function WordPuzzleGame() {
   const [answer, setAnswer] = useState<string[]>([]);
   const [solved, setSolved] = useState(false);
   const [solvedCount, setSolvedCount] = useState(0);
+
+  useEffect(() => {
+    markJourneyItem("game");
+  }, []);
 
   function nextRound() {
     const w = pickWord(word.id);

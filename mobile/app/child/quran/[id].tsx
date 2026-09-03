@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../../../src/components/icons";
+import { markJourneyItem } from "../../../src/lib/childProgress";
 import {
   fetchQuranSurahList,
   fetchSurahDetail,
@@ -37,6 +38,10 @@ export default function SurahDetail() {
       cancelled = true;
     };
   }, [id, i18n.language]);
+
+  useEffect(() => {
+    markJourneyItem("quran");
+  }, [id]);
 
   return (
     <SafeAreaView style={styles.screen} edges={["top"]}>

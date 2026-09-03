@@ -1,10 +1,11 @@
 import { router } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../../src/components/Button";
 import { Icon } from "../../../src/components/icons";
+import { markJourneyItem } from "../../../src/lib/childProgress";
 import { islamicSymbols } from "../../../src/data/gamesData";
 import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
 
@@ -26,6 +27,10 @@ export default function FindPairGame() {
   const [matched, setMatched] = useState<string[]>([]);
   const [moves, setMoves] = useState(0);
   const [busy, setBusy] = useState(false);
+
+  useEffect(() => {
+    markJourneyItem("game");
+  }, []);
 
   const won = matched.length === islamicSymbols.length;
 
