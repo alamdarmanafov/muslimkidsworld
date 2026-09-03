@@ -611,6 +611,21 @@
       "sc36": "Which animal carries its own \"house\" on its back?",
       "sc37": "What happens to trees' leaves in autumn?",
       "sc38": "Is it important to use water carefully and protect it in nature?",
+      "sc39": "How many eyes does a human have?",
+      "sc40": "What do plants need to grow?",
+      "sc41": "In which season does it usually snow?",
+      "sc42": "What is the largest organ of the human body?",
+      "sc43": "What do bears do in winter?",
+      "sc44": "What is the fastest land animal?",
+      "sc45": "What is the process called where plants make food from sunlight?",
+      "sc46": "Which planet is closest to the Sun?",
+      "sc47": "Which organ pumps blood through our body?",
+      "sc48": "Which gas do trees release that helps us breathe?",
+      "sc49": "What is the largest planet in the solar system?",
+      "sc50": "Which is faster, light or sound?",
+      "sc51": "What is the largest internal organ in the human body?",
+      "sc52": "Which animal can change its color to match its surroundings?",
+      "sc53": "What is the tallest mountain in the world?",
       "m29": "Continue the sequence: 2, 6, 10, 14, ?",
       "m30": "Continue the sequence: 30, 25, 20, 15, ?",
       "m31": "Continue the sequence: 1, 2, 4, 8, ?",
@@ -660,6 +675,68 @@
       "sea": "Into the sea",
       "well": "Into a well",
       "cave": "Into a cave"
+    },
+    "quizPlantNeeds": {
+      "darkness": "Darkness",
+      "sunlight": "Sunlight",
+      "cold": "Cold",
+      "salt": "Salt"
+    },
+    "quizSeasons": {
+      "summer": "Summer",
+      "spring": "Spring",
+      "winter": "Winter",
+      "autumn": "Autumn"
+    },
+    "quizBodyOrgans": {
+      "heart": "Heart",
+      "skin": "Skin",
+      "liver": "Liver",
+      "lung": "Lung"
+    },
+    "quizBearActs": {
+      "migrates": "Migrates",
+      "hibernates": "Hibernates",
+      "swims": "Swims",
+      "flies": "Flies"
+    },
+    "quizAnimalNames": {
+      "lion": "Lion",
+      "elephant": "Elephant",
+      "turtle": "Turtle",
+      "cheetah": "Cheetah",
+      "chameleon": "Chameleon"
+    },
+    "quizProcesses": {
+      "photosynthesis": "Photosynthesis",
+      "respiration": "Respiration",
+      "digestion": "Digestion",
+      "evaporation": "Evaporation"
+    },
+    "quizPlanetNames": {
+      "mercury": "Mercury",
+      "venus": "Venus",
+      "mars": "Mars",
+      "saturn": "Saturn",
+      "jupiter": "Jupiter"
+    },
+    "quizGases": {
+      "oxygen": "Oxygen",
+      "carbonDioxide": "Carbon dioxide",
+      "nitrogen": "Nitrogen",
+      "hydrogen": "Hydrogen"
+    },
+    "quizLightSound": {
+      "light": "Light",
+      "sound": "Sound",
+      "equal": "They're equal",
+      "neither": "Neither"
+    },
+    "quizMountains": {
+      "everest": "Everest",
+      "kilimanjaro": "Kilimanjaro",
+      "elbrus": "Elbrus",
+      "fuji": "Fuji"
     },
     "quizSymbols": {
       "moon": "Moon",
@@ -878,6 +955,21 @@
       "sc36": "A turtle has a hard shell protecting its body, as if it carries its own house on its back.",
       "sc37": "In autumn, trees prepare for winter, and their leaves change color and fall.",
       "sc38": "Water is very important for life, so we must use it carefully and protect it.",
+      "sc39": "Humans have 2 eyes, which we use to see the world around us.",
+      "sc40": "Plants need sunlight, water, and soil to grow.",
+      "sc41": "Snow usually falls in winter, when the weather turns cold.",
+      "sc42": "Skin is the largest organ of the human body and it protects us.",
+      "sc43": "Some bears sleep through the winter — this is called hibernation.",
+      "sc44": "The cheetah is the fastest land animal on Earth.",
+      "sc45": "This process is called photosynthesis — it's how plants make their own food.",
+      "sc46": "Mercury is the closest planet to the Sun in our solar system.",
+      "sc47": "The heart is the organ that pumps blood through our blood vessels.",
+      "sc48": "Trees release oxygen, which helps us breathe.",
+      "sc49": "Jupiter is the largest planet in the solar system.",
+      "sc50": "Light travels far faster than sound.",
+      "sc51": "The liver is the largest internal organ in the human body.",
+      "sc52": "The chameleon is a fascinating animal that can change its color to match its surroundings.",
+      "sc53": "Mount Everest is the tallest mountain in the world.",
       "m29": "Each number increases by 4: 2, 6, 10, 14, 18.",
       "m30": "Each number decreases by 5: 30, 25, 20, 15, 10.",
       "m31": "Each number is double the one before it: 1, 2, 4, 8, 16.",

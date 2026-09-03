@@ -611,6 +611,21 @@
       "sc36": "Hansı heyvan öz \"evini\" belində daşıyır?",
       "sc37": "Payız fəslində ağacların yarpaqlarına nə baş verir?",
       "sc38": "Təbiətdə suyu qənaətlə istifadə etmək və qorumaq vacibdirmi?",
+      "sc39": "İnsanın neçə gözü var?",
+      "sc40": "Bitkilər böyümək üçün nəyə ehtiyac duyur?",
+      "sc41": "Qar adətən hansı fəsildə yağır?",
+      "sc42": "İnsan bədəninin ən böyük üzvü (orqanı) hansıdır?",
+      "sc43": "Ayı qışda nə edir?",
+      "sc44": "Ən sürətli quru heyvanı hansıdır?",
+      "sc45": "Bitkilərin günəş işığından qida hazırlama prosesinə nə deyilir?",
+      "sc46": "Günəşə ən yaxın planet hansıdır?",
+      "sc47": "Bədənimizdə qanı vuran (nəbz yaradan) orqan hansıdır?",
+      "sc48": "Ağaclar hansı qazı buraxaraq bizə nəfəs almağa kömək edir?",
+      "sc49": "Günəş sistemində ən böyük planet hansıdır?",
+      "sc50": "İşıq və səsdən hansı daha sürətlidir?",
+      "sc51": "İnsan bədənindəki ən böyük daxili orqan hansıdır?",
+      "sc52": "Hansı heyvan rəngini ətraf mühitə uyğun dəyişə bilir?",
+      "sc53": "Dünyanın ən hündür dağı hansıdır?",
       "m29": "Ardıcıllığı davam etdir: 2, 6, 10, 14, ?",
       "m30": "Ardıcıllığı davam etdir: 30, 25, 20, 15, ?",
       "m31": "Ardıcıllığı davam etdir: 1, 2, 4, 8, ?",
@@ -660,6 +675,68 @@
       "sea": "Dənizə",
       "well": "Quyuya",
       "cave": "Mağaraya"
+    },
+    "quizPlantNeeds": {
+      "darkness": "Qaranlığa",
+      "sunlight": "Günəş işığına",
+      "cold": "Soyuğa",
+      "salt": "Duza"
+    },
+    "quizSeasons": {
+      "summer": "Yay",
+      "spring": "Yaz",
+      "winter": "Qış",
+      "autumn": "Payız"
+    },
+    "quizBodyOrgans": {
+      "heart": "Ürək",
+      "skin": "Dəri",
+      "liver": "Qaraciyər",
+      "lung": "Ağciyər"
+    },
+    "quizBearActs": {
+      "migrates": "Köç edir",
+      "hibernates": "Yuxuya gedir",
+      "swims": "Üzür",
+      "flies": "Uçur"
+    },
+    "quizAnimalNames": {
+      "lion": "Aslan",
+      "elephant": "Fil",
+      "turtle": "Tısbağa",
+      "cheetah": "Çita",
+      "chameleon": "Buqələmun"
+    },
+    "quizProcesses": {
+      "photosynthesis": "Fotosintez",
+      "respiration": "Tənəffüs",
+      "digestion": "Həzm",
+      "evaporation": "Buxarlanma"
+    },
+    "quizPlanetNames": {
+      "mercury": "Merkuri",
+      "venus": "Venera",
+      "mars": "Mars",
+      "saturn": "Saturn",
+      "jupiter": "Yupiter"
+    },
+    "quizGases": {
+      "oxygen": "Oksigen",
+      "carbonDioxide": "Karbon qazı",
+      "nitrogen": "Azot",
+      "hydrogen": "Hidrogen"
+    },
+    "quizLightSound": {
+      "light": "İşıq",
+      "sound": "Səs",
+      "equal": "Bərabərdirlər",
+      "neither": "Heç biri"
+    },
+    "quizMountains": {
+      "everest": "Everest",
+      "kilimanjaro": "Kilimancaro",
+      "elbrus": "Elbrus",
+      "fuji": "Fudzi"
     },
     "quizSymbols": {
       "moon": "Ay",
@@ -878,6 +955,21 @@
       "sc36": "Tısbağanın bədənini qoruyan sərt qabığı var, elə bil öz evini belində daşıyır.",
       "sc37": "Payızda ağaclar qışa hazırlaşır, yarpaqları rəngini dəyişib tökülür.",
       "sc38": "Su həyat üçün çox vacibdir, ona görə də onu qənaətlə istifadə etmək və qorumaq lazımdır.",
+      "sc39": "İnsanın 2 gözü var və onlarla ətrafımızı görürük.",
+      "sc40": "Bitkilər böyümək üçün günəş işığına, suya və torpağa ehtiyac duyur.",
+      "sc41": "Qar adətən qış fəslində, hava soyuyanda yağır.",
+      "sc42": "Dəri insan bədəninin ən böyük üzvüdür və bizi qoruyur.",
+      "sc43": "Bəzi ayılar qışda yuxuya gedir, buna hibernasiya deyilir.",
+      "sc44": "Çita (gepard) quruda yaşayan ən sürətli heyvandır.",
+      "sc45": "Bu prosesə fotosintez deyilir — bitkilər bununla öz qidasını hazırlayır.",
+      "sc46": "Merkuri, Günəş sistemində Günəşə ən yaxın planetdir.",
+      "sc47": "Ürək bədənimizdə qanı damarlar vasitəsilə vuran orqandır.",
+      "sc48": "Ağaclar oksigen qazı buraxaraq bizim nəfəs almağımıza kömək edir.",
+      "sc49": "Yupiter, Günəş sistemindəki ən böyük planetdir.",
+      "sc50": "İşıq səsdən qat-qat sürətli hərəkət edir.",
+      "sc51": "Qaraciyər insan bədənindəki ən böyük daxili orqandır.",
+      "sc52": "Buqələmun rəngini ətraf mühitə uyğun dəyişə bilən maraqlı bir heyvandır.",
+      "sc53": "Everest dünyanın ən hündür dağıdır.",
       "m29": "Ədədlər hər dəfə 4 artır: 2, 6, 10, 14, 18.",
       "m30": "Ədədlər hər dəfə 5 azalır: 30, 25, 20, 15, 10.",
       "m31": "Hər ədəd özündən əvvəlkinin 2 mislidir: 1, 2, 4, 8, 16.",

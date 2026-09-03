@@ -611,6 +611,21 @@
       "sc36": "Hangi hayvan kendi \"evini\" sırtında taşır?",
       "sc37": "Sonbaharda ağaçların yapraklarına ne olur?",
       "sc38": "Doğada suyu tasarruflu kullanmak ve korumak önemli midir?",
+      "sc39": "İnsanın kaç gözü vardır?",
+      "sc40": "Bitkilerin büyümek için neye ihtiyacı vardır?",
+      "sc41": "Kar genellikle hangi mevsimde yağar?",
+      "sc42": "İnsan vücudunun en büyük organı hangisidir?",
+      "sc43": "Ayılar kışın ne yapar?",
+      "sc44": "En hızlı kara hayvanı hangisidir?",
+      "sc45": "Bitkilerin güneş ışığından besin üretme sürecine ne denir?",
+      "sc46": "Güneş'e en yakın gezegen hangisidir?",
+      "sc47": "Vücudumuzda kanı pompalayan organ hangisidir?",
+      "sc48": "Ağaçlar nefes almamıza yardımcı olan hangi gazı salar?",
+      "sc49": "Güneş sistemindeki en büyük gezegen hangisidir?",
+      "sc50": "Işık mı yoksa ses mi daha hızlıdır?",
+      "sc51": "İnsan vücudundaki en büyük iç organ hangisidir?",
+      "sc52": "Hangi hayvan rengini çevresine uyacak şekilde değiştirebilir?",
+      "sc53": "Dünyanın en yüksek dağı hangisidir?",
       "m29": "Diziyi tamamla: 2, 6, 10, 14, ?",
       "m30": "Diziyi tamamla: 30, 25, 20, 15, ?",
       "m31": "Diziyi tamamla: 1, 2, 4, 8, ?",
@@ -660,6 +675,68 @@
       "sea": "Denize",
       "well": "Kuyuya",
       "cave": "Mağaraya"
+    },
+    "quizPlantNeeds": {
+      "darkness": "Karanlık",
+      "sunlight": "Güneş ışığı",
+      "cold": "Soğuk",
+      "salt": "Tuz"
+    },
+    "quizSeasons": {
+      "summer": "Yaz",
+      "spring": "İlkbahar",
+      "winter": "Kış",
+      "autumn": "Sonbahar"
+    },
+    "quizBodyOrgans": {
+      "heart": "Kalp",
+      "skin": "Deri",
+      "liver": "Karaciğer",
+      "lung": "Akciğer"
+    },
+    "quizBearActs": {
+      "migrates": "Göç eder",
+      "hibernates": "Kış uykusuna yatar",
+      "swims": "Yüzer",
+      "flies": "Uçar"
+    },
+    "quizAnimalNames": {
+      "lion": "Aslan",
+      "elephant": "Fil",
+      "turtle": "Kaplumbağa",
+      "cheetah": "Çita",
+      "chameleon": "Bukalemun"
+    },
+    "quizProcesses": {
+      "photosynthesis": "Fotosentez",
+      "respiration": "Solunum",
+      "digestion": "Sindirim",
+      "evaporation": "Buharlaşma"
+    },
+    "quizPlanetNames": {
+      "mercury": "Merkür",
+      "venus": "Venüs",
+      "mars": "Mars",
+      "saturn": "Satürn",
+      "jupiter": "Jüpiter"
+    },
+    "quizGases": {
+      "oxygen": "Oksijen",
+      "carbonDioxide": "Karbondioksit",
+      "nitrogen": "Azot",
+      "hydrogen": "Hidrojen"
+    },
+    "quizLightSound": {
+      "light": "Işık",
+      "sound": "Ses",
+      "equal": "Eşittirler",
+      "neither": "Hiçbiri"
+    },
+    "quizMountains": {
+      "everest": "Everest",
+      "kilimanjaro": "Kilimanjaro",
+      "elbrus": "Elbrus",
+      "fuji": "Fuji"
     },
     "quizSymbols": {
       "moon": "Ay",
@@ -878,6 +955,21 @@
       "sc36": "Kaplumbağanın vücudunu koruyan sert bir kabuğu vardır, sanki kendi evini sırtında taşır.",
       "sc37": "Sonbaharda ağaçlar kışa hazırlanır, yaprakları renk değiştirip dökülür.",
       "sc38": "Su, yaşam için çok önemlidir, bu yüzden tasarruflu kullanmalı ve korumalıyız.",
+      "sc39": "İnsanın 2 gözü vardır ve onlarla etrafımızı görürüz.",
+      "sc40": "Bitkilerin büyümek için güneş ışığına, suya ve toprağa ihtiyacı vardır.",
+      "sc41": "Kar genellikle hava soğuduğunda, kış mevsiminde yağar.",
+      "sc42": "Deri, insan vücudunun en büyük organıdır ve bizi korur.",
+      "sc43": "Bazı ayılar kış boyunca uyur — buna kış uykusu denir.",
+      "sc44": "Çita, karada yaşayan en hızlı hayvandır.",
+      "sc45": "Bu sürece fotosentez denir — bitkiler bu şekilde kendi besinlerini üretir.",
+      "sc46": "Merkür, Güneş sistemimizde Güneş'e en yakın gezegendir.",
+      "sc47": "Kalp, damarlarımız aracılığıyla kanı pompalayan organdır.",
+      "sc48": "Ağaçlar, nefes almamıza yardımcı olan oksijen gazını salar.",
+      "sc49": "Jüpiter, Güneş sistemindeki en büyük gezegendir.",
+      "sc50": "Işık, sesten çok daha hızlı hareket eder.",
+      "sc51": "Karaciğer, insan vücudundaki en büyük iç organdır.",
+      "sc52": "Bukalemun, rengini çevresine uyacak şekilde değiştirebilen ilginç bir hayvandır.",
+      "sc53": "Everest Dağı, dünyanın en yüksek dağıdır.",
       "m29": "Sayılar her seferinde 4 artıyor: 2, 6, 10, 14, 18.",
       "m30": "Sayılar her seferinde 5 azalıyor: 30, 25, 20, 15, 10.",
       "m31": "Her sayı bir öncekinin 2 katıdır: 1, 2, 4, 8, 16.",
