@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Avatar } from "../../../src/components/Avatar";
 import { Button } from "../../../src/components/Button";
 import { Card } from "../../../src/components/Card";
+import { Icon } from "../../../src/components/icons";
 import { ProgressRing } from "../../../src/components/ProgressRing";
 import { deleteChild, fetchChildren, type ParentChild } from "../../../src/lib/children";
 import { toast } from "../../../src/lib/toast";
@@ -86,6 +87,16 @@ export default function Children() {
                     </Text>
                   ) : null}
                 </View>
+                <Pressable
+                  style={styles.syncBtn}
+                  hitSlop={8}
+                  onPress={(e) => {
+                    e.stopPropagation();
+                    router.push("/parent/family-code");
+                  }}
+                >
+                  <Icon name="sync" size={18} color={colors.primary} />
+                </Pressable>
                 <ProgressRing percent={Math.round(child.accuracy)} size={48} strokeWidth={4} />
               </Card>
             </Pressable>
@@ -116,6 +127,7 @@ const styles = StyleSheet.create({
   title: { fontSize: 22, fontWeight: "800", color: colors.ink },
   slots: { fontSize: 13, color: colors.inkMuted, fontWeight: "600" },
   list: { padding: spacing.lg, gap: spacing.md },
+  syncBtn: { padding: spacing.xs },
   row: {
     flexDirection: "row",
     alignItems: "center",

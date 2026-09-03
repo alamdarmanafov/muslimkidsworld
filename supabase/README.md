@@ -179,6 +179,25 @@ for real queries later is a small diff, not a rewrite.
    Takes a few minutes (114 surahs × Arabic + 4 translations, ~31,000
    rows). Safe to re-run — every write is an upsert.
 
+9. **Enable the Apple auth provider**, for Sign in with Apple
+   (`mobile/src/lib/appleAuth.ts`, `app/parent-auth.tsx`):
+   - In [Apple Developer](https://developer.apple.com/account) →
+     Certificates, Identifiers & Profiles → Identifiers, open the
+     app's identifier (`com.muslimkidsworld.app`) and enable the
+     "Sign in with Apple" capability.
+   - Under Keys, create a new key with "Sign in with Apple" enabled;
+     note its Key ID and download the `.p8` file (only downloadable
+     once). Note your Team ID too (top-right of the Apple Developer
+     dashboard).
+   - In the Supabase dashboard → Authentication → Providers → Apple:
+     enable it, paste in the Team ID, Key ID, and the `.p8` file's
+     contents, and add `com.muslimkidsworld.app` under "Authorized
+     Client IDs" (this native flow uses the bundle ID directly — no
+     Services ID or redirect URL needed, unlike Apple's web OAuth
+     flow).
+   - This only works in a real build (EAS build / TestFlight), not
+     Expo Go — `expo-apple-authentication` needs to be compiled in.
+
 ## What's still a stub / explicitly out of scope here
 
 - **Parent + child onboarding, the parent's Children list, and

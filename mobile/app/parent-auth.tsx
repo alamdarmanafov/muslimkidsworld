@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { router } from "expo-router";
 import { useTranslation } from "react-i18next";
 import {
@@ -11,8 +11,10 @@ import {
   TextInput,
   View,
 } from "react-native";
+import * as AppleAuthentication from "expo-apple-authentication";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../src/components/icons";
+import { signInWithApple } from "../src/lib/appleAuth";
 import { getSupabaseClient } from "../src/lib/supabase";
 import { toast } from "../src/lib/toast";
 import { colors, fonts, radii, spacing } from "../src/theme/theme";
@@ -28,12 +30,34 @@ export default function ParentAuth() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [appleAvailable, setAppleAvailable] = useState(false);
+
+  useEffect(() => {
+    if (Platform.OS !== "ios") return;
+    AppleAuthentication.isAvailableAsync().then(setAppleAvailable);
+  }, []);
 
   const isSignUp = mode === "signUp";
   const canSubmit =
     email.trim().length > 3 &&
     password.length >= 6 &&
     (!isSignUp || (fullName.trim().length > 0 && password === confirmPassword));
+
+  const handleAppleSignIn = async () => {
+    setError(null);
+    setLoading(true);
+    const result = await signInWithApple();
+    setLoading(false);
+    if (!result.ok) {
+      if (result.cancelled) return;
+      const message = result.error ?? t("parentAuth.somethingWrong");
+      setError(message);
+      toast.error(message);
+      return;
+    }
+    toast.success(t("parentAuth.signedIn"));
+    router.replace("/parent");
+  };
 
   const handleSubmit = async () => {
     setError(null);
@@ -171,18 +195,27 @@ export default function ParentAuth() {
             </Text>
           </Pressable>
 
-          <View style={styles.divider}>
-            <View style={styles.dividerLine} />
-            <Text style={styles.dividerText}>{t("parentAuth.comingSoon")}</Text>
-            <View style={styles.dividerLine} />
-          </View>
+          {appleAvailable ? (
+            <>
+              <View style={styles.divider}>
+                <View style={styles.dividerLine} />
+                <Text style={styles.dividerText}>{t("parentAuth.or")}</Text>
+                <View style={styles.dividerLine} />
+              </View>
 
-          <View style={[styles.oauthBtn, styles.oauthBtnDisabled]}>
-            <Text style={styles.oauthBtnText}>{t("parentAuth.continueWithApple")}</Text>
-          </View>
-          <View style={[styles.oauthBtn, styles.oauthBtnDisabled]}>
-            <Text style={styles.oauthBtnText}>{t("parentAuth.continueWithGoogle")}</Text>
-          </View>
+              <AppleAuthentication.AppleAuthenticationButton
+                buttonType={
+                  isSignUp
+                    ? AppleAuthentication.AppleAuthenticationButtonType.SIGN_UP
+                    : AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN
+                }
+                buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
+                cornerRadius={radii.md}
+                style={styles.appleBtn}
+                onPress={handleAppleSignIn}
+              />
+            </>
+          ) : null}
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -255,14 +288,5 @@ const styles = StyleSheet.create({
   },
   dividerLine: { flex: 1, height: 1, backgroundColor: colors.border },
   dividerText: { fontFamily: fonts.body, fontSize: 11, color: colors.inkMuted },
-  oauthBtn: {
-    borderRadius: radii.md,
-    borderWidth: 1.5,
-    borderColor: colors.border,
-    paddingVertical: spacing.md,
-    alignItems: "center",
-    marginBottom: spacing.sm,
-  },
-  oauthBtnDisabled: { opacity: 0.4 },
-  oauthBtnText: { fontFamily: fonts.bodyBold, fontSize: 14, color: colors.ink },
+  appleBtn: { width: "100%", height: 48 },
 });
