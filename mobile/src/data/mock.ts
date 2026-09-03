@@ -2665,7 +2665,11 @@ function planetNameOptions(pool: PlanetMeta[], lang: string): QuizOption[] {
  * verified dataset (planets.json — real, stable order-from-Sun facts) so the
  * answers never need hand-checking beyond the 8-row source table.
  */
-export function generatePlanetOrderQuestions(count: number, lang: string): QuizQuestion[] {
+export function generatePlanetOrderQuestions(
+  count: number,
+  lang: string,
+  difficulty: QuizDifficulty = "medium",
+): QuizQuestion[] {
   const pool = shuffle(planetIndex).slice(0, count);
   return pool.map((p, i) => {
     const distractors = shuffle(planetIndex.filter((o) => o.order !== p.order)).slice(0, 3);
@@ -2677,7 +2681,7 @@ export function generatePlanetOrderQuestions(count: number, lang: string): QuizQ
       return {
         id: `planet-order-name-${p.order}-${i}`,
         category: "elm",
-        difficulty: "medium",
+        difficulty,
         promptKey: "content.quiz.elmPlanetOrderName",
         promptParams: { number: p.order } as Record<string, string | number>,
         options: planetNameOptions(group, lang),
@@ -2696,7 +2700,7 @@ export function generatePlanetOrderQuestions(count: number, lang: string): QuizQ
     return {
       id: `planet-order-number-${p.order}-${i}`,
       category: "elm",
-      difficulty: "medium",
+      difficulty,
       promptKey: "content.quiz.elmPlanetOrderNumber",
       promptParams: { name: planetName(p, lang) },
       options,
@@ -2724,7 +2728,11 @@ const PLANET_COMPARE_MODES: PlanetCompareMode[] = [
  * comparisons over the same verified table, giving C(8,4)=70 groupings per
  * mode without a single new fact to check by hand.
  */
-export function generatePlanetCompareQuestions(count: number, lang: string): QuizQuestion[] {
+export function generatePlanetCompareQuestions(
+  count: number,
+  lang: string,
+  difficulty: QuizDifficulty = "medium",
+): QuizQuestion[] {
   const questions: QuizQuestion[] = [];
   for (let i = 0; i < count; i++) {
     const mode = shuffle(PLANET_COMPARE_MODES)[0];
@@ -2737,7 +2745,7 @@ export function generatePlanetCompareQuestions(count: number, lang: string): Qui
     questions.push({
       id: `planet-compare-${i}-${group.map((p) => p.order).join("-")}`,
       category: "elm",
-      difficulty: "medium",
+      difficulty,
       promptKey: mode.promptKey,
       options: planetNameOptions(group, lang),
       correctOptionId: optionLetters[correctIndex],
@@ -2767,6 +2775,7 @@ const FOREIGN_LANG_LABEL: Record<string, Record<ForeignTargetLang, string>> = {
 export function generateVocabPictureQuestions(
   count: number,
   targetLang: ForeignTargetLang,
+  difficulty: QuizDifficulty = "easy",
 ): QuizQuestion[] {
   const pool = shuffle(vocabIndex).slice(0, count);
   return pool.map((entry, i) => {
@@ -2782,7 +2791,7 @@ export function generateVocabPictureQuestions(
       id: `vocab-picture-${targetLang}-${entry.id}-${i}`,
       category: "xariciDil",
       targetLang,
-      difficulty: "easy",
+      difficulty,
       promptKey: "content.quiz.xariciDilPictureMatch",
       promptParams: { word: entry[targetLang] },
       options,
@@ -2800,6 +2809,7 @@ export function generateVocabWordQuestions(
   count: number,
   targetLang: ForeignTargetLang,
   lang: string,
+  difficulty: QuizDifficulty = "easy",
 ): QuizQuestion[] {
   const pool = shuffle(vocabIndex).slice(0, count);
   const langLabel = FOREIGN_LANG_LABEL[lang]?.[targetLang] ?? FOREIGN_LANG_LABEL.az[targetLang];
@@ -2817,7 +2827,7 @@ export function generateVocabWordQuestions(
       id: `vocab-word-${targetLang}-${entry.id}-${i}`,
       category: "xariciDil",
       targetLang,
-      difficulty: "easy",
+      difficulty,
       promptKey: "content.quiz.xariciDilWordMatch",
       promptParams: { emoji: entry.emoji, lang: langLabel },
       options,
@@ -2861,10 +2871,15 @@ export function getQuizQuestions(
     const staticElm = quizBank
       .filter((q) => q.category === "elm")
       .filter((q) => !difficulty || getDifficulty(q) === difficulty);
-    const generated =
-      !difficulty || difficulty === "medium"
-        ? [...generatePlanetOrderQuestions(10, lang), ...generatePlanetCompareQuestions(10, lang)]
-        : [];
+    // Planet facts don't get inherently harder by difficulty tier (same
+    // table either way), so unlike din/riyaziyyat these are generated for
+    // every tier — otherwise "hard" would have only the 2 hand-authored
+    // elm questions tagged hard, an almost-empty, repeating quiz.
+    const genDifficulty = difficulty ?? "medium";
+    const generated = [
+      ...generatePlanetOrderQuestions(10, lang, genDifficulty),
+      ...generatePlanetCompareQuestions(10, lang, genDifficulty),
+    ];
     return shuffle([...staticElm, ...generated]);
   }
   if (category === "xariciDil") {
@@ -2872,10 +2887,16 @@ export function getQuizQuestions(
     const staticForeign = quizBank
       .filter((q) => q.category === "xariciDil" && q.targetLang === tl)
       .filter((q) => !difficulty || getDifficulty(q) === difficulty);
-    const generated =
-      !difficulty || difficulty === "easy"
-        ? [...generateVocabPictureQuestions(12, tl), ...generateVocabWordQuestions(12, tl, lang)]
-        : [];
+    // All hand-authored xariciDil questions are tagged "easy" — without
+    // this, picking medium/hard here returned zero questions (a crash,
+    // since quiz.tsx indexes into an empty array). Vocabulary matching
+    // doesn't really get harder by tier either, so generate for whatever
+    // tier was requested rather than only "easy".
+    const genDifficulty = difficulty ?? "easy";
+    const generated = [
+      ...generateVocabPictureQuestions(12, tl, genDifficulty),
+      ...generateVocabWordQuestions(12, tl, lang, genDifficulty),
+    ];
     return shuffle([...staticForeign, ...generated]);
   }
   return quizBank.filter(
