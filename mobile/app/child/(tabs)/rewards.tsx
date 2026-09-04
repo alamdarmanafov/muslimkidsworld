@@ -1,11 +1,13 @@
 import { useCallback, useState } from "react";
 import { useFocusEffect } from "expo-router";
 import { useTranslation } from "react-i18next";
-import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../../../src/components/icons";
 import { achievements } from "../../../src/data/mock";
+import { shareCertificate } from "../../../src/lib/certificate";
 import { fetchChildProgress } from "../../../src/lib/childProgress";
+import { toast } from "../../../src/lib/toast";
 import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
 
 export default function Achievements() {
@@ -15,6 +17,8 @@ export default function Achievements() {
   const [stars, setStars] = useState(0);
   const [days, setDays] = useState(0);
   const [earnedSlugs, setEarnedSlugs] = useState<string[]>([]);
+  const [childName, setChildName] = useState("");
+  const [sharingId, setSharingId] = useState<string | null>(null);
 
   // The badge catalog (icon/tone) still comes from mock.ts, but which
   // ones actually show as earned now comes from record-quiz-result's
@@ -34,6 +38,7 @@ export default function Achievements() {
           setStars(result.progress.stars_count);
           setDays(result.progress.active_days_count);
           setEarnedSlugs(result.achievements);
+          setChildName(result.child.name);
         }
         setLoading(false);
       });
@@ -42,6 +47,17 @@ export default function Achievements() {
       };
     }, []),
   );
+
+  const handleShareCertificate = async (achievementId: string) => {
+    setSharingId(achievementId);
+    const ok = await shareCertificate(childName, t(`content.achievements.${achievementId}`), {
+      kicker: t("achievements.certificateKicker"),
+      appName: "Muslim Kids World",
+      footer: t("achievements.certificateFooter"),
+    });
+    setSharingId(null);
+    if (!ok) toast.error(t("achievements.certificateFailed"));
+  };
 
   const stats = [
     { labelKey: "achievements.badges", value: badges },
@@ -83,6 +99,13 @@ export default function Achievements() {
                     <Icon name={a.icon} size={26} color={a.tone[1]} />
                   </View>
                   <Text style={styles.badgeLabel}>{t(`content.achievements.${a.id}`)}</Text>
+                  <Pressable onPress={() => handleShareCertificate(a.id)} disabled={sharingId === a.id}>
+                    {sharingId === a.id ? (
+                      <ActivityIndicator size="small" color={colors.primary} />
+                    ) : (
+                      <Text style={styles.certificateLink}>{t("achievements.getCertificate")}</Text>
+                    )}
+                  </Pressable>
                 </View>
               ))}
             </View>
@@ -150,4 +173,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   badgeLabel: { fontFamily: fonts.bodyBold, fontSize: 10, color: colors.ink, textAlign: "center" },
+  certificateLink: {
+    fontFamily: fonts.bodyBold,
+    fontSize: 9,
+    color: colors.primary,
+    textDecorationLine: "underline",
+    marginTop: 2,
+  },
 });

@@ -309,7 +309,11 @@
     "recentBadges": "Последние значки",
     "badges": "Значки",
     "stars": "Звёзды",
-    "days": "Дни"
+    "days": "Дни",
+    "getCertificate": "Получить сертификат",
+    "certificateFailed": "Не удалось создать сертификат.",
+    "certificateKicker": "Сертификат достижения",
+    "certificateFooter": "Так держать! 🌙"
   },
   "parentChildren": {
     "title": "Мои дети",

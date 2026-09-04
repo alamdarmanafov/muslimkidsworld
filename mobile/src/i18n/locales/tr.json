@@ -301,7 +301,11 @@
     "recentBadges": "Son Rozetler",
     "badges": "Rozetler",
     "stars": "Yıldızlar",
-    "days": "Günler"
+    "days": "Günler",
+    "getCertificate": "Sertifika al",
+    "certificateFailed": "Sertifika oluşturulamadı.",
+    "certificateKicker": "Başarı Sertifikası",
+    "certificateFooter": "Böyle devam et! 🌙"
   },
   "parentChildren": {
     "title": "Çocuklarım",

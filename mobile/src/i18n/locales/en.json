@@ -301,7 +301,11 @@
     "recentBadges": "Recent Badges",
     "badges": "Badges",
     "stars": "Stars",
-    "days": "Days"
+    "days": "Days",
+    "getCertificate": "Get certificate",
+    "certificateFailed": "Couldn't create the certificate.",
+    "certificateKicker": "Certificate of Achievement",
+    "certificateFooter": "Keep up the great work! 🌙"
   },
   "parentChildren": {
     "title": "My Children",

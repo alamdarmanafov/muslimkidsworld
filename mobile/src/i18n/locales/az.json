@@ -301,7 +301,11 @@
     "recentBadges": "Son nişanlar",
     "badges": "Nişanlar",
     "stars": "Ulduzlar",
-    "days": "Günlər"
+    "days": "Günlər",
+    "getCertificate": "Sertifikat al",
+    "certificateFailed": "Sertifikat yaradıla bilmədi.",
+    "certificateKicker": "Nailiyyət sertifikatı",
+    "certificateFooter": "Belə davam et! 🌙"
   },
   "parentChildren": {
     "title": "Uşaqlarım",
