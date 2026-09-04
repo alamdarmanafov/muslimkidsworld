@@ -1,6 +1,7 @@
 {
   "common": {
     "continue": "Continue",
+    "offline": "No internet connection",
     "tryAgain": "Try Again",
     "cancel": "Cancel",
     "save": "Save",

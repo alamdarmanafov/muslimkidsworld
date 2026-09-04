@@ -1,6 +1,7 @@
 {
   "common": {
     "continue": "Devam et",
+    "offline": "İnternet bağlantısı yok",
     "tryAgain": "Tekrar dene",
     "cancel": "Vazgeç",
     "save": "Kaydet",
