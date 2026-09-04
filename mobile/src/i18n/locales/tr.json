@@ -410,6 +410,17 @@
     "sent": "Teşekkürler! Bildirimini aldık.",
     "noScreenshot": "Ekran görüntüsü alınamadı"
   },
+  "quietHours": {
+    "menuLabel": "Bildirim sessiz saatleri",
+    "title": "Sessiz saatler",
+    "subtitle": "Bu saatler arasında bildirim gönderilmez (çocuğunun günlük hatırlatması ve başarı bildirimleri dahil).",
+    "enable": "Sessiz saatleri etkinleştir",
+    "presets": "Hızlı seçimler",
+    "custom": "Kendi saatlerin",
+    "from": "Başlangıç",
+    "to": "Bitiş",
+    "saveFailed": "Kaydedilemedi. Tekrar dene."
+  },
   "days": {
     "mon": "Pzt",
     "tue": "Sal",

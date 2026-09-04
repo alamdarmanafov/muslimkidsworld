@@ -10,6 +10,11 @@
 // completion isn't tracked server-side yet (see daily_journeys, still
 // a stub), so this can't reason about those, only quiz activity.
 //
+// Skips a child whose family is currently inside its configured quiet
+// hours (0026_quiet_hours.sql) — this cron only runs once, at
+// whatever fixed hour it's scheduled for, so "skip" is the only lever
+// available here (there's no per-family reschedule).
+//
 // Not user-authenticated — protected by requiring the service role
 // key itself as the bearer token, since only the cron job (which
 // holds it as a secret, never shipped to the app) should call this.
@@ -24,6 +29,7 @@
 import { createClient } from "npm:@supabase/supabase-js@2.112.4";
 import { corsHeaders, jsonResponse } from "../_shared/cors.ts";
 import { sendExpoPush } from "../_shared/push.ts";
+import { isWithinQuietHours } from "../_shared/quietHours.ts";
 
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
@@ -47,7 +53,9 @@ Deno.serve(async (req: Request) => {
 
   const todayStr = new Date().toISOString().slice(0, 10);
 
-  const { data: children, error: childrenError } = await adminClient.from("children").select("id");
+  const { data: children, error: childrenError } = await adminClient
+    .from("children")
+    .select("id, family_id");
   if (childrenError) {
     return jsonResponse({ error: childrenError.message }, 500);
   }
@@ -62,9 +70,34 @@ Deno.serve(async (req: Request) => {
   }
 
   const activeIds = new Set((activeToday ?? []).map((r) => r.child_id as string));
-  const inactiveChildIds = (children ?? [])
-    .map((c) => c.id as string)
-    .filter((id) => !activeIds.has(id));
+  const inactiveChildren = (children ?? []).filter(
+    (c: { id: string }) => !activeIds.has(c.id),
+  );
+
+  if (inactiveChildren.length === 0) {
+    return jsonResponse({ sent: 0 });
+  }
+
+  const familyIds = [...new Set(inactiveChildren.map((c: { family_id: string }) => c.family_id))];
+  const { data: families, error: familiesError } = await adminClient
+    .from("families")
+    .select("id, quiet_hours_start, quiet_hours_end, timezone_offset_minutes")
+    .in("id", familyIds);
+  if (familiesError) {
+    return jsonResponse({ error: familiesError.message }, 500);
+  }
+  const familyById = new Map((families ?? []).map((f: { id: string }) => [f.id, f]));
+
+  const inactiveChildIds = inactiveChildren
+    .filter((c: { family_id: string }) => {
+      const family = familyById.get(c.family_id);
+      return !family || !isWithinQuietHours(
+        family.quiet_hours_start,
+        family.quiet_hours_end,
+        family.timezone_offset_minutes,
+      );
+    })
+    .map((c: { id: string }) => c.id);
 
   if (inactiveChildIds.length === 0) {
     return jsonResponse({ sent: 0 });

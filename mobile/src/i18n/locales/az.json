@@ -410,6 +410,17 @@
     "sent": "Təşəkkürlər! Problemi aldıq.",
     "noScreenshot": "Ekran şəkli alınmadı"
   },
+  "quietHours": {
+    "menuLabel": "Bildiriş sakit saatları",
+    "title": "Sakit saatlar",
+    "subtitle": "Bu saatlar arasında bildiriş göndərilməsin (uşağının gündəlik xatırlatması və nailiyyət bildirişləri daxil).",
+    "enable": "Sakit saatları aktivləşdir",
+    "presets": "Tez seçimlər",
+    "custom": "Öz saatların",
+    "from": "Başlanğıc",
+    "to": "Son",
+    "saveFailed": "Saxlanılmadı. Yenidən cəhd et."
+  },
   "days": {
     "mon": "B.e",
     "tue": "Ç.a",

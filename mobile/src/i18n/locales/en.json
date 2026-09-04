@@ -410,6 +410,17 @@
     "sent": "Thanks! We got your report.",
     "noScreenshot": "Couldn't capture a screenshot"
   },
+  "quietHours": {
+    "menuLabel": "Notification quiet hours",
+    "title": "Quiet hours",
+    "subtitle": "No notifications will be sent during this window (including your child's daily reminder and achievement pushes).",
+    "enable": "Enable quiet hours",
+    "presets": "Quick picks",
+    "custom": "Your own hours",
+    "from": "From",
+    "to": "To",
+    "saveFailed": "Couldn't save. Try again."
+  },
   "days": {
     "mon": "Mon",
     "tue": "Tue",

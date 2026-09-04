@@ -103,12 +103,19 @@ supabase/
 │   │                                screen, reported through the same
 │   │                                record-quiz-result function
 │   │                                (isBonus: true)
-│   └── 0025_streak_freeze.sql      child_progress.streak_freezes_
-│                                    available — one missed day no
-│                                    longer resets a streak outright;
-│                                    record-quiz-result consumes a
-│                                    freeze instead and awards one back
-│                                    every full week of activity
+│   ├── 0025_streak_freeze.sql      child_progress.streak_freezes_
+│   │                                available — one missed day no
+│   │                                longer resets a streak outright;
+│   │                                record-quiz-result consumes a
+│   │                                freeze instead and awards one back
+│   │                                every full week of activity
+│   └── 0026_quiet_hours.sql        families.quiet_hours_start/_end +
+│                                    timezone_offset_minutes — a
+│                                    parent-set do-not-disturb window
+│                                    (app/parent/notification-quiet-
+│                                    hours.tsx), applied in
+│                                    notifyFamilyParents and
+│                                    send-daily-reminders
 ├── scripts/
 │   └── import-quran.mjs            one-time script, run from a machine
 │                                    with real internet access: pulls
@@ -168,7 +175,11 @@ supabase/
                                      both Apple IAP functions), lockout.ts
                                      (shared 3-strikes/5-minute brute-force
                                      lockout, used by verify-parent-pin and
-                                     redeem-family-code)
+                                     redeem-family-code), quietHours.ts
+                                     (families.quiet_hours_*/timezone_
+                                     offset_minutes → "is it quiet hours
+                                     right now", used by notifyParents.ts
+                                     and send-daily-reminders)
 ```
 
 The SQL has been validated by actually running it against a local

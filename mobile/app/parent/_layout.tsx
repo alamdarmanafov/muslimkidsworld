@@ -19,6 +19,7 @@ export default function ParentLayout() {
       <Stack.Screen name="family-code" options={{ presentation: "modal" }} />
       <Stack.Screen name="privacy" options={{ presentation: "modal" }} />
       <Stack.Screen name="contact" options={{ presentation: "modal" }} />
+      <Stack.Screen name="notification-quiet-hours" options={{ presentation: "modal" }} />
       <Stack.Screen name="parent-pin-setup" options={{ presentation: "modal" }} />
       <Stack.Screen name="devices" options={{ presentation: "modal" }} />
       <Stack.Screen name="onboarding" options={{ presentation: "modal" }} />

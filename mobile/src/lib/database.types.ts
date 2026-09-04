@@ -30,6 +30,9 @@ export type Database = {
           name: string | null;
           pin_hash: string | null;
           daily_limit_minutes: number;
+          quiet_hours_start: number | null;
+          quiet_hours_end: number | null;
+          timezone_offset_minutes: number | null;
           created_at: string;
           updated_at: string;
         };
@@ -38,6 +41,9 @@ export type Database = {
           name?: string | null;
           pin_hash?: string | null;
           daily_limit_minutes?: number;
+          quiet_hours_start?: number | null;
+          quiet_hours_end?: number | null;
+          timezone_offset_minutes?: number | null;
           created_at?: string;
           updated_at?: string;
         };
