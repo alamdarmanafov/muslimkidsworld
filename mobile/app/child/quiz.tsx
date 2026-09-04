@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text, View } from "react-native";
@@ -13,6 +13,7 @@ import {
   type QuizDifficulty,
 } from "../../src/data/mock";
 import { recordQuizResult } from "../../src/lib/childProgress";
+import { speakText, stopSpeaking } from "../../src/lib/speech";
 import { toast } from "../../src/lib/toast";
 import { colors, radii, spacing } from "../../src/theme/theme";
 
@@ -60,6 +61,19 @@ export default function Quiz() {
 
   const question = questions[index];
   const isLast = index === questions.length - 1;
+  const promptText =
+    phase === "question" && question
+      ? question.promptText ?? t(question.promptKey ?? `content.quiz.${question.id}`, question.promptParams)
+      : "";
+
+  // Stops any in-progress read-aloud when leaving the question (next
+  // question, answering, or navigating away entirely) rather than
+  // letting it keep talking over whatever screen comes next.
+  useEffect(() => {
+    return () => {
+      stopSpeaking();
+    };
+  }, [index, phase]);
 
   function selectOption(optionId: string) {
     setSelectedId(optionId);
@@ -170,7 +184,9 @@ export default function Quiz() {
         <Text style={styles.progressLabel}>
           {isBonus ? t("quiz.bonusTag") : t("quiz.questionOf", { current: index + 1, total: questions.length })}
         </Text>
-        <Text style={styles.speaker}>🔊</Text>
+        <Pressable onPress={() => speakText(promptText, i18n.language)} hitSlop={8}>
+          <Text style={styles.speaker}>🔊</Text>
+        </Pressable>
       </View>
 
       <View style={styles.progressTrack}>
@@ -183,10 +199,7 @@ export default function Quiz() {
       </View>
 
       <View style={styles.questionBlock}>
-        <Text style={styles.prompt}>
-          {question.promptText ??
-            t(question.promptKey ?? `content.quiz.${question.id}`, question.promptParams)}
-        </Text>
+        <Text style={styles.prompt}>{promptText}</Text>
 
         <View style={styles.optionsGrid}>
           {question.options.map((option, i) => (
