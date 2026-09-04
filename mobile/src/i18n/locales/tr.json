@@ -364,7 +364,15 @@
     "subjects": "Dersler",
     "strongest": "En Güçlü Ders",
     "needsPractice": "Pratik Gerekiyor",
-    "notEnoughData": "Ders dağılımını göstermek için birkaç test daha gerekiyor."
+    "notEnoughData": "Ders dağılımını göstermek için birkaç test daha gerekiyor.",
+    "exportButton": "PDF olarak paylaş",
+    "exporting": "Hazırlanıyor...",
+    "exportFailed": "Hazırlanamadı. Tekrar dene.",
+    "exportTitle": "Haftalık Rapor",
+    "exportDay": "Gün",
+    "exportMinutes": "Dakika",
+    "exportQuestions": "Sorular",
+    "exportFooter": "Muslim Kids World — Haftalık Rapor"
   },
   "addChild": {
     "title": "Çocuk Ekle",

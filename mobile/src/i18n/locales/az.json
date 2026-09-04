@@ -364,7 +364,15 @@
     "subjects": "Fənlər",
     "strongest": "Ən güclü fənn",
     "needsPractice": "Təkrar lazımdır",
-    "notEnoughData": "Fənn üzrə göstərici üçün daha çox test lazımdır."
+    "notEnoughData": "Fənn üzrə göstərici üçün daha çox test lazımdır.",
+    "exportButton": "PDF olaraq paylaş",
+    "exporting": "Hazırlanır...",
+    "exportFailed": "Hazırlanmadı. Yenidən cəhd et.",
+    "exportTitle": "Həftəlik Hesabat",
+    "exportDay": "Gün",
+    "exportMinutes": "Dəqiqə",
+    "exportQuestions": "Suallar",
+    "exportFooter": "Muslim Kids World — Həftəlik Hesabat"
   },
   "addChild": {
     "title": "Uşaq əlavə et",

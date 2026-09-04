@@ -374,7 +374,15 @@
     "subjects": "Предметы",
     "strongest": "Сильнейший предмет",
     "needsPractice": "Нужна практика",
-    "notEnoughData": "Нужно больше тестов, чтобы показать разбивку по предметам."
+    "notEnoughData": "Нужно больше тестов, чтобы показать разбивку по предметам.",
+    "exportButton": "Поделиться как PDF",
+    "exporting": "Подготовка...",
+    "exportFailed": "Не удалось подготовить. Попробуйте снова.",
+    "exportTitle": "Еженедельный отчёт",
+    "exportDay": "День",
+    "exportMinutes": "Минуты",
+    "exportQuestions": "Вопросы",
+    "exportFooter": "Muslim Kids World — Еженедельный отчёт"
   },
   "addChild": {
     "title": "Добавить ребёнка",

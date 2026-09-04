@@ -364,7 +364,15 @@
     "subjects": "Subjects",
     "strongest": "Strongest Subject",
     "needsPractice": "Needs Practice",
-    "notEnoughData": "Needs a few more quizzes to show a subject breakdown."
+    "notEnoughData": "Needs a few more quizzes to show a subject breakdown.",
+    "exportButton": "Share as PDF",
+    "exporting": "Preparing...",
+    "exportFailed": "Couldn't prepare it. Try again.",
+    "exportTitle": "Weekly Report",
+    "exportDay": "Day",
+    "exportMinutes": "Minutes",
+    "exportQuestions": "Questions",
+    "exportFooter": "Muslim Kids World — Weekly Report"
   },
   "addChild": {
     "title": "Add Child",

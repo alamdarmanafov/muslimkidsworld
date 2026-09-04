@@ -4,9 +4,12 @@ import { useTranslation } from "react-i18next";
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Avatar } from "../../../src/components/Avatar";
+import { Button } from "../../../src/components/Button";
 import { Card } from "../../../src/components/Card";
 import { Icon } from "../../../src/components/icons";
+import { toast } from "../../../src/lib/toast";
 import { fetchWeeklyReport, type ChildWeeklyReport } from "../../../src/lib/weeklyReport";
+import { shareWeeklyReport } from "../../../src/lib/weeklyReportExport";
 import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
 
 const DAY_KEYS = ["days.sun", "days.mon", "days.tue", "days.wed", "days.thu", "days.fri", "days.sat"];
@@ -45,6 +48,7 @@ export default function Progress() {
   const [loading, setLoading] = useState(true);
   const [reports, setReports] = useState<ChildWeeklyReport[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [exporting, setExporting] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -80,6 +84,34 @@ export default function Progress() {
   const week = buildWeekDisplay(selected.week);
   const totalMinutes = selected.week.reduce((sum, d) => sum + d.minutesSpent, 0);
   const signal = pickStrongestAndWeakest(selected.categoryStats);
+
+  const handleExport = async () => {
+    setExporting(true);
+    const ok = await shareWeeklyReport(
+      selected.name,
+      { accuracy: selected.accuracy, streak: selected.streak, badges: selected.badgesEarnedThisWeek },
+      week.map((d) => ({ label: t(d.dayKey), minutes: d.value })),
+      selected.categoryStats.map((c) => ({
+        label: t(`quizCategories.${c.category}`),
+        questionsAnswered: c.questionsAnswered,
+        accuracy: c.accuracy,
+      })),
+      {
+        title: t("parentProgress.exportTitle"),
+        accuracy: t("childProgress.accuracy"),
+        streak: t("parentProgress.streak"),
+        badges: t("parentProgress.newBadges"),
+        day: t("parentProgress.exportDay"),
+        minutes: t("parentProgress.exportMinutes"),
+        subject: t("parentProgress.subjects"),
+        questions: t("parentProgress.exportQuestions"),
+        accuracyCol: t("childProgress.accuracy"),
+        footer: t("parentProgress.exportFooter"),
+      },
+    );
+    setExporting(false);
+    if (!ok) toast.error(t("parentProgress.exportFailed"));
+  };
 
   return (
     <SafeAreaView style={styles.screen} edges={["top"]}>
@@ -171,6 +203,14 @@ export default function Progress() {
             <Text style={styles.emptySubjects}>{t("parentProgress.notEnoughData")}</Text>
           </Card>
         )}
+
+        <Button
+          label={exporting ? t("parentProgress.exporting") : t("parentProgress.exportButton")}
+          variant="outline"
+          disabled={exporting}
+          onPress={handleExport}
+          style={styles.exportBtn}
+        />
       </ScrollView>
     </SafeAreaView>
   );
@@ -238,4 +278,5 @@ const styles = StyleSheet.create({
   subjectName: { fontFamily: fonts.bodyBold, fontSize: 14, color: colors.ink },
   subjectAccuracy: { fontFamily: fonts.heading, fontSize: 16, color: colors.ink },
   emptySubjects: { fontFamily: fonts.body, fontSize: 13, color: colors.inkMuted, textAlign: "center" },
+  exportBtn: { marginTop: spacing.lg },
 });
