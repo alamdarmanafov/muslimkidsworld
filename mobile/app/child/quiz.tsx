@@ -13,11 +13,16 @@ import {
   type QuizDifficulty,
 } from "../../src/data/mock";
 import { recordQuizResult } from "../../src/lib/childProgress";
+import { toast } from "../../src/lib/toast";
 import { colors, radii, spacing } from "../../src/theme/theme";
 
 type Phase = "question" | "feedback" | "reward";
 
 const optionColors = ["#FBBF24", "#22C55E", "#8B5CF6", "#3B82F6"];
+// Mirrors BONUS_XP in supabase/functions/record-quiz-result/index.ts —
+// only used here to show the right number before that request lands;
+// the server decides the real XP regardless of what this sends.
+const BONUS_XP = 50;
 
 function resolveOptionText(option: { textKey?: string; text?: string; emoji: string }, t: (key: string) => string) {
   if (option.textKey) return t(option.textKey);
@@ -26,21 +31,26 @@ function resolveOptionText(option: { textKey?: string; text?: string; emoji: str
 
 export default function Quiz() {
   const { t, i18n } = useTranslation();
-  const { category, targetLang, difficulty } = useLocalSearchParams<{
+  const { category, targetLang, difficulty, bonus } = useLocalSearchParams<{
     category: QuizCategory;
     targetLang?: ForeignTargetLang;
     difficulty?: QuizDifficulty;
+    bonus?: string;
   }>();
+  const isBonus = bonus === "1";
   // Computed once per quiz session, not on every render: getQuizQuestions
   // reshuffles (and, for generated categories, re-randomizes) its result
   // on every call, so calling it fresh on each render could hand back a
   // different array — sometimes a different length — out from under
   // `index`, which is exactly what crashed with "Cannot read property
-  // 'promptText' of undefined" once `index` no longer fit.
-  const questions = useMemo(
-    () => getQuizQuestions(category ?? "din", targetLang, difficulty, i18n.language),
-    [category, targetLang, difficulty, i18n.language],
-  );
+  // 'promptText' of undefined" once `index` no longer fit. The daily
+  // bonus (?bonus=1) is the same pool, just capped to its first
+  // question — getQuizQuestions already shuffles, so this is still a
+  // random pick from the category.
+  const questions = useMemo(() => {
+    const pool = getQuizQuestions(category ?? "din", targetLang, difficulty, i18n.language);
+    return isBonus ? pool.slice(0, 1) : pool;
+  }, [category, targetLang, difficulty, i18n.language, isBonus]);
   const [index, setIndex] = useState(0);
   const [phase, setPhase] = useState<Phase>("question");
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -54,9 +64,10 @@ export default function Quiz() {
   function selectOption(optionId: string) {
     setSelectedId(optionId);
     if (optionId === question.correctOptionId) {
-      setEarnedXp(question.xp);
+      const xp = isBonus ? BONUS_XP : question.xp;
+      setEarnedXp(xp);
       setSessionCorrect((c) => c + 1);
-      setSessionXp((x) => x + question.xp);
+      setSessionXp((x) => x + xp);
     } else {
       setEarnedXp(0);
     }
@@ -65,7 +76,16 @@ export default function Quiz() {
 
   function next() {
     if (isLast) {
-      recordQuizResult(sessionCorrect, questions.length, sessionXp, category);
+      recordQuizResult(sessionCorrect, questions.length, sessionXp, category, isBonus);
+      if (isBonus) {
+        toast.success(
+          sessionCorrect > 0
+            ? t("quiz.bonusDone", { xp: sessionXp })
+            : t("quiz.bonusDoneNoXp"),
+        );
+        router.replace("/child");
+        return;
+      }
       setPhase("reward");
       return;
     }
@@ -132,7 +152,7 @@ export default function Quiz() {
         </View>
         <View style={styles.footer}>
           <Button
-            label={isLast ? t("quiz.seeReward") : t("quiz.nextQuestion")}
+            label={isBonus ? t("quiz.finish") : isLast ? t("quiz.seeReward") : t("quiz.nextQuestion")}
             variant="success"
             onPress={next}
           />
@@ -148,7 +168,7 @@ export default function Quiz() {
           <Text style={styles.closeText}>✕</Text>
         </Pressable>
         <Text style={styles.progressLabel}>
-          {t("quiz.questionOf", { current: index + 1, total: questions.length })}
+          {isBonus ? t("quiz.bonusTag") : t("quiz.questionOf", { current: index + 1, total: questions.length })}
         </Text>
         <Text style={styles.speaker}>🔊</Text>
       </View>

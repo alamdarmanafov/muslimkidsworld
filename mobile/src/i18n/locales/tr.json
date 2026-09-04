@@ -107,7 +107,9 @@
     "gardenFullBloom": "Bahçen tamamen çiçek açtı!",
     "gardenBlooming": "Bahçen çiçek açıyor!",
     "gardenGrowing": "Bahçen büyüyor!",
-    "gardenSprouted": "Bahçen yeni filizlendi!"
+    "gardenSprouted": "Bahçen yeni filizlendi!",
+    "dailyBonus": "🎁 Günün sürpriz sorusu",
+    "dailyBonusBody": "Bir soru cevapla, ekstra XP kazan!"
   },
   "parentHome": {
     "goodEvening": "İyi akşamlar,",
@@ -262,7 +264,11 @@
     "tryNextOne": "Bir sonrakini deneyelim.",
     "correctAnswerWas": "Doğru cevap: {{answer}}",
     "seeReward": "Ödülü Gör",
-    "nextQuestion": "Sonraki Soru"
+    "nextQuestion": "Sonraki Soru",
+    "bonusTag": "🎁 Sürpriz soru",
+    "finish": "Bitir",
+    "bonusDone": "🎁 +{{xp}} XP kazandın! Yarın yeni bir soru gelecek.",
+    "bonusDoneNoXp": "Yarın tekrar dene! Bugünkü sürpriz soru bitti."
   },
   "salah": {
     "title": "Namaz",

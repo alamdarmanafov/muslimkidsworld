@@ -91,12 +91,18 @@ supabase/
 │   │                                answered from the admin panel;
 │   │                                replaces privacy.tsx's old
 │   │                                unconfigured support-email line
-│   └── 0023_bug_screenshots.sql    extends error_reports with kind
-│                                    ('crash' | 'user_report') and
-│                                    screenshot_path, plus a private
-│                                    'bug-screenshots' storage bucket —
-│                                    backs the shake-to-report feature
-│                                    (mobile/src/lib/bugReport.ts)
+│   ├── 0023_bug_screenshots.sql    extends error_reports with kind
+│   │                                ('crash' | 'user_report') and
+│   │                                screenshot_path, plus a private
+│   │                                'bug-screenshots' storage bucket —
+│   │                                backs the shake-to-report feature
+│   │                                (mobile/src/lib/bugReport.ts)
+│   └── 0024_daily_bonus_question.sql  child_daily_activity.bonus_
+│                                    question_done — once-a-day higher-
+│                                    XP question on the child home
+│                                    screen, reported through the same
+│                                    record-quiz-result function
+│                                    (isBonus: true)
 ├── scripts/
 │   └── import-quran.mjs            one-time script, run from a machine
 │                                    with real internet access: pulls

@@ -32,13 +32,24 @@
 // unrecognized categories are skipped, not errored, so this stays
 // backward compatible with any client that doesn't send one yet.
 //
+// `isBonus: true` (mobile/app/child/quiz.tsx's ?bonus=1 mode, one
+// question) reports the child home screen's once-a-day bonus question
+// instead of a regular session — total/correct must describe exactly
+// one question, and the client's xpEarned is ignored in favor of a
+// fixed BONUS_XP awarded only on a correct answer, so a compromised
+// client can't forge bonus XP any more than it can regular XP. Rejects
+// with 409 if today's bonus was already claimed
+// (child_daily_activity.bonus_question_done, 0024_daily_bonus_question.sql).
+//
 // Request:
 //   POST /functions/v1/record-quiz-result
 //   { "deviceId": "dev_abc123", "correct": 4, "total": 5, "xpEarned": 80, "category": "din" }
+//   { "deviceId": "dev_abc123", "correct": 1, "total": 1, "xpEarned": 0, "isBonus": true }
 //
 // Response:
 //   200 { progress: {...} }                          — updated child_progress row
 //   404 { error: "Device is not bound to a family" | "No child found for this family" }
+//   409 { error: "Bonus question already answered today" }
 //   400 { error: "..." }                              — bad request body
 
 import { createClient } from "npm:@supabase/supabase-js@2.112.4";
@@ -53,9 +64,11 @@ type Body = {
   total?: unknown;
   xpEarned?: unknown;
   category?: unknown;
+  isBonus?: unknown;
 };
 
 const VALID_CATEGORIES = new Set(["din", "riyaziyyat", "yaxsiEmeller", "elm", "xariciDil"]);
+const BONUS_XP = 50;
 
 function isValidDeviceId(v: unknown): v is string {
   return typeof v === "string" && v.length > 0 && v.length <= 256;
@@ -91,11 +104,17 @@ Deno.serve(async (req: Request) => {
   if (!isNonNegInt(body.xpEarned)) {
     return jsonResponse({ error: "xpEarned must be a non-negative integer" }, 400);
   }
+  const isBonus = body.isBonus === true;
+  if (isBonus && body.total !== 1) {
+    return jsonResponse({ error: "A bonus report must describe exactly one question" }, 400);
+  }
 
   const deviceId = body.deviceId;
   const correct = body.correct;
   const total = body.total;
-  const xpEarned = body.xpEarned;
+  // The client's xpEarned is only trusted for a regular session — a
+  // bonus's XP is fixed and decided here, never by what the client sends.
+  const xpEarned = isBonus ? (correct === 1 ? BONUS_XP : 0) : body.xpEarned;
   const category = typeof body.category === "string" && VALID_CATEGORIES.has(body.category)
     ? body.category
     : null;
@@ -131,6 +150,21 @@ Deno.serve(async (req: Request) => {
   const yesterday = new Date(now);
   yesterday.setUTCDate(yesterday.getUTCDate() - 1);
   const yesterdayStr = yesterday.toISOString().slice(0, 10);
+
+  if (isBonus) {
+    const { data: todayRow, error: todayRowError } = await adminClient
+      .from("child_daily_activity")
+      .select("bonus_question_done")
+      .eq("child_id", childId)
+      .eq("activity_date", todayStr)
+      .maybeSingle();
+    if (todayRowError) {
+      return jsonResponse({ error: todayRowError.message }, 500);
+    }
+    if (todayRow?.bonus_question_done) {
+      return jsonResponse({ error: "Bonus question already answered today" }, 409);
+    }
+  }
 
   const prevTotalQuestions = existing?.total_questions_answered ?? 0;
   const prevTotalCorrect = existing?.total_correct_answers ?? 0;
@@ -204,7 +238,7 @@ Deno.serve(async (req: Request) => {
 
   const { data: existingDay, error: existingDayError } = await adminClient
     .from("child_daily_activity")
-    .select("questions_answered, xp_earned")
+    .select("questions_answered, xp_earned, bonus_question_done")
     .eq("child_id", childId)
     .eq("activity_date", todayStr)
     .maybeSingle();
@@ -219,6 +253,7 @@ Deno.serve(async (req: Request) => {
       activity_date: todayStr,
       questions_answered: (existingDay?.questions_answered ?? 0) + total,
       xp_earned: (existingDay?.xp_earned ?? 0) + xpEarned,
+      bonus_question_done: isBonus ? true : (existingDay?.bonus_question_done ?? false),
     },
     { onConflict: "child_id,activity_date" },
   );

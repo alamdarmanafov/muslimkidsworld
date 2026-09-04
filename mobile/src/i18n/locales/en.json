@@ -107,7 +107,9 @@
     "gardenFullBloom": "Your garden is in full bloom!",
     "gardenBlooming": "Your garden is blooming!",
     "gardenGrowing": "Your garden is growing!",
-    "gardenSprouted": "Your garden just sprouted!"
+    "gardenSprouted": "Your garden just sprouted!",
+    "dailyBonus": "🎁 Today's surprise question",
+    "dailyBonusBody": "Answer one question, earn bonus XP!"
   },
   "parentHome": {
     "goodEvening": "Good evening,",
@@ -262,7 +264,11 @@
     "tryNextOne": "Let's try the next one.",
     "correctAnswerWas": "Correct answer: {{answer}}",
     "seeReward": "See Reward",
-    "nextQuestion": "Next Question"
+    "nextQuestion": "Next Question",
+    "bonusTag": "🎁 Surprise question",
+    "finish": "Finish",
+    "bonusDone": "🎁 You earned +{{xp}} XP! A new question comes tomorrow.",
+    "bonusDoneNoXp": "Try again tomorrow! Today's surprise question is done."
   },
   "salah": {
     "title": "Salah",

@@ -4,9 +4,14 @@ import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon, type IconName } from "../../../src/components/icons";
-import { activeChild, dailyJourney, type JourneyItem } from "../../../src/data/mock";
+import { activeChild, dailyJourney, type JourneyItem, type QuizCategory } from "../../../src/data/mock";
 import { fetchChildProgress } from "../../../src/lib/childProgress";
 import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
+
+const BONUS_CATEGORIES: QuizCategory[] = ["din", "riyaziyyat", "yaxsiEmeller", "elm", "xariciDil"];
+function randomBonusCategory(): QuizCategory {
+  return BONUS_CATEGORIES[Math.floor(Math.random() * BONUS_CATEGORIES.length)];
+}
 
 const exploreTiles: { labelKey: string; icon: IconName; bg: string; href: string }[] = [
   { labelKey: "childHome.quran", icon: "book", bg: colors.successDark, href: "/child/quran" },
@@ -42,6 +47,10 @@ export default function ChildHome() {
   const [journey, setJourney] = useState<JourneyItem[]>(dailyJourney);
   const [dailyGoalMinutes, setDailyGoalMinutes] = useState(60);
   const [minutesDone, setMinutesDone] = useState(0);
+  // Hidden until we actually know today's status — showing it by
+  // default and then yanking it away once the real answer loads would
+  // just flicker.
+  const [bonusAvailable, setBonusAvailable] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -51,6 +60,7 @@ export default function ChildHome() {
         setName(result.child.name);
         setXp(result.progress.xp);
         setDailyGoalMinutes(result.dailyLimitMinutes);
+        setBonusAvailable(!result.bonusQuestionDoneToday);
 
         // Real per-item signal for all five, from today's
         // child_daily_activity row: "quiz" from questions_answered
@@ -153,6 +163,22 @@ export default function ChildHome() {
           </View>
         </View>
 
+        {bonusAvailable ? (
+          <Pressable
+            style={styles.bonusCard}
+            onPress={() =>
+              router.push({ pathname: "/child/quiz", params: { category: randomBonusCategory(), bonus: "1" } })
+            }
+          >
+            <Icon name="gift" size={30} color={colors.goldDark} />
+            <View style={{ flex: 1 }}>
+              <Text style={styles.bonusTitle}>{t("childHome.dailyBonus")}</Text>
+              <Text style={styles.bonusSubtitle}>{t("childHome.dailyBonusBody")}</Text>
+            </View>
+            <Icon name="arrowRight" size={16} color={colors.goldDark} />
+          </Pressable>
+        ) : null}
+
         <Text style={styles.sectionTitle}>{t("childHome.explore")}</Text>
         <View style={styles.grid}>
           {exploreTiles.map((tile) => (
@@ -251,6 +277,20 @@ const styles = StyleSheet.create({
   },
   gardenTitle: { fontFamily: fonts.bodyBold, fontSize: 14, color: colors.ink },
   gardenSubtitle: { fontFamily: fonts.body, fontSize: 12, color: colors.inkMuted, marginTop: 2 },
+  bonusCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.md,
+    backgroundColor: "#FFF8E6",
+    borderRadius: radii.lg,
+    borderWidth: 1.5,
+    borderColor: colors.gold,
+    padding: spacing.md,
+    marginBottom: spacing.lg,
+    ...shadow,
+  },
+  bonusTitle: { fontFamily: fonts.bodyBold, fontSize: 14, color: colors.ink },
+  bonusSubtitle: { fontFamily: fonts.body, fontSize: 12, color: colors.inkMuted, marginTop: 2 },
   sectionTitle: {
     fontFamily: fonts.heading,
     fontSize: 16,

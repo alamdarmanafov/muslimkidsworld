@@ -52,6 +52,7 @@ export type DailyActivity = {
   story_done: boolean;
   game_done: boolean;
   minutes_spent: number;
+  bonus_question_done: boolean;
 };
 
 export type ChildProgressResult = {
@@ -62,6 +63,8 @@ export type ChildProgressResult = {
   achievements: string[];
   /** The family's real, parent-set screen-time limit (families.daily_limit_minutes). */
   dailyLimitMinutes: number;
+  /** Whether today's once-a-day bonus question (child/quiz.tsx's ?bonus=1) has already been answered. */
+  bonusQuestionDoneToday: boolean;
 };
 
 /**
@@ -110,11 +113,12 @@ export async function recordQuizResult(
   total: number,
   xpEarned: number,
   category?: string,
+  isBonus?: boolean,
 ): Promise<void> {
   try {
     const deviceId = await getDeviceId();
     const { error } = await getSupabaseClient().functions.invoke("record-quiz-result", {
-      body: { deviceId, correct, total, xpEarned, category },
+      body: { deviceId, correct, total, xpEarned, category, isBonus },
     });
     if (error) {
       const serverMessage = await readServerErrorMessage(error);

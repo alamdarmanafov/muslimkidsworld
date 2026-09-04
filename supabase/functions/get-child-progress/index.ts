@@ -24,8 +24,13 @@
 // constant that could never actually sync between a parent's device
 // and a child's.
 //
+// `bonusQuestionDoneToday` mirrors today's row in `week` (see
+// 0024_daily_bonus_question.sql) — pulled out separately so the child
+// home screen doesn't have to re-derive "today" from the week array
+// itself.
+//
 // Response:
-//   200 { child: {...}, progress: {...}, week: [...], achievements: [...], dailyLimitMinutes: 60 }
+//   200 { child: {...}, progress: {...}, week: [...], achievements: [...], dailyLimitMinutes: 60, bonusQuestionDoneToday: false }
 //   404 { error: "Device is not bound to a family" | "No child found for this family" }
 //   400 { error: "..." }                             — bad request body
 //
@@ -106,6 +111,7 @@ Deno.serve(async (req: Request) => {
   }
 
   const today = new Date();
+  const todayStr = today.toISOString().slice(0, 10);
   const sevenDaysAgo = new Date(today);
   sevenDaysAgo.setUTCDate(sevenDaysAgo.getUTCDate() - 6);
   const sevenDaysAgoStr = sevenDaysAgo.toISOString().slice(0, 10);
@@ -113,7 +119,7 @@ Deno.serve(async (req: Request) => {
   const { data: week, error: weekError } = await adminClient
     .from("child_daily_activity")
     .select(
-      "activity_date, questions_answered, xp_earned, quran_done, dua_done, story_done, game_done, minutes_spent",
+      "activity_date, questions_answered, xp_earned, quran_done, dua_done, story_done, game_done, minutes_spent, bonus_question_done",
     )
     .eq("child_id", child.id)
     .gte("activity_date", sevenDaysAgoStr)
@@ -122,6 +128,9 @@ Deno.serve(async (req: Request) => {
   if (weekError) {
     return jsonResponse({ error: weekError.message }, 500);
   }
+
+  const bonusQuestionDoneToday =
+    week?.find((d) => d.activity_date === todayStr)?.bonus_question_done ?? false;
 
   const { data: family, error: familyError } = await adminClient
     .from("families")
@@ -150,6 +159,7 @@ Deno.serve(async (req: Request) => {
     child,
     achievements: achievementSlugs,
     dailyLimitMinutes: family?.daily_limit_minutes ?? 60,
+    bonusQuestionDoneToday,
     progress: progress ?? {
       child_id: child.id,
       level: 1,

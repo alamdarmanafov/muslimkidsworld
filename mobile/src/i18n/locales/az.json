@@ -107,7 +107,9 @@
     "gardenFullBloom": "Bağçan tam çiçəklənib!",
     "gardenBlooming": "Bağçan çiçəklənir!",
     "gardenGrowing": "Bağçan böyüyür!",
-    "gardenSprouted": "Bağçan indicə cücərdi!"
+    "gardenSprouted": "Bağçan indicə cücərdi!",
+    "dailyBonus": "🎁 Günün sürpriz sualı",
+    "dailyBonusBody": "Bir sual cavabla, əlavə XP qazan!"
   },
   "parentHome": {
     "goodEvening": "Axşamın xeyir,",
@@ -262,7 +264,11 @@
     "tryNextOne": "Növbətini sınayaq.",
     "correctAnswerWas": "Doğru cavab: {{answer}}",
     "seeReward": "Mükafata bax",
-    "nextQuestion": "Növbəti sual"
+    "nextQuestion": "Növbəti sual",
+    "bonusTag": "🎁 Sürpriz sual",
+    "finish": "Bitir",
+    "bonusDone": "🎁 +{{xp}} XP qazandın! Sabah yeni sual gələcək.",
+    "bonusDoneNoXp": "Sabah yenidən sına! Bugünkü sürpriz sual bitdi."
   },
   "salah": {
     "title": "Namaz",

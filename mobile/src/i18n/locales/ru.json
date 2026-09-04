@@ -109,7 +109,9 @@
     "gardenFullBloom": "Твой сад в полном цвету!",
     "gardenBlooming": "Твой сад расцветает!",
     "gardenGrowing": "Твой сад растёт!",
-    "gardenSprouted": "Твой сад только что взошёл!"
+    "gardenSprouted": "Твой сад только что взошёл!",
+    "dailyBonus": "🎁 Сюрприз-вопрос дня",
+    "dailyBonusBody": "Ответь на один вопрос и получи бонусные XP!"
   },
   "parentHome": {
     "goodEvening": "Добрый вечер,",
@@ -264,7 +266,11 @@
     "tryNextOne": "Попробуем следующий.",
     "correctAnswerWas": "Правильный ответ: {{answer}}",
     "seeReward": "Смотреть награду",
-    "nextQuestion": "Следующий вопрос"
+    "nextQuestion": "Следующий вопрос",
+    "bonusTag": "🎁 Сюрприз-вопрос",
+    "finish": "Завершить",
+    "bonusDone": "🎁 Ты заработал +{{xp}} XP! Новый вопрос завтра.",
+    "bonusDoneNoXp": "Попробуй завтра! Сегодняшний сюрприз-вопрос завершён."
   },
   "salah": {
     "title": "Намаз",
