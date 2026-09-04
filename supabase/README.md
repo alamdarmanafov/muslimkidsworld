@@ -70,13 +70,22 @@ supabase/
 │   │                                child_world_visits — makes
 │   │                                book-lover/storyteller/
 │   │                                mosque-visitor awardable
-│   └── 0019_screen_time.sql        families.daily_limit_minutes (a
-│                                    real, shared setting — see its own
-│                                    header comment for why it used to
-│                                    be fake), child_daily_activity.
-│                                    minutes_spent, and a trigger
-│                                    hardening families.pin_hash
-│                                    against direct client writes
+│   ├── 0019_screen_time.sql        families.daily_limit_minutes (a
+│   │                                real, shared setting — see its own
+│   │                                header comment for why it used to
+│   │                                be fake), child_daily_activity.
+│   │                                minutes_spent, and a trigger
+│   │                                hardening families.pin_hash
+│   │                                against direct client writes
+│   ├── 0020_attempt_lockouts.sql   device_lockouts — 3-strikes,
+│   │                                5-minute lockout for verify-parent-pin
+│   │                                and redeem-family-code, both device-
+│   │                                guessable secrets with no other
+│   │                                brute-force protection before this
+│   └── 0021_error_reports.sql      error_reports — own-infrastructure
+│                                    crash/error log (no Sentry account
+│                                    needed), written by report-error and
+│                                    read from the admin panel
 ├── scripts/
 │   └── import-quran.mjs            one-time script, run from a machine
 │                                    with real internet access: pulls
@@ -117,6 +126,10 @@ supabase/
     │                                webhook — re-verifies with Apple
     │                                rather than trusting the payload
     │                                (see its own header comment)
+    ├── report-error/               parent or child app reports a crash/JS
+    │                                error — works with no auth session at
+    │                                all, since a crash can happen before
+    │                                login or device binding
     └── _shared/                    cors.ts, push.ts (Expo push sender),
                                      notifyParents.ts (push to every
                                      parent in a family), resolveChild.ts
@@ -127,7 +140,10 @@ supabase/
                                      record-quiz-result/mark-story-read/
                                      mark-world-visit), appleIap.ts (App
                                      Store Server API calls, shared by
-                                     both Apple IAP functions)
+                                     both Apple IAP functions), lockout.ts
+                                     (shared 3-strikes/5-minute brute-force
+                                     lockout, used by verify-parent-pin and
+                                     redeem-family-code)
 ```
 
 The SQL has been validated by actually running it against a local
@@ -440,11 +456,12 @@ for real queries later is a small diff, not a rewrite.
 `admin/index.html` — a single, dependency-free static file (loads
 `@supabase/supabase-js` from a CDN, no build step) for editing the
 content that's actually live-read from the database today: Quran text
-and translations, and achievements. Duas, Stories, and Quiz content
-still come from `mobile/src/data/mock.ts` + i18n, not these tables
-(see the stub note below), so this deliberately doesn't cover them
-yet — an editor for tables the app doesn't read would just be
-confusing.
+and translations, and achievements, plus a read-only Error Reports tab
+(see report-error above) for reviewing crashes without a third-party
+crash-reporting account. Duas, Stories, and Quiz content still come
+from `mobile/src/data/mock.ts` + i18n, not these tables (see the stub
+note below), so this deliberately doesn't cover them yet — an editor
+for tables the app doesn't read would just be confusing.
 
 1. Run `0015_admin_panel.sql` (already included if you ran `supabase
    db push` per the steps above).

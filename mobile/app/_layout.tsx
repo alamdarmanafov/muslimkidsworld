@@ -9,11 +9,23 @@ import {
   Nunito_700Bold,
   Nunito_800ExtraBold,
 } from "@expo-google-fonts/nunito";
+import { ErrorBoundary } from "../src/components/ErrorBoundary";
 import { ToastHost } from "../src/components/ToastHost";
 import { initI18n } from "../src/i18n";
+import { installGlobalErrorHandler } from "../src/lib/errorReporting";
 import { colors } from "../src/theme/theme";
 
+installGlobalErrorHandler();
+
 export default function RootLayout() {
+  return (
+    <ErrorBoundary>
+      <AppShell />
+    </ErrorBoundary>
+  );
+}
+
+function AppShell() {
   const [fontsLoaded] = useFonts({
     Nunito_400Regular,
     Nunito_700Bold,

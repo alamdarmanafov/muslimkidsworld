@@ -150,6 +150,14 @@
   table.ach-table textarea { min-height: 44px; }
   .muted { color: var(--muted); font-size: 12px; }
   .empty-state { text-align: center; color: var(--muted); padding: 40px; }
+  .report-list { display: flex; flex-direction: column; gap: 10px; }
+  .report-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+  .report-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
+  .report-badge { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: #EEF2FF; color: #4338CA; text-transform: uppercase; }
+  .report-message { font-size: 14px; font-weight: 700; margin: 0 0 4px; }
+  .report-meta { font-size: 12px; color: var(--muted); }
+  .report-stack { margin-top: 8px; font-size: 12px; font-family: ui-monospace, monospace; white-space: pre-wrap; background: #FAFAFC; border: 1px solid var(--border); border-radius: 8px; padding: 8px; max-height: 200px; overflow-y: auto; }
+  details.report-stack-toggle summary { cursor: pointer; font-size: 12px; color: var(--primary); font-weight: 600; }
 </style>
 </head>
 <body>
@@ -277,18 +285,23 @@ function renderApp(supabase) {
 
   const quranPanel = el("div", { class: "panel active", id: "panel-quran" });
   const achPanel = el("div", { class: "panel", id: "panel-ach" });
+  const errorsPanel = el("div", { class: "panel", id: "panel-errors" });
 
   const tabQuran = el("button", { class: "tab-btn active", text: "Quran" });
   const tabAch = el("button", { class: "tab-btn", text: "Nailiyyətlər" });
+  const tabErrors = el("button", { class: "tab-btn", text: "Xəta hesabatları" });
 
   function activateTab(name) {
     tabQuran.classList.toggle("active", name === "quran");
     tabAch.classList.toggle("active", name === "ach");
+    tabErrors.classList.toggle("active", name === "errors");
     quranPanel.classList.toggle("active", name === "quran");
     achPanel.classList.toggle("active", name === "ach");
+    errorsPanel.classList.toggle("active", name === "errors");
   }
   tabQuran.addEventListener("click", () => activateTab("quran"));
   tabAch.addEventListener("click", () => activateTab("ach"));
+  tabErrors.addEventListener("click", () => activateTab("errors"));
 
   const shell = el("div", { class: "app-shell" }, [
     el("header", { class: "topbar" }, [
@@ -298,13 +311,73 @@ function renderApp(supabase) {
         renderLogin(supabase);
       }}),
     ]),
-    el("div", { class: "tabs" }, [tabQuran, tabAch]),
-    el("main", {}, [quranPanel, achPanel]),
+    el("div", { class: "tabs" }, [tabQuran, tabAch, tabErrors]),
+    el("main", {}, [quranPanel, achPanel, errorsPanel]),
   ]);
   root.appendChild(shell);
 
   mountQuranPanel(supabase, quranPanel);
   mountAchievementsPanel(supabase, achPanel);
+  mountErrorReportsPanel(supabase, errorsPanel);
+}
+
+async function mountErrorReportsPanel(supabase, panel) {
+  panel.innerHTML = "";
+  const refreshBtn = el("button", { class: "btn-secondary btn-small", text: "Yenilə" });
+  const list = el("div", { class: "report-list" });
+  panel.appendChild(el("div", { style: "margin-bottom: 12px; display: flex; align-items: center; gap: 10px;" }, [
+    el("span", { class: "muted", text: "Son 200 hesabat, ən yenisi öndə." }),
+    refreshBtn,
+  ]));
+  panel.appendChild(list);
+
+  async function load() {
+    list.innerHTML = "";
+    list.appendChild(el("p", { class: "muted", text: "Yüklənir..." }));
+    const { data, error } = await supabase
+      .from("error_reports")
+      .select("id, source, message, stack, device_id, parent_id, app_version, platform, created_at")
+      .order("created_at", { ascending: false })
+      .limit(200);
+    list.innerHTML = "";
+    if (error) {
+      list.appendChild(el("p", { class: "empty-state", text: "Yüklənmədi: " + error.message }));
+      return;
+    }
+    if (!data || data.length === 0) {
+      list.appendChild(el("p", { class: "empty-state", text: "Heç bir xəta hesabatı yoxdur." }));
+      return;
+    }
+    data.forEach((r) => list.appendChild(errorReportCard(r)));
+  }
+
+  function errorReportCard(r) {
+    const when = new Date(r.created_at).toLocaleString();
+    const metaParts = [when, r.platform, r.app_version ? "v" + r.app_version : null, r.device_id]
+      .filter(Boolean)
+      .join(" · ");
+
+    const children = [
+      el("div", { class: "report-head" }, [
+        el("span", { class: "report-badge", text: r.source }),
+        el("span", { class: "report-meta", text: metaParts }),
+      ]),
+      el("p", { class: "report-message", text: r.message }),
+    ];
+
+    if (r.stack) {
+      const stackPre = el("pre", { class: "report-stack", text: r.stack });
+      children.push(el("details", { class: "report-stack-toggle" }, [
+        el("summary", { text: "Stack trace" }),
+        stackPre,
+      ]));
+    }
+
+    return el("div", { class: "report-card" }, children);
+  }
+
+  refreshBtn.addEventListener("click", load);
+  load();
 }
 
 async function mountQuranPanel(supabase, panel) {
