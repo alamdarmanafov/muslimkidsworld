@@ -12,6 +12,7 @@ import {
 import { BugReportHost } from "../src/components/BugReportHost";
 import { ErrorBoundary } from "../src/components/ErrorBoundary";
 import { OfflineBanner } from "../src/components/OfflineBanner";
+import { PendingSyncHost } from "../src/components/PendingSyncHost";
 import { ToastHost } from "../src/components/ToastHost";
 import { initI18n } from "../src/i18n";
 import { installGlobalErrorHandler } from "../src/lib/errorReporting";
@@ -59,6 +60,7 @@ function AppShell() {
       <ToastHost />
       <OfflineBanner />
       <BugReportHost />
+      <PendingSyncHost />
     </SafeAreaProvider>
   );
 }

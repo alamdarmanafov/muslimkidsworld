@@ -17,7 +17,9 @@
 // crashing. Callers should treat null as "no data available", not
 // distinguish the specific cause.
 
+import i18next from "i18next";
 import { getDeviceId } from "./deviceBinding";
+import { enqueuePendingQuizResult } from "./offlineQueue";
 import { getSupabaseClient } from "./supabase";
 import { toast } from "./toast";
 
@@ -131,9 +133,17 @@ export async function recordQuizResult(
       toast.error(message);
     }
   } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
-    if (__DEV__) console.warn("recordQuizResult failed", message);
-    toast.error(message);
+    // A thrown exception here means the request never reached the
+    // server at all — no connectivity — as opposed to the server
+    // responding with a real rejection (handled above, where retrying
+    // wouldn't help). Queue it locally instead of losing the session's
+    // XP; PendingSyncHost (mounted in app/_layout.tsx) replays the
+    // queue once the device is back online.
+    if (__DEV__) {
+      console.warn("recordQuizResult failed, queuing offline", err instanceof Error ? err.message : String(err));
+    }
+    await enqueuePendingQuizResult({ correct, total, xpEarned, category, isBonus });
+    toast.success(i18next.t("quiz.savedOffline"));
   }
 }
 

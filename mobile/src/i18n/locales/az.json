@@ -270,7 +270,8 @@
     "bonusTag": "🎁 Sürpriz sual",
     "finish": "Bitir",
     "bonusDone": "🎁 +{{xp}} XP qazandın! Sabah yeni sual gələcək.",
-    "bonusDoneNoXp": "Sabah yenidən sına! Bugünkü sürpriz sual bitdi."
+    "bonusDoneNoXp": "Sabah yenidən sına! Bugünkü sürpriz sual bitdi.",
+    "savedOffline": "İnternet yoxdur — nəticən yadda saxlanıldı, qoşulan kimi göndəriləcək."
   },
   "salah": {
     "title": "Namaz",

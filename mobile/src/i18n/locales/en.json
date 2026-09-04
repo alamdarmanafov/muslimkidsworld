@@ -270,7 +270,8 @@
     "bonusTag": "🎁 Surprise question",
     "finish": "Finish",
     "bonusDone": "🎁 You earned +{{xp}} XP! A new question comes tomorrow.",
-    "bonusDoneNoXp": "Try again tomorrow! Today's surprise question is done."
+    "bonusDoneNoXp": "Try again tomorrow! Today's surprise question is done.",
+    "savedOffline": "No internet — your result was saved and will send once you're back online."
   },
   "salah": {
     "title": "Salah",
