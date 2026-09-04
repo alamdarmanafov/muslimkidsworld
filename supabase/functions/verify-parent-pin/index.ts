@@ -21,9 +21,15 @@
 //                                              never "no PIN needed"
 //   404 { error: "Device is not bound to a family" }
 //   400 { error: "..." }
+//   429 { error: "...", locked: true, retryAfterSeconds: number }
+//                                            — 3 wrong PINs in a row;
+//                                              see _shared/lockout.ts
 
 import { createClient } from "npm:@supabase/supabase-js@2.112.4";
 import { corsHeaders, jsonResponse } from "../_shared/cors.ts";
+import { checkLockout, clearLockout, recordFailedAttempt } from "../_shared/lockout.ts";
+
+const LOCKOUT_ACTION = "pin";
 
 type Body = { deviceId?: unknown; pin?: unknown };
 
@@ -76,6 +82,14 @@ Deno.serve(async (req: Request) => {
     auth: { persistSession: false },
   });
 
+  const lockout = await checkLockout(adminClient, deviceId, LOCKOUT_ACTION);
+  if (lockout.locked) {
+    return jsonResponse(
+      { error: "Too many wrong PIN attempts. Try again later.", locked: true, retryAfterSeconds: lockout.retryAfterSeconds },
+      429,
+    );
+  }
+
   const { data: boundCode, error: codeError } = await adminClient
     .from("family_codes")
     .select("family_id")
@@ -104,5 +118,11 @@ Deno.serve(async (req: Request) => {
   }
 
   const submittedHash = await hashPin(pin);
-  return jsonResponse({ valid: submittedHash === family.pin_hash, pinSet: true });
+  const valid = submittedHash === family.pin_hash;
+  if (valid) {
+    await clearLockout(adminClient, deviceId, LOCKOUT_ACTION);
+  } else {
+    await recordFailedAttempt(adminClient, deviceId, LOCKOUT_ACTION);
+  }
+  return jsonResponse({ valid, pinSet: true });
 });

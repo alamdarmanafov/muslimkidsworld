@@ -34,9 +34,16 @@
 //   404 { error: "Invalid or expired code" }
 //   409 { error: "This code is already linked to another device" }
 //   400 { error: "..." }                             — bad request body
+//   429 { error: "...", locked: true, retryAfterSeconds: number }
+//                                            — 3 wrong codes in a row
+//                                              from this device; see
+//                                              _shared/lockout.ts
 
 import { createClient } from "npm:@supabase/supabase-js@2.112.4";
 import { corsHeaders, jsonResponse } from "../_shared/cors.ts";
+import { checkLockout, clearLockout, recordFailedAttempt } from "../_shared/lockout.ts";
+
+const LOCKOUT_ACTION = "code";
 
 type RedeemBody = {
   code?: unknown;
@@ -90,6 +97,14 @@ Deno.serve(async (req: Request) => {
     auth: { persistSession: false },
   });
 
+  const lockout = await checkLockout(adminClient, deviceId, LOCKOUT_ACTION);
+  if (lockout.locked) {
+    return jsonResponse(
+      { error: "Too many wrong codes. Try again later.", locked: true, retryAfterSeconds: lockout.retryAfterSeconds },
+      429,
+    );
+  }
+
   const { data: familyCode, error: lookupError } = await adminClient
     .from("family_codes")
     .select("id, family_id, bound_device_id, expires_at")
@@ -101,6 +116,7 @@ Deno.serve(async (req: Request) => {
     return jsonResponse({ error: lookupError.message }, 500);
   }
   if (!familyCode) {
+    await recordFailedAttempt(adminClient, deviceId, LOCKOUT_ACTION);
     return jsonResponse({ error: "Invalid or expired code" }, 404);
   }
 
@@ -111,6 +127,7 @@ Deno.serve(async (req: Request) => {
   // this is the actual enforcement, not just a UI countdown.
   const isExpired = new Date(familyCode.expires_at).getTime() < Date.now();
   if (isExpired && familyCode.bound_device_id !== deviceId) {
+    await recordFailedAttempt(adminClient, deviceId, LOCKOUT_ACTION);
     return jsonResponse({ error: "Invalid or expired code" }, 404);
   }
 
@@ -159,6 +176,8 @@ Deno.serve(async (req: Request) => {
       }
     }
   }
+
+  await clearLockout(adminClient, deviceId, LOCKOUT_ACTION);
 
   const { data: children, error: childrenError } = await adminClient
     .from("children")

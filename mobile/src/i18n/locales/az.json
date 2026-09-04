@@ -54,7 +54,8 @@
     "invalidOrExpired": "Bu kod uyğun gəlmir və ya vaxtı bitib. Yenidən cəhd et.",
     "alreadyLinked": "Bu kod artıq başqa bir cihaza bağlanıb.",
     "somethingWrong": "Nəsə səhv getdi. Yenidən cəhd et.",
-    "connected": "Qoşuldu! Xoş gəldin 🎉"
+    "connected": "Qoşuldu! Xoş gəldin 🎉",
+    "locked": "Çox sayda səhv cəhd. {{seconds}} saniyə sonra yenidən cəhd et."
   },
   "parentAuth": {
     "signInTitle": "Xoş gəldin",
@@ -139,7 +140,8 @@
     "title": "Valideyn PIN-i daxil et",
     "subtitle": "Valideyndən 4 rəqəmli PIN-i daxil etməsini xahiş et.",
     "wrongPin": "Yanlış PIN, yenidən cəhd et.",
-    "noPinSet": "Valideyn hələ PIN təyin etməyib. Bunu Valideyn tətbiqindən et."
+    "noPinSet": "Valideyn hələ PIN təyin etməyib. Bunu Valideyn tətbiqindən et.",
+    "locked": "Çox sayda səhv cəhd. {{seconds}} saniyə sonra yenidən cəhd et."
   },
   "dailyLimit": {
     "title": "Gündəlik öyrənmə limiti",

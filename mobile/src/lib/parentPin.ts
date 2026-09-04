@@ -23,7 +23,13 @@ export async function setParentPin(pin: string): Promise<boolean> {
   }
 }
 
-export type VerifyParentPinResult = { valid: boolean; pinSet: boolean };
+export type VerifyParentPinResult = {
+  valid: boolean;
+  pinSet: boolean;
+  /** Set when 3 wrong PINs in a row have temporarily locked this device out — see verify-parent-pin. */
+  locked?: boolean;
+  retryAfterSeconds?: number;
+};
 
 /**
  * Checks a PIN typed on a child's device against its family's real
@@ -38,7 +44,21 @@ export async function verifyParentPin(pin: string): Promise<VerifyParentPinResul
       "verify-parent-pin",
       { body: { deviceId, pin } },
     );
-    if (error || !data) return { valid: false, pinSet: false };
+    if (error) {
+      const context = (error as { context?: Response } | null)?.context;
+      if (context && typeof context.json === "function") {
+        try {
+          const body = await context.json();
+          if (body?.locked) {
+            return { valid: false, pinSet: true, locked: true, retryAfterSeconds: body.retryAfterSeconds };
+          }
+        } catch {
+          // fall through
+        }
+      }
+      return { valid: false, pinSet: false };
+    }
+    if (!data) return { valid: false, pinSet: false };
     return data;
   } catch {
     return { valid: false, pinSet: false };

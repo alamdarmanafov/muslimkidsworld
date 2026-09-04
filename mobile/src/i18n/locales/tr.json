@@ -54,7 +54,8 @@
     "invalidOrExpired": "Bu kod eşleşmiyor veya süresi doldu. Tekrar dene.",
     "alreadyLinked": "Bu kod zaten başka bir cihaza bağlı.",
     "somethingWrong": "Bir şeyler ters gitti. Tekrar dene.",
-    "connected": "Bağlandı! Hoş geldin 🎉"
+    "connected": "Bağlandı! Hoş geldin 🎉",
+    "locked": "Çok fazla yanlış deneme. {{seconds}} saniye sonra tekrar dene."
   },
   "parentAuth": {
     "signInTitle": "Tekrar hoş geldin",
@@ -139,7 +140,8 @@
     "title": "Ebeveyn PIN'ini gir",
     "subtitle": "Bir ebeveynden 4 haneli PIN'i girmesini iste.",
     "wrongPin": "Yanlış PIN, tekrar dene.",
-    "noPinSet": "Ebeveyn henüz PIN belirlemedi. Bunu Ebeveyn uygulamasından yap."
+    "noPinSet": "Ebeveyn henüz PIN belirlemedi. Bunu Ebeveyn uygulamasından yap.",
+    "locked": "Çok fazla yanlış deneme. {{seconds}} saniye sonra tekrar dene."
   },
   "dailyLimit": {
     "title": "Günlük öğrenme sınırı",

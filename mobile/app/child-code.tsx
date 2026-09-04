@@ -14,12 +14,13 @@ const SERVER_ERROR_KEYS: Record<string, string> = {
   "This code is already linked to another device": "childCode.alreadyLinked",
 };
 
-async function readServerErrorMessage(error: unknown): Promise<string | null> {
+type ServerErrorBody = { error?: string; locked?: boolean; retryAfterSeconds?: number };
+
+async function readServerErrorBody(error: unknown): Promise<ServerErrorBody | null> {
   const context = (error as { context?: Response } | null)?.context;
   if (context && typeof context.json === "function") {
     try {
-      const body = await context.json();
-      if (typeof body?.error === "string") return body.error;
+      return await context.json();
     } catch {
       // fall through
     }
@@ -43,9 +44,12 @@ export default function ChildCode() {
         { body: { code, deviceId } },
       );
       if (fnError) {
-        const serverMessage = await readServerErrorMessage(fnError);
-        const key = serverMessage ? SERVER_ERROR_KEYS[serverMessage] : undefined;
-        const message = key ? t(key) : t("childCode.somethingWrong");
+        const body = await readServerErrorBody(fnError);
+        const message = body?.locked
+          ? t("childCode.locked", { seconds: body.retryAfterSeconds ?? 300 })
+          : body?.error && SERVER_ERROR_KEYS[body.error]
+            ? t(SERVER_ERROR_KEYS[body.error])
+            : t("childCode.somethingWrong");
         setError(message);
         toast.error(message);
         return;

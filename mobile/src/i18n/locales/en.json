@@ -54,7 +54,8 @@
     "invalidOrExpired": "That code doesn't match or has expired. Try again.",
     "alreadyLinked": "This code is already linked to another device.",
     "somethingWrong": "Something went wrong. Try again.",
-    "connected": "Connected! Welcome 🎉"
+    "connected": "Connected! Welcome 🎉",
+    "locked": "Too many wrong attempts. Try again in {{seconds}} seconds."
   },
   "parentAuth": {
     "signInTitle": "Welcome back",
@@ -139,7 +140,8 @@
     "title": "Enter Parent PIN",
     "subtitle": "Ask a parent to enter their 4-digit PIN.",
     "wrongPin": "Wrong PIN, try again.",
-    "noPinSet": "A parent hasn't set a PIN yet. Do this from the Parent app."
+    "noPinSet": "A parent hasn't set a PIN yet. Do this from the Parent app.",
+    "locked": "Too many wrong attempts. Try again in {{seconds}} seconds."
   },
   "dailyLimit": {
     "title": "Daily Learning Limit",

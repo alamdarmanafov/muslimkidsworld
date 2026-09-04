@@ -16,17 +16,23 @@ export default function ParentPin() {
   const [error, setError] = useState(false);
   const [noPinSet, setNoPinSet] = useState(false);
   const [checking, setChecking] = useState(false);
+  const [lockedSecondsLeft, setLockedSecondsLeft] = useState(0);
   const resetTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (digits.length < PIN_LENGTH) return;
     let cancelled = false;
     setChecking(true);
-    verifyParentPin(digits).then(({ valid, pinSet }) => {
+    verifyParentPin(digits).then(({ valid, pinSet, locked, retryAfterSeconds }) => {
       if (cancelled) return;
       setChecking(false);
       if (valid) {
         router.replace("/parent");
+        return;
+      }
+      if (locked) {
+        setDigits("");
+        setLockedSecondsLeft(retryAfterSeconds ?? 300);
         return;
       }
       setError(true);
@@ -47,8 +53,18 @@ export default function ParentPin() {
     };
   }, []);
 
+  useEffect(() => {
+    if (lockedSecondsLeft <= 0) return;
+    const interval = setInterval(() => {
+      setLockedSecondsLeft((s) => Math.max(0, s - 1));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [lockedSecondsLeft]);
+
+  const locked = lockedSecondsLeft > 0;
+
   const press = (key: string) => {
-    if (key === "" || error || checking) return;
+    if (key === "" || error || checking || locked) return;
     if (key === "back") {
       setDigits((d) => d.slice(0, -1));
       return;
@@ -69,14 +85,18 @@ export default function ParentPin() {
 
         <PinDots length={PIN_LENGTH} filled={digits.length} error={error} />
         {checking ? <ActivityIndicator color={colors.gold} style={{ marginTop: spacing.sm }} /> : null}
-        {error ? (
+        {locked ? (
+          <Text style={styles.errorText}>
+            {t("parentPin.locked", { seconds: lockedSecondsLeft })}
+          </Text>
+        ) : error ? (
           <Text style={styles.errorText}>
             {noPinSet ? t("parentPin.noPinSet") : t("parentPin.wrongPin")}
           </Text>
         ) : null}
       </View>
 
-      <PinKeypad onPress={press} disabled={error || checking} />
+      <PinKeypad onPress={press} disabled={error || checking || locked} />
     </SafeAreaView>
   );
 }
