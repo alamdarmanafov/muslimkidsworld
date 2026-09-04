@@ -20,6 +20,7 @@ export type ParentChild = {
   accuracy: number;
   level: number;
   streak: number;
+  xp: number;
 };
 
 /**
@@ -43,7 +44,7 @@ export async function fetchChildren(): Promise<ParentChild[] | null> {
 
     const { data: progressRows } = await supabase
       .from("child_progress")
-      .select("child_id, accuracy, level, streak")
+      .select("child_id, accuracy, level, streak, xp")
       .in(
         "child_id",
         rows.map((r) => r.id),
@@ -57,6 +58,7 @@ export async function fetchChildren(): Promise<ParentChild[] | null> {
         accuracy: progress?.accuracy ?? 0,
         level: progress?.level ?? 1,
         streak: progress?.streak ?? 0,
+        xp: progress?.xp ?? 0,
       };
     });
   } catch {

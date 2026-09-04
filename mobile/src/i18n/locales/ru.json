@@ -315,6 +315,8 @@
     "title": "Мои дети",
     "slots": "{{used}}/{{max}} мест",
     "yearsOld": "{{age}} лет",
+    "leaderboardTitle": "🏆 Семейный рейтинг",
+    "leaderboardXp": "{{xp}} XP",
     "addChild": "Добавить ребёнка",
     "noSlotsAvailable": "Нет свободных мест для ребёнка",
     "emptyTitle": "Пока нет детей",

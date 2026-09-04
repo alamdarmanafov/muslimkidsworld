@@ -10,9 +10,10 @@ import { Icon } from "../../../src/components/icons";
 import { ProgressRing } from "../../../src/components/ProgressRing";
 import { deleteChild, fetchChildren, type ParentChild } from "../../../src/lib/children";
 import { toast } from "../../../src/lib/toast";
-import { colors, spacing } from "../../../src/theme/theme";
+import { colors, fonts, spacing } from "../../../src/theme/theme";
 
 const MAX_SLOTS = 3;
+const RANK_MEDALS = ["🥇", "🥈", "🥉"];
 
 export default function Children() {
   const { t } = useTranslation();
@@ -75,6 +76,23 @@ export default function Children() {
         </View>
       ) : (
         <ScrollView contentContainerStyle={styles.list}>
+          {children.length > 1 ? (
+            <Card style={styles.leaderboardCard}>
+              <Text style={styles.leaderboardTitle}>{t("parentChildren.leaderboardTitle")}</Text>
+              {[...children]
+                .sort((a, b) => b.xp - a.xp)
+                .map((child, i) => (
+                  <View key={child.id} style={styles.leaderboardRow}>
+                    <Text style={styles.leaderboardRank}>{RANK_MEDALS[i] ?? `${i + 1}.`}</Text>
+                    <Avatar emoji={child.emoji} color={child.color} size={32} />
+                    <Text style={styles.leaderboardName}>{child.name}</Text>
+                    <Text style={styles.leaderboardXp}>
+                      {t("parentChildren.leaderboardXp", { xp: child.xp })}
+                    </Text>
+                  </View>
+                ))}
+            </Card>
+          ) : null}
           {children.map((child) => (
             <Pressable key={child.id} onPress={() => handleDelete(child)}>
               <Card style={styles.row}>
@@ -127,6 +145,12 @@ const styles = StyleSheet.create({
   title: { fontSize: 22, fontWeight: "800", color: colors.ink },
   slots: { fontSize: 13, color: colors.inkMuted, fontWeight: "600" },
   list: { padding: spacing.lg, gap: spacing.md },
+  leaderboardCard: { gap: spacing.sm },
+  leaderboardTitle: { fontFamily: fonts.heading, fontSize: 14, color: colors.ink, marginBottom: spacing.xs },
+  leaderboardRow: { flexDirection: "row", alignItems: "center", gap: spacing.sm },
+  leaderboardRank: { width: 26, fontSize: 16, textAlign: "center" },
+  leaderboardName: { flex: 1, fontFamily: fonts.bodyBold, fontSize: 14, color: colors.ink },
+  leaderboardXp: { fontFamily: fonts.bodyBold, fontSize: 13, color: colors.goldDark },
   syncBtn: { padding: spacing.xs },
   row: {
     flexDirection: "row",

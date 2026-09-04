@@ -307,6 +307,8 @@
     "title": "Uşaqlarım",
     "slots": "{{used}}/{{max}} yer",
     "yearsOld": "{{age}} yaşında",
+    "leaderboardTitle": "🏆 Ailə reytinqi",
+    "leaderboardXp": "{{xp}} XP",
     "addChild": "Uşaq əlavə et",
     "noSlotsAvailable": "Uşaq üçün yer qalmayıb",
     "emptyTitle": "Hələ uşaq yoxdur",

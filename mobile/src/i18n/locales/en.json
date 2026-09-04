@@ -307,6 +307,8 @@
     "title": "My Children",
     "slots": "{{used}}/{{max}} slots",
     "yearsOld": "{{age}} years old",
+    "leaderboardTitle": "🏆 Family leaderboard",
+    "leaderboardXp": "{{xp}} XP",
     "addChild": "Add Child",
     "noSlotsAvailable": "No child slots available",
     "emptyTitle": "No children yet",

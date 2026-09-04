@@ -307,6 +307,8 @@
     "title": "Çocuklarım",
     "slots": "{{used}}/{{max}} kontenjan",
     "yearsOld": "{{age}} yaşında",
+    "leaderboardTitle": "🏆 Aile sıralaması",
+    "leaderboardXp": "{{xp}} XP",
     "addChild": "Çocuk Ekle",
     "noSlotsAvailable": "Boş çocuk kontenjanı yok",
     "emptyTitle": "Henüz çocuk yok",
