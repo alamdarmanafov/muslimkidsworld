@@ -5460,105 +5460,6 @@ export const latestReward: Reward = {
   unlockLevel: 12,
 };
 
-export type DuaCategory = "Morning" | "Evening" | "Sleep" | "Eat";
-
-export type Dua = {
-  id: string;
-  category: DuaCategory;
-  arabic: string;
-  transliteration: string;
-};
-
-export const duas: Dua[] = [
-  {
-    id: "morning",
-    category: "Morning",
-    arabic: "اللَّهُمَّ بِكَ أَصْبَحْنَا وَبِكَ أَمْسَيْنَا",
-    transliteration: "Allahumma bika asbahna wa bika amsaina",
-  },
-  {
-    id: "morning2",
-    category: "Morning",
-    arabic: "الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ",
-    transliteration: "Alhamdu lillahil-ladhi ahyana ba'da ma amatana wa ilayhin-nushur",
-  },
-  {
-    id: "morning3",
-    category: "Morning",
-    arabic: "رَبِّ زِدْنِي عِلْمًا",
-    transliteration: "Rabbi zidni ilma",
-  },
-  {
-    id: "evening",
-    category: "Evening",
-    arabic: "اللَّهُمَّ بِكَ أَمْسَيْنَا وَبِكَ أَصْبَحْنَا",
-    transliteration: "Allahumma bika amsaina wa bika asbahna",
-  },
-  {
-    id: "evening2",
-    category: "Evening",
-    arabic: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ",
-    transliteration: "A'udhu bikalimatillahit-tammati min sharri ma khalaq",
-  },
-  {
-    id: "evening3",
-    category: "Evening",
-    arabic: "رَبِّ أَوْزِعْنِي أَنْ أَشْكُرَ نِعْمَتَكَ",
-    transliteration: "Rabbi awzi'ni an ashkura ni'mataka",
-  },
-  {
-    id: "sleep",
-    category: "Sleep",
-    arabic: "بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا",
-    transliteration: "Bismika Allahumma amutu wa ahya",
-  },
-  {
-    id: "sleep2",
-    category: "Sleep",
-    arabic: "اللَّهُمَّ قِنِي عَذَابَكَ يَوْمَ تَبْعَثُ عِبَادَكَ",
-    transliteration: "Allahumma qini adhabaka yawma tab'athu 'ibadak",
-  },
-  {
-    id: "sleep3",
-    category: "Sleep",
-    arabic: "بِاسْمِكَ رَبِّي وَضَعْتُ جَنْبِي وَبِكَ أَرْفَعُهُ",
-    transliteration: "Bismika rabbi wada'tu janbi wa bika arfa'uh",
-  },
-  {
-    id: "eat",
-    category: "Eat",
-    arabic: "بِسْمِ اللَّهِ",
-    transliteration: "Bismillah",
-  },
-  {
-    id: "eat2",
-    category: "Eat",
-    arabic: "الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِينَ",
-    transliteration: "Alhamdu lillahil-ladhi at'amana wa saqana wa ja'alana muslimeen",
-  },
-  {
-    id: "eat3",
-    category: "Eat",
-    arabic: "بِسْمِ اللَّهِ أَوَّلَهُ وَآخِرَهُ",
-    transliteration: "Bismillahi awwalahu wa akhirahu",
-  },
-];
-
-export type Story = {
-  id: string;
-  icon: IconName;
-  tone: IconBadgeTone;
-  locked: boolean;
-};
-
-export const stories: Story[] = [
-  { id: "yunus", icon: "globe", tone: tones.blue, locked: false },
-  { id: "ibrahim", icon: "mosque", tone: tones.gold, locked: false },
-  { id: "nuh", icon: "shield", tone: tones.green, locked: false },
-  { id: "musa", icon: "star", tone: tones.teal, locked: true },
-  { id: "yusuf", icon: "crown", tone: tones.purple, locked: true },
-];
-
 export type WorldSite = {
   id: string;
   icon: IconName;
@@ -5566,9 +5467,10 @@ export type WorldSite = {
 };
 
 // Content (name/fact) lives in i18n under content.worldSites.<id>, same
-// deliberate mock.ts+i18n pattern as Stories/Dua/Quiz (see
-// supabase/README.md) — not a content table, since nothing else in
-// this feature is admin-editable either. `id` doubles as the
+// deliberate mock.ts+i18n pattern Stories/Dua used to follow before
+// 0029_dua_story_content.sql moved them into the database (see
+// supabase/README.md) — World stays a mock.ts+i18n pair since it's
+// not admin-editable either. `id` doubles as the
 // `worldSlug` mark-world-visit expects and mosque-visitor's criteria
 // checks against ({"type":"world_visited","world":"mosque"},
 // 0008_achievement_criteria.sql) — keep the two lists in sync if a

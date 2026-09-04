@@ -280,9 +280,10 @@ async function checkAdminAndRender(supabase) {
 }
 
 // ---------------------------------------------------------------------
-// Step 3: the admin app itself — Quran text/translations and
-// achievements, the two content types actually read from the
-// database today (see 0015_admin_panel.sql's header comment).
+// Step 3: the admin app itself — Quran text/translations, Dua,
+// Stories, and Achievements, the content types actually read from
+// the database today (see 0015_admin_panel.sql and
+// 0029_dua_story_content.sql's header comments).
 // ---------------------------------------------------------------------
 const LANGS = [
   { code: "az", label: "Azərbaycan" },
@@ -295,26 +296,36 @@ function renderApp(supabase) {
   root.innerHTML = "";
 
   const quranPanel = el("div", { class: "panel active", id: "panel-quran" });
+  const duaPanel = el("div", { class: "panel", id: "panel-dua" });
+  const storiesPanel = el("div", { class: "panel", id: "panel-stories" });
   const achPanel = el("div", { class: "panel", id: "panel-ach" });
   const errorsPanel = el("div", { class: "panel", id: "panel-errors" });
   const contactPanel = el("div", { class: "panel", id: "panel-contact" });
 
   const tabQuran = el("button", { class: "tab-btn active", text: "Quran" });
+  const tabDua = el("button", { class: "tab-btn", text: "Dualar" });
+  const tabStories = el("button", { class: "tab-btn", text: "Hekayələr" });
   const tabAch = el("button", { class: "tab-btn", text: "Nailiyyətlər" });
   const tabErrors = el("button", { class: "tab-btn", text: "Xəta hesabatları" });
   const tabContact = el("button", { class: "tab-btn", text: "Mesajlar" });
 
   function activateTab(name) {
     tabQuran.classList.toggle("active", name === "quran");
+    tabDua.classList.toggle("active", name === "dua");
+    tabStories.classList.toggle("active", name === "stories");
     tabAch.classList.toggle("active", name === "ach");
     tabErrors.classList.toggle("active", name === "errors");
     tabContact.classList.toggle("active", name === "contact");
     quranPanel.classList.toggle("active", name === "quran");
+    duaPanel.classList.toggle("active", name === "dua");
+    storiesPanel.classList.toggle("active", name === "stories");
     achPanel.classList.toggle("active", name === "ach");
     errorsPanel.classList.toggle("active", name === "errors");
     contactPanel.classList.toggle("active", name === "contact");
   }
   tabQuran.addEventListener("click", () => activateTab("quran"));
+  tabDua.addEventListener("click", () => activateTab("dua"));
+  tabStories.addEventListener("click", () => activateTab("stories"));
   tabAch.addEventListener("click", () => activateTab("ach"));
   tabErrors.addEventListener("click", () => activateTab("errors"));
   tabContact.addEventListener("click", () => activateTab("contact"));
@@ -327,12 +338,14 @@ function renderApp(supabase) {
         renderLogin(supabase);
       }}),
     ]),
-    el("div", { class: "tabs" }, [tabQuran, tabAch, tabErrors, tabContact]),
-    el("main", {}, [quranPanel, achPanel, errorsPanel, contactPanel]),
+    el("div", { class: "tabs" }, [tabQuran, tabDua, tabStories, tabAch, tabErrors, tabContact]),
+    el("main", {}, [quranPanel, duaPanel, storiesPanel, achPanel, errorsPanel, contactPanel]),
   ]);
   root.appendChild(shell);
 
   mountQuranPanel(supabase, quranPanel);
+  mountDuaPanel(supabase, duaPanel);
+  mountStoriesPanel(supabase, storiesPanel);
   mountAchievementsPanel(supabase, achPanel);
   mountErrorReportsPanel(supabase, errorsPanel);
   mountContactPanel(supabase, contactPanel);
@@ -604,6 +617,287 @@ async function loadSurahDetail(supabase, detailEl, surah) {
   ]));
   detailEl.appendChild(versesList);
   renderVerses(langSelect.value);
+}
+
+// ---------------------------------------------------------------------
+// Dua panel — mirrors mountQuranPanel/loadSurahDetail's list+detail
+// layout: base fields (category/arabic/transliteration) are language-
+// independent and save straight to `duas`; title/meaning are per-
+// language and save to `dua_translations` (0029_dua_story_content.sql).
+// ---------------------------------------------------------------------
+async function mountDuaPanel(supabase, panel) {
+  panel.innerHTML = "";
+  const listEl = el("div", {});
+  const detailEl = el("div", { class: "verses-card" }, [el("p", { class: "empty-state", text: "Soldan bir dua seç." })]);
+
+  panel.appendChild(el("div", { class: "quran-layout" }, [
+    el("div", { class: "surah-list" }, [listEl]),
+    detailEl,
+  ]));
+
+  const { data: duas, error } = await supabase
+    .from("duas")
+    .select("id, slug, category, arabic, transliteration")
+    .order("sort_order", { ascending: true });
+
+  if (error) {
+    listEl.appendChild(el("p", { class: "empty-state", text: "Yüklənmədi: " + error.message }));
+    return;
+  }
+
+  let activeSlug = null;
+
+  function renderList() {
+    listEl.innerHTML = "";
+    (duas || []).forEach((d) => {
+      const row = el("div", { class: "surah-row" + (d.slug === activeSlug ? " active" : "") }, [
+        el("span", { text: d.category }),
+        el("span", { text: d.slug }),
+      ]);
+      row.addEventListener("click", () => {
+        activeSlug = d.slug;
+        renderList();
+        loadDuaDetail(supabase, detailEl, d);
+      });
+      listEl.appendChild(row);
+    });
+  }
+  renderList();
+}
+
+async function loadDuaDetail(supabase, detailEl, dua) {
+  detailEl.innerHTML = "";
+  detailEl.appendChild(el("p", { class: "muted", text: "Yüklənir..." }));
+
+  const langSelect = el("select", {});
+  LANGS.forEach((l) => langSelect.appendChild(el("option", { value: l.code, text: l.label })));
+
+  const { data: translations, error } = await supabase
+    .from("dua_translations")
+    .select("lang, title, meaning")
+    .eq("dua_id", dua.id);
+
+  detailEl.innerHTML = "";
+  if (error) {
+    detailEl.appendChild(el("p", { class: "empty-state", text: "Yüklənmədi: " + error.message }));
+    return;
+  }
+
+  const arabicArea = el("textarea", { dir: "rtl", rows: "2" });
+  arabicArea.value = dua.arabic;
+  const transliterationArea = el("textarea", { rows: "2" });
+  transliterationArea.value = dua.transliteration;
+  const baseSavedTag = el("span", { class: "saved-tag", text: "✓ Saxlanıldı" });
+  const baseSaveBtn = el("button", { class: "btn-secondary btn-small", text: "Ərəbcə/transliterasiyanı saxla", onClick: async () => {
+    baseSaveBtn.disabled = true;
+    const { error: e } = await supabase.from("duas").update({
+      arabic: arabicArea.value,
+      transliteration: transliterationArea.value,
+    }).eq("id", dua.id);
+    baseSaveBtn.disabled = false;
+    if (e) { alert("Xəta: " + e.message); return; }
+    baseSavedTag.classList.add("show");
+    setTimeout(() => baseSavedTag.classList.remove("show"), 1500);
+  }});
+
+  function translationFor(lang) {
+    const row = (translations || []).find((t) => t.lang === lang);
+    return row || { title: "", meaning: "" };
+  }
+
+  const titleInput = el("input", {});
+  const meaningArea = el("textarea", { rows: "3" });
+  const langSavedTag = el("span", { class: "saved-tag", text: "✓ Saxlanıldı" });
+
+  function renderLang(lang) {
+    const t = translationFor(lang);
+    titleInput.value = t.title;
+    meaningArea.value = t.meaning;
+  }
+
+  const langSaveBtn = el("button", { class: "btn-secondary btn-small", text: "Bu dildə saxla", onClick: async () => {
+    langSaveBtn.disabled = true;
+    const { error: e } = await supabase.from("dua_translations").upsert(
+      { dua_id: dua.id, lang: langSelect.value, title: titleInput.value.trim(), meaning: meaningArea.value.trim() },
+      { onConflict: "dua_id,lang" },
+    );
+    langSaveBtn.disabled = false;
+    if (e) { alert("Xəta: " + e.message); return; }
+    langSavedTag.classList.add("show");
+    setTimeout(() => langSavedTag.classList.remove("show"), 1500);
+  }});
+
+  langSelect.addEventListener("change", () => renderLang(langSelect.value));
+
+  detailEl.appendChild(el("div", { class: "verses-toolbar" }, [
+    el("strong", { text: dua.slug + " (" + dua.category + ")" }),
+  ]));
+  detailEl.appendChild(el("div", { class: "verse-row" }, [
+    el("div", { class: "verse-num", text: "AR" }),
+    el("div", { class: "verse-fields" }, [
+      arabicArea,
+      transliterationArea,
+      el("div", { class: "verse-actions" }, [baseSaveBtn, baseSavedTag]),
+    ]),
+  ]));
+  detailEl.appendChild(el("div", { class: "verses-toolbar" }, [
+    el("span", { class: "muted", text: "Tərcümə dili:" }),
+    langSelect,
+  ]));
+  detailEl.appendChild(el("div", { class: "verse-row" }, [
+    el("div", { class: "verse-num", text: "LG" }),
+    el("div", { class: "verse-fields" }, [
+      titleInput,
+      meaningArea,
+      el("div", { class: "verse-actions" }, [langSaveBtn, langSavedTag]),
+    ]),
+  ]));
+  renderLang(langSelect.value);
+}
+
+// ---------------------------------------------------------------------
+// Stories panel — same list+detail shape as Dua/Quran. Base fields
+// (icon/unlock_level) are language-independent and save straight to
+// `stories`; title/subtitle/paragraphs are per-language and save to
+// `story_translations` (0029_dua_story_content.sql). Paragraphs are
+// edited as one paragraph per line and split back into a JSON array
+// on save.
+// ---------------------------------------------------------------------
+async function mountStoriesPanel(supabase, panel) {
+  panel.innerHTML = "";
+  const listEl = el("div", {});
+  const detailEl = el("div", { class: "verses-card" }, [el("p", { class: "empty-state", text: "Soldan bir hekayə seç." })]);
+
+  panel.appendChild(el("div", { class: "quran-layout" }, [
+    el("div", { class: "surah-list" }, [listEl]),
+    detailEl,
+  ]));
+
+  const { data: stories, error } = await supabase
+    .from("stories")
+    .select("id, slug, icon, unlock_level")
+    .order("sort_order", { ascending: true });
+
+  if (error) {
+    listEl.appendChild(el("p", { class: "empty-state", text: "Yüklənmədi: " + error.message }));
+    return;
+  }
+
+  let activeSlug = null;
+
+  function renderList() {
+    listEl.innerHTML = "";
+    (stories || []).forEach((s) => {
+      const row = el("div", { class: "surah-row" + (s.slug === activeSlug ? " active" : "") }, [
+        el("span", { text: s.slug }),
+      ]);
+      row.addEventListener("click", () => {
+        activeSlug = s.slug;
+        renderList();
+        loadStoryDetail(supabase, detailEl, s);
+      });
+      listEl.appendChild(row);
+    });
+  }
+  renderList();
+}
+
+async function loadStoryDetail(supabase, detailEl, story) {
+  detailEl.innerHTML = "";
+  detailEl.appendChild(el("p", { class: "muted", text: "Yüklənir..." }));
+
+  const langSelect = el("select", {});
+  LANGS.forEach((l) => langSelect.appendChild(el("option", { value: l.code, text: l.label })));
+
+  const { data: translations, error } = await supabase
+    .from("story_translations")
+    .select("lang, title, subtitle, paragraphs")
+    .eq("story_id", story.id);
+
+  detailEl.innerHTML = "";
+  if (error) {
+    detailEl.appendChild(el("p", { class: "empty-state", text: "Yüklənmədi: " + error.message }));
+    return;
+  }
+
+  const iconInput = el("input", {});
+  iconInput.value = story.icon;
+  const unlockInput = el("input", { type: "number" });
+  unlockInput.value = story.unlock_level;
+  const baseSavedTag = el("span", { class: "saved-tag", text: "✓ Saxlanıldı" });
+  const baseSaveBtn = el("button", { class: "btn-secondary btn-small", text: "İkon/səviyyəni saxla", onClick: async () => {
+    baseSaveBtn.disabled = true;
+    const { error: e } = await supabase.from("stories").update({
+      icon: iconInput.value.trim(),
+      unlock_level: Number(unlockInput.value) || 1,
+    }).eq("id", story.id);
+    baseSaveBtn.disabled = false;
+    if (e) { alert("Xəta: " + e.message); return; }
+    baseSavedTag.classList.add("show");
+    setTimeout(() => baseSavedTag.classList.remove("show"), 1500);
+  }});
+
+  function translationFor(lang) {
+    const row = (translations || []).find((t) => t.lang === lang);
+    return row || { title: "", subtitle: "", paragraphs: [] };
+  }
+
+  const titleInput = el("input", {});
+  const subtitleInput = el("input", {});
+  const paragraphsArea = el("textarea", { rows: "8" });
+  const langSavedTag = el("span", { class: "saved-tag", text: "✓ Saxlanıldı" });
+
+  function renderLang(lang) {
+    const t = translationFor(lang);
+    titleInput.value = t.title;
+    subtitleInput.value = t.subtitle;
+    paragraphsArea.value = (t.paragraphs || []).join("\n\n");
+  }
+
+  const langSaveBtn = el("button", { class: "btn-secondary btn-small", text: "Bu dildə saxla", onClick: async () => {
+    const paragraphs = paragraphsArea.value.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
+    if (paragraphs.length === 0) { alert("Ən azı bir paraqraf lazımdır."); return; }
+    langSaveBtn.disabled = true;
+    const { error: e } = await supabase.from("story_translations").upsert(
+      { story_id: story.id, lang: langSelect.value, title: titleInput.value.trim(), subtitle: subtitleInput.value.trim(), paragraphs },
+      { onConflict: "story_id,lang" },
+    );
+    langSaveBtn.disabled = false;
+    if (e) { alert("Xəta: " + e.message); return; }
+    langSavedTag.classList.add("show");
+    setTimeout(() => langSavedTag.classList.remove("show"), 1500);
+  }});
+
+  langSelect.addEventListener("change", () => renderLang(langSelect.value));
+
+  detailEl.appendChild(el("div", { class: "verses-toolbar" }, [
+    el("strong", { text: story.slug }),
+  ]));
+  detailEl.appendChild(el("div", { class: "verse-row" }, [
+    el("div", { class: "verse-num", text: "⚙" }),
+    el("div", { class: "verse-fields" }, [
+      el("label", { class: "muted", text: "İkon adı (mobile/src/components/icons.tsx)" }),
+      iconInput,
+      el("label", { class: "muted", text: "Açılma səviyyəsi (unlock_level)" }),
+      unlockInput,
+      el("div", { class: "verse-actions" }, [baseSaveBtn, baseSavedTag]),
+    ]),
+  ]));
+  detailEl.appendChild(el("div", { class: "verses-toolbar" }, [
+    el("span", { class: "muted", text: "Tərcümə dili:" }),
+    langSelect,
+  ]));
+  detailEl.appendChild(el("div", { class: "verse-row" }, [
+    el("div", { class: "verse-num", text: "LG" }),
+    el("div", { class: "verse-fields" }, [
+      titleInput,
+      subtitleInput,
+      el("label", { class: "muted", text: "Paraqraflar (hər paraqraf arasında boş sətir)" }),
+      paragraphsArea,
+      el("div", { class: "verse-actions" }, [langSaveBtn, langSavedTag]),
+    ]),
+  ]));
+  renderLang(langSelect.value);
 }
 
 async function mountAchievementsPanel(supabase, panel) {

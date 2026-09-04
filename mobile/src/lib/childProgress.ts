@@ -161,7 +161,7 @@ export async function markJourneyItem(item: "quran" | "dua" | "story" | "game"):
 }
 
 /**
- * Records that a child opened a specific story (by mock.ts Story.id) —
+ * Records that a child opened a specific story (by stories.slug) —
  * separate from markJourneyItem("story"), which only flips today's
  * done flag and has no memory of *which* story. This is what lets
  * book-lover/storyteller ever actually be earned. Fails silently, same

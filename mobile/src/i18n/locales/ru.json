@@ -232,11 +232,13 @@
     "categoryMorning": "Утро",
     "categoryEvening": "Вечер",
     "categorySleep": "Сон",
-    "categoryEat": "Еда"
+    "categoryEat": "Еда",
+    "unavailable": "Дуа пока не загрузились. Загляните позже."
   },
   "stories": {
     "title": "Истории",
-    "moreStories": "Ещё истории"
+    "moreStories": "Ещё истории",
+    "unavailable": "Истории пока не загрузились. Загляните позже."
   },
   "world": {
     "title": "Мусульманский мир",

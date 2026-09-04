@@ -230,11 +230,13 @@
     "categoryMorning": "Morning",
     "categoryEvening": "Evening",
     "categorySleep": "Sleep",
-    "categoryEat": "Eat"
+    "categoryEat": "Eat",
+    "unavailable": "Duas haven't loaded yet. Check back soon."
   },
   "stories": {
     "title": "Stories",
-    "moreStories": "More Stories"
+    "moreStories": "More Stories",
+    "unavailable": "Stories haven't loaded yet. Check back soon."
   },
   "world": {
     "title": "Muslim World",

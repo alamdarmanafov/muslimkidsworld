@@ -1,13 +1,36 @@
 import { router } from "expo-router";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../../src/components/icons";
-import { stories } from "../../src/data/mock";
+import { fetchChildProgress } from "../../src/lib/childProgress";
+import { fetchStories } from "../../src/lib/stories";
+import type { Story } from "../../src/lib/stories";
 import { colors, fonts, radii, shadow, spacing } from "../../src/theme/theme";
 
+type StoryListItem = Omit<Story, "paragraphs">;
+
 export default function Stories() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const [loading, setLoading] = useState(true);
+  const [stories, setStories] = useState<StoryListItem[]>([]);
+  const [childLevel, setChildLevel] = useState(1);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    Promise.all([fetchStories(i18n.language), fetchChildProgress()]).then(([list, progress]) => {
+      if (cancelled) return;
+      setStories(list ?? []);
+      if (progress) setChildLevel(progress.progress.level);
+      setLoading(false);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [i18n.language]);
+
   const [featured, ...rest] = stories;
 
   return (
@@ -22,34 +45,43 @@ export default function Stories() {
         </View>
       </View>
 
-      <ScrollView contentContainerStyle={styles.content}>
-        <Pressable
-          style={[styles.featuredCard, { backgroundColor: colors.fire }]}
-          onPress={() => router.push(`/child/stories/${featured.id}`)}
-        >
-          <Icon name={featured.icon} size={40} color="#FFFFFF" />
-          <Text style={styles.featuredTitle}>{t(`content.stories.${featured.id}.title`)}</Text>
-          <Text style={styles.featuredSubtitle}>{t(`content.stories.${featured.id}.subtitle`)}</Text>
-        </Pressable>
+      {loading ? (
+        <ActivityIndicator color={colors.primary} style={{ marginTop: spacing.xl }} />
+      ) : !featured ? (
+        <Text style={styles.emptyText}>{t("stories.unavailable")}</Text>
+      ) : (
+        <ScrollView contentContainerStyle={styles.content}>
+          <Pressable
+            style={[styles.featuredCard, { backgroundColor: colors.fire }]}
+            onPress={() => router.push(`/child/stories/${featured.id}`)}
+          >
+            <Icon name={featured.icon} size={40} color="#FFFFFF" />
+            <Text style={styles.featuredTitle}>{featured.title}</Text>
+            <Text style={styles.featuredSubtitle}>{featured.subtitle}</Text>
+          </Pressable>
 
-        <Text style={styles.sectionTitle}>{t("stories.moreStories")}</Text>
-        <View style={styles.grid}>
-          {rest.map((s) => (
-            <Pressable
-              key={s.id}
-              style={[styles.tile, s.locked && styles.tileLocked]}
-              disabled={s.locked}
-              onPress={() => router.push(`/child/stories/${s.id}`)}
-            >
-              <View style={[styles.tileIconWrap, { backgroundColor: s.tone[0] }]}>
-                <Icon name={s.icon} size={26} color={s.tone[1]} />
-              </View>
-              <Text style={styles.tileTitle}>{t(`content.stories.${s.id}.title`)}</Text>
-              {s.locked ? <Icon name="lock" size={14} color={colors.locked} /> : null}
-            </Pressable>
-          ))}
-        </View>
-      </ScrollView>
+          <Text style={styles.sectionTitle}>{t("stories.moreStories")}</Text>
+          <View style={styles.grid}>
+            {rest.map((s) => {
+              const locked = childLevel < s.unlockLevel;
+              return (
+                <Pressable
+                  key={s.id}
+                  style={[styles.tile, locked && styles.tileLocked]}
+                  disabled={locked}
+                  onPress={() => router.push(`/child/stories/${s.id}`)}
+                >
+                  <View style={[styles.tileIconWrap, { backgroundColor: s.tone[0] }]}>
+                    <Icon name={s.icon} size={26} color={s.tone[1]} />
+                  </View>
+                  <Text style={styles.tileTitle}>{s.title}</Text>
+                  {locked ? <Icon name="lock" size={14} color={colors.locked} /> : null}
+                </Pressable>
+              );
+            })}
+          </View>
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 }
@@ -76,6 +108,14 @@ const styles = StyleSheet.create({
   backIcon: { transform: [{ scaleX: -1 }] },
   title: { flex: 1, textAlign: "center", fontFamily: fonts.heading, fontSize: 18, color: colors.ink },
   starWrap: { width: 34, alignItems: "center" },
+  emptyText: {
+    fontFamily: fonts.body,
+    fontSize: 13,
+    color: colors.inkMuted,
+    textAlign: "center",
+    marginTop: spacing.xl,
+    paddingHorizontal: spacing.xl,
+  },
   content: { padding: spacing.lg, paddingTop: 0 },
   featuredCard: {
     borderRadius: radii.lg,

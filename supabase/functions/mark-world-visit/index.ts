@@ -11,7 +11,8 @@
 // worldSlug is checked against the same fixed list of sites the app
 // ships (mobile/src/data/mock.ts `worldSites`) rather than a content
 // table — see that file's comment for why this feature's content
-// lives in mock.ts + i18n like Stories/Dua, not the database.
+// still lives in mock.ts + i18n (Stories/Dua used to as well, until
+// 0029_dua_story_content.sql moved them into the database).
 //
 // Request:
 //   POST /functions/v1/mark-world-visit

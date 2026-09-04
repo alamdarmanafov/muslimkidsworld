@@ -2,7 +2,7 @@
 
 This directory holds the SQL migrations, RLS policies, and edge
 functions for the app's real backend, built entirely as code so they
-can be reviewed before being applied. Migrations run through `0016`
+can be reviewed before being applied. Migrations run through `0029`
 and every function below has been written and validated locally, but
 **deploying a new migration/function to your linked project still
 needs `supabase db push` / `supabase functions deploy` run from a
@@ -10,12 +10,13 @@ machine with network access to `supabase.co`** — see "Taking this
 live" below for the exact commands and secrets each one needs. The
 Quran is a real, live-fetched 114-surah feature (see
 `0010_quran_verses.sql` and `supabase/scripts/import-quran.mjs`
-below); Dua, Stories, quiz content, and Games still read from
-`mobile/src/data/mock.ts` (see "What's still a stub" below for why).
-Parent/child onboarding, the parent's real Children list, progress
-tracking, achievement badges, account deletion, the real Parent Gate
-PIN, push notifications, multi-child devices, device revocation, and
-iOS in-app purchases all call this backend too.
+below); Dua and Stories are likewise real, admin-editable DB content
+as of `0029_dua_story_content.sql`; quiz content and Games still read
+from `mobile/src/data/mock.ts` (see "What's still a stub" below for
+why). Parent/child onboarding, the parent's real Children list,
+progress tracking, achievement badges, account deletion, the real
+Parent Gate PIN, push notifications, multi-child devices, device
+revocation, and iOS in-app purchases all call this backend too.
 
 ## What's here
 
@@ -122,13 +123,28 @@ supabase/
 │   │                                below); the child Quran reader's
 │   │                                play button just doesn't show for
 │   │                                a verse with no audio_url yet
-│   └── 0028_prayer_city.sql        families.prayer_city_id — a parent-
-│                                    chosen city (app/parent/prayer-
-│                                    city.tsx, mobile/src/data/
-│                                    prayerCities.json) used to compute
-│                                    today's 5 prayer times on-device
-│                                    (adhan) for app/child/salah.tsx;
-│                                    no GPS/location permission needed
+│   ├── 0028_prayer_city.sql        families.prayer_city_id — a parent-
+│   │                                chosen city (app/parent/prayer-
+│   │                                city.tsx, mobile/src/data/
+│   │                                prayerCities.json) used to compute
+│   │                                today's 5 prayer times on-device
+│   │                                (adhan) for app/child/salah.tsx;
+│   │                                no GPS/location permission needed
+│   └── 0029_dua_story_content.sql  dua_translations / story_
+│                                    translations — moves Dua and
+│                                    Stories out of mock.ts + i18n into
+│                                    the database, admin-editable, same
+│                                    per-(item,lang)-row shape as
+│                                    quran_translations; seeds every
+│                                    dua/story mock.ts had that 0005
+│                                    never got to, and every language's
+│                                    text copied verbatim from the live
+│                                    locale files (mobile/src/lib/
+│                                    duas.ts, stories.ts read these;
+│                                    app/child/dua.tsx, stories.tsx,
+│                                    stories/[id].tsx fetch from them).
+│                                    Games stays out of scope — see
+│                                    that migration's header comment
 ├── scripts/
 │   ├── import-quran-audio.mjs      one-time script, run from a machine
 │   │                                with real internet access: pulls
@@ -533,13 +549,13 @@ for real queries later is a small diff, not a rewrite.
 `admin/index.html` — a single, dependency-free static file (loads
 `@supabase/supabase-js` from a CDN, no build step) for editing the
 content that's actually live-read from the database today: Quran text
-and translations, and achievements, plus a read-only Error Reports tab
-(see report-error above) for reviewing crashes without a third-party
-crash-reporting account, and a Mesajlar (Contact messages) tab for
-reading and replying to parent contact-form submissions
-(contact_messages — see 0022_contact_messages.sql). Duas, Stories, and
-Quiz content still come from `mobile/src/data/mock.ts` + i18n, not
-these tables (see the stub note below), so this deliberately doesn't
+and translations, Dua, Stories, and achievements, plus a read-only
+Error Reports tab (see report-error above) for reviewing crashes
+without a third-party crash-reporting account, and a Mesajlar (Contact
+messages) tab for reading and replying to parent contact-form
+submissions (contact_messages — see 0022_contact_messages.sql). Quiz
+content and Games still come from `mobile/src/data/mock.ts` + i18n,
+not a table (see the stub note below), so this deliberately doesn't
 cover them yet — an editor for tables the app doesn't read would just
 be confusing.
 
@@ -582,11 +598,16 @@ be confusing.
   `app/child/quran/[id].tsx`) is real too, via `mobile/src/lib/quran.ts`
   — all 114 surahs, Arabic text and 4 translations, from
   `quran_surahs`/`quran_verses`/`quran_translations` (see
-  `0010_quran_verses.sql` and `scripts/import-quran.mjs` above).
-  Everything else (Dua, Stories, the quiz *content* itself, Games, the
-  achievement-badge grid on the Rewards tab) still reads from
-  `mobile/src/data/mock.ts` — swapping each of those over to the
-  matching content table is still a follow-up, one screen at a time.
+  `0010_quran_verses.sql` and `scripts/import-quran.mjs` above). Dua
+  (`app/child/dua.tsx`, `mobile/src/lib/duas.ts`) and Stories
+  (`app/child/stories.tsx`, `stories/[id].tsx`,
+  `mobile/src/lib/stories.ts`) are real too, from
+  `duas`/`dua_translations` and `stories`/`story_translations` (see
+  `0029_dua_story_content.sql` above). The achievement-badge grid on
+  the Rewards tab is real too (see below). The quiz *content* itself
+  and Games still read from `mobile/src/data/mock.ts` — swapping those
+  over to a matching content table is still a follow-up (see below for
+  why quiz content specifically needs a redesign, not just a wire-up).
 - **No child auth.** There is no separate Supabase auth role for a
   child's own session. Today, "child access" means either the parent's
   authenticated session (RLS-scoped to their family) or a service-role
@@ -627,8 +648,9 @@ be confusing.
   opening the "mosque" site in the new "Muslim World" explore feature
   (`app/child/world.tsx`, `app/child/world/[id].tsx` — content in
   `mobile/src/data/mock.ts` `worldSites` + i18n
-  `content.worldSites.*`, same deliberate mock.ts+i18n pattern as
-  Stories/Dua, see below).
+  `content.worldSites.*`, the same mock.ts+i18n pattern Stories/Dua
+  used to follow before `0029_dua_story_content.sql` moved them into
+  the database — see below).
 - **Quiz content staying in `mock.ts` is deliberate, not an
   oversight.** The `quizzes` / `quiz_questions` tables and their seed
   (`0002_content_tables.sql`, `0005_seed_content.sql`) predate the
@@ -650,14 +672,15 @@ be confusing.
   purchase/restore and a renewal/cancellation Apple processes on its
   own are covered; there's no Play Store or Stripe path at all, since
   the user scoped this pass to iOS only.
-- **Admin panel covers Quran + achievements, not everything.**
-  `admin/index.html` (see above) edits `quran_surahs`/`quran_verses`/
-  `quran_translations` and `achievements` — the content types the app
-  actually reads from the database. `duas`/`stories`/`quizzes`/`games`
-  still read from `mobile/src/data/mock.ts` + i18n (see below), so an
-  editor for those tables wouldn't do anything yet; extending the
-  admin panel to them is only worthwhile once those screens move off
-  mock data.
+- **Admin panel covers Quran + Dua + Stories + achievements, not
+  everything.** `admin/index.html` (see above) edits
+  `quran_surahs`/`quran_verses`/`quran_translations`,
+  `duas`/`dua_translations`, `stories`/`story_translations`, and
+  `achievements` — the content types the app actually reads from the
+  database. `quizzes`/`games` still read from
+  `mobile/src/data/mock.ts` + i18n (see below), so an editor for those
+  tables wouldn't do anything yet; extending the admin panel to them
+  is only worthwhile once those screens move off mock data.
 - **"Daily limit reached" push notification is built.**
   `families.daily_limit_minutes` (`0019_screen_time.sql`) is a real,
   parent-set, shared setting now — `app/parent/daily-limit.tsx` writes

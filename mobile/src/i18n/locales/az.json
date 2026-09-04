@@ -230,11 +230,13 @@
     "categoryMorning": "Səhər",
     "categoryEvening": "Axşam",
     "categorySleep": "Yuxu",
-    "categoryEat": "Yemək"
+    "categoryEat": "Yemək",
+    "unavailable": "Dualar hələ yüklənməyib. Bir az sonra yenidən yoxla."
   },
   "stories": {
     "title": "Hekayələr",
-    "moreStories": "Daha çox hekayə"
+    "moreStories": "Daha çox hekayə",
+    "unavailable": "Hekayələr hələ yüklənməyib. Bir az sonra yenidən yoxla."
   },
   "world": {
     "title": "Müsəlman Dünyası",

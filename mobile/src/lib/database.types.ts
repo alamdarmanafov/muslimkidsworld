@@ -418,6 +418,41 @@ export type Database = {
         Update: Partial<Database["public"]["Tables"]["stories"]["Insert"]>;
         Relationships: [];
       };
+      dua_translations: {
+        Row: {
+          dua_id: string;
+          lang: string;
+          title: string;
+          meaning: string;
+        };
+        Insert: {
+          dua_id: string;
+          lang: string;
+          title: string;
+          meaning: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["dua_translations"]["Insert"]>;
+        Relationships: [];
+      };
+      story_translations: {
+        Row: {
+          story_id: string;
+          lang: string;
+          title: string;
+          subtitle: string;
+          // array of paragraph strings, in reading order
+          paragraphs: Json;
+        };
+        Insert: {
+          story_id: string;
+          lang: string;
+          title: string;
+          subtitle: string;
+          paragraphs: Json;
+        };
+        Update: Partial<Database["public"]["Tables"]["story_translations"]["Insert"]>;
+        Relationships: [];
+      };
       quizzes: {
         Row: {
           id: string;

@@ -230,11 +230,13 @@
     "categoryMorning": "Sabah",
     "categoryEvening": "Akşam",
     "categorySleep": "Uyku",
-    "categoryEat": "Yemek"
+    "categoryEat": "Yemek",
+    "unavailable": "Dualar henüz yüklenmedi. Daha sonra tekrar dene."
   },
   "stories": {
     "title": "Hikayeler",
-    "moreStories": "Daha Fazla Hikaye"
+    "moreStories": "Daha Fazla Hikaye",
+    "unavailable": "Hikayeler henüz yüklenmedi. Daha sonra tekrar dene."
   },
   "world": {
     "title": "Müslüman Dünyası",

@@ -1,23 +1,37 @@
 import { router, useLocalSearchParams } from "expo-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../../../src/components/icons";
 import { markJourneyItem, markStoryRead } from "../../../src/lib/childProgress";
-import { stories } from "../../../src/data/mock";
+import { fetchStoryDetail, type Story } from "../../../src/lib/stories";
 import { colors, fonts, radii, shadow, spacing } from "../../../src/theme/theme";
 
 export default function StoryDetail() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { id } = useLocalSearchParams<{ id: string }>();
-  const story = stories.find((s) => s.id === id) ?? stories[0];
-  const paragraphs = t(`content.storyContent.${story.id}`, { returnObjects: true }) as string[];
+  const [loading, setLoading] = useState(true);
+  const [story, setStory] = useState<Story | null>(null);
 
   useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    fetchStoryDetail(id, i18n.language).then((detail) => {
+      if (cancelled) return;
+      setStory(detail);
+      setLoading(false);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [id, i18n.language]);
+
+  useEffect(() => {
+    if (!story) return;
     markJourneyItem("story");
     markStoryRead(story.id);
-  }, [story.id]);
+  }, [story]);
 
   return (
     <SafeAreaView style={styles.screen} edges={["top"]}>
@@ -26,25 +40,29 @@ export default function StoryDetail() {
           <Icon name="arrowRight" size={18} color={colors.ink} style={styles.backIcon} />
         </Pressable>
         <Text style={styles.title} numberOfLines={1}>
-          {t(`content.stories.${story.id}.title`)}
+          {story?.title ?? ""}
         </Text>
         <View style={{ width: 34 }} />
       </View>
 
-      <ScrollView contentContainerStyle={styles.content}>
-        <View style={[styles.banner, { backgroundColor: story.tone[0] }]}>
-          <Icon name={story.icon} size={36} color={story.tone[1]} />
-          <Text style={[styles.bannerSubtitle, { color: story.tone[1] }]}>
-            {t(`content.stories.${story.id}.subtitle`)}
-          </Text>
-        </View>
-
-        {paragraphs.map((p, i) => (
-          <View key={i} style={styles.paragraphCard}>
-            <Text style={styles.paragraphText}>{p}</Text>
+      {loading ? (
+        <ActivityIndicator color={colors.primary} style={{ marginTop: spacing.xl }} />
+      ) : !story ? (
+        <Text style={styles.emptyText}>{t("stories.unavailable")}</Text>
+      ) : (
+        <ScrollView contentContainerStyle={styles.content}>
+          <View style={[styles.banner, { backgroundColor: story.tone[0] }]}>
+            <Icon name={story.icon} size={36} color={story.tone[1]} />
+            <Text style={[styles.bannerSubtitle, { color: story.tone[1] }]}>{story.subtitle}</Text>
           </View>
-        ))}
-      </ScrollView>
+
+          {story.paragraphs.map((p, i) => (
+            <View key={i} style={styles.paragraphCard}>
+              <Text style={styles.paragraphText}>{p}</Text>
+            </View>
+          ))}
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 }
@@ -70,6 +88,14 @@ const styles = StyleSheet.create({
   },
   backIcon: { transform: [{ scaleX: -1 }] },
   title: { flex: 1, textAlign: "center", fontFamily: fonts.heading, fontSize: 16, color: colors.ink },
+  emptyText: {
+    fontFamily: fonts.body,
+    fontSize: 13,
+    color: colors.inkMuted,
+    textAlign: "center",
+    marginTop: spacing.xl,
+    paddingHorizontal: spacing.xl,
+  },
   content: { padding: spacing.lg, paddingTop: 0, gap: spacing.md },
   banner: {
     borderRadius: radii.lg,

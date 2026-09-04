@@ -1,11 +1,11 @@
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../../src/components/icons";
 import { markJourneyItem } from "../../src/lib/childProgress";
-import { duas, type DuaCategory } from "../../src/data/mock";
+import { fetchDuas, type Dua, type DuaCategory } from "../../src/lib/duas";
 import { colors, fonts, radii, shadow, spacing } from "../../src/theme/theme";
 
 const categories: DuaCategory[] = ["Morning", "Evening", "Sleep", "Eat"];
@@ -17,11 +17,26 @@ const categoryLabelKeys: Record<DuaCategory, string> = {
 };
 
 export default function Dua() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const [loading, setLoading] = useState(true);
+  const [duas, setDuas] = useState<Dua[]>([]);
   const [category, setCategory] = useState<DuaCategory>("Morning");
   const [index, setIndex] = useState(0);
   const categoryDuas = duas.filter((d) => d.category === category);
   const active = categoryDuas[index] ?? categoryDuas[0] ?? duas[0];
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    fetchDuas(i18n.language).then((result) => {
+      if (cancelled) return;
+      setDuas(result ?? []);
+      setLoading(false);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [i18n.language]);
 
   useEffect(() => {
     markJourneyItem("dua");
@@ -48,43 +63,49 @@ export default function Dua() {
         </View>
       </View>
 
-      <ScrollView contentContainerStyle={styles.content}>
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>{t(`content.dua.${active.id}`)}</Text>
-          <Text style={styles.arabic}>{active.arabic}</Text>
-          <Text style={styles.transliteration}>{active.transliteration}</Text>
-          <Text style={styles.meaning}>{t(`content.duaMeaning.${active.id}`)}</Text>
+      {loading ? (
+        <ActivityIndicator color={colors.primary} style={{ marginTop: spacing.xl }} />
+      ) : !active ? (
+        <Text style={styles.emptyText}>{t("dua.unavailable")}</Text>
+      ) : (
+        <ScrollView contentContainerStyle={styles.content}>
+          <View style={styles.card}>
+            <Text style={styles.cardTitle}>{active.title}</Text>
+            <Text style={styles.arabic}>{active.arabic}</Text>
+            <Text style={styles.transliteration}>{active.transliteration}</Text>
+            <Text style={styles.meaning}>{active.meaning}</Text>
 
-          <View style={styles.controls}>
-            <Pressable style={styles.smallBtn} onPress={() => goTo(-1)}>
-              <Icon name="skipBack" size={16} color={colors.purple} />
-            </Pressable>
-            <Pressable style={styles.playBtn}>
-              <Icon name="play" size={20} color="#FFFFFF" />
-            </Pressable>
-            <Pressable style={styles.smallBtn} onPress={() => goTo(1)}>
-              <Icon name="skipForward" size={16} color={colors.purple} />
-            </Pressable>
+            <View style={styles.controls}>
+              <Pressable style={styles.smallBtn} onPress={() => goTo(-1)}>
+                <Icon name="skipBack" size={16} color={colors.purple} />
+              </Pressable>
+              <Pressable style={styles.playBtn}>
+                <Icon name="play" size={20} color="#FFFFFF" />
+              </Pressable>
+              <Pressable style={styles.smallBtn} onPress={() => goTo(1)}>
+                <Icon name="skipForward" size={16} color={colors.purple} />
+              </Pressable>
+            </View>
+            <Text style={styles.pageIndicator}>
+              {index + 1} / {categoryDuas.length}
+            </Text>
           </View>
-          <Text style={styles.pageIndicator}>
-            {index + 1} / {categoryDuas.length}
-          </Text>
-        </View>
 
-        <View style={styles.categoryRow}>
-          {categories.map((c) => (
-            <Pressable
-              key={c}
-              style={[styles.categoryChip, c === category && styles.categoryChipActive]}
-              onPress={() => changeCategory(c)}
-            >
-              <Text style={[styles.categoryText, c === category && styles.categoryTextActive]}>
-                {t(categoryLabelKeys[c])}
-              </Text>
-            </Pressable>
-          ))}
-        </View>
-      </ScrollView>
+          <View style={styles.categoryRow}>
+            {categories.map((c) => (
+              <Pressable
+                key={c}
+                style={[styles.categoryChip, c === category && styles.categoryChipActive]}
+                onPress={() => changeCategory(c)}
+              >
+                <Text style={[styles.categoryText, c === category && styles.categoryTextActive]}>
+                  {t(categoryLabelKeys[c])}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 }
@@ -111,6 +132,14 @@ const styles = StyleSheet.create({
   backIcon: { transform: [{ scaleX: -1 }] },
   title: { flex: 1, textAlign: "center", fontFamily: fonts.heading, fontSize: 18, color: colors.ink },
   starWrap: { width: 34, alignItems: "center" },
+  emptyText: {
+    fontFamily: fonts.body,
+    fontSize: 13,
+    color: colors.inkMuted,
+    textAlign: "center",
+    marginTop: spacing.xl,
+    paddingHorizontal: spacing.xl,
+  },
   content: { flexGrow: 1, padding: spacing.lg, paddingTop: 0, justifyContent: "center" },
   card: {
     backgroundColor: "#EDE6FB",
