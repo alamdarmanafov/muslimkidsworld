@@ -9,7 +9,10 @@ import { addChild } from "../../src/lib/children";
 import { toast } from "../../src/lib/toast";
 import { colors, radii, spacing } from "../../src/theme/theme";
 
-const avatarOptions = ["👦", "👧", "🧒", "👶"];
+// A mix of people and kid-friendly animal avatars — not just the
+// original 4 — since a child who doesn't see themself in "boy/girl/
+// child/baby" should still have a fun option to pick.
+const avatarOptions = ["👦", "👧", "🧒", "👶", "🧑", "👱", "🦸", "🦸‍♀️", "🐱", "🐶", "🦁", "🦊"];
 
 export default function AddChild() {
   const { t } = useTranslation();
@@ -115,7 +118,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: colors.ink,
   },
-  avatarRow: { flexDirection: "row", gap: spacing.sm, marginTop: spacing.xs },
+  avatarRow: { flexDirection: "row", flexWrap: "wrap", gap: spacing.sm, marginTop: spacing.xs },
   avatarOption: {
     width: 48,
     height: 48,
