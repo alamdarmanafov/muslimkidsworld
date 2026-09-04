@@ -5133,6 +5133,102 @@ export function generateVocabWordQuestions(
   });
 }
 
+type GoodDeedTemplate = { promptKey: string; correctKey: string };
+
+/**
+ * Each template pairs one "what's the right thing to do" scenario with the
+ * one correct behavior (a key into content.quizGoodDeeds.*) — the 76
+ * hand-authored yaxsiEmeller questions (e1-e77) predate this generator, so
+ * these 25 are new prompts, not duplicates. Distractors are drawn at
+ * generation time from GOOD_DEED_WRONG_POOL below rather than being fixed
+ * per template, which is what turns 25 sentences into a combinatorial pool
+ * instead of 25 fixed questions — same idea as WORD_PROBLEM_TEMPLATES.
+ */
+const GOOD_DEED_TEMPLATES: GoodDeedTemplate[] = [
+  { promptKey: "content.quiz.goodDeed1", correctKey: "forgive" },
+  { promptKey: "content.quiz.goodDeed2", correctKey: "respectfully" },
+  { promptKey: "content.quiz.goodDeed3", correctKey: "apologizeAndReplace" },
+  { promptKey: "content.quiz.goodDeed4", correctKey: "keepsWord" },
+  { promptKey: "content.quiz.goodDeed5", correctKey: "talkAndHelp" },
+  { promptKey: "content.quiz.goodDeed6", correctKey: "washHands" },
+  { promptKey: "content.quiz.goodDeed7", correctKey: "keepIt" },
+  { promptKey: "content.quiz.goodDeed8", correctKey: "throwTrashProperly" },
+  { promptKey: "content.quiz.goodDeed9", correctKey: "shareFood" },
+  { promptKey: "content.quiz.goodDeed10", correctKey: "tellTruth" },
+  { promptKey: "content.quiz.goodDeed11", correctKey: "helpElderly" },
+  { promptKey: "content.quiz.goodDeed12", correctKey: "bePatient" },
+  { promptKey: "content.quiz.goodDeed13", correctKey: "sayBismillah" },
+  { promptKey: "content.quiz.goodDeed14", correctKey: "cleanUpAfterSelf" },
+  { promptKey: "content.quiz.goodDeed15", correctKey: "waitYourTurn" },
+  { promptKey: "content.quiz.goodDeed16", correctKey: "includeOthers" },
+  { promptKey: "content.quiz.goodDeed17", correctKey: "beGrateful" },
+  { promptKey: "content.quiz.goodDeed18", correctKey: "workHard" },
+  { promptKey: "content.quiz.goodDeed19", correctKey: "protectEnvironment" },
+  { promptKey: "content.quiz.goodDeed20", correctKey: "admitMistake" },
+  { promptKey: "content.quiz.goodDeed21", correctKey: "careForSiblings" },
+  { promptKey: "content.quiz.goodDeed22", correctKey: "respectTeacher" },
+  { promptKey: "content.quiz.goodDeed23", correctKey: "prayOnTime" },
+  { promptKey: "content.quiz.goodDeed24", correctKey: "comfortSad" },
+  { promptKey: "content.quiz.goodDeed25", correctKey: "listenCarefully" },
+];
+
+// Generic "wrong" behaviors, broad enough to work as a plausible-but-wrong
+// distractor against almost any of the templates above (already translated
+// in content.quizGoodDeeds.* — see 0-index batches of yaxsiEmeller content).
+const GOOD_DEED_WRONG_POOL = [
+  "getAngry", "revenge", "ignore", "rude", "impatient", "ignoreThem", "hideIt",
+  "sayNothing", "lie", "breaksPromises", "forgetsPromises", "changesMind",
+  "lookAway", "laugh", "walkAway", "watchTv", "shout", "sleep", "forget",
+  "change", "deny", "breakTrees", "wasteWater", "hurtAnimals",
+];
+
+/**
+ * 25 situation templates × freshly-sampled distractor triples from a
+ * 24-entry wrong-answer pool every time (C(24,3) = 2,024 combinations per
+ * template) — the same "small hand-written bank, endless recombination"
+ * idea as the math/word-problem generators, applied to yaxsiEmeller.
+ */
+export function generateGoodDeedQuestions(
+  count: number,
+  difficulty: QuizDifficulty = "easy",
+): QuizQuestion[] {
+  const questions: QuizQuestion[] = [];
+  const seen = new Set<string>();
+  let attempts = 0;
+
+  while (questions.length < count && attempts < count * 20) {
+    attempts++;
+    const template = shuffle(GOOD_DEED_TEMPLATES)[0];
+    const wrongKeys = shuffle(
+      GOOD_DEED_WRONG_POOL.filter((k) => k !== template.correctKey),
+    ).slice(0, 3);
+    const dedupeKey = `${template.promptKey}-${wrongKeys.slice().sort().join(",")}`;
+    if (seen.has(dedupeKey)) continue;
+    seen.add(dedupeKey);
+
+    const allKeys = shuffle([template.correctKey, ...wrongKeys]);
+    const correctIndex = allKeys.indexOf(template.correctKey);
+    const options: QuizOption[] = allKeys.map((key, idx) => ({
+      id: optionLetters[idx],
+      label: optionLetters[idx].toUpperCase(),
+      emoji: "",
+      textKey: `content.quizGoodDeeds.${key}`,
+    }));
+
+    questions.push({
+      id: `good-deed-${questions.length}-${allKeys.join("-")}`,
+      category: "yaxsiEmeller",
+      difficulty,
+      promptKey: template.promptKey,
+      options,
+      correctOptionId: optionLetters[correctIndex],
+      xp: 20,
+    });
+  }
+
+  return questions;
+}
+
 export function getQuizQuestions(
   category: QuizCategory,
   targetLang?: ForeignTargetLang,
@@ -5162,6 +5258,15 @@ export function getQuizQuestions(
           ]
         : [];
     return shuffle([...staticDin, ...generated]);
+  }
+  if (category === "yaxsiEmeller") {
+    const staticGood = quizBank
+      .filter((q) => q.category === "yaxsiEmeller")
+      .filter((q) => !difficulty || getDifficulty(q) === difficulty);
+    // Scenario difficulty doesn't really vary by tier (same reading level
+    // either way), same reasoning as elm's planet generator below.
+    const generated = generateGoodDeedQuestions(20, difficulty ?? "easy");
+    return shuffle([...staticGood, ...generated]);
   }
   if (category === "elm") {
     const staticElm = quizBank
