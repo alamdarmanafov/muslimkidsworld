@@ -1,50 +1,81 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AdminTopbar } from "../../../components/admin/AdminTopbar";
 import { StatusBadge } from "../../../components/admin/StatusBadge";
-import { sentNotifications as initialNotifications, type SentNotification } from "../../../lib/adminMock";
+import { getSupabaseAdminClient } from "../../../lib/supabaseAdmin";
+
+type BroadcastRow = {
+  id: string;
+  title: string;
+  audience: string;
+  sentAt: string;
+  sentCount: number;
+};
 
 const audiences = [
-  "Bütün istifadəçilər",
-  "Valideynlər",
-  "Xüsusi yaş qrupu",
-  "Xüsusi ölkə",
-  "Premium istifadəçilər",
-];
+  { value: "all_parents", label: "Bütün valideynlər" },
+  { value: "premium_parents", label: "Premium valideynlər" },
+] as const;
+
+const audienceLabel: Record<string, string> = {
+  all_parents: "Bütün valideynlər",
+  premium_parents: "Premium valideynlər",
+};
 
 export default function AdminNotifications() {
-  const [sent, setSent] = useState<SentNotification[]>(initialNotifications);
+  const [loading, setLoading] = useState(true);
+  const [sent, setSent] = useState<BroadcastRow[]>([]);
   const [title, setTitle] = useState("");
-  const [audience, setAudience] = useState(audiences[0]);
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
+  const [body, setBody] = useState("");
+  const [audience, setAudience] = useState<(typeof audiences)[number]["value"]>("all_parents");
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
 
-  function send() {
-    if (!title.trim()) return;
-    const scheduled = date && time;
-    setSent((list) => [
-      {
-        id: `${Date.now()}`,
-        title,
-        audience,
-        sentAt: scheduled ? `${date} ${time}` : "İndi",
-        status: scheduled ? "Planlaşdırılıb" : "Göndərilib",
-      },
-      ...list,
-    ]);
+  async function load() {
+    const supabase = getSupabaseAdminClient();
+    const { data } = await supabase
+      .from("admin_broadcasts")
+      .select("id, title, audience, sent_count, created_at")
+      .order("created_at", { ascending: false })
+      .limit(100);
+    setSent(
+      (data ?? []).map((n) => ({
+        id: n.id,
+        title: n.title,
+        audience: audienceLabel[n.audience] ?? n.audience,
+        sentAt: new Date(n.created_at).toLocaleString("az-AZ"),
+        sentCount: n.sent_count,
+      })),
+    );
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    load();
+  }, []);
+
+  async function send() {
+    if (!title.trim() || !body.trim()) return;
+    setSending(true);
+    setError("");
+    const supabase = getSupabaseAdminClient();
+    const { data, error: invokeError } = await supabase.functions.invoke("admin-broadcast-notification", {
+      body: { title: title.trim(), body: body.trim(), audience },
+    });
+    setSending(false);
+    if (invokeError || !data?.ok) {
+      setError(invokeError?.message ?? "Göndərilmədi.");
+      return;
+    }
     setTitle("");
-    setAudience(audiences[0]);
-    setDate("");
-    setTime("");
+    setBody("");
+    load();
   }
 
   return (
     <>
-      <AdminTopbar
-        title="Bildirişlər"
-        subtitle="İstifadəçilərə hədəflənmiş bildirişlər göndərin."
-      />
+      <AdminTopbar title="Bildirişlər" subtitle="Real Expo push bildirişləri göndərin — tarixçə real göndərişlərdən ibarətdir." />
 
       <div className="px-8 pb-10">
         <div className="grid gap-6 lg:grid-cols-[2fr_1fr]">
@@ -56,27 +87,41 @@ export default function AdminNotifications() {
                     <th className="px-5 py-4 font-medium">Başlıq</th>
                     <th className="px-5 py-4 font-medium">Auditoriya</th>
                     <th className="px-5 py-4 font-medium">Vaxt</th>
-                    <th className="px-5 py-4 font-medium">Status</th>
+                    <th className="px-5 py-4 font-medium">Çatdırılıb</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {sent.map((n) => (
-                    <tr key={n.id} className="border-b border-border last:border-0">
-                      <td className="px-5 py-4 font-medium text-ink">{n.title}</td>
-                      <td className="px-5 py-4 text-inkMuted">{n.audience}</td>
-                      <td className="px-5 py-4 text-inkMuted">{n.sentAt}</td>
-                      <td className="px-5 py-4">
-                        <StatusBadge label={n.status} />
+                  {loading ? (
+                    <tr>
+                      <td colSpan={4} className="px-5 py-8 text-center text-inkMuted">
+                        Yüklənir...
                       </td>
                     </tr>
-                  ))}
+                  ) : sent.length === 0 ? (
+                    <tr>
+                      <td colSpan={4} className="px-5 py-8 text-center text-inkMuted">
+                        Hələ heç bir bildiriş göndərilməyib.
+                      </td>
+                    </tr>
+                  ) : (
+                    sent.map((n) => (
+                      <tr key={n.id} className="border-b border-border last:border-0">
+                        <td className="px-5 py-4 font-medium text-ink">{n.title}</td>
+                        <td className="px-5 py-4 text-inkMuted">{n.audience}</td>
+                        <td className="px-5 py-4 text-inkMuted">{n.sentAt}</td>
+                        <td className="px-5 py-4">
+                          <StatusBadge label={`${n.sentCount} cihaz`} />
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>
           </div>
 
           <div className="h-fit rounded-2xl border border-border bg-white p-6 shadow-sm">
-            <h2 className="mb-4 text-lg font-bold text-ink">Yeni bildiriş yarat</h2>
+            <h2 className="mb-4 text-lg font-bold text-ink">Yeni bildiriş göndər</h2>
 
             <label className="mb-1 block text-xs font-medium text-inkMuted">Başlıq</label>
             <input
@@ -86,44 +131,35 @@ export default function AdminNotifications() {
               className="mb-4 w-full rounded-lg border border-border px-3 py-2 text-sm"
             />
 
+            <label className="mb-1 block text-xs font-medium text-inkMuted">Mətn</label>
+            <textarea
+              value={body}
+              onChange={(e) => setBody(e.target.value)}
+              rows={3}
+              className="mb-4 w-full rounded-lg border border-border px-3 py-2 text-sm"
+            />
+
             <label className="mb-1 block text-xs font-medium text-inkMuted">Hədəf</label>
             <select
               value={audience}
-              onChange={(e) => setAudience(e.target.value)}
+              onChange={(e) => setAudience(e.target.value as typeof audience)}
               className="mb-4 w-full rounded-lg border border-border px-3 py-2 text-sm"
             >
               {audiences.map((a) => (
-                <option key={a}>{a}</option>
+                <option key={a.value} value={a.value}>
+                  {a.label}
+                </option>
               ))}
             </select>
 
-            <div className="mb-4 grid grid-cols-2 gap-3">
-              <div>
-                <label className="mb-1 block text-xs font-medium text-inkMuted">Tarix</label>
-                <input
-                  type="date"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  className="w-full rounded-lg border border-border px-3 py-2 text-sm"
-                />
-              </div>
-              <div>
-                <label className="mb-1 block text-xs font-medium text-inkMuted">Vaxt</label>
-                <input
-                  type="time"
-                  value={time}
-                  onChange={(e) => setTime(e.target.value)}
-                  className="w-full rounded-lg border border-border px-3 py-2 text-sm"
-                />
-              </div>
-            </div>
+            {error ? <p className="mb-3 text-xs font-medium text-red-600">{error}</p> : null}
 
             <button
               onClick={send}
-              disabled={!title.trim()}
+              disabled={!title.trim() || !body.trim() || sending}
               className="w-full rounded-xl bg-primary py-2.5 text-sm font-semibold text-white transition hover:bg-primaryDark disabled:cursor-not-allowed disabled:opacity-50"
             >
-              {date && time ? "Planlaşdır" : "Göndər"}
+              {sending ? "Göndərilir..." : "Göndər"}
             </button>
           </div>
         </div>

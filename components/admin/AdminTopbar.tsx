@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { setAdminAuthed } from "../../lib/adminAuth";
+import { useEffect, useState } from "react";
+import { getSupabaseAdminClient } from "../../lib/supabaseAdmin";
 
 export function AdminTopbar({
   title,
@@ -13,9 +13,16 @@ export function AdminTopbar({
   action?: React.ReactNode;
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [email, setEmail] = useState<string | null>(null);
 
-  function logout() {
-    setAdminAuthed(false);
+  useEffect(() => {
+    getSupabaseAdminClient()
+      .auth.getSession()
+      .then(({ data }) => setEmail(data.session?.user.email ?? null));
+  }, []);
+
+  async function logout() {
+    await getSupabaseAdminClient().auth.signOut();
     window.location.href = "/admin";
   }
 
@@ -27,26 +34,14 @@ export function AdminTopbar({
         </div>
 
         <div className="flex items-center gap-5">
-          <button className="flex items-center gap-1 text-sm font-medium text-ink">
-            🌐 AZ <span className="text-inkMuted">▾</span>
-          </button>
-          <div className="relative text-lg">
-            🔔
-            <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">
-              12
-            </span>
-          </div>
           <div className="relative">
-            <button
-              onClick={() => setMenuOpen((v) => !v)}
-              className="flex items-center gap-2"
-            >
+            <button onClick={() => setMenuOpen((v) => !v)} className="flex items-center gap-2">
               <div className="flex h-9 w-9 items-center justify-center rounded-full bg-violet-100 text-lg">
                 🧑
               </div>
               <div className="text-left text-sm leading-tight">
                 <p className="font-semibold text-ink">Admin</p>
-                <p className="text-xs text-inkMuted">Super Admin</p>
+                <p className="max-w-[160px] truncate text-xs text-inkMuted">{email ?? ""}</p>
               </div>
               <span className="text-inkMuted">▾</span>
             </button>

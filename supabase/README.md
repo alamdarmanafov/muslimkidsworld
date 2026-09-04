@@ -130,21 +130,31 @@ supabase/
 │   │                                today's 5 prayer times on-device
 │   │                                (adhan) for app/child/salah.tsx;
 │   │                                no GPS/location permission needed
-│   └── 0029_dua_story_content.sql  dua_translations / story_
-│                                    translations — moves Dua and
-│                                    Stories out of mock.ts + i18n into
-│                                    the database, admin-editable, same
-│                                    per-(item,lang)-row shape as
-│                                    quran_translations; seeds every
-│                                    dua/story mock.ts had that 0005
-│                                    never got to, and every language's
-│                                    text copied verbatim from the live
-│                                    locale files (mobile/src/lib/
-│                                    duas.ts, stories.ts read these;
-│                                    app/child/dua.tsx, stories.tsx,
-│                                    stories/[id].tsx fetch from them).
-│                                    Games stays out of scope — see
-│                                    that migration's header comment
+│   ├── 0029_dua_story_content.sql  dua_translations / story_
+│   │                                translations — moves Dua and
+│   │                                Stories out of mock.ts + i18n into
+│   │                                the database, admin-editable, same
+│   │                                per-(item,lang)-row shape as
+│   │                                quran_translations; seeds every
+│   │                                dua/story mock.ts had that 0005
+│   │                                never got to, and every language's
+│   │                                text copied verbatim from the live
+│   │                                locale files (mobile/src/lib/
+│   │                                duas.ts, stories.ts read these;
+│   │                                app/child/dua.tsx, stories.tsx,
+│   │                                stories/[id].tsx fetch from them).
+│   │                                Games stays out of scope — see
+│   │                                that migration's header comment
+│   └── 0030_admin_broadcasts.sql   admin_broadcasts — a real send log
+│                                    for the root Next.js admin
+│                                    dashboard's Bildirişlər page
+│                                    (app/admin/notifications/page.tsx,
+│                                    repo root, not mobile/), written
+│                                    only by the admin-broadcast-
+│                                    notification edge function right
+│                                    after it has actually pushed via
+│                                    Expo — replaces that page's old
+│                                    hardcoded "sent" history
 ├── scripts/
 │   ├── import-quran-audio.mjs      one-time script, run from a machine
 │   │                                with real internet access: pulls
@@ -204,6 +214,15 @@ supabase/
     │                                works with no auth session at all,
     │                                since a crash can happen before login
     │                                or device binding
+    ├── admin-broadcast-notification/  root Next.js admin dashboard's
+    │                                Bildirişlər page (app/admin/
+    │                                notifications/, repo root) sends a
+    │                                real push to all or premium-only
+    │                                parents through this — checks
+    │                                parents.is_admin itself (service
+    │                                role bypasses RLS) before sending,
+    │                                then logs the real sent_count to
+    │                                admin_broadcasts
     └── _shared/                    cors.ts, push.ts (Expo push sender),
                                      notifyParents.ts (push to every
                                      parent in a family), resolveChild.ts
@@ -292,6 +311,9 @@ for real queries later is a small diff, not a rewrite.
    supabase functions deploy record-screen-time
    supabase functions deploy verify-apple-purchase
    supabase functions deploy apple-server-notifications
+   supabase functions deploy report-error
+   supabase functions deploy send-daily-parent-digest
+   supabase functions deploy admin-broadcast-notification
    ```
    All of these read `SUPABASE_URL`, `SUPABASE_ANON_KEY`, and
    `SUPABASE_SERVICE_ROLE_KEY` — Supabase injects these automatically
@@ -573,6 +595,49 @@ be confusing.
 4. To share it with other admins without emailing a file around, host
    it anywhere that serves static files (Netlify, Vercel, GitHub
    Pages, an S3 bucket) — it's one HTML file, nothing to build.
+
+### The second admin surface: the Next.js dashboard (repo root `app/admin/`)
+
+The repo also has a full Next.js marketing site at the repo root
+(`app/page.tsx` and friends), and that app ships its own `/admin`
+dashboard — a different, more operations-focused surface from
+`admin/index.html` above (real users/children/subscriptions/support
+tables and charts, not content editing). It used to be a pure UI
+mockup (`lib/adminMock.ts`, since deleted) with a hardcoded
+`admin@muslimkidsworld.com` / `admin123` login stored in source and
+nothing but a `localStorage` flag guarding it — a real security bug,
+not a placeholder worth keeping. It's now wired to the same database
+and the same `is_admin()` gate as `admin/index.html`:
+
+- `lib/supabaseAdmin.ts` reads `NEXT_PUBLIC_SUPABASE_URL` /
+  `NEXT_PUBLIC_SUPABASE_ANON_KEY` (see `.env.example` — same project
+  URL/anon key `mobile/.env` and `admin/index.html`'s setup screen
+  point at; set them in a root `.env.local`).
+- `components/admin/AdminGate.tsx` signs in with a parent's real
+  email/password and checks `parents.is_admin`, exactly like
+  `admin/index.html`'s `checkAdminAndRender`.
+- `/admin` (overview), `/admin/users`, `/admin/children`,
+  `/admin/subscriptions`, `/admin/support`, `/admin/statistics`,
+  `/admin/settings`, and `/admin/content` all read real rows —
+  `parents`/`children`/`child_progress`/`child_category_stats`/
+  `subscriptions`/`subscription_plans`/`contact_messages`/
+  `error_reports`/`child_achievements`, plus real per-language content
+  counts from `quran_translations`/`dua_translations`/
+  `story_translations`. Statistics deliberately does **not** show
+  DAU/WAU/MAU, retention, or "most popular" content — there is no
+  event/session-tracking table to compute those from honestly, so
+  fabricating them would just be a different flavor of the same bug
+  this rewrite fixed.
+- `/admin/notifications` sends a real Expo push via the
+  `admin-broadcast-notification` edge function (see above) and lists
+  real past sends from `admin_broadcasts` — no more hardcoded "sent"
+  history.
+- The old **Kuponlar / Əyləncə yerləri / Yemək yerləri / Tədbirlər**
+  pages and the **Admin rolları** table are gone, not rewired — they
+  were a coupon/venue-partnership/events business and a multi-role
+  admin system that don't exist anywhere else in this product (no
+  matching tables, no matching mobile screens); showing them as if
+  they were real would itself be the bug.
 
 ## What's still a stub / explicitly out of scope here
 
