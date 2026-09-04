@@ -4622,7 +4622,7 @@ export function generateMathQuestions(
   return questions;
 }
 
-type WordProblemOp = "subtract" | "multiply" | "divide";
+type WordProblemOp = "add" | "subtract" | "multiply" | "divide";
 
 type WordProblemTemplate = {
   promptKey: string;
@@ -4650,6 +4650,16 @@ const WORD_PROBLEM_TEMPLATES: WordProblemTemplate[] = [
   { promptKey: "content.quiz.mathWordBooks", op: "divide" },
   { promptKey: "content.quiz.mathWordFlowers", op: "divide" },
   { promptKey: "content.quiz.mathWordCookies", op: "divide" },
+  { promptKey: "content.quiz.mathWordKittens", op: "add" },
+  { promptKey: "content.quiz.mathWordMarbles", op: "add" },
+  { promptKey: "content.quiz.mathWordShells", op: "add" },
+  { promptKey: "content.quiz.mathWordPencils", op: "subtract" },
+  { promptKey: "content.quiz.mathWordToys", op: "subtract" },
+  { promptKey: "content.quiz.mathWordSweets", op: "subtract" },
+  { promptKey: "content.quiz.mathWordChairs", op: "multiply" },
+  { promptKey: "content.quiz.mathWordPlates", op: "multiply" },
+  { promptKey: "content.quiz.mathWordPens", op: "divide" },
+  { promptKey: "content.quiz.mathWordOranges", op: "divide" },
 ];
 
 function buildWordProblem(
@@ -4661,7 +4671,11 @@ function buildWordProblem(
   let a: number;
   let b: number;
   let answer: number;
-  if (template.op === "subtract") {
+  if (template.op === "add") {
+    a = randInt(1, range);
+    b = randInt(1, range);
+    answer = a + b;
+  } else if (template.op === "subtract") {
     a = randInt(Math.ceil(range / 2), range);
     b = randInt(1, a);
     answer = a - b;
