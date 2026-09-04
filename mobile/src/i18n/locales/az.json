@@ -289,6 +289,8 @@
     "dayStreak_one": "{{count}} günlük ardıcıllıq",
     "dayStreak_other": "{{count}} günlük ardıcıllıq",
     "keepGoingChain": "Davam et, zənciri qırma!",
+    "freezesAvailable_one": "🧊 {{count}} seriya dondurması qalıb",
+    "freezesAvailable_other": "🧊 {{count}} seriya dondurması qalıb",
     "thisWeek": "Bu həftə",
     "accuracy": "Dəqiqlik"
   },

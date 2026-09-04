@@ -165,6 +165,7 @@ Deno.serve(async (req: Request) => {
       level: 1,
       xp: 0,
       streak: 0,
+      streak_freezes_available: 1,
       accuracy: 0,
       badges_count: 0,
       stars_count: 0,

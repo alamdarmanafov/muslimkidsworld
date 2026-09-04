@@ -27,6 +27,7 @@ export default function ChildProgress() {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [streak, setStreak] = useState(0);
+  const [freezesAvailable, setFreezesAvailable] = useState(0);
   const [accuracy, setAccuracy] = useState(0);
   const [level, setLevel] = useState(1);
   const [week, setWeek] = useState<{ dayKey: string; value: number; percent: number }[]>(
@@ -40,6 +41,7 @@ export default function ChildProgress() {
         if (cancelled) return;
         if (result) {
           setStreak(result.progress.streak);
+          setFreezesAvailable(result.progress.streak_freezes_available);
           setAccuracy(result.progress.accuracy);
           setLevel(result.progress.level);
           setWeek(buildWeekDisplay(result.week));
@@ -68,6 +70,11 @@ export default function ChildProgress() {
                   {t("childProgress.dayStreak", { count: streak })}
                 </Text>
                 <Text style={styles.streakSubtitle}>{t("childProgress.keepGoingChain")}</Text>
+                {freezesAvailable > 0 ? (
+                  <Text style={styles.freezeText}>
+                    {t("childProgress.freezesAvailable", { count: freezesAvailable })}
+                  </Text>
+                ) : null}
               </View>
             </View>
 
@@ -118,6 +125,7 @@ const styles = StyleSheet.create({
   },
   streakValue: { fontFamily: fonts.heading, fontSize: 16, color: "#FFFFFF" },
   streakSubtitle: { fontFamily: fonts.body, fontSize: 11, color: "rgba(255,255,255,0.85)", marginTop: 2 },
+  freezeText: { fontFamily: fonts.bodyBold, fontSize: 11, color: "#FFFFFF", marginTop: 4 },
   sectionTitle: { fontFamily: fonts.heading, fontSize: 15, color: colors.ink, marginBottom: spacing.sm },
   chartCard: {
     backgroundColor: colors.card,

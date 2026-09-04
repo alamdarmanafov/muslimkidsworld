@@ -34,6 +34,8 @@ export type ChildProgressStats = {
   level: number;
   xp: number;
   streak: number;
+  /** Free "skip a missed day" tokens — see 0025_streak_freeze.sql. */
+  streak_freezes_available: number;
   accuracy: number;
   badges_count: number;
   stars_count: number;

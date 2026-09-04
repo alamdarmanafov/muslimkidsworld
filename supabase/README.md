@@ -97,12 +97,18 @@ supabase/
 │   │                                'bug-screenshots' storage bucket —
 │   │                                backs the shake-to-report feature
 │   │                                (mobile/src/lib/bugReport.ts)
-│   └── 0024_daily_bonus_question.sql  child_daily_activity.bonus_
-│                                    question_done — once-a-day higher-
-│                                    XP question on the child home
-│                                    screen, reported through the same
-│                                    record-quiz-result function
-│                                    (isBonus: true)
+│   ├── 0024_daily_bonus_question.sql  child_daily_activity.bonus_
+│   │                                question_done — once-a-day higher-
+│   │                                XP question on the child home
+│   │                                screen, reported through the same
+│   │                                record-quiz-result function
+│   │                                (isBonus: true)
+│   └── 0025_streak_freeze.sql      child_progress.streak_freezes_
+│                                    available — one missed day no
+│                                    longer resets a streak outright;
+│                                    record-quiz-result consumes a
+│                                    freeze instead and awards one back
+│                                    every full week of activity
 ├── scripts/
 │   └── import-quran.mjs            one-time script, run from a machine
 │                                    with real internet access: pulls

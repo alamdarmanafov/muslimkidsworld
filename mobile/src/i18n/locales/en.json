@@ -289,6 +289,8 @@
     "dayStreak_one": "{{count}} day streak",
     "dayStreak_other": "{{count}} day streak",
     "keepGoingChain": "Keep it going, don't break the chain!",
+    "freezesAvailable_one": "🧊 {{count}} streak freeze left",
+    "freezesAvailable_other": "🧊 {{count}} streak freezes left",
     "thisWeek": "This Week",
     "accuracy": "Accuracy"
   },

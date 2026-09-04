@@ -16,8 +16,13 @@
 //                mobile/src/data/mock.ts) per level
 //   - accuracy:  round(lifetime correct / lifetime answered * 100)
 //   - streak:    +1 if the child's last activity was yesterday (UTC
-//               date), unchanged if already recorded today, reset to
-//               1 otherwise (including first-ever session)
+//               date), unchanged if already recorded today, +1 (not
+//               reset) if it was two days ago and a streak freeze is
+//               available (0025_streak_freeze.sql — consumes one),
+//               reset to 1 otherwise (including first-ever session)
+//   - streak_freezes_available: -1 when one absorbs a missed day as
+//                above, +1 every full week of consecutive activity,
+//                capped at MAX_FREEZES
 //   - active_days_count: +1 only the first time a given UTC date is
 //                recorded, mirrored into child_daily_activity's
 //                per-day upsert so the two never disagree
@@ -171,9 +176,13 @@ Deno.serve(async (req: Request) => {
   const prevXp = existing?.xp ?? 0;
   const prevStreak = existing?.streak ?? 0;
   const prevActiveDays = existing?.active_days_count ?? 0;
+  const prevFreezes = existing?.streak_freezes_available ?? 1;
   const lastActivityDateStr = existing?.last_activity_at
     ? new Date(existing.last_activity_at).toISOString().slice(0, 10)
     : null;
+  const dayBeforeYesterday = new Date(now);
+  dayBeforeYesterday.setUTCDate(dayBeforeYesterday.getUTCDate() - 2);
+  const dayBeforeYesterdayStr = dayBeforeYesterday.toISOString().slice(0, 10);
 
   const newTotalQuestions = prevTotalQuestions + total;
   const newTotalCorrect = prevTotalCorrect + correct;
@@ -182,19 +191,33 @@ Deno.serve(async (req: Request) => {
   const newAccuracy =
     newTotalQuestions > 0 ? Math.round((newTotalCorrect / newTotalQuestions) * 100) : 0;
 
+  // A streak freeze absorbs exactly one missed day — see
+  // 0025_streak_freeze.sql's header comment for why this exists.
+  const MAX_FREEZES = 3;
   let newStreak: number;
   let isNewActiveDay: boolean;
+  let freezeConsumed = false;
   if (lastActivityDateStr === todayStr) {
     newStreak = prevStreak || 1;
     isNewActiveDay = false;
   } else if (lastActivityDateStr === yesterdayStr) {
     newStreak = prevStreak + 1;
     isNewActiveDay = true;
+  } else if (lastActivityDateStr === dayBeforeYesterdayStr && prevFreezes > 0) {
+    newStreak = prevStreak + 1;
+    isNewActiveDay = true;
+    freezeConsumed = true;
   } else {
     newStreak = 1;
     isNewActiveDay = true;
   }
   const newActiveDaysCount = prevActiveDays + (isNewActiveDay ? 1 : 0);
+  // Earned back one full week of consecutive activity at a time, capped.
+  const earnedFreeze = newStreak > 0 && newStreak % 7 === 0;
+  const newFreezes = Math.min(
+    prevFreezes - (freezeConsumed ? 1 : 0) + (earnedFreeze ? 1 : 0),
+    MAX_FREEZES,
+  );
 
   let newBadgesCount = existing?.badges_count ?? 0;
   let newlyEarnedSlugs: string[] = [];
@@ -218,6 +241,7 @@ Deno.serve(async (req: Request) => {
         level: newLevel,
         xp: newXp,
         streak: newStreak,
+        streak_freezes_available: newFreezes,
         accuracy: newAccuracy,
         badges_count: newBadgesCount,
         stars_count: existing?.stars_count ?? 0,

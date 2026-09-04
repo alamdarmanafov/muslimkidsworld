@@ -295,6 +295,10 @@
     "dayStreak_many": "Серия: {{count}} дней",
     "dayStreak_other": "Серия: {{count}} дня",
     "keepGoingChain": "Продолжай, не разрывай цепочку!",
+    "freezesAvailable_one": "🧊 Осталась {{count}} заморозка серии",
+    "freezesAvailable_few": "🧊 Осталось {{count}} заморозки серии",
+    "freezesAvailable_many": "🧊 Осталось {{count}} заморозок серии",
+    "freezesAvailable_other": "🧊 Осталось {{count}} заморозки серии",
     "thisWeek": "На этой неделе",
     "accuracy": "Точность"
   },
