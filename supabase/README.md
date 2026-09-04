@@ -86,11 +86,17 @@ supabase/
 │   │                                crash/error log (no Sentry account
 │   │                                needed), written by report-error and
 │   │                                read from the admin panel
-│   └── 0022_contact_messages.sql   contact_messages — parent "contact
-│                                    us" form (app/parent/contact.tsx),
-│                                    answered from the admin panel;
-│                                    replaces privacy.tsx's old
-│                                    unconfigured support-email line
+│   ├── 0022_contact_messages.sql   contact_messages — parent "contact
+│   │                                us" form (app/parent/contact.tsx),
+│   │                                answered from the admin panel;
+│   │                                replaces privacy.tsx's old
+│   │                                unconfigured support-email line
+│   └── 0023_bug_screenshots.sql    extends error_reports with kind
+│                                    ('crash' | 'user_report') and
+│                                    screenshot_path, plus a private
+│                                    'bug-screenshots' storage bucket —
+│                                    backs the shake-to-report feature
+│                                    (mobile/src/lib/bugReport.ts)
 ├── scripts/
 │   └── import-quran.mjs            one-time script, run from a machine
 │                                    with real internet access: pulls
@@ -132,9 +138,11 @@ supabase/
     │                                rather than trusting the payload
     │                                (see its own header comment)
     ├── report-error/               parent or child app reports a crash/JS
-    │                                error — works with no auth session at
-    │                                all, since a crash can happen before
-    │                                login or device binding
+    │                                error, or a user-initiated shake/manual
+    │                                "report a problem" with a screenshot —
+    │                                works with no auth session at all,
+    │                                since a crash can happen before login
+    │                                or device binding
     └── _shared/                    cors.ts, push.ts (Expo push sender),
                                      notifyParents.ts (push to every
                                      parent in a family), resolveChild.ts

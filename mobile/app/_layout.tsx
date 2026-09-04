@@ -9,6 +9,7 @@ import {
   Nunito_700Bold,
   Nunito_800ExtraBold,
 } from "@expo-google-fonts/nunito";
+import { BugReportHost } from "../src/components/BugReportHost";
 import { ErrorBoundary } from "../src/components/ErrorBoundary";
 import { OfflineBanner } from "../src/components/OfflineBanner";
 import { ToastHost } from "../src/components/ToastHost";
@@ -57,6 +58,7 @@ function AppShell() {
       </Stack>
       <ToastHost />
       <OfflineBanner />
+      <BugReportHost />
     </SafeAreaProvider>
   );
 }

@@ -5,6 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon, type IconName } from "../../../src/components/icons";
 import { IconBadge, tones } from "../../../src/components/IconBadge";
 import { LanguageSwitcher } from "../../../src/components/LanguageSwitcher";
+import { triggerBugReport } from "../../../src/lib/bugReportUI";
 import { deleteAccount } from "../../../src/lib/children";
 import { getSupabaseClient } from "../../../src/lib/supabase";
 import { toast } from "../../../src/lib/toast";
@@ -22,6 +23,7 @@ export default function ParentProfile() {
     { icon: "crown", label: t("tabs.premium"), onPress: () => router.push("/parent/premium") },
     { icon: "shield", label: t("parentProfile.privacyPolicy"), onPress: () => router.push("/parent/privacy") },
     { icon: "speaker", label: t("contact.menuLabel"), onPress: () => router.push("/parent/contact") },
+    { icon: "alert", label: t("bugReport.menuLabel"), onPress: () => triggerBugReport() },
   ];
 
   const handleSignOut = () => {

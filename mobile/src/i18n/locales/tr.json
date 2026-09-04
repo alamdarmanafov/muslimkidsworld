@@ -392,6 +392,16 @@
       "closed": "Kapatıldı"
     }
   },
+  "bugReport": {
+    "menuLabel": "Sorun bildir",
+    "title": "Sorun bildir",
+    "subtitle": "Telefonunu sallayarak ya da bu düğmeye dokunarak sorunu bildirebilirsin — ekranının bir görüntüsü ve notun bize gönderilir.",
+    "placeholder": "Ne oldu? Kısaca yaz...",
+    "send": "Gönder",
+    "sendFailed": "Gönderilemedi. Tekrar dene.",
+    "sent": "Teşekkürler! Bildirimini aldık.",
+    "noScreenshot": "Ekran görüntüsü alınamadı"
+  },
   "days": {
     "mon": "Pzt",
     "tue": "Sal",

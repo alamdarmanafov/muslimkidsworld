@@ -23,8 +23,9 @@ import { getSupabaseClient } from "./supabase";
  * signed-in Supabase session only ever exists on the parent side
  * (child devices are session-less, see deviceBinding.ts), so it's a
  * reliable proxy for which UI was on screen when the error fired.
+ * Exported for bugReport.ts, which reports from the same two trees.
  */
-async function detectSource(): Promise<"parent" | "child"> {
+export async function detectSource(): Promise<"parent" | "child"> {
   try {
     const { data } = await getSupabaseClient().auth.getSession();
     return data.session ? "parent" : "child";

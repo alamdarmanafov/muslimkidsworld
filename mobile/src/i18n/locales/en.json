@@ -392,6 +392,16 @@
       "closed": "Closed"
     }
   },
+  "bugReport": {
+    "menuLabel": "Report a problem",
+    "title": "Report a problem",
+    "subtitle": "Shake your phone or tap this button to report a problem — a screenshot of your screen and your note are sent to us.",
+    "placeholder": "What happened? Describe it briefly...",
+    "send": "Send",
+    "sendFailed": "Couldn't send. Try again.",
+    "sent": "Thanks! We got your report.",
+    "noScreenshot": "Couldn't capture a screenshot"
+  },
   "days": {
     "mon": "Mon",
     "tue": "Tue",

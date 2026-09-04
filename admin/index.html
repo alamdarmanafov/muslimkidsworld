@@ -431,7 +431,7 @@ async function mountErrorReportsPanel(supabase, panel) {
     list.appendChild(el("p", { class: "muted", text: "Yüklənir..." }));
     const { data, error } = await supabase
       .from("error_reports")
-      .select("id, source, message, stack, device_id, parent_id, app_version, platform, created_at")
+      .select("id, source, kind, message, stack, screenshot_path, device_id, parent_id, app_version, platform, created_at")
       .order("created_at", { ascending: false })
       .limit(200);
     list.innerHTML = "";
@@ -451,14 +451,29 @@ async function mountErrorReportsPanel(supabase, panel) {
     const metaParts = [when, r.platform, r.app_version ? "v" + r.app_version : null, r.device_id]
       .filter(Boolean)
       .join(" · ");
+    const kindLabel = r.kind === "user_report" ? "🐛 İstifadəçi hesabatı" : "⚠️ Crash";
 
     const children = [
       el("div", { class: "report-head" }, [
         el("span", { class: "report-badge", text: r.source }),
+        el("span", { class: "report-badge", text: kindLabel }),
         el("span", { class: "report-meta", text: metaParts }),
       ]),
       el("p", { class: "report-message", text: r.message }),
     ];
+
+    if (r.screenshot_path) {
+      const link = el("a", { href: "#", text: "🖼 Ekran şəklinə bax", target: "_blank" });
+      link.addEventListener("click", async (e) => {
+        e.preventDefault();
+        const { data: signed, error: signErr } = await supabase.storage
+          .from("bug-screenshots")
+          .createSignedUrl(r.screenshot_path, 3600);
+        if (signErr || !signed) { alert("Şəkil açılmadı: " + (signErr?.message || "")); return; }
+        window.open(signed.signedUrl, "_blank");
+      });
+      children.push(link);
+    }
 
     if (r.stack) {
       const stackPre = el("pre", { class: "report-stack", text: r.stack });

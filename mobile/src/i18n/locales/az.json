@@ -392,6 +392,16 @@
       "closed": "Bağlandı"
     }
   },
+  "bugReport": {
+    "menuLabel": "Problem bildir",
+    "title": "Problem bildir",
+    "subtitle": "Telefonu silkələyərək və ya bu düymədən problemi bildirə bilərsən — ekranın şəkli və yazdığın qeyd bizə göndərilir.",
+    "placeholder": "Nə baş verdi? Qısaca yaz...",
+    "send": "Göndər",
+    "sendFailed": "Göndərilmədi. Yenidən cəhd et.",
+    "sent": "Təşəkkürlər! Problemi aldıq.",
+    "noScreenshot": "Ekran şəkli alınmadı"
+  },
   "days": {
     "mon": "B.e",
     "tue": "Ç.a",
