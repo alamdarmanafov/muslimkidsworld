@@ -208,7 +208,7 @@ describe("generateVocabPictureQuestions / generateVocabWordQuestions", () => {
 describe("getQuizQuestions", () => {
   const categories = ["din", "riyaziyyat", "yaxsiEmeller", "elm", "xariciDil"] as const;
 
-  it.each(categories)("returns a non-empty, well-formed, category-correct pool for %s", (category) => {
+  it.each(categories)("returns a non-empty, well-formed, category-correct pool for %s", (category: (typeof categories)[number]) => {
     const questions = getQuizQuestions(category, "en", undefined, "az");
     expect(questions.length).toBeGreaterThan(0);
     questions.forEach((q) => {

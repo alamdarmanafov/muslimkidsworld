@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "@react-native/jest-preset": "^0.86.3",
+    "@types/jest": "^30.0.0",
     "@types/react": "~19.2.2",
     "babel-preset-expo": "~57.0.9",
     "jest": "^30.5.1",
