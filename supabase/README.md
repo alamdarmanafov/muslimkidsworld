@@ -82,10 +82,15 @@ supabase/
 │   │                                and redeem-family-code, both device-
 │   │                                guessable secrets with no other
 │   │                                brute-force protection before this
-│   └── 0021_error_reports.sql      error_reports — own-infrastructure
-│                                    crash/error log (no Sentry account
-│                                    needed), written by report-error and
-│                                    read from the admin panel
+│   ├── 0021_error_reports.sql      error_reports — own-infrastructure
+│   │                                crash/error log (no Sentry account
+│   │                                needed), written by report-error and
+│   │                                read from the admin panel
+│   └── 0022_contact_messages.sql   contact_messages — parent "contact
+│                                    us" form (app/parent/contact.tsx),
+│                                    answered from the admin panel;
+│                                    replaces privacy.tsx's old
+│                                    unconfigured support-email line
 ├── scripts/
 │   └── import-quran.mjs            one-time script, run from a machine
 │                                    with real internet access: pulls
@@ -458,10 +463,13 @@ for real queries later is a small diff, not a rewrite.
 content that's actually live-read from the database today: Quran text
 and translations, and achievements, plus a read-only Error Reports tab
 (see report-error above) for reviewing crashes without a third-party
-crash-reporting account. Duas, Stories, and Quiz content still come
-from `mobile/src/data/mock.ts` + i18n, not these tables (see the stub
-note below), so this deliberately doesn't cover them yet — an editor
-for tables the app doesn't read would just be confusing.
+crash-reporting account, and a Mesajlar (Contact messages) tab for
+reading and replying to parent contact-form submissions
+(contact_messages — see 0022_contact_messages.sql). Duas, Stories, and
+Quiz content still come from `mobile/src/data/mock.ts` + i18n, not
+these tables (see the stub note below), so this deliberately doesn't
+cover them yet — an editor for tables the app doesn't read would just
+be confusing.
 
 1. Run `0015_admin_panel.sql` (already included if you ran `supabase
    db push` per the steps above).

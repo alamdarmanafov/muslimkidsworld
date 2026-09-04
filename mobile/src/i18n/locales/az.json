@@ -371,6 +371,26 @@
     "yourChild": "uşağın",
     "done": "Hazırdır"
   },
+  "contact": {
+    "menuLabel": "Bizimlə əlaqə",
+    "title": "Bizimlə əlaqə",
+    "subtitle": "Sualın və ya təklifin var? Aşağıdan bizə yaz — cavabımızı burada görəcəksən.",
+    "subject": "Mövzu (istəyə görə)",
+    "subjectPlaceholder": "məs. Sual",
+    "message": "Mesaj",
+    "messagePlaceholder": "Nə barədə yazmaq istəyirsən?",
+    "send": "Göndər",
+    "sending": "Göndərilir...",
+    "sendFailed": "Göndərilmədi. Yenidən cəhd et.",
+    "sent": "Mesajın göndərildi!",
+    "previousMessages": "Əvvəlki mesajların",
+    "reply": "Cavabımız",
+    "status": {
+      "open": "Baxılır",
+      "answered": "Cavablandı",
+      "closed": "Bağlandı"
+    }
+  },
   "days": {
     "mon": "B.e",
     "tue": "Ç.a",

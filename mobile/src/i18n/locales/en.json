@@ -371,6 +371,26 @@
     "yourChild": "your child",
     "done": "Done"
   },
+  "contact": {
+    "menuLabel": "Contact us",
+    "title": "Contact us",
+    "subtitle": "Have a question or suggestion? Write to us below — you'll see our reply here.",
+    "subject": "Subject (optional)",
+    "subjectPlaceholder": "e.g. Question",
+    "message": "Message",
+    "messagePlaceholder": "What would you like to tell us?",
+    "send": "Send",
+    "sending": "Sending...",
+    "sendFailed": "Couldn't send. Try again.",
+    "sent": "Your message was sent!",
+    "previousMessages": "Your previous messages",
+    "reply": "Our reply",
+    "status": {
+      "open": "In review",
+      "answered": "Answered",
+      "closed": "Closed"
+    }
+  },
   "days": {
     "mon": "Mon",
     "tue": "Tue",

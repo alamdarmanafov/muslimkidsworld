@@ -601,6 +601,30 @@ export type Database = {
         Update: Partial<Database["public"]["Tables"]["push_tokens"]["Insert"]>;
         Relationships: [];
       };
+      contact_messages: {
+        Row: {
+          id: string;
+          parent_id: string;
+          subject: string | null;
+          message: string;
+          status: "open" | "answered" | "closed";
+          admin_reply: string | null;
+          replied_at: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          parent_id: string;
+          subject?: string | null;
+          message: string;
+          status?: "open" | "answered" | "closed";
+          admin_reply?: string | null;
+          replied_at?: string | null;
+          created_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["contact_messages"]["Insert"]>;
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;

@@ -21,6 +21,7 @@ export default function ParentProfile() {
     { icon: "shield", label: t("devices.title"), onPress: () => router.push("/parent/devices") },
     { icon: "crown", label: t("tabs.premium"), onPress: () => router.push("/parent/premium") },
     { icon: "shield", label: t("parentProfile.privacyPolicy"), onPress: () => router.push("/parent/privacy") },
+    { icon: "speaker", label: t("contact.menuLabel"), onPress: () => router.push("/parent/contact") },
   ];
 
   const handleSignOut = () => {

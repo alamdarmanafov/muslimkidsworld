@@ -55,7 +55,7 @@ const SECTIONS: { heading: string; body: string }[] = [
   },
   {
     heading: "Contact",
-    body: "Questions about this policy can be sent to the app's support email.",
+    body: "Questions about this policy — or anything else — can be sent from Profile → Contact us.",
   },
 ];
 

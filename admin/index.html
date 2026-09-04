@@ -158,6 +158,17 @@
   .report-meta { font-size: 12px; color: var(--muted); }
   .report-stack { margin-top: 8px; font-size: 12px; font-family: ui-monospace, monospace; white-space: pre-wrap; background: #FAFAFC; border: 1px solid var(--border); border-radius: 8px; padding: 8px; max-height: 200px; overflow-y: auto; }
   details.report-stack-toggle summary { cursor: pointer; font-size: 12px; color: var(--primary); font-weight: 600; }
+  .contact-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+  .contact-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
+  .status-badge { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; text-transform: uppercase; }
+  .status-open { background: #FEF3C7; color: #92400E; }
+  .status-answered { background: #DCFCE7; color: #166534; }
+  .status-closed { background: #F3F4F6; color: #6B7280; }
+  .contact-subject { font-size: 14px; font-weight: 700; margin: 0 0 4px; }
+  .contact-message { font-size: 13px; margin: 0 0 8px; white-space: pre-wrap; }
+  .contact-reply-row { display: flex; flex-direction: column; gap: 6px; }
+  .contact-reply-row textarea { min-height: 60px; }
+  .contact-actions { display: flex; align-items: center; gap: 8px; }
 </style>
 </head>
 <body>
@@ -286,22 +297,27 @@ function renderApp(supabase) {
   const quranPanel = el("div", { class: "panel active", id: "panel-quran" });
   const achPanel = el("div", { class: "panel", id: "panel-ach" });
   const errorsPanel = el("div", { class: "panel", id: "panel-errors" });
+  const contactPanel = el("div", { class: "panel", id: "panel-contact" });
 
   const tabQuran = el("button", { class: "tab-btn active", text: "Quran" });
   const tabAch = el("button", { class: "tab-btn", text: "Nailiyyətlər" });
   const tabErrors = el("button", { class: "tab-btn", text: "Xəta hesabatları" });
+  const tabContact = el("button", { class: "tab-btn", text: "Mesajlar" });
 
   function activateTab(name) {
     tabQuran.classList.toggle("active", name === "quran");
     tabAch.classList.toggle("active", name === "ach");
     tabErrors.classList.toggle("active", name === "errors");
+    tabContact.classList.toggle("active", name === "contact");
     quranPanel.classList.toggle("active", name === "quran");
     achPanel.classList.toggle("active", name === "ach");
     errorsPanel.classList.toggle("active", name === "errors");
+    contactPanel.classList.toggle("active", name === "contact");
   }
   tabQuran.addEventListener("click", () => activateTab("quran"));
   tabAch.addEventListener("click", () => activateTab("ach"));
   tabErrors.addEventListener("click", () => activateTab("errors"));
+  tabContact.addEventListener("click", () => activateTab("contact"));
 
   const shell = el("div", { class: "app-shell" }, [
     el("header", { class: "topbar" }, [
@@ -311,14 +327,93 @@ function renderApp(supabase) {
         renderLogin(supabase);
       }}),
     ]),
-    el("div", { class: "tabs" }, [tabQuran, tabAch, tabErrors]),
-    el("main", {}, [quranPanel, achPanel, errorsPanel]),
+    el("div", { class: "tabs" }, [tabQuran, tabAch, tabErrors, tabContact]),
+    el("main", {}, [quranPanel, achPanel, errorsPanel, contactPanel]),
   ]);
   root.appendChild(shell);
 
   mountQuranPanel(supabase, quranPanel);
   mountAchievementsPanel(supabase, achPanel);
   mountErrorReportsPanel(supabase, errorsPanel);
+  mountContactPanel(supabase, contactPanel);
+}
+
+async function mountContactPanel(supabase, panel) {
+  panel.innerHTML = "";
+  const refreshBtn = el("button", { class: "btn-secondary btn-small", text: "Yenilə" });
+  const list = el("div", { class: "report-list" });
+  panel.appendChild(el("div", { style: "margin-bottom: 12px; display: flex; align-items: center; gap: 10px;" }, [
+    el("span", { class: "muted", text: "Valideynlərdən gələn mesajlar, ən yenisi öndə." }),
+    refreshBtn,
+  ]));
+  panel.appendChild(list);
+
+  async function load() {
+    list.innerHTML = "";
+    list.appendChild(el("p", { class: "muted", text: "Yüklənir..." }));
+    const { data, error } = await supabase
+      .from("contact_messages")
+      .select("id, parent_id, subject, message, status, admin_reply, created_at")
+      .order("created_at", { ascending: false })
+      .limit(200);
+    list.innerHTML = "";
+    if (error) {
+      list.appendChild(el("p", { class: "empty-state", text: "Yüklənmədi: " + error.message }));
+      return;
+    }
+    if (!data || data.length === 0) {
+      list.appendChild(el("p", { class: "empty-state", text: "Heç bir mesaj yoxdur." }));
+      return;
+    }
+    data.forEach((m) => list.appendChild(contactCard(m)));
+  }
+
+  function contactCard(m) {
+    const when = new Date(m.created_at).toLocaleString();
+    const statusClass = m.status === "answered" ? "status-answered" : m.status === "closed" ? "status-closed" : "status-open";
+    const statusLabel = m.status === "answered" ? "Cavablandı" : m.status === "closed" ? "Bağlandı" : "Baxılır";
+
+    const replyArea = el("textarea", {});
+    replyArea.value = m.admin_reply || "";
+
+    const saveBtn = el("button", { class: "btn-secondary btn-small", text: "Cavabı saxla" });
+    const closeBtn = el("button", { class: "btn-secondary btn-small", text: "Bağla" });
+
+    saveBtn.addEventListener("click", async () => {
+      saveBtn.disabled = true;
+      const { error } = await supabase.from("contact_messages").update({
+        admin_reply: replyArea.value.trim() || null,
+        status: replyArea.value.trim() ? "answered" : m.status,
+        replied_at: replyArea.value.trim() ? new Date().toISOString() : null,
+      }).eq("id", m.id);
+      saveBtn.disabled = false;
+      if (error) { alert("Xəta: " + error.message); return; }
+      load();
+    });
+
+    closeBtn.addEventListener("click", async () => {
+      const { error } = await supabase.from("contact_messages").update({ status: "closed" }).eq("id", m.id);
+      if (error) { alert("Xəta: " + error.message); return; }
+      load();
+    });
+
+    return el("div", { class: "contact-card" }, [
+      el("div", { class: "contact-head" }, [
+        el("span", { class: "status-badge " + statusClass, text: statusLabel }),
+        el("span", { class: "report-meta", text: when + " · parent_id: " + m.parent_id }),
+      ]),
+      m.subject ? el("p", { class: "contact-subject", text: m.subject }) : null,
+      el("p", { class: "contact-message", text: m.message }),
+      el("div", { class: "contact-reply-row" }, [
+        el("label", { text: "Cavabımız" }),
+        replyArea,
+        el("div", { class: "contact-actions" }, [saveBtn, closeBtn]),
+      ]),
+    ]);
+  }
+
+  refreshBtn.addEventListener("click", load);
+  load();
 }
 
 async function mountErrorReportsPanel(supabase, panel) {

@@ -371,6 +371,26 @@
     "yourChild": "çocuğunun",
     "done": "Tamam"
   },
+  "contact": {
+    "menuLabel": "Bize ulaşın",
+    "title": "Bize ulaşın",
+    "subtitle": "Bir sorunuz veya öneriniz mi var? Aşağıya yazın — cevabımızı burada göreceksiniz.",
+    "subject": "Konu (isteğe bağlı)",
+    "subjectPlaceholder": "örn. Soru",
+    "message": "Mesaj",
+    "messagePlaceholder": "Bize ne söylemek istersin?",
+    "send": "Gönder",
+    "sending": "Gönderiliyor...",
+    "sendFailed": "Gönderilemedi. Tekrar dene.",
+    "sent": "Mesajın gönderildi!",
+    "previousMessages": "Önceki mesajların",
+    "reply": "Cevabımız",
+    "status": {
+      "open": "İnceleniyor",
+      "answered": "Cevaplandı",
+      "closed": "Kapatıldı"
+    }
+  },
   "days": {
     "mon": "Pzt",
     "tue": "Sal",
