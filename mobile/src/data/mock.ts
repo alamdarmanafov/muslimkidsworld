@@ -5051,6 +5051,90 @@ export function generatePlanetCompareQuestions(
   return questions;
 }
 
+type AnimalMeta = {
+  id: string;
+  emoji: string;
+  habitat: "land" | "water" | "air";
+  diet: "herbivore" | "carnivore" | "omnivore";
+  name: Record<string, string>;
+};
+const animalIndex = animalData as AnimalMeta[];
+
+function animalName(a: AnimalMeta, lang: string): string {
+  return a.name[lang] ?? a.name.en;
+}
+
+function animalNameOptions(pool: AnimalMeta[], lang: string): QuizOption[] {
+  return pool.map((a, idx) => ({
+    id: optionLetters[idx],
+    label: optionLetters[idx].toUpperCase(),
+    emoji: "",
+    text: animalName(a, lang),
+  }));
+}
+
+type AnimalQuestionMode = {
+  promptKey: string;
+  field: "habitat" | "diet";
+  value: string;
+};
+
+const ANIMAL_MODES: AnimalQuestionMode[] = [
+  { promptKey: "content.quiz.elmAnimalWater", field: "habitat", value: "water" },
+  { promptKey: "content.quiz.elmAnimalLand", field: "habitat", value: "land" },
+  { promptKey: "content.quiz.elmAnimalAir", field: "habitat", value: "air" },
+  { promptKey: "content.quiz.elmAnimalCarnivore", field: "diet", value: "carnivore" },
+  { promptKey: "content.quiz.elmAnimalHerbivore", field: "diet", value: "herbivore" },
+  { promptKey: "content.quiz.elmAnimalOmnivore", field: "diet", value: "omnivore" },
+];
+
+/**
+ * "Which of these 4 animals lives in water / eats meat / ...?" — one animal
+ * matching the asked trait plus 3 that don't, drawn from a curated
+ * 30-animal habitat+diet table (animals.json, simple well-known facts
+ * only — no obscure or contested species). 6 modes × groupings from a
+ * 30-entry table give a large, factually safe pool the same way
+ * generateSurahRevelationQuestions does for Meccan/Madinan surahs — this
+ * was elm's smallest generator (planets only, 8 entries) before this.
+ */
+export function generateAnimalFactQuestions(
+  count: number,
+  lang: string,
+  difficulty: QuizDifficulty = "easy",
+): QuizQuestion[] {
+  const questions: QuizQuestion[] = [];
+  const seen = new Set<string>();
+  let attempts = 0;
+
+  while (questions.length < count && attempts < count * 20) {
+    attempts++;
+    const mode = shuffle(ANIMAL_MODES)[0];
+    const matching = animalIndex.filter((a) => a[mode.field] === mode.value);
+    const nonMatching = animalIndex.filter((a) => a[mode.field] !== mode.value);
+    if (matching.length === 0 || nonMatching.length < 3) continue;
+
+    const correct = shuffle(matching)[0];
+    const distractors = shuffle(nonMatching).slice(0, 3);
+    const dedupeKey = `${mode.promptKey}-${[correct, ...distractors].map((a) => a.id).sort().join(",")}`;
+    if (seen.has(dedupeKey)) continue;
+    seen.add(dedupeKey);
+
+    const group = shuffle([correct, ...distractors]);
+    const correctIndex = group.findIndex((a) => a.id === correct.id);
+    questions.push({
+      id: `animal-${mode.field}-${mode.value}-${questions.length}-${group.map((a) => a.id).join("-")}`,
+      category: "elm",
+      difficulty,
+      promptKey: mode.promptKey,
+      options: animalNameOptions(group, lang),
+      correctOptionId: optionLetters[correctIndex],
+      xp: 20,
+    });
+  }
+
+  return questions;
+}
+
 type VocabEntry = { id: string; emoji: string; en: string; ru: string };
 const vocabIndex = vocabularyData as VocabEntry[];
 
@@ -5280,6 +5364,7 @@ export function getQuizQuestions(
     const generated = [
       ...generatePlanetOrderQuestions(10, lang, genDifficulty),
       ...generatePlanetCompareQuestions(10, lang, genDifficulty),
+      ...generateAnimalFactQuestions(10, lang, genDifficulty),
     ];
     return shuffle([...staticElm, ...generated]);
   }
@@ -5310,6 +5395,7 @@ import type { IconName } from "../components/icons";
 import surahIndexData from "./quran/surahIndex.json";
 import { getDivineNames } from "./divineNamesLoader";
 import vocabularyData from "./vocabulary.json";
+import animalData from "./animals.json";
 import planetData from "./planets.json";
 
 export type WorldLocation = {
