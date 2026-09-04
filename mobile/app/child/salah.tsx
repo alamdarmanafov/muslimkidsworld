@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { router } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
@@ -6,11 +6,30 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../../src/components/icons";
 import { SalahPosture } from "../../src/components/SalahPosture";
 import { prayers, salahStepIds } from "../../src/data/salah";
+import { fetchChildProgress } from "../../src/lib/childProgress";
+import {
+  computeTodayPrayerTimes,
+  findPrayerCity,
+  type TodayPrayerTimes,
+} from "../../src/lib/prayerTimes";
 import { colors, fonts, radii, shadow, spacing } from "../../src/theme/theme";
 
 export default function Salah() {
   const { t } = useTranslation();
   const [showSteps, setShowSteps] = useState(false);
+  const [todayTimes, setTodayTimes] = useState<TodayPrayerTimes | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchChildProgress().then((result) => {
+      if (cancelled) return;
+      const city = findPrayerCity(result?.prayerCityId ?? null);
+      setTodayTimes(city ? computeTodayPrayerTimes(city) : null);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   if (showSteps) {
     return (
@@ -65,7 +84,12 @@ export default function Salah() {
               <Icon name={p.icon} size={24} color="#FFFFFF" />
             </View>
             <Text style={styles.rowTitle}>{t(`content.prayers.${p.id}`)}</Text>
-            <Text style={styles.rowRakats}>{t("salah.rakatsLabel", { count: p.rakats })}</Text>
+            <View style={styles.rowMeta}>
+              {todayTimes ? (
+                <Text style={styles.rowTime}>{todayTimes[p.id as keyof TodayPrayerTimes]}</Text>
+              ) : null}
+              <Text style={styles.rowRakats}>{t("salah.rakatsLabel", { count: p.rakats })}</Text>
+            </View>
           </View>
         ))}
 
@@ -118,6 +142,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   rowTitle: { flex: 1, fontFamily: fonts.bodyBold, fontSize: 15, color: colors.ink },
+  rowMeta: { alignItems: "flex-end", gap: 2 },
+  rowTime: { fontFamily: fonts.bodyBold, fontSize: 14, color: colors.successDark },
   rowRakats: { fontFamily: fonts.body, fontSize: 12, color: colors.inkMuted },
   howToBtn: {
     marginTop: spacing.md,

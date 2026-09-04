@@ -116,12 +116,19 @@ supabase/
 │                                    hours.tsx), applied in
 │                                    notifyFamilyParents and
 │                                    send-daily-reminders
-│   └── 0027_quran_audio.sql        quran_verses.audio_url — per-verse
-│                                    recitation, schema only (see
-│                                    scripts/import-quran-audio.mjs
-│                                    below); the child Quran reader's
-│                                    play button just doesn't show for
-│                                    a verse with no audio_url yet
+│   ├── 0027_quran_audio.sql        quran_verses.audio_url — per-verse
+│   │                                recitation, schema only (see
+│   │                                scripts/import-quran-audio.mjs
+│   │                                below); the child Quran reader's
+│   │                                play button just doesn't show for
+│   │                                a verse with no audio_url yet
+│   └── 0028_prayer_city.sql        families.prayer_city_id — a parent-
+│                                    chosen city (app/parent/prayer-
+│                                    city.tsx, mobile/src/data/
+│                                    prayerCities.json) used to compute
+│                                    today's 5 prayer times on-device
+│                                    (adhan) for app/child/salah.tsx;
+│                                    no GPS/location permission needed
 ├── scripts/
 │   ├── import-quran-audio.mjs      one-time script, run from a machine
 │   │                                with real internet access: pulls

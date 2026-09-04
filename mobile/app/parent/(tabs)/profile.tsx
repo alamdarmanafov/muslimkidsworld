@@ -19,6 +19,7 @@ export default function ParentProfile() {
     { icon: "chartBar", label: t("tabs.progress"), onPress: () => router.push("/parent/progress") },
     { icon: "clock", label: t("parentHome.dailyLimit"), onPress: () => router.push("/parent/daily-limit") },
     { icon: "moon", label: t("quietHours.menuLabel"), onPress: () => router.push("/parent/notification-quiet-hours") },
+    { icon: "mosque", label: t("prayerCity.menuLabel"), onPress: () => router.push("/parent/prayer-city") },
     { icon: "lock", label: t("parentProfile.parentPin"), onPress: () => router.push("/parent/parent-pin-setup") },
     { icon: "shield", label: t("devices.title"), onPress: () => router.push("/parent/devices") },
     { icon: "crown", label: t("tabs.premium"), onPress: () => router.push("/parent/premium") },

@@ -33,6 +33,7 @@ export type Database = {
           quiet_hours_start: number | null;
           quiet_hours_end: number | null;
           timezone_offset_minutes: number | null;
+          prayer_city_id: string | null;
           created_at: string;
           updated_at: string;
         };
@@ -44,6 +45,7 @@ export type Database = {
           quiet_hours_start?: number | null;
           quiet_hours_end?: number | null;
           timezone_offset_minutes?: number | null;
+          prayer_city_id?: string | null;
           created_at?: string;
           updated_at?: string;
         };

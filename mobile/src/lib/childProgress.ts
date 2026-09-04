@@ -65,6 +65,8 @@ export type ChildProgressResult = {
   achievements: string[];
   /** The family's real, parent-set screen-time limit (families.daily_limit_minutes). */
   dailyLimitMinutes: number;
+  /** The parent-chosen city for prayer-time calculation (families.prayer_city_id), or null if unset. */
+  prayerCityId: string | null;
   /** Whether today's once-a-day bonus question (child/quiz.tsx's ?bonus=1) has already been answered. */
   bonusQuestionDoneToday: boolean;
 };

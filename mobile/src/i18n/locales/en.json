@@ -435,6 +435,13 @@
     "to": "To",
     "saveFailed": "Couldn't save. Try again."
   },
+  "prayerCity": {
+    "menuLabel": "City for prayer times",
+    "title": "Choose your city",
+    "subtitle": "Prayer times will be calculated for the city you choose.",
+    "saved": "City saved!",
+    "saveFailed": "Couldn't save. Try again."
+  },
   "days": {
     "mon": "Mon",
     "tue": "Tue",
@@ -451,6 +458,32 @@
       "al-falaq": "Al-Falaq",
       "al-ikhlas": "Al-Ikhlas",
       "juzAmma": "Juz Amma"
+    },
+    "prayerCities": {
+      "baku": "Baku",
+      "ganja": "Ganja",
+      "sumqayit": "Sumgait",
+      "nakhchivan": "Nakhchivan",
+      "lankaran": "Lankaran",
+      "shaki": "Shaki",
+      "istanbul": "Istanbul",
+      "ankara": "Ankara",
+      "moscow": "Moscow",
+      "kazan": "Kazan",
+      "mecca": "Mecca",
+      "medina": "Medina",
+      "cairo": "Cairo",
+      "dubai": "Dubai",
+      "tashkent": "Tashkent",
+      "almaty": "Almaty",
+      "tehran": "Tehran",
+      "amman": "Amman",
+      "islamabad": "Islamabad",
+      "jakarta": "Jakarta",
+      "kuala-lumpur": "Kuala Lumpur",
+      "london": "London",
+      "berlin": "Berlin",
+      "new-york": "New York"
     },
     "dua": {
       "morning": "Morning Dua",

@@ -30,7 +30,7 @@
 // itself.
 //
 // Response:
-//   200 { child: {...}, progress: {...}, week: [...], achievements: [...], dailyLimitMinutes: 60, bonusQuestionDoneToday: false }
+//   200 { child: {...}, progress: {...}, week: [...], achievements: [...], dailyLimitMinutes: 60, prayerCityId: "baku", bonusQuestionDoneToday: false }
 //   404 { error: "Device is not bound to a family" | "No child found for this family" }
 //   400 { error: "..." }                             — bad request body
 //
@@ -134,7 +134,7 @@ Deno.serve(async (req: Request) => {
 
   const { data: family, error: familyError } = await adminClient
     .from("families")
-    .select("daily_limit_minutes")
+    .select("daily_limit_minutes, prayer_city_id")
     .eq("id", resolved.familyId)
     .maybeSingle();
 
@@ -159,6 +159,7 @@ Deno.serve(async (req: Request) => {
     child,
     achievements: achievementSlugs,
     dailyLimitMinutes: family?.daily_limit_minutes ?? 60,
+    prayerCityId: family?.prayer_city_id ?? null,
     bonusQuestionDoneToday,
     progress: progress ?? {
       child_id: child.id,

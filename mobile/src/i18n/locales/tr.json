@@ -435,6 +435,13 @@
     "to": "Bitiş",
     "saveFailed": "Kaydedilemedi. Tekrar dene."
   },
+  "prayerCity": {
+    "menuLabel": "Namaz vakitleri için şehir",
+    "title": "Şehrini seç",
+    "subtitle": "Namaz vakitleri seçtiğin şehre göre hesaplanacak.",
+    "saved": "Şehir kaydedildi!",
+    "saveFailed": "Kaydedilemedi. Tekrar dene."
+  },
   "days": {
     "mon": "Pzt",
     "tue": "Sal",
@@ -451,6 +458,32 @@
       "al-falaq": "Felak",
       "al-ikhlas": "İhlas",
       "juzAmma": "Amme Cüzü"
+    },
+    "prayerCities": {
+      "baku": "Bakü",
+      "ganja": "Gence",
+      "sumqayit": "Sumqayıt",
+      "nakhchivan": "Nahçıvan",
+      "lankaran": "Lenkeran",
+      "shaki": "Şeki",
+      "istanbul": "İstanbul",
+      "ankara": "Ankara",
+      "moscow": "Moskova",
+      "kazan": "Kazan",
+      "mecca": "Mekke",
+      "medina": "Medine",
+      "cairo": "Kahire",
+      "dubai": "Dubai",
+      "tashkent": "Taşkent",
+      "almaty": "Almatı",
+      "tehran": "Tahran",
+      "amman": "Amman",
+      "islamabad": "İslamabad",
+      "jakarta": "Cakarta",
+      "kuala-lumpur": "Kuala Lumpur",
+      "london": "Londra",
+      "berlin": "Berlin",
+      "new-york": "New York"
     },
     "dua": {
       "morning": "Sabah Duası",
