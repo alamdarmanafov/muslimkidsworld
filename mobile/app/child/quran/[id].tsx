@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
+import { useAudioPlayer, useAudioPlayerStatus } from "expo-audio";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -19,6 +20,27 @@ export default function SurahDetail() {
   const [loading, setLoading] = useState(true);
   const [surah, setSurah] = useState<QuranSurahDetail | null>(null);
   const [nextSurah, setNextSurah] = useState<QuranSurahListItem | null>(null);
+  const [playingVerse, setPlayingVerse] = useState<number | null>(null);
+  const player = useAudioPlayer(null);
+  const playerStatus = useAudioPlayerStatus(player);
+
+  // Recitation audio only exists once supabase/scripts/import-quran-audio.mjs
+  // has been run (see 0027_quran_audio.sql) — a verse with no audioUrl
+  // simply shows no play button rather than a broken one.
+  const toggleVerseAudio = (verseNumber: number, audioUrl: string | null) => {
+    if (!audioUrl) return;
+    if (playingVerse === verseNumber && playerStatus.playing) {
+      player.pause();
+      return;
+    }
+    player.replace(audioUrl);
+    player.play();
+    setPlayingVerse(verseNumber);
+  };
+
+  useEffect(() => {
+    if (playerStatus.didJustFinish) setPlayingVerse(null);
+  }, [playerStatus.didJustFinish]);
 
   useEffect(() => {
     let cancelled = false;
@@ -61,8 +83,23 @@ export default function SurahDetail() {
         <ScrollView contentContainerStyle={styles.content}>
           {surah.verses.map((verse) => (
             <View key={verse.verseNumber} style={styles.verseCard}>
-              <View style={styles.verseBadge}>
-                <Text style={styles.verseBadgeText}>{verse.verseNumber}</Text>
+              <View style={styles.verseHeaderRow}>
+                <View style={styles.verseBadge}>
+                  <Text style={styles.verseBadgeText}>{verse.verseNumber}</Text>
+                </View>
+                {verse.audioUrl ? (
+                  <Pressable
+                    style={styles.playBtn}
+                    hitSlop={8}
+                    onPress={() => toggleVerseAudio(verse.verseNumber, verse.audioUrl)}
+                  >
+                    <Icon
+                      name={playingVerse === verse.verseNumber && playerStatus.playing ? "pause" : "play"}
+                      size={14}
+                      color={colors.successDark}
+                    />
+                  </Pressable>
+                ) : null}
               </View>
               <Text style={styles.arabicText}>{verse.arabic}</Text>
               <Text style={styles.translationText}>{verse.translation}</Text>
@@ -129,6 +166,12 @@ const styles = StyleSheet.create({
     padding: spacing.lg,
     ...shadow,
   },
+  verseHeaderRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: spacing.sm,
+  },
   verseBadge: {
     width: 26,
     height: 26,
@@ -136,9 +179,16 @@ const styles = StyleSheet.create({
     backgroundColor: colors.successDark,
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: spacing.sm,
   },
   verseBadgeText: { color: "#FFFFFF", fontFamily: fonts.bodyBold, fontSize: 12 },
+  playBtn: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: "#EAFBEF",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   arabicText: {
     fontFamily: fonts.bodyBold,
     fontSize: 22,

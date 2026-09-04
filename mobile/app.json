@@ -36,6 +36,13 @@
       "expo-notifications",
       "expo-iap",
       [
+        "expo-audio",
+        {
+          "microphonePermission": false,
+          "recordAudioAndroid": false
+        }
+      ],
+      [
         "@react-native-google-signin/google-signin",
         {
           "iosUrlScheme": "com.googleusercontent.apps.176528804491-irlba9io7ru1f9is5vjfj0c4a4el19ds"

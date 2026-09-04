@@ -116,7 +116,22 @@ supabase/
 │                                    hours.tsx), applied in
 │                                    notifyFamilyParents and
 │                                    send-daily-reminders
+│   └── 0027_quran_audio.sql        quran_verses.audio_url — per-verse
+│                                    recitation, schema only (see
+│                                    scripts/import-quran-audio.mjs
+│                                    below); the child Quran reader's
+│                                    play button just doesn't show for
+│                                    a verse with no audio_url yet
 ├── scripts/
+│   ├── import-quran-audio.mjs      one-time script, run from a machine
+│   │                                with real internet access: pulls
+│   │                                Mishary Alafasy's recitation
+│   │                                (ar.alafasy edition) from the same
+│   │                                alquran.cloud API import-quran.mjs
+│   │                                uses, and links each verse's
+│   │                                audio_url — run this *after*
+│   │                                import-quran.mjs, since it only
+│   │                                updates rows that script created
 │   └── import-quran.mjs            one-time script, run from a machine
 │                                    with real internet access: pulls
 │                                    all 114 surahs (Arabic + 4

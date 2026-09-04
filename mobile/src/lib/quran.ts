@@ -47,6 +47,8 @@ export type QuranVerse = {
   verseNumber: number;
   arabic: string;
   translation: string;
+  /** Recitation audio URL, or null until supabase/scripts/import-quran-audio.mjs has been run. */
+  audioUrl: string | null;
 };
 
 export type QuranSurahDetail = {
@@ -78,7 +80,7 @@ export async function fetchSurahDetail(
 
     const { data: verses, error: versesError } = await supabase
       .from("quran_verses")
-      .select("verse_number, arabic_text")
+      .select("verse_number, arabic_text, audio_url")
       .eq("chapter", surah.chapter)
       .order("verse_number", { ascending: true });
     if (versesError || !verses) return null;
@@ -114,6 +116,7 @@ export async function fetchSurahDetail(
         verseNumber: v.verse_number,
         arabic: v.arabic_text,
         translation: translationByVerse.get(v.verse_number) ?? "",
+        audioUrl: v.audio_url,
       })),
     };
   } catch {

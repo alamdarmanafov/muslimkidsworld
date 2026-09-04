@@ -327,11 +327,13 @@ export type Database = {
           chapter: number;
           verse_number: number;
           arabic_text: string;
+          audio_url: string | null;
         };
         Insert: {
           chapter: number;
           verse_number: number;
           arabic_text: string;
+          audio_url?: string | null;
         };
         Update: Partial<Database["public"]["Tables"]["quran_verses"]["Insert"]>;
         Relationships: [];
