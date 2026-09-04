@@ -41,7 +41,7 @@
 
 import { createClient } from "npm:@supabase/supabase-js@2.112.4";
 import { corsHeaders, jsonResponse } from "../_shared/cors.ts";
-import { checkLockout, clearLockout, recordFailedAttempt } from "../_shared/lockout.ts";
+import { checkLockout, clearLockout, lockoutKeys, recordFailedAttempt } from "../_shared/lockout.ts";
 
 const LOCKOUT_ACTION = "code";
 
@@ -97,7 +97,8 @@ Deno.serve(async (req: Request) => {
     auth: { persistSession: false },
   });
 
-  const lockout = await checkLockout(adminClient, deviceId, LOCKOUT_ACTION);
+  const keys = lockoutKeys(deviceId, req);
+  const lockout = await checkLockout(adminClient, keys, LOCKOUT_ACTION);
   if (lockout.locked) {
     return jsonResponse(
       { error: "Too many wrong codes. Try again later.", locked: true, retryAfterSeconds: lockout.retryAfterSeconds },
@@ -116,7 +117,7 @@ Deno.serve(async (req: Request) => {
     return jsonResponse({ error: lookupError.message }, 500);
   }
   if (!familyCode) {
-    await recordFailedAttempt(adminClient, deviceId, LOCKOUT_ACTION);
+    await recordFailedAttempt(adminClient, keys, LOCKOUT_ACTION);
     return jsonResponse({ error: "Invalid or expired code" }, 404);
   }
 
@@ -127,7 +128,7 @@ Deno.serve(async (req: Request) => {
   // this is the actual enforcement, not just a UI countdown.
   const isExpired = new Date(familyCode.expires_at).getTime() < Date.now();
   if (isExpired && familyCode.bound_device_id !== deviceId) {
-    await recordFailedAttempt(adminClient, deviceId, LOCKOUT_ACTION);
+    await recordFailedAttempt(adminClient, keys, LOCKOUT_ACTION);
     return jsonResponse({ error: "Invalid or expired code" }, 404);
   }
 
@@ -177,7 +178,7 @@ Deno.serve(async (req: Request) => {
     }
   }
 
-  await clearLockout(adminClient, deviceId, LOCKOUT_ACTION);
+  await clearLockout(adminClient, keys, LOCKOUT_ACTION);
 
   const { data: children, error: childrenError } = await adminClient
     .from("children")

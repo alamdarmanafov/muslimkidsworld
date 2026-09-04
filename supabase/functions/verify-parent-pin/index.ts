@@ -27,7 +27,8 @@
 
 import { createClient } from "npm:@supabase/supabase-js@2.112.4";
 import { corsHeaders, jsonResponse } from "../_shared/cors.ts";
-import { checkLockout, clearLockout, recordFailedAttempt } from "../_shared/lockout.ts";
+import { checkLockout, clearLockout, lockoutKeys, recordFailedAttempt } from "../_shared/lockout.ts";
+import { hashPin } from "../_shared/pinHash.ts";
 
 const LOCKOUT_ACTION = "pin";
 
@@ -38,14 +39,6 @@ function isValidDeviceId(v: unknown): v is string {
 }
 function isValidPin(v: unknown): v is string {
   return typeof v === "string" && /^[0-9]{4}$/.test(v);
-}
-
-async function hashPin(pin: string): Promise<string> {
-  const bytes = new TextEncoder().encode(pin);
-  const digest = await crypto.subtle.digest("SHA-256", bytes);
-  return Array.from(new Uint8Array(digest))
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
 }
 
 Deno.serve(async (req: Request) => {
@@ -82,7 +75,8 @@ Deno.serve(async (req: Request) => {
     auth: { persistSession: false },
   });
 
-  const lockout = await checkLockout(adminClient, deviceId, LOCKOUT_ACTION);
+  const keys = lockoutKeys(deviceId, req);
+  const lockout = await checkLockout(adminClient, keys, LOCKOUT_ACTION);
   if (lockout.locked) {
     return jsonResponse(
       { error: "Too many wrong PIN attempts. Try again later.", locked: true, retryAfterSeconds: lockout.retryAfterSeconds },
@@ -107,7 +101,7 @@ Deno.serve(async (req: Request) => {
 
   const { data: family, error: familyError } = await adminClient
     .from("families")
-    .select("pin_hash")
+    .select("pin_hash, pin_salt")
     .eq("id", boundCode.family_id)
     .maybeSingle();
   if (familyError) {
@@ -117,12 +111,12 @@ Deno.serve(async (req: Request) => {
     return jsonResponse({ valid: false, pinSet: false });
   }
 
-  const submittedHash = await hashPin(pin);
+  const submittedHash = await hashPin(pin, family.pin_salt);
   const valid = submittedHash === family.pin_hash;
   if (valid) {
-    await clearLockout(adminClient, deviceId, LOCKOUT_ACTION);
+    await clearLockout(adminClient, keys, LOCKOUT_ACTION);
   } else {
-    await recordFailedAttempt(adminClient, deviceId, LOCKOUT_ACTION);
+    await recordFailedAttempt(adminClient, keys, LOCKOUT_ACTION);
   }
   return jsonResponse({ valid, pinSet: true });
 });

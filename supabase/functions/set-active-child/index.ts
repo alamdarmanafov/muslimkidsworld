@@ -9,7 +9,11 @@
 // and comparing against families.pin_hash exactly like
 // verify-parent-pin does — the PIN is the authorization here, and
 // nothing about it (hash or plaintext) ever reaches the client either
-// way.
+// way. Shares verify-parent-pin's 3-strikes lockout (same "pin"
+// action, see _shared/lockout.ts) — this function used to re-hash and
+// compare the PIN with no rate limiting of its own at all, so it was
+// a completely unthrottled way to brute-force a family's 4-digit PIN
+// even though verify-parent-pin already had one.
 //
 // Sets family_codes.active_child_id on this device's binding row;
 // _shared/resolveChild.ts (used by get-child-progress,
@@ -25,9 +29,19 @@
 //   401 { error: "Incorrect PIN" | "No Parent Gate PIN has been set for this family" }
 //   404 { error: "Device is not bound to a family" | "Child not found in this family" }
 //   400 { error: "..." }
+//   429 { error: "...", locked: true, retryAfterSeconds: number }
+//                                            — 3 wrong PINs in a row;
+//                                              see _shared/lockout.ts
 
 import { createClient } from "npm:@supabase/supabase-js@2.112.4";
 import { corsHeaders, jsonResponse } from "../_shared/cors.ts";
+import { checkLockout, clearLockout, lockoutKeys, recordFailedAttempt } from "../_shared/lockout.ts";
+import { hashPin } from "../_shared/pinHash.ts";
+
+// Same action key verify-parent-pin uses — both check the same
+// family's PIN, so guessing through one endpoint can't buy fresh
+// attempts on the other; see _shared/lockout.ts.
+const LOCKOUT_ACTION = "pin";
 
 type Body = { deviceId?: unknown; pin?: unknown; childId?: unknown };
 
@@ -39,14 +53,6 @@ function isValidPin(v: unknown): v is string {
 }
 function isValidChildId(v: unknown): v is string {
   return typeof v === "string" && v.length > 0 && v.length <= 64;
-}
-
-async function hashPin(pin: string): Promise<string> {
-  const bytes = new TextEncoder().encode(pin);
-  const digest = await crypto.subtle.digest("SHA-256", bytes);
-  return Array.from(new Uint8Array(digest))
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
 }
 
 Deno.serve(async (req: Request) => {
@@ -87,6 +93,15 @@ Deno.serve(async (req: Request) => {
     auth: { persistSession: false },
   });
 
+  const keys = lockoutKeys(deviceId, req);
+  const lockout = await checkLockout(adminClient, keys, LOCKOUT_ACTION);
+  if (lockout.locked) {
+    return jsonResponse(
+      { error: "Too many wrong PIN attempts. Try again later.", locked: true, retryAfterSeconds: lockout.retryAfterSeconds },
+      429,
+    );
+  }
+
   const { data: boundCode, error: codeError } = await adminClient
     .from("family_codes")
     .select("id, family_id")
@@ -104,7 +119,7 @@ Deno.serve(async (req: Request) => {
 
   const { data: family, error: familyError } = await adminClient
     .from("families")
-    .select("pin_hash")
+    .select("pin_hash, pin_salt")
     .eq("id", boundCode.family_id)
     .maybeSingle();
   if (familyError) {
@@ -114,10 +129,12 @@ Deno.serve(async (req: Request) => {
     return jsonResponse({ error: "No Parent Gate PIN has been set for this family" }, 401);
   }
 
-  const submittedHash = await hashPin(pin);
+  const submittedHash = await hashPin(pin, family.pin_salt);
   if (submittedHash !== family.pin_hash) {
+    await recordFailedAttempt(adminClient, keys, LOCKOUT_ACTION);
     return jsonResponse({ error: "Incorrect PIN" }, 401);
   }
+  await clearLockout(adminClient, keys, LOCKOUT_ACTION);
 
   const { data: child, error: childError } = await adminClient
     .from("children")

@@ -12,6 +12,19 @@
 // apple-server-notifications (which re-runs this same "ask Apple"
 // step whenever Apple reports a renewal/cancellation on its own).
 //
+// Confirming a transaction is *real* isn't confirming it's *theirs*:
+// Apple will happily confirm any real transactionId regardless of who
+// asks, and transaction ids are just numbers — nothing before this
+// stopped signed-in Parent A from calling this with Parent B's real
+// (observed, guessed, leaked) transaction id and getting Parent A's
+// own family upgraded to premium off Parent B's payment, for free,
+// forever. The fix is binding at purchase time, not just checking at
+// verify time: mobile/app/parent/(tabs)/premium.tsx now passes the
+// buying parent's own user id as `appAccountToken` on the
+// requestPurchase call, Apple signs that into the transaction, and
+// this function refuses to accept a transaction whose
+// appAccountToken doesn't match the caller.
+//
 // Request (parent must be signed in — Authorization bearer token):
 //   POST /functions/v1/verify-apple-purchase
 //   { "transactionId": "<App Store transaction id>" }
@@ -20,6 +33,7 @@
 //   200 { ok: true, status: "active" | "expired" | "cancelled", planSlug: string }
 //   400 { error: "..." }
 //   401 { error: "Not authenticated" }
+//   403 { error: "This purchase does not belong to your account" }
 //   404 { error: "No family found for this account" | "Transaction not found" }
 //   500 { error: "..." }
 //
@@ -107,6 +121,9 @@ Deno.serve(async (req: Request) => {
   }
   if (!resolved) {
     return jsonResponse({ error: "Transaction not found" }, 404);
+  }
+  if (resolved.appAccountToken !== user.id) {
+    return jsonResponse({ error: "This purchase does not belong to your account" }, 403);
   }
 
   const { data: plan, error: planError } = await adminClient

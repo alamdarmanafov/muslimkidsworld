@@ -1,0 +1,24 @@
+-- 0032_pin_salt.sql
+--
+-- families.pin_hash was SHA-256(pin) with no salt — fine against an
+-- online brute-force attempt (that's what the lockout in
+-- 0020_attempt_lockouts.sql, now closed further by
+-- _shared/lockout.ts's IP-keying, is for), but not against a leaked
+-- `families` table: SHA-256 of all 10,000 possible 4-digit PINs takes
+-- a fraction of a second to precompute *once*, and that same
+-- precomputed table then instantly cracks every family's PIN in every
+-- installation forever, since they're all hashed the exact same way.
+-- A random per-family salt makes that precomputation worthless — an
+-- attacker has to redo it per family, which is no longer "instant for
+-- everyone" the moment the table leaks.
+--
+-- set-parent-pin now generates a fresh salt every time a PIN is set
+-- or changed; verify-parent-pin and set-active-child hash the
+-- submitted PIN with the stored salt before comparing. A family whose
+-- PIN was set before this migration has pin_salt = null — those two
+-- functions fall back to the old unsalted hash for that one
+-- comparison so an existing PIN keeps working, but the *next* time
+-- that family's PIN is set/changed it gets a real salt like anyone
+-- else's.
+alter table public.families
+  add column if not exists pin_salt text;

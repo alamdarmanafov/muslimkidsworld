@@ -11,6 +11,7 @@ import { plans } from "../../../src/data/mock";
 import {
   fetchFamilySubscription,
   fetchPlanProducts,
+  getCurrentParentId,
   verifyApplePurchase,
   type FamilySubscription,
   type PlanProduct,
@@ -90,9 +91,22 @@ export default function Premium() {
       toast.error(t("parentPremium.purchaseFailed"));
       return;
     }
+    // appAccountToken ties this transaction to this parent's own
+    // account — Apple signs it in, and verify-apple-purchase refuses
+    // to accept a transaction whose token doesn't match the caller
+    // (otherwise anyone could claim credit for anyone else's real
+    // purchase just by knowing its transaction id).
+    const parentId = await getCurrentParentId();
+    if (!parentId) {
+      toast.error(t("parentPremium.purchaseFailed"));
+      return;
+    }
     setPurchasing(true);
     try {
-      await requestPurchase({ request: { apple: { sku: productId } }, type: "subs" });
+      await requestPurchase({
+        request: { apple: { sku: productId, appAccountToken: parentId } },
+        type: "subs",
+      });
     } catch {
       setPurchasing(false);
     }

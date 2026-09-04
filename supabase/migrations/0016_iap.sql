@@ -12,9 +12,9 @@ alter table public.subscription_plans
   add column if not exists apple_product_id text unique;
 
 update public.subscription_plans
-  set apple_product_id = 'com.muslimkidsworld.app.single.monthly'
+  set apple_product_id = 'com.muslimkidsworld.app.single.yearly'
   where slug = 'single' and apple_product_id is null;
 
 update public.subscription_plans
-  set apple_product_id = 'com.muslimkidsworld.app.family.monthly'
+  set apple_product_id = 'com.muslimkidsworld.app.family.yearly'
   where slug = 'family' and apple_product_id is null;

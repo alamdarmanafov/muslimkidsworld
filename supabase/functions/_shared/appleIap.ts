@@ -122,6 +122,16 @@ export type ResolvedSubscription = {
   periodStart: string | null;
   periodEnd: string | null;
   cancelAtPeriodEnd: boolean;
+  /**
+   * The value the client passed as appAccountToken when it initiated
+   * the purchase (mobile/app/parent/(tabs)/premium.tsx's requestPurchase
+   * call sets this to the signed-in parent's own auth user id) — Apple
+   * signs it into the transaction, so it can't be forged by whoever
+   * calls verify-apple-purchase afterwards. null if the purchase was
+   * made without one (a real transaction id from an *unrelated*
+   * account, with no way to prove who actually bought it).
+   */
+  appAccountToken: string | null;
 };
 
 /**
@@ -167,5 +177,7 @@ export async function resolveSubscriptionFromApple(
     periodStart: transactionInfo.purchaseDate ? new Date(transactionInfo.purchaseDate).toISOString() : null,
     periodEnd: transactionInfo.expiresDate ? new Date(transactionInfo.expiresDate).toISOString() : null,
     cancelAtPeriodEnd,
+    appAccountToken:
+      typeof transactionInfo.appAccountToken === "string" ? transactionInfo.appAccountToken : null,
   };
 }

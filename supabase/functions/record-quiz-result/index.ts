@@ -41,10 +41,17 @@
 // question) reports the child home screen's once-a-day bonus question
 // instead of a regular session — total/correct must describe exactly
 // one question, and the client's xpEarned is ignored in favor of a
-// fixed BONUS_XP awarded only on a correct answer, so a compromised
-// client can't forge bonus XP any more than it can regular XP. Rejects
-// with 409 if today's bonus was already claimed
-// (child_daily_activity.bonus_question_done, 0024_daily_bonus_question.sql).
+// fixed BONUS_XP awarded only on a correct answer. Rejects with 409 if
+// today's bonus was already claimed (child_daily_activity.
+// bonus_question_done, 0024_daily_bonus_question.sql).
+//
+// xpEarned in the request body is accepted but never trusted for
+// either path: every mock.ts question is worth XP_PER_CORRECT (20)
+// XP, so a regular session's real xpEarned is `correct * 20`,
+// computed here — not read from the client — exactly like the bonus
+// path already was. A client that sent a forged xpEarned (any value,
+// not just one matching its own `correct` count) used to have it
+// added straight to the child's lifetime XP.
 //
 // Request:
 //   POST /functions/v1/record-quiz-result
@@ -74,6 +81,10 @@ type Body = {
 
 const VALID_CATEGORIES = new Set(["din", "riyaziyyat", "yaxsiEmeller", "elm", "xariciDil"]);
 const BONUS_XP = 50;
+// Every question in mobile/src/data/mock.ts is worth exactly 20 XP —
+// see this file's header comment for why a regular session's xpEarned
+// is computed from this, not read from the client.
+const XP_PER_CORRECT = 20;
 
 function isValidDeviceId(v: unknown): v is string {
   return typeof v === "string" && v.length > 0 && v.length <= 256;
@@ -106,6 +117,9 @@ Deno.serve(async (req: Request) => {
   if (!isNonNegInt(body.total) || body.total < body.correct) {
     return jsonResponse({ error: "total must be a non-negative integer >= correct" }, 400);
   }
+  // Still validated as request-shape hygiene (the client keeps sending
+  // it), but never used to compute anything below — see xpEarned's own
+  // comment further down.
   if (!isNonNegInt(body.xpEarned)) {
     return jsonResponse({ error: "xpEarned must be a non-negative integer" }, 400);
   }
@@ -117,9 +131,12 @@ Deno.serve(async (req: Request) => {
   const deviceId = body.deviceId;
   const correct = body.correct;
   const total = body.total;
-  // The client's xpEarned is only trusted for a regular session — a
-  // bonus's XP is fixed and decided here, never by what the client sends.
-  const xpEarned = isBonus ? (correct === 1 ? BONUS_XP : 0) : body.xpEarned;
+  // xpEarned is always computed here, never trusted from the client —
+  // a bonus's XP is fixed (BONUS_XP, only on a correct answer); a
+  // regular session's is `correct * XP_PER_CORRECT`, the same
+  // arithmetic the client itself does to show it, just not trusted
+  // when it's the client doing it.
+  const xpEarned = isBonus ? (correct === 1 ? BONUS_XP : 0) : correct * XP_PER_CORRECT;
   const category = typeof body.category === "string" && VALID_CATEGORIES.has(body.category)
     ? body.category
     : null;

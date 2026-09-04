@@ -2,7 +2,7 @@
 
 This directory holds the SQL migrations, RLS policies, and edge
 functions for the app's real backend, built entirely as code so they
-can be reviewed before being applied. Migrations run through `0031`
+can be reviewed before being applied. Migrations run through `0032`
 and every function below has been written and validated locally, but
 **deploying a new migration/function to your linked project still
 needs `supabase db push` / `supabase functions deploy` run from a
@@ -155,16 +155,18 @@ supabase/
 │   │                                after it has actually pushed via
 │   │                                Expo — replaces that page's old
 │   │                                hardcoded "sent" history
-│   └── 0031_annual_pricing.sql     switches both plans from monthly
-│                                    to annual billing — Single Child
-│                                    $4.99/mo -> $29.99/yr, Family
-│                                    $7.99/mo -> $49.99/yr
-│                                    (subscription_plans.price_cents/
-│                                    period). An UPDATE, not an INSERT
-│                                    ...ON CONFLICT DO NOTHING like
-│                                    0005_seed_content.sql's original
-│                                    seed — that would never retroactively
-│                                    fix a project that already ran it
+│   ├── 0031_annual_pricing.sql     switches both plans from monthly
+│   │                                to annual billing — Single Child
+│   │                                $4.99/mo -> $29.99/yr, Family
+│   │                                $7.99/mo -> $49.99/yr
+│   │                                (subscription_plans.price_cents/
+│   │                                period). An UPDATE, not an INSERT
+│   │                                ...ON CONFLICT DO NOTHING like
+│   │                                0005_seed_content.sql's original
+│   │                                seed — that would never retroactively
+│   │                                fix a project that already ran it
+│   └── 0032_pin_salt.sql           families.pin_salt — see "Security"
+│                                    below
 ├── scripts/
 │   ├── import-quran-audio.mjs      one-time script, run from a machine
 │   │                                with real internet access: pulls
@@ -493,6 +495,14 @@ for real queries later is a small diff, not a rewrite.
     transaction is genuine and currently active — never taken on the
     client's word — so this step needs real App Store Connect
     products and a server API key before purchases work end to end.
+    Confirming a transaction is *real* isn't confirming it's *theirs*
+    though: `premium.tsx` passes the buying parent's own user id as
+    `appAccountToken` on the purchase request, Apple signs it into the
+    transaction, and `verify-apple-purchase` refuses to accept a
+    transaction whose token doesn't match the caller — otherwise any
+    signed-in parent could "verify" any other parent's real (observed,
+    guessed, leaked) transaction id and get their own family upgraded
+    to premium for free, off someone else's payment.
 
     - **Create the subscription group and products**, in
       [App Store Connect](https://appstoreconnect.apple.com) → your
@@ -505,14 +515,14 @@ for real queries later is a small diff, not a rewrite.
         Premium"), then two auto-renewable subscriptions inside it,
         with **exactly** these product IDs — `0016_iap.sql` already
         maps these to the `single` / `family` plans:
-        - `com.muslimkidsworld.app.single.monthly`
-        - `com.muslimkidsworld.app.family.monthly`
-      - Set each one's price, subscription duration, and localized
-        display name/description to match `content.plans.*` in
-        `mobile/src/i18n/locales/*.json`. The price shown in the app
-        (`premium.tsx`) comes from the App Store itself once products
-        load — the `$4.99`/`$7.99` strings in `mobile/src/data/mock.ts`
-        are only the pre-load fallback.
+        - `com.muslimkidsworld.app.single.yearly`
+        - `com.muslimkidsworld.app.family.yearly`
+      - Set each one's price, subscription duration (1 year), and
+        localized display name/description to match `content.plans.*`
+        in `mobile/src/i18n/locales/*.json`. The price shown in the
+        app (`premium.tsx`) comes from the App Store itself once
+        products load — the `$29.99`/`$49.99` strings in
+        `mobile/src/data/mock.ts` are only the pre-load fallback.
       - If you ever change a plan's `slug` or add a new plan, add a
         matching `apple_product_id` to `subscription_plans` (SQL
         Editor: `update public.subscription_plans set apple_product_id
@@ -648,6 +658,101 @@ and the same `is_admin()` gate as `admin/index.html`:
   admin system that don't exist anywhere else in this product (no
   matching tables, no matching mobile screens); showing them as if
   they were real would itself be the bug.
+
+## Security
+
+A full pass over every edge function and RLS policy, prompted by a
+direct "make security top-priority, audit everything" request rather
+than any specific report. Found and fixed:
+
+- **Brute-force lockouts were keyed only by client-supplied `deviceId`.**
+  `verify-parent-pin` (4-digit PIN) and `redeem-family-code` (6-digit
+  code) both throttle to 3 wrong guesses per 5 minutes
+  (`_shared/lockout.ts`, `0020_attempt_lockouts.sql`) — but `deviceId`
+  is just a random string the calling device makes up and sends in the
+  request body (`mobile/src/lib/deviceBinding.ts`'s
+  `generateDeviceId()`, never issued or checked server-side), so a
+  caller hitting these functions directly (not through the app) could
+  defeat the limit completely by sending a fresh random `deviceId` on
+  every guess — 10,000 PINs or up to 1,000,000 codes is well within
+  reach at that point, and a family's code stays guessable for as long
+  as `mobile/app/parent/family-code.tsx` (the "connect a child"
+  screen) is open, since `generate-family-code` mints a fresh one
+  every ~30 seconds while it is. Every lockout check/record/clear now
+  also keys on the request's client IP (`getClientIp`/`lockoutKeys` in
+  `_shared/lockout.ts`, best-effort via `x-forwarded-for`) — rotating
+  `deviceId` alone no longer resets the counter. Falls back to
+  device-only keying (today's behavior) if the platform ever doesn't
+  hand us a client IP, rather than colliding every such request into
+  one shared bucket and locking out unrelated users.
+- **`set-active-child` re-checked the Parent Gate PIN with *no*
+  lockout at all** — not even the bypassable kind above. It hashes and
+  compares against `families.pin_hash` exactly like
+  `verify-parent-pin` does (a child device has no parent session, so
+  the PIN *is* the authorization for switching which child a shared
+  device acts as), but had never had rate limiting added to it. Now
+  shares `verify-parent-pin`'s lockout under the same `"pin"` action
+  key, so guessing through one endpoint can't buy fresh attempts on
+  the other.
+- **`families.pin_hash` was unsalted SHA-256(pin).** Fine against the
+  online brute-force the lockout above throttles, but a leaked
+  `families` table would let one precomputed 10,000-entry table (every
+  SHA-256 of `"0000"`–`"9999"`, built once) instantly crack *every*
+  family's PIN in *every* installation forever, since they're all
+  hashed identically. `families.pin_salt` (`0032_pin_salt.sql`) plus
+  `_shared/pinHash.ts` now salt it per family; `set-parent-pin`
+  generates a fresh salt every time a PIN is set or changed. A PIN set
+  before this migration falls back to the old unsalted comparison
+  (`pin_salt` is null) so it keeps working, until it's next changed.
+- **`record-quiz-result` trusted the client's `xpEarned` for a regular
+  (non-bonus) session.** The bonus-question path was already correctly
+  server-computed (a fixed `BONUS_XP`, ignoring whatever the client
+  sent) — but a regular session just added `body.xpEarned` straight to
+  the child's lifetime XP with only a "non-negative integer" check, no
+  upper bound and no check that it matched `correct`. Since every
+  question in `mobile/src/data/mock.ts` is worth exactly 20 XP, a
+  regular session's real `xpEarned` is now computed the same way —
+  `correct * 20`, server-side — instead of read from the request,
+  closing an easy way to fake XP/level and top the family leaderboard
+  (`app/parent/(tabs)/children.tsx`) or unlock level-gated content
+  without answering anything.
+- **`verify-apple-purchase` confirmed a transaction was *real* but
+  never that it was *the caller's*.** Any signed-in parent could call
+  it with any real App Store transaction id — Apple would happily
+  confirm a transaction regardless of who asks — and get their own
+  family upgraded to premium for free, off someone else's real
+  payment, as long as they could obtain that transaction id somehow
+  (observed, guessed, leaked). Purchases are now bound to a specific
+  account at *purchase* time, not just checked at verify time:
+  `app/parent/(tabs)/premium.tsx` passes the buying parent's own user
+  id as `appAccountToken` on the `requestPurchase` call, Apple signs
+  it into the transaction, `_shared/appleIap.ts` reads it back out of
+  the (Apple-signed) transaction info, and `verify-apple-purchase`
+  rejects with 403 if it doesn't match the caller.
+- **The root Next.js admin dashboard's login was a hardcoded
+  `admin@muslimkidsworld.com` / `admin123` pair committed to source,
+  guarded only by a `localStorage` flag** — covered in "The second
+  admin surface" above, fixed the same day this audit happened; listed
+  here too since it's squarely a security finding, not just a
+  mock-data one.
+
+Reviewed and found *not* to need a change: CORS is wildcarded
+(`_shared/cors.ts`) on every function, which is normal for
+Authorization-header-based auth (no ambient cookie to ride along on a
+cross-origin request the way classic CSRF needs) rather than a gap on
+its own; `is_admin()` is `security definer` + `grant execute ... to
+authenticated` only (0015_admin_panel.sql), so `anon` can't call it at
+all; every write-capable RLS policy is scoped to `current_family_id()`
+or `is_admin()` — the only `using (true)` policies are `select` on
+public content tables (Quran/Dua/Story/Quiz/Games/Achievements),
+which is the intended behavior, not a gap; the `bug-screenshots`
+storage bucket is private with an admin-only `is_admin()` select
+policy and no insert/update/delete policy at all (uploads only happen
+from `report-error`'s service-role client, which bypasses storage RLS
+entirely); `apple-server-notifications` never trusts its own request
+body, only using it to look up which existing, already-verified
+subscription might have changed before re-asking Apple directly — a
+forged POST there can at worst trigger a redundant, harmless re-check.
 
 ## What's still a stub / explicitly out of scope here
 

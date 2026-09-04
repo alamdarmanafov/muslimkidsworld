@@ -13,6 +13,20 @@ import { getSupabaseClient } from "./supabase";
 export type PlanProduct = { slug: string; appleProductId: string };
 
 /**
+ * The signed-in parent's own user id, or null if there's no session.
+ * app/parent/(tabs)/premium.tsx passes this as requestPurchase's
+ * appAccountToken so Apple signs it into the transaction — see
+ * verify-apple-purchase's header comment for why that's what actually
+ * ties a purchase to *this* account, not just to a real transaction.
+ */
+export async function getCurrentParentId(): Promise<string | null> {
+  const {
+    data: { user },
+  } = await getSupabaseClient().auth.getUser();
+  return user?.id ?? null;
+}
+
+/**
  * The App Store product id for every active plan that has one
  * configured. Public-read (subscription_plans has no RLS restriction
  * on select), so this works before the parent is signed in too.

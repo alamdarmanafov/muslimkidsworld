@@ -21,19 +21,12 @@
 
 import { createClient } from "npm:@supabase/supabase-js@2.112.4";
 import { corsHeaders, jsonResponse } from "../_shared/cors.ts";
+import { generatePinSalt, hashPin } from "../_shared/pinHash.ts";
 
 type Body = { pin?: unknown };
 
 function isValidPin(v: unknown): v is string {
   return typeof v === "string" && /^[0-9]{4}$/.test(v);
-}
-
-async function hashPin(pin: string): Promise<string> {
-  const bytes = new TextEncoder().encode(pin);
-  const digest = await crypto.subtle.digest("SHA-256", bytes);
-  return Array.from(new Uint8Array(digest))
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
 }
 
 Deno.serve(async (req: Request) => {
@@ -96,10 +89,13 @@ Deno.serve(async (req: Request) => {
     return jsonResponse({ error: "No family found for this account" }, 404);
   }
 
-  const pinHash = await hashPin(pin);
+  // A fresh salt every time the PIN is set/changed — see
+  // _shared/pinHash.ts's header comment for why.
+  const pinSalt = generatePinSalt();
+  const pinHash = await hashPin(pin, pinSalt);
   const { error: updateError } = await adminClient
     .from("families")
-    .update({ pin_hash: pinHash })
+    .update({ pin_hash: pinHash, pin_salt: pinSalt })
     .eq("id", parent.family_id);
   if (updateError) {
     return jsonResponse({ error: updateError.message }, 500);
