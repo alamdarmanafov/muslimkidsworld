@@ -138,6 +138,10 @@ supabase/
     │                                Expo push token
     ├── send-daily-reminders/       cron-triggered: nudges children who
     │                                haven't opened the app today
+    ├── send-daily-parent-digest/   cron-triggered: pushes parents a "what
+    │                                your child did today" summary for
+    │                                every child who was actually active —
+    │                                skipped for a quiet day, no digest sent
     ├── revoke-device/              parent cuts off one connected device
     ├── mark-journey-item/          child device marks a Today's Journey
     │                                item (Quran/Dua/Story/Game) done
@@ -359,8 +363,9 @@ for real queries later is a small diff, not a rewrite.
 
 11. **Push notifications** (`mobile/src/lib/pushNotifications.ts`,
     `register-push-token`, `record-quiz-result`,
-    `send-daily-reminders`) — iOS only, via Expo's push service (no
-    Firebase needed; Expo's service talks to APNs directly for iOS):
+    `send-daily-reminders`, `send-daily-parent-digest`) — iOS only, via
+    Expo's push service (no Firebase needed; Expo's service talks to
+    APNs directly for iOS):
     - EAS manages the APNs push key automatically the first time you
       build with push notifications configured — no manual Apple
       Developer step needed, just run `eas build` and answer its
@@ -370,9 +375,10 @@ for real queries later is a small diff, not a rewrite.
       once a build with `expo-notifications` compiled in is installed
       and the parent has granted notification permission — no extra
       setup.
-    - The daily reminder (`send-daily-reminders`) needs a cron job to
-      actually call it — Supabase doesn't schedule edge functions on
-      its own. In the Supabase Dashboard → SQL Editor, run once:
+    - Both cron-triggered functions (the child-facing daily reminder
+      and the parent-facing daily digest) need a cron job to actually
+      call them — Supabase doesn't schedule edge functions on its own.
+      In the Supabase Dashboard → SQL Editor, run once:
       ```sql
       create extension if not exists pg_cron with schema extensions;
       create extension if not exists pg_net with schema extensions;
@@ -390,10 +396,23 @@ for real queries later is a small diff, not a rewrite.
         );
         $$
       );
+
+      select cron.schedule(
+        'send-daily-parent-digest',
+        '0 17 * * *', -- 17:00 UTC ≈ 21:00 Baku time — after the reminder above, so it reports the day's real activity
+        $$
+        select net.http_post(
+          url := 'https://<project-ref>.supabase.co/functions/v1/send-daily-parent-digest',
+          headers := jsonb_build_object(
+            'Authorization', 'Bearer <service role key, from Settings → API>',
+            'Content-Type', 'application/json'
+          )
+        );
+        $$
+      );
       ```
       Re-run `cron.schedule` with the same job name any time to change
-      the hour; `select cron.unschedule('send-daily-reminders');` to
-      stop it.
+      the hour; `select cron.unschedule('<job name>');` to stop one.
 
 12. **In-app purchases** (`mobile/src/lib/iap.ts`,
     `app/parent/(tabs)/premium.tsx`, `verify-apple-purchase`) — iOS
