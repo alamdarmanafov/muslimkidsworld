@@ -5544,13 +5544,13 @@ export const dailyLimitOptions = [30, 45, 60, 90] as const;
 export const plans = [
   {
     id: "single",
-    price: "$4.99",
-    period: "/month",
+    price: "$29.99",
+    period: "/year",
   },
   {
     id: "family",
-    price: "$7.99",
-    period: "/month",
+    price: "$49.99",
+    period: "/year",
     bestValue: true,
   },
 ];

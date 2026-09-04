@@ -39,6 +39,7 @@ export default function AdminSubscriptions() {
         { icon: "trendingDown", tone: "orange", label: "Bitib", value: counts.expired.toLocaleString() },
       ]);
 
+      const periodLabel: Record<string, string> = { month: "ay", year: "il" };
       setPlans(
         (planRows ?? []).map((p) => {
           const subscribers = subsByPlan.get(p.id) ?? 0;
@@ -46,9 +47,11 @@ export default function AdminSubscriptions() {
           return {
             id: p.id,
             name: p.name,
-            price: `$${(p.price_cents / 100).toFixed(2)}/${p.period === "month" ? "ay" : p.period}`,
+            price: `$${(p.price_cents / 100).toFixed(2)}/${periodLabel[p.period] ?? p.period}`,
             subscribers,
-            revenue: `$${(revenueCents / 100).toLocaleString(undefined, { maximumFractionDigits: 0 })}`,
+            revenue: `$${(revenueCents / 100).toLocaleString(undefined, { maximumFractionDigits: 0 })}${
+              p.period === "year" ? "/il" : "/ay"
+            }`,
           };
         }),
       );
@@ -96,7 +99,7 @@ export default function AdminSubscriptions() {
                     <span className="font-semibold text-ink">{p.subscribers.toLocaleString()}</span>
                   </div>
                   <div className="mt-2 flex items-center justify-between text-sm">
-                    <span className="text-inkMuted">Aylıq gəlir</span>
+                    <span className="text-inkMuted">Gəlir</span>
                     <span className="font-semibold text-ink">{p.revenue}</span>
                   </div>
                 </div>

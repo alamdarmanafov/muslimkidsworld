@@ -2,7 +2,7 @@
 
 This directory holds the SQL migrations, RLS policies, and edge
 functions for the app's real backend, built entirely as code so they
-can be reviewed before being applied. Migrations run through `0029`
+can be reviewed before being applied. Migrations run through `0031`
 and every function below has been written and validated locally, but
 **deploying a new migration/function to your linked project still
 needs `supabase db push` / `supabase functions deploy` run from a
@@ -145,16 +145,26 @@ supabase/
 │   │                                stories/[id].tsx fetch from them).
 │   │                                Games stays out of scope — see
 │   │                                that migration's header comment
-│   └── 0030_admin_broadcasts.sql   admin_broadcasts — a real send log
-│                                    for the root Next.js admin
-│                                    dashboard's Bildirişlər page
-│                                    (app/admin/notifications/page.tsx,
-│                                    repo root, not mobile/), written
-│                                    only by the admin-broadcast-
-│                                    notification edge function right
-│                                    after it has actually pushed via
-│                                    Expo — replaces that page's old
-│                                    hardcoded "sent" history
+│   ├── 0030_admin_broadcasts.sql   admin_broadcasts — a real send log
+│   │                                for the root Next.js admin
+│   │                                dashboard's Bildirişlər page
+│   │                                (app/admin/notifications/page.tsx,
+│   │                                repo root, not mobile/), written
+│   │                                only by the admin-broadcast-
+│   │                                notification edge function right
+│   │                                after it has actually pushed via
+│   │                                Expo — replaces that page's old
+│   │                                hardcoded "sent" history
+│   └── 0031_annual_pricing.sql     switches both plans from monthly
+│                                    to annual billing — Single Child
+│                                    $4.99/mo -> $29.99/yr, Family
+│                                    $7.99/mo -> $49.99/yr
+│                                    (subscription_plans.price_cents/
+│                                    period). An UPDATE, not an INSERT
+│                                    ...ON CONFLICT DO NOTHING like
+│                                    0005_seed_content.sql's original
+│                                    seed — that would never retroactively
+│                                    fix a project that already ran it
 ├── scripts/
 │   ├── import-quran-audio.mjs      one-time script, run from a machine
 │   │                                with real internet access: pulls

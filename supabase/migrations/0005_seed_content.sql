@@ -16,9 +16,9 @@ values
   (
     'single',
     'Single Child',
-    499,
+    2999,
     'usd',
-    'month',
+    'year',
     1,
     '["Unlimited Daily 10", "Full World Access", "Basic Reports"]'::jsonb,
     false,
@@ -27,9 +27,9 @@ values
   (
     'family',
     'Family',
-    799,
+    4999,
     'usd',
-    'month',
+    'year',
     3,
     '["Unlimited Daily 10", "Full World Access", "Advanced Progress & Reports", "Premium Rewards", "Cancel Anytime"]'::jsonb,
     true,

@@ -40,16 +40,22 @@ export default function AdminOverview() {
           .select("*", { count: "exact", head: true })
           .gte("last_activity_at", todayStart.toISOString()),
         supabase.from("subscriptions").select("plan_id").eq("status", "active"),
-        supabase.from("subscription_plans").select("id, price_cents"),
+        supabase.from("subscription_plans").select("id, price_cents, period"),
         supabase
           .from("subscriptions")
           .select("*", { count: "exact", head: true })
           .gte("created_at", new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()),
       ]);
 
-      const priceByPlan = new Map((plans ?? []).map((p) => [p.id, p.price_cents]));
+      // Normalized to a monthly-equivalent amount per plan, since plans
+      // can be billed on different periods (annual plans divide by 12) —
+      // MRR/ARR would otherwise count a $49.99/year sub as if it were
+      // $49.99/month, wildly overstating both.
+      const monthlyPriceByPlan = new Map(
+        (plans ?? []).map((p) => [p.id, p.period === "year" ? p.price_cents / 12 : p.price_cents]),
+      );
       const mrrCents = (activeSubs ?? []).reduce(
-        (sum, row) => sum + (priceByPlan.get(row.plan_id) ?? 0),
+        (sum, row) => sum + (monthlyPriceByPlan.get(row.plan_id) ?? 0),
         0,
       );
 
